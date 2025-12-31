@@ -69,7 +69,7 @@ export default function UploadLayout({
                   <div className="flex items-center space-x-2">
                     <User size={18} className="text-purple-600" />
                     <span className="text-sm font-medium text-gray-700">
-                      {user.full_name}
+                      {user.username || user.email}
                     </span>
                   </div>
                   <button
