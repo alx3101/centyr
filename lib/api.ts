@@ -1,5 +1,84 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 
+// ===========================
+// TypeScript Types/Interfaces
+// ===========================
+
+export enum JobStatus {
+  PENDING = 'pending',
+  PROCESSING = 'processing',
+  COMPLETED = 'completed',
+  FAILED = 'failed',
+}
+
+export interface UserInfo {
+  user_id: string
+  email: string
+  email_verified: boolean
+  username: string
+  subscription: {
+    plan: string
+    usage: number
+    quota: number
+    status: string
+  }
+}
+
+export interface JobResponse {
+  job_id: string
+  status: JobStatus
+  created_at: string
+  updated_at: string
+  input_image_url?: string | null
+  output_image_url?: string | null
+  error_message?: string | null
+  processing_time?: number | null
+}
+
+export interface JobStatusResponse {
+  job_id: string
+  status: JobStatus
+  progress?: number | null
+  message?: string | null
+}
+
+export interface CheckoutResponse {
+  session_id: string
+  checkout_url: string
+}
+
+export interface CreateCheckoutRequest {
+  price_id: string
+  success_url: string
+  cancel_url: string
+}
+
+export interface CustomerPortalRequest {
+  return_url: string
+}
+
+export interface CustomerPortalResponse {
+  portal_url: string
+}
+
+export interface UploadResponse {
+  job_id: string
+}
+
+export interface HealthCheckResponse {
+  status: string
+  services: {
+    dynamodb: boolean
+    s3: boolean
+    redis: boolean
+    cognito: boolean
+  }
+}
+
+// ===========================
+// API Client Class
+// ===========================
+
 class ApiClient {
   private baseURL: string
 
@@ -7,6 +86,9 @@ class ApiClient {
     this.baseURL = baseURL
   }
 
+  /**
+   * Generic request method with automatic token injection
+   */
   private async request<T>(
     endpoint: string,
     options: RequestInit = {}
@@ -28,101 +110,296 @@ class ApiClient {
     })
 
     if (!response.ok) {
-      const error = await response.json()
-      throw new Error(error.detail || 'Request failed')
+      let errorMessage = 'Request failed'
+      try {
+        const error = await response.json()
+        errorMessage = error.detail || error.message || errorMessage
+      } catch {
+        errorMessage = `HTTP ${response.status}: ${response.statusText}`
+      }
+      throw new Error(errorMessage)
+    }
+
+    // Handle empty responses (204 No Content)
+    if (response.status === 204) {
+      return {} as T
     }
 
     return response.json()
   }
 
-  // Auth endpoints
-  async login(email: string, password: string) {
-    return this.request<{ access_token: string; user: any }>('/auth/login', {
-      method: 'POST',
-      body: JSON.stringify({ email, password }),
-    })
+  // ===========================
+  // Health & Root Endpoints
+  // ===========================
+
+  /**
+   * Health Check - GET /health
+   *
+   * Checks connectivity to all critical services:
+   * - DynamoDB (subscriptions table)
+   * - S3 (bucket accessibility)
+   * - Redis (Celery broker)
+   * - Cognito (JWKS endpoint)
+   */
+  async healthCheck(): Promise<HealthCheckResponse> {
+    return this.request<HealthCheckResponse>('/health')
   }
 
-  async signup(email: string, password: string, fullName: string) {
-    return this.request('/auth/signup', {
-      method: 'POST',
-      body: JSON.stringify({
-        email,
-        password,
-        full_name: fullName,
-      }),
-    })
+  /**
+   * Root - GET /
+   */
+  async getRoot(): Promise<any> {
+    return this.request('//')
   }
 
-  async getUser() {
-    return this.request<any>('/auth/me')
+  // ===========================
+  // User Endpoints
+  // ===========================
+
+  /**
+   * Get Current User Info - GET /api/v1/me
+   *
+   * Get current authenticated user information from Cognito token
+   * Includes subscription and quota information
+   */
+  async getCurrentUser(): Promise<UserInfo> {
+    return this.request<UserInfo>('/api/v1/me')
   }
 
-  // Image processing endpoints
-  async processImages(files: File[]) {
+  // ===========================
+  // Upload Endpoints
+  // ===========================
+
+  /**
+   * Upload Image - POST /api/v1/upload
+   *
+   * Upload an image for alignment processing
+   *
+   * Requires authentication (JWT token in Authorization header)
+   * Respects subscription quota limits (Free: 10/month, Premium: 500/month)
+   *
+   * @param file - Image file to align
+   * @returns job_id to track the processing status
+   * @throws {Error} 400: Validation error (invalid file, filename, dimensions, etc.)
+   * @throws {Error} 413: File too large
+   * @throws {Error} 429: Quota exceeded
+   * @throws {Error} 503: Service unavailable (S3 or DynamoDB error)
+   * @throws {Error} 500: Unexpected error
+   */
+  async uploadImage(file: File): Promise<UploadResponse> {
     const formData = new FormData()
-    files.forEach(file => {
-      formData.append('files', file)
-    })
+    formData.append('file', file)
 
-    const token = localStorage.getItem('auth_token')
+    const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null
 
-    const response = await fetch(`${this.baseURL}/images/process`, {
+    const headers: Record<string, string> = {}
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`
+    }
+
+    const response = await fetch(`${this.baseURL}/api/v1/upload`, {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
+      headers,
       body: formData,
     })
 
     if (!response.ok) {
-      const error = await response.json()
-      throw new Error(error.detail || 'Processing failed')
+      let errorMessage = 'Upload failed'
+      try {
+        const error = await response.json()
+        errorMessage = error.detail || error.message || errorMessage
+      } catch {
+        errorMessage = `HTTP ${response.status}: ${response.statusText}`
+      }
+      throw new Error(errorMessage)
     }
 
     return response.json()
   }
 
+  // ===========================
+  // Job Endpoints
+  // ===========================
+
+  /**
+   * Get Job Details - GET /api/v1/jobs/{job_id}
+   *
+   * Get detailed job information
+   * Requires authentication. Users can only access their own jobs.
+   *
+   * @param jobId - Job ID
+   * @returns Full job details including status, timestamps, and URLs
+   */
+  async getJobDetails(jobId: string): Promise<JobResponse> {
+    return this.request<JobResponse>(`/api/v1/jobs/${jobId}`)
+  }
+
+  /**
+   * Get Job Status - GET /api/v1/jobs/{job_id}/status
+   *
+   * Get simplified job status
+   * Requires authentication. Quick endpoint for polling job progress.
+   *
+   * @param jobId - Job ID
+   */
+  async getJobStatus(jobId: string): Promise<JobStatusResponse> {
+    return this.request<JobStatusResponse>(`/api/v1/jobs/${jobId}/status`)
+  }
+
+  /**
+   * Get Job Result - GET /api/v1/jobs/{job_id}/result
+   *
+   * Get the processed image result
+   * Requires authentication. Redirects to the S3 URL if processing is complete.
+   *
+   * @param jobId - Job ID
+   */
+  async getJobResult(jobId: string): Promise<any> {
+    return this.request(`/api/v1/jobs/${jobId}/result`)
+  }
+
+  /**
+   * Delete Job - DELETE /api/v1/jobs/{job_id}
+   *
+   * Delete a job and its associated resources
+   * Requires authentication. Users can only delete their own jobs.
+   * Removes job from database and optionally deletes files from S3.
+   *
+   * @param jobId - Job ID
+   */
+  async deleteJob(jobId: string): Promise<any> {
+    return this.request(`/api/v1/jobs/${jobId}`, {
+      method: 'DELETE',
+    })
+  }
+
+  // ===========================
+  // Billing Endpoints
+  // ===========================
+
+  /**
+   * Create Checkout Session - POST /api/v1/billing/create-checkout
+   *
+   * Creates a checkout session for the user to purchase a subscription.
+   *
+   * Flow:
+   * 1. User clicks "Upgrade to Premium" in frontend
+   * 2. Frontend calls this endpoint with price_id
+   * 3. Backend creates Stripe checkout session
+   * 4. Frontend redirects to checkout_url
+   * 5. User completes payment on Stripe
+   * 6. Stripe redirects to success_url
+   * 7. Stripe sends webhook to /webhooks/stripe
+   * 8. Backend updates subscription in database
+   *
+   * @param request - Checkout request with price_id and redirect URLs
+   * @returns Checkout session with URL to redirect user
+   */
+  async createCheckoutSession(request: CreateCheckoutRequest): Promise<CheckoutResponse> {
+    return this.request<CheckoutResponse>('/api/v1/billing/create-checkout', {
+      method: 'POST',
+      body: JSON.stringify(request),
+    })
+  }
+
+  /**
+   * Create Customer Portal - POST /api/v1/billing/customer-portal
+   *
+   * Allows users to:
+   * - Update payment method
+   * - View invoices
+   * - Cancel subscription
+   * - Download receipts
+   *
+   * @param request - Portal request with return URL
+   * @returns Portal URL to redirect user
+   */
+  async createCustomerPortal(request: CustomerPortalRequest): Promise<CustomerPortalResponse> {
+    return this.request<CustomerPortalResponse>('/api/v1/billing/customer-portal', {
+      method: 'POST',
+      body: JSON.stringify(request),
+    })
+  }
+
+  /**
+   * Cancel Subscription - POST /api/v1/billing/cancel-subscription
+   *
+   * @param cancelImmediately - If true, cancel now. If false, cancel at period end
+   * @returns Success message
+   */
+  async cancelSubscription(cancelImmediately: boolean = false): Promise<any> {
+    return this.request('/api/v1/billing/cancel-subscription', {
+      method: 'POST',
+      body: JSON.stringify({ cancel_immediately: cancelImmediately }),
+    })
+  }
+
+  // ===========================
+  // Legacy/Compatibility Methods
+  // ===========================
+
+  /**
+   * @deprecated Use getCurrentUser() instead
+   */
+  async getUser() {
+    return this.getCurrentUser()
+  }
+
+  /**
+   * @deprecated Use uploadImage() instead
+   */
+  async processImages(files: File[]) {
+    // For backward compatibility, upload the first file
+    if (files.length === 0) {
+      throw new Error('No files provided')
+    }
+    return this.uploadImage(files[0])
+  }
+
+  /**
+   * @deprecated Use getJobStatus() instead
+   */
   async getProcessingStatus(jobId: string) {
-    return this.request<{
-      job_id: string
-      status: 'pending' | 'processing' | 'completed' | 'failed'
-      progress: number
-      processed_count: number
-      total_count: number
-    }>(`/images/status/${jobId}`)
+    return this.getJobStatus(jobId)
   }
 
+  /**
+   * @deprecated Use getJobDetails() instead (endpoint not in new API)
+   */
   async getJobs() {
-    return this.request<{ jobs: any[] }>('/images/jobs')
+    // This endpoint doesn't exist in the new API
+    // You may need to implement pagination or list endpoint
+    throw new Error('getJobs() is deprecated and not available in new API')
   }
 
+  /**
+   * @deprecated Use getJobResult() instead (endpoint not in new API)
+   */
   async downloadProcessedImages(jobId: string) {
-    return this.request<{ download_url: string; expires_in: number }>(
-      `/images/download/${jobId}`
-    )
+    return this.getJobResult(jobId)
   }
 
-  // Subscription endpoints
-  async createCheckoutSession(planId: string, successUrl: string, cancelUrl: string) {
-    return this.request<{ session_url: string }>('/subscriptions/create-checkout', {
-      method: 'POST',
-      body: JSON.stringify({
-        plan_id: planId,
-        success_url: successUrl,
-        cancel_url: cancelUrl,
-      }),
-    })
+  /**
+   * @deprecated Auth endpoints removed - use AWS Cognito directly
+   */
+  async login(_email: string, _password: string) {
+    throw new Error('login() is deprecated - use AWS Cognito authentication')
   }
 
+  /**
+   * @deprecated Auth endpoints removed - use AWS Cognito directly
+   */
+  async signup(_email: string, _password: string, _fullName: string) {
+    throw new Error('signup() is deprecated - use AWS Cognito authentication')
+  }
+
+  /**
+   * @deprecated Use createCheckoutSession() instead
+   */
   async getSubscription() {
-    return this.request<any>('/subscriptions/me')
-  }
-
-  async cancelSubscription() {
-    return this.request('/subscriptions/cancel', {
-      method: 'POST',
-    })
+    // Subscription info is now included in getCurrentUser()
+    const user = await this.getCurrentUser()
+    return user.subscription
   }
 }
 

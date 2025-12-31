@@ -1,12 +1,18 @@
+// Updated User type to match new API (UserInfo from Cognito)
 export interface User {
-  id: number
+  user_id: string
   email: string
-  full_name: string
-  plan: string
-  monthly_limit: number
-  images_used_this_month: number
+  email_verified: boolean
+  username: string
+  subscription: {
+    plan: string
+    usage: number
+    quota: number
+    status: string
+  }
 }
 
+// Legacy support - convert old User format to new format if needed
 export function getStoredUser(): User | null {
   if (typeof window === 'undefined') return null
 
@@ -14,7 +20,25 @@ export function getStoredUser(): User | null {
   if (!userData) return null
 
   try {
-    return JSON.parse(userData)
+    const parsed = JSON.parse(userData)
+
+    // Check if it's old format and convert
+    if (parsed.id && !parsed.user_id) {
+      return {
+        user_id: String(parsed.id),
+        email: parsed.email,
+        email_verified: true,
+        username: parsed.email.split('@')[0],
+        subscription: {
+          plan: parsed.plan || 'free',
+          usage: parsed.images_used_this_month || 0,
+          quota: parsed.monthly_limit || 10,
+          status: 'active',
+        },
+      }
+    }
+
+    return parsed
   } catch {
     return null
   }
