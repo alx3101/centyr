@@ -13,9 +13,8 @@ export interface UploadedFile {
 export interface ProcessingJob {
   job_id: string
   status: 'pending' | 'processing' | 'completed' | 'failed'
-  progress: number
-  processed_count: number
-  total_count: number
+  progress?: number | null
+  message?: string | null
   created_at?: string
   completed_at?: string
 }
@@ -65,30 +64,40 @@ export function useUpload() {
     setIsUploading(true)
 
     try {
-      // Update all file statuses to uploading
-      setFiles((prev) =>
-        prev.map((f) => ({ ...f, status: 'uploading' as const }))
-      )
+      // Upload files one at a time (new API only accepts single file)
+      const jobIds: string[] = []
 
-      const filesToUpload = files.map((f) => f.file)
-      const response = await api.processImages(filesToUpload)
+      for (const fileData of files) {
+        // Update file status to uploading
+        setFiles((prev) =>
+          prev.map((f) =>
+            f.id === fileData.id ? { ...f, status: 'uploading' as const } : f
+          )
+        )
 
-      // Update file statuses to processing
-      setFiles((prev) =>
-        prev.map((f) => ({ ...f, status: 'processing' as const }))
-      )
+        // Upload single file
+        const response = await api.uploadImage(fileData.file)
+        jobIds.push(response.job_id)
 
-      // Set current job for polling
-      setCurrentJob({
-        job_id: response.job_id,
-        status: 'processing',
-        progress: 0,
-        processed_count: 0,
-        total_count: files.length,
-      })
+        // Update file status to processing
+        setFiles((prev) =>
+          prev.map((f) =>
+            f.id === fileData.id ? { ...f, status: 'processing' as const } : f
+          )
+        )
+      }
+
+      // Set current job to first one (for backward compatibility)
+      if (jobIds.length > 0) {
+        setCurrentJob({
+          job_id: jobIds[0],
+          status: 'processing',
+          progress: 0,
+        })
+      }
 
       toast.success('Upload started! Processing images...')
-      return response.job_id
+      return jobIds[0] || null
     } catch (error: any) {
       toast.error(error.message || 'Upload failed')
       setFiles((prev) =>
@@ -138,18 +147,25 @@ export function useUpload() {
 
   const downloadProcessedImages = async (jobId: string) => {
     try {
-      const { download_url } = await api.downloadProcessedImages(jobId)
+      // Get job details which includes the output image URL
+      const job = await api.getJobDetails(jobId)
+
+      if (!job.output_image_url) {
+        toast.error('No processed image available')
+        throw new Error('No output image')
+      }
 
       // Trigger download
       const link = document.createElement('a')
-      link.href = download_url
-      link.download = `processed-images-${jobId}.zip`
+      link.href = job.output_image_url
+      link.download = `processed-image-${jobId}.jpg`
+      link.target = '_blank'
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)
 
       toast.success('Download started!')
-      return download_url
+      return job.output_image_url
     } catch (error: any) {
       toast.error(error.message || 'Download failed')
       throw error
