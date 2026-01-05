@@ -27,12 +27,13 @@ function DashboardContent() {
   const [recentJobs, setRecentJobs] = useState<ProcessingJob[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
+
   useEffect(() => {
     if (currentJobId) {
       pollJobStatus(currentJobId)
     }
     loadRecentJobs()
-    refreshUser() // Aggiorna i dati utente
+    refreshUser()
   }, [currentJobId])
 
   const pollJobStatus = async (jobId: string) => {
@@ -109,9 +110,7 @@ function DashboardContent() {
     }
   }
 
-  const usagePercentage = user
-    ? (user.subscription.usage / user.subscription.quota) * 100
-    : 0
+  const usagePercentage = user?.subscription?.usage_percentage ?? 0
 
   if (!user) {
     return <SkeletonDashboard />
@@ -123,7 +122,7 @@ function DashboardContent() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-            Welcome back, {user.username || user.email.split('@')[0]}!
+            Welcome back, {user.email.split('@')[0]}!
           </h1>
           <p className="text-gray-600">
             Here's what's happening with your images
@@ -136,18 +135,18 @@ function DashboardContent() {
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-sm font-semibold text-gray-600">Plan</h3>
               <span className="px-3 py-1 gradient-purple-fuchsia text-white text-xs font-bold rounded-full">
-                {user.subscription.plan.toUpperCase()}
+                {user.subscription.plan_name.toUpperCase()}
               </span>
             </div>
-            <p className="text-3xl font-bold text-gray-900">{user.subscription.quota}</p>
+            <p className="text-3xl font-bold text-gray-900">{user.subscription.monthly_limit}</p>
             <p className="text-sm text-gray-500">images/month</p>
           </div>
 
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-100 shadow-lg hover:shadow-xl transition-all">
             <h3 className="text-sm font-semibold text-gray-600 mb-4">Usage This Month</h3>
             <div className="flex items-end gap-2 mb-2">
-              <p className="text-3xl font-bold text-gray-900">{user.subscription.usage}</p>
-              <p className="text-lg text-gray-500 mb-1">/ {user.subscription.quota}</p>
+              <p className="text-3xl font-bold text-gray-900">{user.subscription.current_period_uploads}</p>
+              <p className="text-lg text-gray-500 mb-1">/ {user.subscription.monthly_limit}</p>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2">
               <div
@@ -160,10 +159,10 @@ function DashboardContent() {
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-100 shadow-lg hover:shadow-xl transition-all">
             <h3 className="text-sm font-semibold text-gray-600 mb-4">Remaining</h3>
             <p className="text-3xl font-bold text-gradient">
-              {user.subscription.quota - user.subscription.usage}
+              {user.subscription.monthly_limit - user.subscription.current_period_uploads}
             </p>
             <p className="text-sm text-gray-500">images left</p>
-            {user.subscription.quota - user.subscription.usage < 10 && (
+            {user.subscription.monthly_limit - user.subscription.current_period_uploads < user.subscription.monthly_limit / 2 && (
               <Link
                 href="/pricing"
                 className="text-sm text-primary-600 hover:text-fuchsia-600 font-semibold mt-2 inline-block"

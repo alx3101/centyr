@@ -64,13 +64,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // Cache token (solo dopo verifica Cognito)
       localStorage.setItem('auth_token', idToken)
 
-      const cachedUser = localStorage.getItem('user')
-      if (cachedUser) {
-        setUser(JSON.parse(cachedUser))
-        setAuthStatus('authenticated')
-        return
-      }
-
       const userData = await api.getCurrentUser()
       setUser(userData)
       setAuth(idToken, userData)

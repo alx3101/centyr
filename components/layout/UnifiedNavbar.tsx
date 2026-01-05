@@ -71,11 +71,10 @@ export function UnifiedNavbar() {
                     <Link
                       key={link.href}
                       href={link.href}
-                      className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
-                        isActive
+                      className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${isActive
                           ? 'bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white'
                           : 'text-gray-700 hover:bg-purple-100 hover:text-purple-700'
-                      }`}
+                        }`}
                     >
                       <Icon size={18} />
                       <span className="font-medium">{link.label}</span>
@@ -108,7 +107,7 @@ export function UnifiedNavbar() {
                 <div className="hidden sm:flex items-center space-x-3 px-4 border-l border-purple-200">
                   <User size={18} className="text-purple-600" />
                   <span className="text-sm font-medium text-gray-700">
-                    {user.username || user.email}
+                    {user.email.split('@')[0]}
                   </span>
                 </div>
 
@@ -163,11 +162,10 @@ export function UnifiedNavbar() {
                         key={link.href}
                         href={link.href}
                         onClick={() => setMobileMenuOpen(false)}
-                        className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all ${
-                          isActive
+                        className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all ${isActive
                             ? 'bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white'
                             : 'text-gray-700 hover:bg-purple-50'
-                        }`}
+                          }`}
                       >
                         <Icon size={20} />
                         <span className="font-medium">{link.label}</span>

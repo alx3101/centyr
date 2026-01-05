@@ -5,10 +5,11 @@ export interface User {
   email_verified: boolean
   username: string
   subscription: {
-    plan: string
-    usage: number
-    quota: number
+    plan_name: string
+    current_period_uploads: number
+    monthly_limit: number
     status: string
+    usage_percentage: number
   }
 }
 
@@ -30,10 +31,11 @@ export function getStoredUser(): User | null {
         email_verified: true,
         username: parsed.email.split('@')[0],
         subscription: {
-          plan: parsed.plan || 'free',
-          usage: parsed.images_used_this_month || 0,
-          quota: parsed.monthly_limit || 10,
+          plan_name: parsed.plan || 'free',
+          current_period_uploads: parsed.monthly_limit || 0,
+          monthly_limit: parsed.monthly_limit || 10,
           status: 'active',
+          usage_percentage: 50
         },
       }
     }

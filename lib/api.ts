@@ -17,10 +17,12 @@ export interface UserInfo {
   email_verified: boolean
   username: string
   subscription: {
-    plan: string
-    usage: number
-    quota: number
-    status: string
+    plan_name: string
+    current_period_uploads: number
+    monthly_limit: number
+    status: string,
+    usage_percentage: number
+
   }
 }
 
