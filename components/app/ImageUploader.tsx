@@ -19,16 +19,31 @@ export default function ImageUploader() {
 
     setUploading(true)
     const formData = new FormData()
-    formData.append('image', selectedFile)
+    formData.append('file', selectedFile)
+
+    // Get auth token from localStorage
+    const token = localStorage.getItem('auth_token')
+    const headers: Record<string, string> = {}
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`
+    }
 
     try {
-      const response = await fetch('/api/process-image', {
+      // Call backend directly instead of going through Next.js middleware
+      const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://51.44.133.83'
+      const response = await fetch(`${backendUrl}/api/v1/upload`, {
         method: 'POST',
+        headers,
         body: formData,
       })
 
       const data = await response.json()
-      setResult(data)
+
+      if (!response.ok) {
+        setResult({ error: data.message || data.detail || 'Upload failed' })
+      } else {
+        setResult(data)
+      }
     } catch (error) {
       console.error('Upload failed:', error)
       setResult({ error: 'Upload failed' })

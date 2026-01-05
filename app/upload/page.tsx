@@ -1,32 +1,17 @@
 'use client'
 
-import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-hot-toast'
 import { Upload, X, Check, Loader } from 'lucide-react'
 import { useDropzone } from 'react-dropzone'
-
-interface UploadedFile {
-  file: File
-  preview: string
-  status: 'pending' | 'uploading' | 'processing' | 'completed' | 'error'
-  progress: number
-}
+import { useUpload } from '@/hooks/useUpload'
 
 export default function UploadPage() {
   const router = useRouter()
-  const [files, setFiles] = useState<UploadedFile[]>([])
-  const [isProcessing, setIsProcessing] = useState(false)
-  const [jobId, setJobId] = useState<string | null>(null)
+  const { files, isUploading, addFiles, removeFile, clearFiles, uploadAndProcess } = useUpload()
 
   const onDrop = (acceptedFiles: File[]) => {
-    const newFiles = acceptedFiles.map(file => ({
-      file,
-      preview: URL.createObjectURL(file),
-      status: 'pending' as const,
-      progress: 0,
-    }))
-    setFiles([...files, ...newFiles])
+    addFiles(acceptedFiles)
   }
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -40,53 +25,17 @@ export default function UploadPage() {
     maxFiles: 100,
   })
 
-  const removeFile = (index: number) => {
-    const newFiles = files.filter((_, i) => i !== index)
-    setFiles(newFiles)
-  }
-
   const handleProcess = async () => {
     if (files.length === 0) {
       toast.error('Please upload at least one image')
       return
     }
 
-    setIsProcessing(true)
-
-    try {
-      const formData = new FormData()
-      files.forEach(({ file }) => {
-        formData.append('files', file)
-      })
-
-      const token = localStorage.getItem('auth_token')
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/images/process`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-        body: formData,
-      })
-
-      const data = await response.json()
-
-      if (!response.ok) {
-        throw new Error(data.detail || 'Processing failed')
-      }
-
-      setJobId(data.job_id)
-      toast.success('Processing started! Redirecting to dashboard...')
-
-      // Update file statuses
-      setFiles(files.map(f => ({ ...f, status: 'processing' as const })))
-
-      // Redirect to dashboard to see progress
+    const jobId = await uploadAndProcess()
+    if (jobId) {
       setTimeout(() => {
-        router.push(`/dashboard?job=${data.job_id}`)
+        router.push(`/dashboard?job=${jobId}`)
       }, 2000)
-    } catch (error: any) {
-      toast.error(error.message || 'Processing failed')
-      setIsProcessing(false)
     }
   }
 
@@ -147,7 +96,7 @@ export default function UploadPage() {
                 Uploaded Images ({files.length})
               </h2>
               <button
-                onClick={() => setFiles([])}
+                onClick={clearFiles}
                 className="text-sm text-gray-600 hover:text-red-600 transition-colors font-semibold"
               >
                 Clear All
@@ -191,7 +140,7 @@ export default function UploadPage() {
                   {/* Remove button */}
                   {uploadedFile.status === 'pending' && (
                     <button
-                      onClick={() => removeFile(index)}
+                      onClick={() => removeFile(uploadedFile.id)}
                       className="absolute top-2 right-2 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
                     >
                       <X className="w-4 h-4 text-white" />
@@ -211,10 +160,10 @@ export default function UploadPage() {
           <div className="text-center animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
             <button
               onClick={handleProcess}
-              disabled={isProcessing}
+              disabled={isUploading}
               className="gradient-purple-fuchsia text-white px-12 py-4 rounded-xl text-lg font-bold hover:scale-105 transition-all duration-300 shadow-2xl glow-purple-strong disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center gap-3"
             >
-              {isProcessing ? (
+              {isUploading ? (
                 <>
                   <Loader className="w-6 h-6 animate-spin" />
                   Processing {files.length} images...

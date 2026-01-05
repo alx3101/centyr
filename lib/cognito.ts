@@ -329,3 +329,41 @@ export function cognitoChangePassword(
     })
   })
 }
+
+/**
+ * OAuth Login with Social Providers
+ *
+ * Providers supportati: Google, Apple, GitHub
+ *
+ * IMPORTANTE: Richiede configurazione OAuth nel Cognito User Pool:
+ * 1. Vai su AWS Console → Cognito → User Pool
+ * 2. App integration → App client settings
+ * 3. Abilita i provider desiderati
+ * 4. Configura callback URLs:
+ *    - Allowed callback URLs: http://localhost:3000/auth/callback, https://yourdomain.com/auth/callback
+ *    - Allowed sign-out URLs: http://localhost:3000, https://yourdomain.com
+ * 5. Configura OAuth flows: Authorization code grant
+ * 6. Scopes: email, openid, profile
+ */
+export function cognitoOAuthSignIn(provider: 'Google' | 'Apple' | 'GitHub') {
+  const region = process.env.NEXT_PUBLIC_COGNITO_REGION
+  const userPoolId = process.env.NEXT_PUBLIC_COGNITO_USER_POOL_ID
+  const clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID
+  const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`
+
+  // Extract domain from user pool ID (format: region_xxxxx)
+  const domain = `${userPoolId}` // Your Cognito domain
+
+  // Cognito Hosted UI URL
+  const cognitoDomain = `https://${domain}.auth.${region}.amazoncognito.com`
+
+  const oauthUrl = `${cognitoDomain}/oauth2/authorize?` +
+    `identity_provider=${provider}&` +
+    `redirect_uri=${encodeURIComponent(redirectUri)}&` +
+    `response_type=code&` +
+    `client_id=${clientId}&` +
+    `scope=email openid profile`
+
+  // Redirect to Cognito Hosted UI
+  window.location.href = oauthUrl
+}

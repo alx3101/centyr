@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
-import { LanguageProvider } from '@/contexts/LanguageContext'
+import { AppProviders } from '@/components/providers/AppProviders'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -25,11 +25,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <script
+          async
+          src="https://js.stripe.com/v3/pricing-table.js">
+        </script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className={inter.className}>
-        <LanguageProvider>
+        <AppProviders>
           {children}
           <Toaster
             position="top-right"
@@ -58,7 +62,7 @@ export default function RootLayout({
               },
             }}
           />
-        </LanguageProvider>
+        </AppProviders>
       </body>
     </html>
   )

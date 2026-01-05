@@ -52,14 +52,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   }
 
   const value: LanguageContextType = {
-    language,
+    language: mounted ? language : 'en',
     setLanguage,
-    t: translations[language],
-  }
-
-  // Prevent hydration mismatch
-  if (!mounted) {
-    return <>{children}</>
+    t: translations[mounted ? language : 'en'],
   }
 
   return (

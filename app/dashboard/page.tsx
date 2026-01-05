@@ -1,10 +1,13 @@
 'use client'
 
 import { useState, useEffect, Suspense } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { toast } from 'react-hot-toast'
-import { Upload, Download, History, Settings, LogOut, Loader, CheckCircle, XCircle, Clock } from 'lucide-react'
+import { Upload, Download, Loader, CheckCircle, XCircle, Clock } from 'lucide-react'
+import { useAuth } from '@/contexts/AuthContext'
+import { SkeletonDashboard } from '@/components/ui/Skeleton'
+import { EmptyState } from '@/components/ui/EmptyState'
 
 interface ProcessingJob {
   job_id: string
@@ -15,40 +18,22 @@ interface ProcessingJob {
   created_at: string
 }
 
-interface User {
-  email: string
-  full_name: string
-  plan: string
-  monthly_limit: number
-  images_used_this_month: number
-}
-
 function DashboardContent() {
-  const router = useRouter()
   const searchParams = useSearchParams()
   const currentJobId = searchParams?.get('job')
+  const { user, refreshUser } = useAuth()
 
-  const [user, setUser] = useState<User | null>(null)
   const [currentJob, setCurrentJob] = useState<ProcessingJob | null>(null)
   const [recentJobs, setRecentJobs] = useState<ProcessingJob[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    loadUser()
     if (currentJobId) {
       pollJobStatus(currentJobId)
     }
     loadRecentJobs()
+    refreshUser() // Aggiorna i dati utente
   }, [currentJobId])
-
-  const loadUser = () => {
-    const userData = localStorage.getItem('user')
-    if (userData) {
-      setUser(JSON.parse(userData))
-    } else {
-      router.push('/login')
-    }
-  }
 
   const pollJobStatus = async (jobId: string) => {
     const token = localStorage.getItem('auth_token')
@@ -56,7 +41,7 @@ function DashboardContent() {
     const interval = setInterval(async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/images/status/${jobId}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/jobs/${jobId}/status`,
           {
             headers: {
               'Authorization': `Bearer ${token}`,
@@ -70,6 +55,7 @@ function DashboardContent() {
         if (data.status === 'completed') {
           clearInterval(interval)
           toast.success('Processing completed!')
+          refreshUser() // Aggiorna usage
         } else if (data.status === 'failed') {
           clearInterval(interval)
           toast.error('Processing failed')
@@ -77,7 +63,7 @@ function DashboardContent() {
       } catch (error) {
         console.error('Error polling job status:', error)
       }
-    }, 2000) // Poll every 2 seconds
+    }, 2000)
 
     return () => clearInterval(interval)
   }
@@ -86,7 +72,7 @@ function DashboardContent() {
     setIsLoading(true)
     try {
       const token = localStorage.getItem('auth_token')
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/images/jobs`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/jobs`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -116,8 +102,6 @@ function DashboardContent() {
       )
 
       const data = await response.json()
-
-      // Open download URL
       window.open(data.download_url, '_blank')
       toast.success('Download started!')
     } catch (error) {
@@ -125,88 +109,45 @@ function DashboardContent() {
     }
   }
 
-  const handleLogout = () => {
-    localStorage.removeItem('auth_token')
-    localStorage.removeItem('user')
-    router.push('/login')
-    toast.success('Logged out successfully')
-  }
-
   const usagePercentage = user
-    ? (user.images_used_this_month / user.monthly_limit) * 100
+    ? (user.subscription.usage / user.subscription.quota) * 100
     : 0
 
+  if (!user) {
+    return <SkeletonDashboard />
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-fuchsia-50">
-      {/* Sidebar */}
-      <div className="fixed left-0 top-0 h-full w-64 bg-white/80 backdrop-blur-sm border-r-2 border-purple-100 p-6 hidden md:block">
-        <Link href="/" className="text-2xl font-bold text-gradient block mb-8">
-          Centyr
-        </Link>
-
-        <nav className="space-y-2">
-          <Link
-            href="/dashboard"
-            className="flex items-center gap-3 px-4 py-3 text-gray-900 bg-purple-100 rounded-lg font-semibold"
-          >
-            <History className="w-5 h-5" />
-            Dashboard
-          </Link>
-          <Link
-            href="/upload"
-            className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-purple-50 rounded-lg transition-colors"
-          >
-            <Upload className="w-5 h-5" />
-            Upload Images
-          </Link>
-          <Link
-            href="/settings"
-            className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-purple-50 rounded-lg transition-colors"
-          >
-            <Settings className="w-5 h-5" />
-            Settings
-          </Link>
-        </nav>
-
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-colors mt-auto absolute bottom-6 left-6 right-6"
-        >
-          <LogOut className="w-5 h-5" />
-          Logout
-        </button>
-      </div>
-
-      {/* Main Content */}
-      <div className="md:ml-64 p-8">
+    <div className="py-8 px-4 md:px-8">
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2 animate-fade-in-up">
-            Welcome back, {user?.full_name || 'User'}!
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+            Welcome back, {user.username || user.email.split('@')[0]}!
           </h1>
-          <p className="text-gray-600 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+          <p className="text-gray-600">
             Here's what's happening with your images
           </p>
         </div>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-100 shadow-lg hover:shadow-xl transition-all animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-100 shadow-lg hover:shadow-xl transition-all">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-sm font-semibold text-gray-600">Plan</h3>
               <span className="px-3 py-1 gradient-purple-fuchsia text-white text-xs font-bold rounded-full">
-                {user?.plan?.toUpperCase()}
+                {user.subscription.plan.toUpperCase()}
               </span>
             </div>
-            <p className="text-3xl font-bold text-gray-900">{user?.monthly_limit}</p>
+            <p className="text-3xl font-bold text-gray-900">{user.subscription.quota}</p>
             <p className="text-sm text-gray-500">images/month</p>
           </div>
 
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-100 shadow-lg hover:shadow-xl transition-all animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-100 shadow-lg hover:shadow-xl transition-all">
             <h3 className="text-sm font-semibold text-gray-600 mb-4">Usage This Month</h3>
             <div className="flex items-end gap-2 mb-2">
-              <p className="text-3xl font-bold text-gray-900">{user?.images_used_this_month}</p>
-              <p className="text-lg text-gray-500 mb-1">/ {user?.monthly_limit}</p>
+              <p className="text-3xl font-bold text-gray-900">{user.subscription.usage}</p>
+              <p className="text-lg text-gray-500 mb-1">/ {user.subscription.quota}</p>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2">
               <div
@@ -216,13 +157,13 @@ function DashboardContent() {
             </div>
           </div>
 
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-100 shadow-lg hover:shadow-xl transition-all animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-100 shadow-lg hover:shadow-xl transition-all">
             <h3 className="text-sm font-semibold text-gray-600 mb-4">Remaining</h3>
             <p className="text-3xl font-bold text-gradient">
-              {user ? user.monthly_limit - user.images_used_this_month : 0}
+              {user.subscription.quota - user.subscription.usage}
             </p>
             <p className="text-sm text-gray-500">images left</p>
-            {user && user.monthly_limit - user.images_used_this_month < 10 && (
+            {user.subscription.quota - user.subscription.usage < 10 && (
               <Link
                 href="/pricing"
                 className="text-sm text-primary-600 hover:text-fuchsia-600 font-semibold mt-2 inline-block"
@@ -241,7 +182,7 @@ function DashboardContent() {
                 <Loader className="w-6 h-6 text-fuchsia-600 animate-spin" />
                 Processing Images...
               </h2>
-              <span className="text-sm text-gray-600">Job ID: {currentJob.job_id.slice(0, 8)}</span>
+              <span className="text-sm text-gray-600">Job ID: {currentJob.job_id?.slice(0, 8) || 'N/A'}</span>
             </div>
 
             <div className="mb-6">
@@ -267,8 +208,7 @@ function DashboardContent() {
         <div className="mb-8">
           <Link
             href="/upload"
-            className="inline-flex items-center gap-3 gradient-purple-fuchsia text-white px-8 py-4 rounded-xl font-bold hover:scale-105 transition-all duration-300 shadow-lg glow-purple animate-fade-in-up"
-            style={{ animationDelay: '0.5s' }}
+            className="inline-flex items-center gap-3 gradient-purple-fuchsia text-white px-8 py-4 rounded-xl font-bold hover:scale-105 transition-all duration-300 shadow-lg glow-purple"
           >
             <Upload className="w-6 h-6" />
             Upload New Images
@@ -276,7 +216,7 @@ function DashboardContent() {
         </div>
 
         {/* Recent Jobs */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-100 shadow-lg animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-100 shadow-lg">
           <h2 className="text-xl font-bold text-gray-900 mb-6">Recent Jobs</h2>
 
           {isLoading ? (
@@ -284,22 +224,26 @@ function DashboardContent() {
               <Loader className="w-8 h-8 text-primary-600 animate-spin mx-auto" />
             </div>
           ) : recentJobs.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-gray-500">No processing jobs yet</p>
-              <Link
-                href="/upload"
-                className="text-primary-600 hover:text-fuchsia-600 font-semibold mt-2 inline-block"
-              >
-                Upload your first images →
-              </Link>
-            </div>
+            <EmptyState
+              icon={Upload}
+              title="No processing jobs yet"
+              description="Upload your first images to get started"
+              action={
+                <Link
+                  href="/upload"
+                  className="inline-flex items-center gap-2 gradient-purple-fuchsia text-white px-6 py-3 rounded-lg font-semibold hover:scale-105 transition-all"
+                >
+                  <Upload className="w-5 h-5" />
+                  Upload Images
+                </Link>
+              }
+            />
           ) : (
             <div className="space-y-4">
-              {recentJobs.map((job, index) => (
+              {recentJobs.map((job) => (
                 <div
                   key={job.job_id}
-                  className="flex items-center justify-between p-4 border-2 border-gray-200 rounded-xl hover:border-fuchsia-300 transition-all animate-fade-in-up"
-                  style={{ animationDelay: `${0.1 * index}s` }}
+                  className="flex items-center justify-between p-4 border-2 border-gray-200 rounded-xl hover:border-fuchsia-300 transition-all"
                 >
                   <div className="flex items-center gap-4">
                     {job.status === 'completed' && (
@@ -328,15 +272,14 @@ function DashboardContent() {
 
                   <div className="flex items-center gap-4">
                     <span
-                      className={`px-3 py-1 text-xs font-bold rounded-full ${
-                        job.status === 'completed'
-                          ? 'bg-green-100 text-green-700'
-                          : job.status === 'processing'
+                      className={`px-3 py-1 text-xs font-bold rounded-full ${job.status === 'completed'
+                        ? 'bg-green-100 text-green-700'
+                        : job.status === 'processing'
                           ? 'bg-blue-100 text-blue-700'
                           : job.status === 'failed'
-                          ? 'bg-red-100 text-red-700'
-                          : 'bg-gray-100 text-gray-700'
-                      }`}
+                            ? 'bg-red-100 text-red-700'
+                            : 'bg-gray-100 text-gray-700'
+                        }`}
                     >
                       {job.status}
                     </span>
@@ -363,11 +306,7 @@ function DashboardContent() {
 
 export default function DashboardPage() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-fuchsia-50 flex items-center justify-center">
-        <Loader className="w-12 h-12 text-purple-600 animate-spin" />
-      </div>
-    }>
+    <Suspense fallback={<SkeletonDashboard />}>
       <DashboardContent />
     </Suspense>
   )

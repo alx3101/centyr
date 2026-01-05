@@ -75,6 +75,25 @@ export interface HealthCheckResponse {
   }
 }
 
+export interface PricingPlan {
+  id: string
+  name: string
+  description: string
+  price: number
+  currency: string
+  period: string
+  stripe_price_id: string | null
+  stripe_product_id: string
+  features: string[]
+  popular: boolean
+  monthly_limit: number
+  metadata: Record<string, any>
+}
+
+export interface PricingPlansResponse {
+  plans: PricingPlan[]
+}
+
 // ===========================
 // API Client Class
 // ===========================
@@ -274,6 +293,22 @@ class ApiClient {
   }
 
   // ===========================
+  // Pricing Endpoints
+  // ===========================
+
+  /**
+   * Get Pricing Plans - GET /api/v1/pricing/plans
+   *
+   * Fetches all active pricing plans from Stripe.
+   * This endpoint is public (no authentication required).
+   *
+   * @returns List of pricing plans
+   */
+  async getPricingPlans(): Promise<PricingPlansResponse> {
+    return this.request<PricingPlansResponse>('/api/v1/pricing/plans')
+  }
+
+  // ===========================
   // Billing Endpoints
   // ===========================
 
@@ -298,6 +333,9 @@ class ApiClient {
   async createCheckoutSession(request: CreateCheckoutRequest): Promise<CheckoutResponse> {
     return this.request<CheckoutResponse>('/api/v1/billing/create-checkout', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(request),
     })
   }

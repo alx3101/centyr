@@ -8,8 +8,6 @@ import DemoVideo from '@/components/marketing/DemoVideo'
 import Testimonials from '@/components/marketing/Testimonials'
 import FAQ from '@/components/marketing/FAQ'
 import FinalCTA from '@/components/marketing/FinalCTA'
-import Footer from '@/components/marketing/Footer'
-import Navbar from '@/components/marketing/Navbar'
 
 export const metadata = {
   title: 'Centyr - Align Product Photos Automatically | AI Image Alignment for E-commerce',
@@ -18,8 +16,7 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <main>
-      <Navbar />
+    <>
       <Hero />
       <ValueProposition />
       <HowItWorks />
@@ -30,7 +27,6 @@ export default function Home() {
       <Testimonials />
       <FAQ />
       <FinalCTA />
-      <Footer />
-    </main>
+    </>
   )
 }

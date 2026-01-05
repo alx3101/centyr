@@ -1,4 +1,4 @@
-// Updated User type to match new API (UserInfo from Cognito)
+// User type matches API UserInfo
 export interface User {
   user_id: string
   email: string

@@ -3,11 +3,11 @@ import { NextRequest, NextResponse } from 'next/server'
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData()
-    const image = formData.get('image') as File
+    const image = formData.get('file') as File
 
     if (!image) {
       return NextResponse.json(
-        { error: 'No image provided' },
+        { error: 'No file provided' },
         { status: 400 }
       )
     }
@@ -15,11 +15,22 @@ export async function POST(request: NextRequest) {
     // TODO: Send image to Python service for processing
     const pythonServiceUrl = process.env.PYTHON_SERVICE_URL || 'http://localhost:8000'
 
-    const processFormData = new FormData()
-    processFormData.append('file', image)
+    // Get auth token from request headers
+    const authHeader = request.headers.get('authorization')
 
-    const response = await fetch(`${pythonServiceUrl}/align`, {
+    // Convert File to Blob for proper FormData handling
+    const fileBlob = await image.arrayBuffer()
+    const processFormData = new FormData()
+    processFormData.append('file', new Blob([fileBlob], { type: image.type }), image.name)
+
+    const headers: HeadersInit = {}
+    if (authHeader) {
+      headers['Authorization'] = authHeader
+    }
+
+    const response = await fetch(`${pythonServiceUrl}/api/v1/upload`, {
       method: 'POST',
+      headers,
       body: processFormData,
     })
 
