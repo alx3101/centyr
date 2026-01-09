@@ -97,7 +97,7 @@ export default function PricingPage() {
               <div>
                 <h3 className="text-lg font-bold text-gray-900">Current Plan: {user.subscription.plan.toUpperCase()}</h3>
                 <p className="text-gray-600">
-                  {user.subscription.usage} / {user.subscription.quota} images used this month
+                  {user.subscription.usage} / {user.subscription.quota} jobs used this month
                 </p>
               </div>
               <div className="w-full md:w-64 bg-gray-200 rounded-full h-3">

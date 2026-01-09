@@ -69,8 +69,8 @@ export default function BillingPage() {
 
   if (!user) return null
 
-  const isPremium = user.subscription.plan === 'premium'
-  const usagePercentage = (user.subscription.usage / user.subscription.quota) * 100
+  const isPremium = user.subscription.plan_name === 'premium'
+  const usagePercentage = (user.subscription.current_period_uploads / user.subscription.monthly_limit) * 100
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-fuchsia-50 py-12 px-4">
@@ -105,16 +105,15 @@ export default function BillingPage() {
             <div className="flex justify-between items-center mb-2">
               <span className="text-sm font-semibold text-gray-700">Monthly Usage</span>
               <span className="text-sm font-semibold text-gray-900">
-                {user.subscription.usage} / {user.subscription.quota} images
+                {user.subscription.current_period_uploads} / {user.subscription.monthly_limit} jobs
               </span>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
               <div
-                className={`h-3 rounded-full transition-all duration-300 ${
-                  usagePercentage > 90
+                className={`h-3 rounded-full transition-all duration-300 ${usagePercentage > 90
                     ? 'bg-gradient-to-r from-red-500 to-orange-500'
                     : 'bg-gradient-to-r from-purple-600 to-fuchsia-600'
-                }`}
+                  }`}
                 style={{ width: `${Math.min(usagePercentage, 100)}%` }}
               />
             </div>
@@ -136,7 +135,7 @@ export default function BillingPage() {
                     <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center">
                       <span className="text-green-600 text-xs">✓</span>
                     </div>
-                    500 images/month
+                    500 jobs/month
                   </li>
                   <li className="flex items-center gap-2 text-gray-700">
                     <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center">
@@ -157,7 +156,7 @@ export default function BillingPage() {
                     <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center">
                       <span className="text-green-600 text-xs">✓</span>
                     </div>
-                    10 images/month
+                    10 jobs/month
                   </li>
                   <li className="flex items-center gap-2 text-gray-700">
                     <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center">

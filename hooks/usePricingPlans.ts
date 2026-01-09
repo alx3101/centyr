@@ -36,7 +36,7 @@ export function usePricingPlans() {
           period: 'month',
           stripe_price_id: null,
           stripe_product_id: 'free',
-          features: ['10 images/month', 'Standard processing', 'Email support'],
+          features: ['10 jobs/month', 'Standard processing', 'Email support'],
           popular: false,
           monthly_limit: 10,
           metadata: {}
@@ -50,7 +50,7 @@ export function usePricingPlans() {
           period: 'month',
           stripe_price_id: null,
           stripe_product_id: 'pro',
-          features: ['100 images/month', 'Advanced processing', 'Priority support', 'API access'],
+          features: ['100 jobs/month', 'Advanced processing', 'Priority support', 'API access'],
           popular: true,
           monthly_limit: 100,
           metadata: {}
@@ -64,7 +64,7 @@ export function usePricingPlans() {
           period: 'month',
           stripe_price_id: null,
           stripe_product_id: 'business',
-          features: ['500 images/month', 'Batch processing', '24/7 support', 'Custom API limits', 'Team features'],
+          features: ['500 jobs/month', 'Batch processing', '24/7 support', 'Custom API limits', 'Team features'],
           popular: false,
           monthly_limit: 500,
           metadata: {}

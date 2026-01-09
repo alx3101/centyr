@@ -220,7 +220,7 @@ export default function SettingsPage() {
               </div>
               <div className="flex justify-between py-2">
                 <span className="text-gray-600">Current Plan</span>
-                <span className="font-semibold text-gray-900">{user.subscription.plan.toUpperCase()}</span>
+                <span className="font-semibold text-gray-900">{user.subscription.plan_name.toUpperCase()}</span>
               </div>
             </div>
           </div>

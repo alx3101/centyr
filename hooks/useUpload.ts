@@ -55,7 +55,7 @@ export function useUpload() {
     setFiles([])
   }, [files])
 
-  const uploadAndProcess = async () => {
+  const uploadAndProcess = async (jobName?: string) => {
     if (files.length === 0) {
       toast.error('No files to upload')
       return null
@@ -64,40 +64,31 @@ export function useUpload() {
     setIsUploading(true)
 
     try {
-      // Upload files one at a time (new API only accepts single file)
-      const jobIds: string[] = []
+      // Create batch job with all files
+      const fileArray = files.map(f => f.file)
 
-      for (const fileData of files) {
-        // Update file status to uploading
-        setFiles((prev) =>
-          prev.map((f) =>
-            f.id === fileData.id ? { ...f, status: 'uploading' as const } : f
-          )
-        )
+      // Update all files to uploading status
+      setFiles((prev) =>
+        prev.map((f) => ({ ...f, status: 'uploading' as const }))
+      )
 
-        // Upload single file
-        const response = await api.uploadImage(fileData.file)
-        jobIds.push(response.job_id)
+      // Upload batch with job name
+      const response = await api.uploadBatch(fileArray, jobName)
 
-        // Update file status to processing
-        setFiles((prev) =>
-          prev.map((f) =>
-            f.id === fileData.id ? { ...f, status: 'processing' as const } : f
-          )
-        )
-      }
+      // Update all files to processing status
+      setFiles((prev) =>
+        prev.map((f) => ({ ...f, status: 'processing' as const }))
+      )
 
-      // Set current job to first one (for backward compatibility)
-      if (jobIds.length > 0) {
-        setCurrentJob({
-          job_id: jobIds[0],
-          status: 'processing',
-          progress: 0,
-        })
-      }
+      // Set current job
+      setCurrentJob({
+        job_id: response.job_id,
+        status: 'processing',
+        progress: 0,
+      })
 
-      toast.success('Upload started! Processing images...')
-      return jobIds[0] || null
+      toast.success(`Job "${jobName || 'Untitled'}" created! Processing ${files.length} images...`)
+      return response.job_id
     } catch (error: any) {
       toast.error(error.message || 'Upload failed')
       setFiles((prev) =>
@@ -139,6 +130,19 @@ export function useUpload() {
         return status
       } catch (error: any) {
         console.error('Error polling job status:', error)
+
+        // If job not found, mark as error and stop
+        if (error.message?.includes('404') || error.message?.includes('not found')) {
+          setFiles((prev) =>
+            prev.map((f) => ({
+              ...f,
+              status: 'error' as const,
+              error: 'Job not found',
+            }))
+          )
+          setCurrentJob(null)
+        }
+
         throw error
       }
     },

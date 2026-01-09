@@ -208,7 +208,7 @@ export const translations: Record<Language, Translations> = {
       plan: 'Plan',
       usage: 'Usage This Month',
       remaining: 'Remaining',
-      imagesPerMonth: 'images/month',
+      imagesPerMonth: 'jobs/month',
       imagesLeft: 'images left',
       upgradePlan: 'Upgrade plan →',
       processingImages: 'Processing Images...',
@@ -256,7 +256,7 @@ export const translations: Record<Language, Translations> = {
       currentPlan: 'Current Plan',
       upgrade: 'Upgrade',
       features: {
-        images: 'images/month',
+        images: 'jobs/month',
         processing: 'Processing speed',
         support: 'Support',
         api: 'API Access',

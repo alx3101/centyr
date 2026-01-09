@@ -5,7 +5,7 @@ export default function HowItWorks() {
     {
       number: '1',
       title: 'Upload',
-      description: 'Drag & drop your product images or sync directly from Shopify, WooCommerce, or any platform.',
+      description: 'Simply drag & drop your product images and start processing instantly.'
     },
     {
       number: '2',

@@ -75,8 +75,8 @@ export default function BillingPage() {
     period: plan.period
   }))
 
-  const currentPlan = user.subscription.plan
-  const usagePercentage = (user.subscription.usage / user.subscription.quota) * 100
+  const currentPlan = user.subscription.plan_name
+  const usagePercentage = (user.subscription.current_period_uploads / user.subscription.monthly_limit) * 100
 
   return (
     <div className="py-8 px-4 md:px-8">
@@ -109,13 +109,13 @@ export default function BillingPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
               <div>
                 <p className="text-sm text-gray-600 mb-1">Monthly Quota</p>
-                <p className="text-2xl font-bold text-gray-900">{user.subscription.quota}</p>
-                <p className="text-sm text-gray-500">images/month</p>
+                <p className="text-2xl font-bold text-gray-900">{user.subscription.monthly_limit}</p>
+                <p className="text-sm text-gray-500">jobs/month</p>
               </div>
 
               <div>
                 <p className="text-sm text-gray-600 mb-1">Used This Month</p>
-                <p className="text-2xl font-bold text-gray-900">{user.subscription.usage}</p>
+                <p className="text-2xl font-bold text-gray-900">{user.subscription.current_period_uploads}</p>
                 <div className="mt-2 w-full bg-gray-200 rounded-full h-2">
                   <div
                     className="gradient-purple-fuchsia h-2 rounded-full transition-all duration-500"
@@ -127,9 +127,9 @@ export default function BillingPage() {
               <div>
                 <p className="text-sm text-gray-600 mb-1">Remaining</p>
                 <p className="text-2xl font-bold text-gradient">
-                  {user.subscription.quota - user.subscription.usage}
+                  {user.subscription.monthly_limit - user.subscription.current_period_uploads}
                 </p>
-                <p className="text-sm text-gray-500">images left</p>
+                <p className="text-sm text-gray-500">jobs left</p>
               </div>
             </div>
 
@@ -184,21 +184,19 @@ export default function BillingPage() {
               <div className="flex items-center gap-3 bg-gray-100 rounded-lg p-1">
                 <button
                   onClick={() => setBillingPeriod('monthly')}
-                  className={`px-4 py-2 rounded-md font-semibold text-sm transition-all ${
-                    billingPeriod === 'monthly'
-                      ? 'bg-white text-purple-600 shadow-md'
-                      : 'text-gray-600 hover:text-gray-900'
-                  }`}
+                  className={`px-4 py-2 rounded-md font-semibold text-sm transition-all ${billingPeriod === 'monthly'
+                    ? 'bg-white text-purple-600 shadow-md'
+                    : 'text-gray-600 hover:text-gray-900'
+                    }`}
                 >
                   Monthly
                 </button>
                 <button
                   onClick={() => setBillingPeriod('yearly')}
-                  className={`px-4 py-2 rounded-md font-semibold text-sm transition-all relative ${
-                    billingPeriod === 'yearly'
-                      ? 'bg-white text-purple-600 shadow-md'
-                      : 'text-gray-600 hover:text-gray-900'
-                  }`}
+                  className={`px-4 py-2 rounded-md font-semibold text-sm transition-all relative ${billingPeriod === 'yearly'
+                    ? 'bg-white text-purple-600 shadow-md'
+                    : 'text-gray-600 hover:text-gray-900'
+                    }`}
                 >
                   Yearly
                   <span className="absolute -top-2 -right-2 bg-green-500 text-white text-xs px-2 py-0.5 rounded-full">
@@ -221,11 +219,10 @@ export default function BillingPage() {
                   return (
                     <div
                       key={plan.id}
-                      className={`bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 transition-all ${
-                        plan.popular
-                          ? 'border-fuchsia-300 shadow-xl relative'
-                          : 'border-purple-100 shadow-lg'
-                      } ${isCurrent ? 'ring-2 ring-purple-600' : ''}`}
+                      className={`bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 transition-all ${plan.popular
+                        ? 'border-fuchsia-300 shadow-xl relative'
+                        : 'border-purple-100 shadow-lg'
+                        } ${isCurrent ? 'ring-2 ring-purple-600' : ''}`}
                     >
                       {plan.popular && (
                         <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
@@ -275,13 +272,12 @@ export default function BillingPage() {
                       <button
                         onClick={() => handleUpgrade(plan.stripePriceId, plan.id)}
                         disabled={isCurrent || loadingPlanId !== null || !plan.stripePriceId}
-                        className={`w-full py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 ${
-                          isCurrent
-                            ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                            : plan.popular
+                        className={`w-full py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 ${isCurrent
+                          ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                          : plan.popular
                             ? 'gradient-purple-fuchsia text-white hover:scale-105 shadow-lg'
                             : 'border-2 border-purple-200 text-purple-700 hover:bg-purple-50'
-                        } disabled:opacity-50 disabled:cursor-not-allowed`}
+                          } disabled:opacity-50 disabled:cursor-not-allowed`}
                       >
                         {isLoading ? (
                           <>

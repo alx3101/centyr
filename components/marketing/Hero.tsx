@@ -45,11 +45,12 @@ export default function Hero() {
               <span className="inline-block w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
               Used by 1,000+ e-commerce stores
             </span>
-            <span className="hidden sm:inline">•</span>
+            <span className="hidden sm:inline">
+              {/* •</span>
             <span>Featured on Shopify App Store</span>
             <span className="hidden sm:inline">•</span>
             <span className="flex items-center gap-1">
-              <span className="text-fuchsia-500">★★★★★</span> 4.9 Rating
+              <span className="text-fuchsia-500">★★★★★</span> 4.9 Rating */}
             </span>
           </div>
 

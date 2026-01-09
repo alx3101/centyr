@@ -26,6 +26,21 @@ export interface UserInfo {
   }
 }
 
+export interface JobOutput {
+  input_s3_key: string
+  input_url: string
+  input_width: number
+  input_height: number
+  input_format: string
+  output_s3_key: string
+  output_url: string
+  output_width: number
+  output_height: number
+  output_format: string
+  status: string
+  processing_time: number
+}
+
 export interface JobResponse {
   job_id: string
   status: JobStatus
@@ -35,6 +50,10 @@ export interface JobResponse {
   output_image_url?: string | null
   error_message?: string | null
   processing_time?: number | null
+  job_name?: string
+  image_count?: number
+  batch_mode?: boolean
+  outputs?: JobOutput[]
 }
 
 export interface JobStatusResponse {
@@ -226,6 +245,63 @@ class ApiClient {
 
     if (!response.ok) {
       let errorMessage = 'Upload failed'
+      try {
+        const error = await response.json()
+        errorMessage = error.detail || error.message || errorMessage
+      } catch {
+        errorMessage = `HTTP ${response.status}: ${response.statusText}`
+      }
+      throw new Error(errorMessage)
+    }
+
+    return response.json()
+  }
+
+  /**
+   * Upload Batch - POST /api/v1/upload/batch
+   *
+   * Upload multiple images as a single batch job
+   *
+   * Requires authentication (JWT token in Authorization header)
+   * Respects subscription quota limits and max_batch_size for the plan
+   *
+   * @param files - Array of image files to process
+   * @param jobName - Optional name for the batch job
+   * @returns job_id to track the processing status
+   * @throws {Error} 400: Validation error or batch size exceeded
+   * @throws {Error} 413: File too large
+   * @throws {Error} 429: Quota exceeded
+   * @throws {Error} 503: Service unavailable
+   * @throws {Error} 500: Unexpected error
+   */
+  async uploadBatch(files: File[], jobName?: string): Promise<UploadResponse> {
+    const formData = new FormData()
+
+    // Add all files
+    files.forEach((file, index) => {
+      formData.append('files', file)
+    })
+
+    // Add job name if provided
+    if (jobName) {
+      formData.append('job_name', jobName)
+    }
+
+    const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null
+
+    const headers: Record<string, string> = {}
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`
+    }
+
+    const response = await fetch(`${this.baseURL}/api/v1/upload`, {
+      method: 'POST',
+      headers,
+      body: formData,
+    })
+
+    if (!response.ok) {
+      let errorMessage = 'Batch upload failed'
       try {
         const error = await response.json()
         errorMessage = error.detail || error.message || errorMessage

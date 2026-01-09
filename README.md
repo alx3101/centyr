@@ -114,7 +114,7 @@ const api = {
 
 ## 💳 Pricing Plans
 
-| Plan   | Price  | Images/Month |
+| Plan   | Price  | jobs/month |
 |--------|--------|--------------|
 | Free   | $0     | 100          |
 | Basic  | $19    | 1,000        |

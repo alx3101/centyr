@@ -1,16 +1,35 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { toast } from 'react-hot-toast'
 import { Upload, X, Check, Loader } from 'lucide-react'
 import { useDropzone } from 'react-dropzone'
 import { useUpload } from '@/hooks/useUpload'
+import { useAuth } from '@/contexts/AuthContext'
 
 export default function UploadPage() {
   const router = useRouter()
+  const { user } = useAuth()
   const { files, isUploading, addFiles, removeFile, clearFiles, uploadAndProcess } = useUpload()
+  const [jobName, setJobName] = useState('')
+
+  // Get max batch size from user subscription features
+  const maxBatchSize = user?.subscription?.features?.max_batch_size || 1
 
   const onDrop = (acceptedFiles: File[]) => {
+    // Check batch size limit
+    const totalFiles = files.length + acceptedFiles.length
+    if (totalFiles > maxBatchSize) {
+      toast.error(`Maximum ${maxBatchSize} images per batch. ${user?.subscription?.plan_name === 'Free' ? 'Upgrade to process more at once!' : ''}`)
+      // Only add up to the limit
+      const remainingSlots = maxBatchSize - files.length
+      if (remainingSlots > 0) {
+        addFiles(acceptedFiles.slice(0, remainingSlots))
+      }
+      return
+    }
     addFiles(acceptedFiles)
   }
 
@@ -22,7 +41,7 @@ export default function UploadPage() {
       'image/webp': ['.webp'],
     },
     maxSize: 50 * 1024 * 1024, // 50MB
-    maxFiles: 100,
+    maxFiles: maxBatchSize,
   })
 
   const handleProcess = async () => {
@@ -31,7 +50,12 @@ export default function UploadPage() {
       return
     }
 
-    const jobId = await uploadAndProcess()
+    if (!jobName.trim()) {
+      toast.error('Please enter a name for this job')
+      return
+    }
+
+    const jobId = await uploadAndProcess(jobName.trim())
     if (jobId) {
       setTimeout(() => {
         router.push(`/dashboard?job=${jobId}`)
@@ -83,10 +107,38 @@ export default function UploadPage() {
               <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full">PNG</span>
               <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full">WebP</span>
               <span className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full">Max 50MB each</span>
-              <span className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full">Up to 100 files</span>
+              <span className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full">
+                Up to {maxBatchSize} {maxBatchSize === 1 ? 'file' : 'files'} per batch
+              </span>
+              {maxBatchSize === 1 && (
+                <Link href="/pricing" className="px-3 py-1 bg-fuchsia-100 text-fuchsia-700 rounded-full font-semibold hover:bg-fuchsia-200 transition-colors">
+                  Upgrade for bulk upload ↗
+                </Link>
+              )}
             </div>
           </div>
         </div>
+
+        {/* Job Name Input */}
+        {files.length > 0 && (
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 mb-6 border-2 border-purple-100 animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
+            <label htmlFor="jobName" className="block text-sm font-semibold text-gray-700 mb-2">
+              Job Name *
+            </label>
+            <input
+              type="text"
+              id="jobName"
+              value={jobName}
+              onChange={(e) => setJobName(e.target.value)}
+              placeholder="e.g., Summer Collection 2024, Product Catalog, etc."
+              className="w-full px-4 py-3 border-2 border-purple-200 rounded-xl focus:outline-none focus:border-fuchsia-400 transition-colors"
+              maxLength={100}
+            />
+            <p className="text-xs text-gray-500 mt-2">
+              Give this batch a memorable name ({jobName.length}/100 characters)
+            </p>
+          </div>
+        )}
 
         {/* Uploaded Files Preview */}
         {files.length > 0 && (

@@ -72,7 +72,7 @@ export default function BillingSuccessPage() {
             <ul className="space-y-3 text-left max-w-md mx-auto">
               <li className="flex items-center gap-3">
                 <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
-                <span className="text-gray-700">500 images per month</span>
+                <span className="text-gray-700">500 jobs per month</span>
               </li>
               <li className="flex items-center gap-3">
                 <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
