@@ -17,14 +17,30 @@ export interface UserInfo {
   email_verified: boolean
   username: string
   subscription: {
+    plan: string
     plan_name: string
     current_period_uploads: number
     monthly_limit: number
     status: string,
     usage_percentage: number
+    features: Features;
 
   }
 }
+
+export interface Features {
+  analytics_enabled: boolean;
+  max_batch_size: number;
+  monthly_limit: number;
+  plan_id: string;
+  plan_name: string;
+  priority_queue: boolean;
+  rate_limit_per_hour: number;
+  rate_limit_per_minute: number;
+  storage_retention_days: number;
+  webhooks_enabled: boolean;
+}
+
 
 export interface JobOutput {
   input_s3_key: string

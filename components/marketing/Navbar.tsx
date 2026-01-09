@@ -2,14 +2,15 @@
 import Link from 'next/link'
 import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { User } from '@/models/user'
+import { UserInfo } from '@/lib/api'
+import { User } from '@supabase/supabase-js'
 
 export default function Navbar() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const currentJobId = searchParams?.get('job')
 
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<UserInfo | null>(null)
 
 
   useEffect(() => {

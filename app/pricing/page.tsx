@@ -71,7 +71,7 @@ export default function PricingPage() {
     features: plan.features,
     cta: plan.price === 0 ? 'Current Plan' : `Upgrade to ${plan.name}`,
     popular: plan.popular,
-    current: user?.subscription?.plan === plan.id,
+    current: user?.subscription?.plan_name === plan.id,
     disabled: user?.subscription?.plan === plan.id || plan.price === 0,
     stripePriceId: plan.stripe_price_id,
     planId: plan.id
@@ -97,13 +97,13 @@ export default function PricingPage() {
               <div>
                 <h3 className="text-lg font-bold text-gray-900">Current Plan: {user.subscription.plan.toUpperCase()}</h3>
                 <p className="text-gray-600">
-                  {user.subscription.usage} / {user.subscription.quota} jobs used this month
+                  {user.subscription.current_period_uploads} / {user.subscription.monthly_limit} jobs used this month
                 </p>
               </div>
               <div className="w-full md:w-64 bg-gray-200 rounded-full h-3">
                 <div
                   className="bg-gradient-to-r from-purple-600 to-fuchsia-600 h-3 rounded-full transition-all duration-300"
-                  style={{ width: `${(user.subscription.usage / user.subscription.quota) * 100}%` }}
+                  style={{ width: `${(user.subscription.current_period_uploads / user.subscription.monthly_limit) * 100}%` }}
                 />
               </div>
               {user.subscription.plan === 'premium' && (

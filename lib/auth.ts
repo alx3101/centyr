@@ -1,3 +1,5 @@
+import { Features } from './api';
+
 // User type matches API UserInfo
 export interface User {
   user_id: string
@@ -5,11 +7,13 @@ export interface User {
   email_verified: boolean
   username: string
   subscription: {
+    plan: string
     plan_name: string
     current_period_uploads: number
     monthly_limit: number
     status: string
     usage_percentage: number
+    features: Features;
   }
 }
 
@@ -31,14 +35,30 @@ export function getStoredUser(): User | null {
         email_verified: true,
         username: parsed.email.split('@')[0],
         subscription: {
-          plan_name: parsed.plan || 'free',
-          current_period_uploads: parsed.monthly_limit || 0,
+          plan: parsed.plan || 'free',
+          plan_name: parsed.plan_name || 'Free',
+          current_period_uploads: parsed.current_period_uploads || 0,
           monthly_limit: parsed.monthly_limit || 10,
           status: 'active',
-          usage_percentage: 50
-        },
-      }
+          usage_percentage: parsed.monthly_limit
+            ? Math.round((parsed.current_period_uploads || 0) / parsed.monthly_limit * 100)
+            : 0,
+          features: {
+            analytics_enabled: parsed.analytics_enabled ?? false,
+            max_batch_size: parsed.max_batch_size ?? 3,
+            monthly_limit: parsed.monthly_limit ?? 10,
+            plan_id: parsed.plan || 'free',
+            plan_name: parsed.plan_name || 'Free',
+            priority_queue: parsed.priority_queue ?? false,
+            rate_limit_per_hour: parsed.rate_limit_per_hour ?? 100,
+            rate_limit_per_minute: parsed.rate_limit_per_minute ?? 20,
+            storage_retention_days: parsed.storage_retention_days ?? 7,
+            webhooks_enabled: parsed.webhooks_enabled ?? false
+          }
+        }
+      };
     }
+
 
     return parsed
   } catch {
