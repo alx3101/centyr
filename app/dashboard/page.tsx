@@ -4,7 +4,7 @@ import { useState, Suspense, useMemo } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { toast } from 'react-hot-toast'
-import { Upload, Download, Loader, CheckCircle, XCircle, Clock, TrendingUp, Zap, Award, Sparkles, Activity } from 'lucide-react'
+import { Upload, Download, Loader, CheckCircle, XCircle, Clock, TrendingUp, Zap, Award, Sparkles, Activity, Filter, Image as ImageIcon } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useRecentJobs } from '@/hooks/queries'
 import { useJobStatus } from '@/hooks/useJobStatus'
@@ -22,7 +22,14 @@ interface Job {
   job_name?: string
   updated_at?: string
   output_image_url?: string
+  input_image_url?: string
   error_message?: string
+  metadata?: {
+    image_count?: number
+    batch_mode?: boolean
+    file_size?: number
+    original_filename?: string
+  }
 }
 
 interface ProcessingJob {
@@ -45,9 +52,16 @@ function DashboardContent() {
 
   const [showOnboarding, setShowOnboarding] = useState(true)
   const [showPostDownloadModal, setShowPostDownloadModal] = useState(false)
+  const [statusFilter, setStatusFilter] = useState<'all' | 'completed' | 'processing' | 'failed' | 'pending'>('all')
 
   // React Query for jobs list (cached, no duplicate calls)
   const { data: recentJobs = [], isLoading } = useRecentJobs(50) as { data: Job[], isLoading: boolean }
+
+  // Filtered jobs based on status
+  const filteredJobs = useMemo(() => {
+    if (statusFilter === 'all') return recentJobs
+    return recentJobs.filter(job => job.status === statusFilter)
+  }, [recentJobs, statusFilter])
 
   // SSE for real-time job status (replaces polling)
   const { status: currentJobStatus, isConnected } = useJobStatus(currentJobId, {
@@ -352,10 +366,52 @@ function DashboardContent() {
 
         {/* Recent Jobs */}
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-100 shadow-lg" id="recent-jobs">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-            <Clock className="w-6 h-6 text-purple-600" />
-            Recent Jobs
-          </h2>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+              <Clock className="w-6 h-6 text-purple-600" />
+              Recent Jobs
+              {filteredJobs.length !== recentJobs.length && (
+                <span className="text-sm font-normal text-gray-500">
+                  ({filteredJobs.length} of {recentJobs.length})
+                </span>
+              )}
+            </h2>
+
+            {/* Filter Buttons */}
+            {recentJobs.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {(['all', 'completed', 'processing', 'failed', 'pending'] as const).map((filter) => {
+                  const count = filter === 'all'
+                    ? recentJobs.length
+                    : recentJobs.filter(j => j.status === filter).length
+
+                  if (count === 0 && filter !== 'all') return null
+
+                  return (
+                    <button
+                      key={filter}
+                      onClick={() => setStatusFilter(filter)}
+                      className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${
+                        statusFilter === filter
+                          ? 'gradient-purple-fuchsia text-white shadow-md'
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      }`}
+                    >
+                      <span className="flex items-center gap-2">
+                        {filter === 'all' && <Filter className="w-4 h-4" />}
+                        {filter === 'completed' && <CheckCircle className="w-4 h-4" />}
+                        {filter === 'processing' && <Loader className="w-4 h-4" />}
+                        {filter === 'failed' && <XCircle className="w-4 h-4" />}
+                        {filter === 'pending' && <Clock className="w-4 h-4" />}
+                        <span className="capitalize">{filter}</span>
+                        <span className="opacity-75">({count})</span>
+                      </span>
+                    </button>
+                  )
+                })}
+              </div>
+            )}
+          </div>
 
           {isLoading ? (
             <div className="text-center py-12">
@@ -376,49 +432,94 @@ function DashboardContent() {
                 'Process multiple images in bulk with Pro plan'
               ]}
             />
+          ) : filteredJobs.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-500 font-medium">No jobs found with status: {statusFilter}</p>
+              <button
+                onClick={() => setStatusFilter('all')}
+                className="mt-4 px-4 py-2 gradient-purple-fuchsia text-white rounded-lg font-semibold hover:scale-105 transition-all"
+              >
+                Show All Jobs
+              </button>
+            </div>
           ) : (
             <div className="space-y-3">
-              {recentJobs.map((job, index) => (
+              {filteredJobs.map((job, index) => (
                 <Link
                   key={job.job_id}
                   href={`/dashboard/jobs/${job.job_id}`}
-                  className="flex items-center justify-between p-4 border-2 border-gray-200 rounded-xl hover:border-fuchsia-300 hover:bg-purple-50/50 transition-all cursor-pointer group animate-fade-in-up"
+                  className="flex items-center gap-4 p-4 border-2 border-gray-200 rounded-xl hover:border-fuchsia-300 hover:bg-purple-50/50 transition-all cursor-pointer group animate-fade-in-up"
                   style={{ animationDelay: `${index * 0.05}s` }}
                 >
-                  <div className="flex items-center gap-4">
-                    {job.status === 'completed' && (
-                      <div className="h-10 w-10 rounded-lg bg-green-100 flex items-center justify-center">
-                        <CheckCircle className="w-5 h-5 text-green-600" />
+                  {/* Thumbnail */}
+                  <div className="relative flex-shrink-0">
+                    {job.output_image_url || job.input_image_url ? (
+                      <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden bg-gray-100 shadow-md group-hover:shadow-lg transition-shadow">
+                        <img
+                          src={job.output_image_url || job.input_image_url}
+                          alt={job.job_name || 'Job thumbnail'}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement
+                            target.style.display = 'none'
+                            target.nextElementSibling?.classList.remove('hidden')
+                          }}
+                        />
+                        <div className="hidden absolute inset-0 bg-gradient-to-br from-purple-100 to-fuchsia-100 flex items-center justify-center">
+                          <ImageIcon className="w-8 h-8 text-gray-400" />
+                        </div>
+                        {/* Status indicator overlay */}
+                        <div className="absolute top-1 right-1">
+                          {job.status === 'completed' && (
+                            <div className="bg-green-500 rounded-full p-1">
+                              <CheckCircle className="w-3 h-3 text-white" />
+                            </div>
+                          )}
+                          {job.status === 'processing' && (
+                            <div className="bg-blue-500 rounded-full p-1">
+                              <Loader className="w-3 h-3 text-white animate-spin" />
+                            </div>
+                          )}
+                          {job.status === 'failed' && (
+                            <div className="bg-red-500 rounded-full p-1">
+                              <XCircle className="w-3 h-3 text-white" />
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="w-16 h-16 md:w-20 md:h-20 rounded-lg bg-gradient-to-br from-purple-100 to-fuchsia-100 flex items-center justify-center shadow-md">
+                        <ImageIcon className="w-8 h-8 text-gray-400" />
                       </div>
                     )}
-                    {job.status === 'processing' && (
-                      <div className="h-10 w-10 rounded-lg bg-blue-100 flex items-center justify-center">
-                        <Loader className="w-5 h-5 text-blue-600 animate-spin" />
-                      </div>
-                    )}
-                    {job.status === 'failed' && (
-                      <div className="h-10 w-10 rounded-lg bg-red-100 flex items-center justify-center">
-                        <XCircle className="w-5 h-5 text-red-600" />
-                      </div>
-                    )}
-                    {job.status === 'pending' && (
-                      <div className="h-10 w-10 rounded-lg bg-gray-100 flex items-center justify-center">
-                        <Clock className="w-5 h-5 text-gray-600" />
-                      </div>
-                    )}
+                  </div>
 
-                    <div>
-                      <p className="font-bold text-gray-900 group-hover:text-gradient transition-colors">
-                        {job.job_name || 'Untitled'}
-                      </p>
+                  {/* Job Info */}
+                  <div className="flex-grow min-w-0">
+                    <p className="font-bold text-gray-900 group-hover:text-gradient transition-colors truncate">
+                      {job.job_name || job.metadata?.original_filename || 'Untitled'}
+                    </p>
+                    <div className="flex items-center gap-3 mt-1 flex-wrap">
                       <p className="text-sm text-gray-500 font-medium">
                         {new Date(job.created_at).toLocaleDateString()} at{' '}
-                        {new Date(job.created_at).toLocaleTimeString()}
+                        {new Date(job.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </p>
+                      {job.metadata?.image_count && job.metadata.image_count > 1 && (
+                        <span className="flex items-center gap-1 text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded-full font-semibold">
+                          <ImageIcon className="w-3 h-3" />
+                          {job.metadata.image_count} images
+                        </span>
+                      )}
+                      {job.metadata?.batch_mode && (
+                        <span className="text-xs bg-fuchsia-100 text-fuchsia-700 px-2 py-1 rounded-full font-semibold">
+                          Batch
+                        </span>
+                      )}
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-4">
+                  {/* Status and Actions */}
+                  <div className="flex items-center gap-3 flex-shrink-0">
                     <span
                       className={`px-3 py-1 text-xs font-bold rounded-full ${
                         job.status === 'completed'
@@ -439,7 +540,7 @@ function DashboardContent() {
                           e.preventDefault()
                           handleDownload(job.job_id)
                         }}
-                        className="flex items-center gap-2 px-4 py-2 gradient-purple-fuchsia text-white rounded-lg font-bold hover:scale-105 transition-all shadow-md"
+                        className="hidden md:flex items-center gap-2 px-4 py-2 gradient-purple-fuchsia text-white rounded-lg font-bold hover:scale-105 transition-all shadow-md"
                       >
                         <Download className="w-4 h-4" />
                         Download
