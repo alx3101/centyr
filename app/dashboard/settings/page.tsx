@@ -68,26 +68,34 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="py-8 px-4 md:px-8">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-fuchsia-50 py-8 px-4 md:px-8 overflow-hidden relative">
+      {/* Background decoration */}
+      <div className="absolute top-20 right-10 w-72 h-72 bg-fuchsia-200 rounded-full filter blur-3xl opacity-20 animate-pulse pointer-events-none"></div>
+      <div className="absolute bottom-20 left-10 w-72 h-72 bg-purple-200 rounded-full filter blur-3xl opacity-20 animate-pulse pointer-events-none" style={{ animationDelay: '1s' }}></div>
+
+      <div className="max-w-4xl mx-auto relative z-10">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-            Account Settings
+          <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm mb-4 border border-purple-100">
+            <User className="w-4 h-4 text-purple-600" />
+            <span className="text-sm font-semibold text-gray-700">Account Management</span>
+          </div>
+          <h1 className="text-3xl md:text-5xl font-bold mb-3">
+            <span className="text-gradient">Account Settings</span>
           </h1>
-          <p className="text-gray-600">
+          <p className="text-lg text-gray-600">
             Manage your account details and preferences
           </p>
         </div>
 
         <div className="space-y-6">
           {/* Profile Information */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border-2 border-purple-100 shadow-lg">
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border-2 border-purple-100 shadow-lg hover:shadow-xl transition-all">
             <div className="flex items-center space-x-3 mb-6">
-              <div className="w-10 h-10 bg-gradient-to-r from-purple-100 to-fuchsia-100 rounded-full flex items-center justify-center">
-                <User className="w-5 h-5 text-purple-600" />
+              <div className="w-12 h-12 gradient-purple-fuchsia rounded-xl flex items-center justify-center shadow-md">
+                <User className="w-6 h-6 text-white" />
               </div>
-              <h2 className="text-xl font-bold text-gray-900">Profile Information</h2>
+              <h2 className="text-2xl font-bold text-gray-900">Profile Information</h2>
             </div>
 
             <form onSubmit={handleUpdateProfile} className="space-y-4">
@@ -131,7 +139,7 @@ export default function SettingsPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="flex items-center gap-2 px-6 py-3 gradient-purple-fuchsia text-white rounded-lg font-semibold hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center gap-2 px-6 py-3 gradient-purple-fuchsia text-white rounded-xl font-bold hover:scale-105 transition-all duration-300 shadow-lg glow-purple disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Save size={18} />
                 {isLoading ? 'Saving...' : 'Save Changes'}
@@ -140,12 +148,12 @@ export default function SettingsPage() {
           </div>
 
           {/* Change Password */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border-2 border-purple-100 shadow-lg">
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border-2 border-purple-100 shadow-lg hover:shadow-xl transition-all">
             <div className="flex items-center space-x-3 mb-6">
-              <div className="w-10 h-10 bg-gradient-to-r from-purple-100 to-fuchsia-100 rounded-full flex items-center justify-center">
-                <Lock className="w-5 h-5 text-purple-600" />
+              <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl flex items-center justify-center shadow-md">
+                <Lock className="w-6 h-6 text-white" />
               </div>
-              <h2 className="text-xl font-bold text-gray-900">Change Password</h2>
+              <h2 className="text-2xl font-bold text-gray-900">Change Password</h2>
             </div>
 
             <form onSubmit={handleChangePassword} className="space-y-4">
@@ -195,7 +203,7 @@ export default function SettingsPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="flex items-center gap-2 px-6 py-3 gradient-purple-fuchsia text-white rounded-lg font-semibold hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center gap-2 px-6 py-3 gradient-purple-fuchsia text-white rounded-xl font-bold hover:scale-105 transition-all duration-300 shadow-lg glow-purple disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Lock size={18} />
                 {isLoading ? 'Changing...' : 'Change Password'}
@@ -204,23 +212,28 @@ export default function SettingsPage() {
           </div>
 
           {/* Account Information */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border-2 border-purple-100 shadow-lg">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">Account Information</h2>
-
-            <div className="space-y-3 text-sm">
-              <div className="flex justify-between py-2 border-b border-gray-100">
-                <span className="text-gray-600">User ID</span>
-                <span className="font-mono text-gray-900">{user.user_id}</span>
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border-2 border-purple-100 shadow-lg hover:shadow-xl transition-all">
+            <div className="flex items-center space-x-3 mb-6">
+              <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-md">
+                <User className="w-6 h-6 text-white" />
               </div>
-              <div className="flex justify-between py-2 border-b border-gray-100">
-                <span className="text-gray-600">Account Status</span>
-                <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full">
+              <h2 className="text-2xl font-bold text-gray-900">Account Information</h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="bg-gradient-to-br from-purple-50 to-fuchsia-50 rounded-xl p-4 border border-purple-100">
+                <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">User ID</p>
+                <p className="font-mono text-sm text-gray-900 break-all">{user.user_id}</p>
+              </div>
+              <div className="bg-gradient-to-br from-purple-50 to-fuchsia-50 rounded-xl p-4 border border-purple-100">
+                <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">Account Status</p>
+                <span className="inline-flex px-3 py-1 bg-green-500 text-white text-xs font-bold rounded-full shadow-sm">
                   {user.subscription.status}
                 </span>
               </div>
-              <div className="flex justify-between py-2">
-                <span className="text-gray-600">Current Plan</span>
-                <span className="font-semibold text-gray-900">{user.subscription.plan_name.toUpperCase()}</span>
+              <div className="bg-gradient-to-br from-purple-50 to-fuchsia-50 rounded-xl p-4 border border-purple-100">
+                <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">Current Plan</p>
+                <p className="text-lg font-bold text-gradient">{user.subscription.plan_name.toUpperCase()}</p>
               </div>
             </div>
           </div>

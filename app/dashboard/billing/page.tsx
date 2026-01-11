@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
 import { usePricingPlans } from '@/hooks/usePricingPlans'
 import Link from 'next/link'
-import { CreditCard, Calendar, ExternalLink, AlertCircle, Loader } from 'lucide-react'
+import { CreditCard, Calendar, ExternalLink, AlertCircle, Loader, Sparkles, Zap, TrendingUp } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { api } from '@/lib/api'
 
@@ -79,57 +79,80 @@ export default function BillingPage() {
   const usagePercentage = (user.subscription.current_period_uploads / user.subscription.monthly_limit) * 100
 
   return (
-    <div className="py-8 px-4 md:px-8">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-fuchsia-50 py-8 px-4 md:px-8 overflow-hidden relative">
+      {/* Background decoration */}
+      <div className="absolute top-20 right-10 w-72 h-72 bg-fuchsia-200 rounded-full filter blur-3xl opacity-20 animate-pulse pointer-events-none"></div>
+      <div className="absolute bottom-20 left-10 w-72 h-72 bg-purple-200 rounded-full filter blur-3xl opacity-20 animate-pulse pointer-events-none" style={{ animationDelay: '1s' }}></div>
+
+      <div className="max-w-6xl mx-auto relative z-10">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-            Billing & Subscription
+          <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm mb-4 border border-purple-100">
+            <Sparkles className="w-4 h-4 text-purple-600" />
+            <span className="text-sm font-semibold text-gray-700">Subscription Management</span>
+          </div>
+          <h1 className="text-3xl md:text-5xl font-bold mb-3">
+            <span className="text-gradient">Billing & Subscription</span>
           </h1>
-          <p className="text-gray-600">
+          <p className="text-lg text-gray-600">
             Manage your subscription and billing information
           </p>
         </div>
 
         <div className="space-y-6">
           {/* Current Subscription Card */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border-2 border-purple-100 shadow-lg">
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border-2 border-purple-100 shadow-lg hover:shadow-xl transition-all">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-purple-100 to-fuchsia-100 rounded-full flex items-center justify-center">
-                  <CreditCard className="w-5 h-5 text-purple-600" />
+                <div className="w-12 h-12 gradient-purple-fuchsia rounded-xl flex items-center justify-center shadow-md">
+                  <CreditCard className="w-6 h-6 text-white" />
                 </div>
-                <h2 className="text-xl font-bold text-gray-900">Current Subscription</h2>
+                <h2 className="text-2xl font-bold text-gray-900">Current Subscription</h2>
               </div>
-              <span className="px-4 py-2 gradient-purple-fuchsia text-white text-sm font-bold rounded-full">
+              <span className="px-5 py-2 gradient-purple-fuchsia text-white text-sm font-bold rounded-full shadow-lg glow-purple">
                 {currentPlan.toUpperCase()}
               </span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-              <div>
-                <p className="text-sm text-gray-600 mb-1">Monthly Quota</p>
-                <p className="text-2xl font-bold text-gray-900">{user.subscription.monthly_limit}</p>
-                <p className="text-sm text-gray-500">jobs/month</p>
+              <div className="bg-gradient-to-br from-purple-50 to-fuchsia-50 rounded-xl p-5 border border-purple-100">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-purple-500 to-fuchsia-500 flex items-center justify-center shadow-md">
+                    <TrendingUp className="w-5 h-5 text-white" />
+                  </div>
+                  <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">Monthly Quota</p>
+                </div>
+                <p className="text-3xl font-bold text-gray-900">{user.subscription.monthly_limit}</p>
+                <p className="text-sm text-gray-500 mt-1">jobs/month</p>
               </div>
 
-              <div>
-                <p className="text-sm text-gray-600 mb-1">Used This Month</p>
-                <p className="text-2xl font-bold text-gray-900">{user.subscription.current_period_uploads}</p>
-                <div className="mt-2 w-full bg-gray-200 rounded-full h-2">
+              <div className="bg-gradient-to-br from-purple-50 to-fuchsia-50 rounded-xl p-5 border border-purple-100">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center shadow-md">
+                    <Zap className="w-5 h-5 text-white" />
+                  </div>
+                  <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">Used This Month</p>
+                </div>
+                <p className="text-3xl font-bold text-gray-900">{user.subscription.current_period_uploads}</p>
+                <div className="mt-3 w-full bg-gray-200 rounded-full h-2.5">
                   <div
-                    className="gradient-purple-fuchsia h-2 rounded-full transition-all duration-500"
+                    className="gradient-purple-fuchsia h-2.5 rounded-full transition-all duration-500"
                     style={{ width: `${Math.min(usagePercentage, 100)}%` }}
                   ></div>
                 </div>
               </div>
 
-              <div>
-                <p className="text-sm text-gray-600 mb-1">Remaining</p>
-                <p className="text-2xl font-bold text-gradient">
+              <div className="bg-gradient-to-br from-purple-50 to-fuchsia-50 rounded-xl p-5 border border-purple-100">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center shadow-md">
+                    <Sparkles className="w-5 h-5 text-white" />
+                  </div>
+                  <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">Remaining</p>
+                </div>
+                <p className="text-3xl font-bold text-gradient">
                   {user.subscription.monthly_limit - user.subscription.current_period_uploads}
                 </p>
-                <p className="text-sm text-gray-500">jobs left</p>
+                <p className="text-sm text-gray-500 mt-1">jobs left</p>
               </div>
             </div>
 
@@ -137,7 +160,7 @@ export default function BillingPage() {
               <button
                 onClick={handleManageBilling}
                 disabled={isLoadingPortal}
-                className="flex items-center gap-2 px-6 py-3 border-2 border-purple-200 text-purple-700 rounded-lg font-semibold hover:bg-purple-50 transition-all disabled:opacity-50"
+                className="flex items-center gap-2 px-6 py-3 border-2 border-purple-300 text-purple-700 rounded-xl font-bold hover:bg-purple-50 hover:scale-105 transition-all duration-300 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoadingPortal ? (
                   <>
@@ -156,18 +179,20 @@ export default function BillingPage() {
 
           {/* Usage Warning */}
           {usagePercentage >= 80 && (
-            <div className="bg-orange-50 border-2 border-orange-200 rounded-2xl p-6 flex items-start gap-4">
-              <AlertCircle className="w-6 h-6 text-orange-600 flex-shrink-0 mt-1" />
+            <div className="bg-gradient-to-r from-orange-50 to-amber-50 border-2 border-orange-300 rounded-2xl p-6 flex items-start gap-4 shadow-lg animate-fade-in-up">
+              <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-amber-500 rounded-xl flex items-center justify-center flex-shrink-0 shadow-md">
+                <AlertCircle className="w-6 h-6 text-white" />
+              </div>
               <div>
-                <h3 className="font-bold text-orange-900 mb-1">
+                <h3 className="text-xl font-bold text-orange-900 mb-2">
                   You're running low on credits
                 </h3>
-                <p className="text-orange-700 text-sm mb-3">
+                <p className="text-orange-700 mb-3">
                   You've used {Math.round(usagePercentage)}% of your monthly quota. Consider upgrading to avoid interruptions.
                 </p>
                 <Link
                   href="#plans"
-                  className="text-sm font-semibold text-orange-600 hover:text-orange-700 underline"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-orange-600 text-white font-bold rounded-lg hover:bg-orange-700 hover:scale-105 transition-all duration-300 shadow-md"
                 >
                   View upgrade options →
                 </Link>
@@ -272,11 +297,11 @@ export default function BillingPage() {
                       <button
                         onClick={() => handleUpgrade(plan.stripePriceId, plan.id)}
                         disabled={isCurrent || loadingPlanId !== null || !plan.stripePriceId}
-                        className={`w-full py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 ${isCurrent
+                        className={`w-full py-3 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-2 ${isCurrent
                           ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                           : plan.popular
-                            ? 'gradient-purple-fuchsia text-white hover:scale-105 shadow-lg'
-                            : 'border-2 border-purple-200 text-purple-700 hover:bg-purple-50'
+                            ? 'gradient-purple-fuchsia text-white hover:scale-105 shadow-lg glow-purple'
+                            : 'border-2 border-purple-300 text-purple-700 hover:bg-purple-50 hover:scale-105 shadow-md'
                           } disabled:opacity-50 disabled:cursor-not-allowed`}
                       >
                         {isLoading ? (
@@ -298,18 +323,20 @@ export default function BillingPage() {
           </div>
 
           {/* Billing History (Placeholder) */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border-2 border-purple-100 shadow-lg">
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border-2 border-purple-100 shadow-lg hover:shadow-xl transition-all">
             <div className="flex items-center space-x-3 mb-6">
-              <div className="w-10 h-10 bg-gradient-to-r from-purple-100 to-fuchsia-100 rounded-full flex items-center justify-center">
-                <Calendar className="w-5 h-5 text-purple-600" />
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center shadow-md">
+                <Calendar className="w-6 h-6 text-white" />
               </div>
-              <h2 className="text-xl font-bold text-gray-900">Billing History</h2>
+              <h2 className="text-2xl font-bold text-gray-900">Billing History</h2>
             </div>
 
             <div className="text-center py-12">
-              <Calendar className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-600 mb-2">No billing history yet</p>
-              <p className="text-sm text-gray-500">
+              <div className="w-20 h-20 bg-gradient-to-br from-purple-100 to-fuchsia-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Calendar className="w-10 h-10 text-purple-600" />
+              </div>
+              <p className="text-lg font-semibold text-gray-700 mb-2">No billing history yet</p>
+              <p className="text-gray-500">
                 Your invoices and payment history will appear here
               </p>
             </div>
