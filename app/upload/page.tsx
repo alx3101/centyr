@@ -71,7 +71,7 @@ export default function UploadPage() {
 
       <div className="max-w-5xl mx-auto relative z-10">
         {/* Header */}
-        <div className="text-center mb-12 animate-fade-in-up">
+        <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm mb-4 border border-purple-100">
             <Sparkles className="w-4 h-4 text-purple-600" />
             <span className="text-sm font-semibold text-gray-700">AI-Powered Processing</span>
@@ -95,9 +95,7 @@ export default function UploadPage() {
               ? 'border-fuchsia-500 bg-fuchsia-50 scale-105'
               : 'border-purple-300 hover:border-fuchsia-400 hover:shadow-lg'
             }
-            animate-fade-in-up
           `}
-          style={{ animationDelay: '0.1s' }}
         >
           <input {...getInputProps()} />
           <div className="flex flex-col items-center justify-center text-center">
