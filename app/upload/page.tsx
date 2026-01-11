@@ -241,21 +241,21 @@ export default function UploadPage() {
 
         {/* Info Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-          <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-100 text-center hover:shadow-xl hover:scale-105 transition-all duration-300 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+          <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-100 text-center hover:shadow-xl hover:scale-105 transition-all duration-300">
             <div className="w-16 h-16 mx-auto mb-4 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
               <Zap className="w-8 h-8 text-white" />
             </div>
             <h3 className="font-bold text-gray-900 mb-2 text-lg">Lightning Fast</h3>
             <p className="text-sm text-gray-600">~3 seconds per image with our optimized AI</p>
           </div>
-          <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-100 text-center hover:shadow-xl hover:scale-105 transition-all duration-300 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+          <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-100 text-center hover:shadow-xl hover:scale-105 transition-all duration-300">
             <div className="w-16 h-16 mx-auto mb-4 rounded-xl gradient-purple-fuchsia flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
               <Sparkles className="w-8 h-8 text-white" />
             </div>
             <h3 className="font-bold text-gray-900 mb-2 text-lg">Pixel Perfect</h3>
             <p className="text-sm text-gray-600">AI-powered precision alignment every time</p>
           </div>
-          <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-100 text-center hover:shadow-xl hover:scale-105 transition-all duration-300 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
+          <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-100 text-center hover:shadow-xl hover:scale-105 transition-all duration-300">
             <div className="w-16 h-16 mx-auto mb-4 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
               <Shield className="w-8 h-8 text-white" />
             </div>
