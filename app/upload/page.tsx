@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { toast } from 'react-hot-toast'
-import { Upload, X, Check, Loader } from 'lucide-react'
+import { Upload, X, Check, Loader, Sparkles, Zap, Shield } from 'lucide-react'
 import { useDropzone } from 'react-dropzone'
 import { useUpload } from '@/hooks/useUpload'
 import { useAuth } from '@/contexts/AuthContext'
@@ -64,12 +64,20 @@ export default function UploadPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-fuchsia-50 py-12 px-4">
-      <div className="max-w-5xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-fuchsia-50 py-12 px-4 overflow-hidden relative">
+      {/* Background decoration */}
+      <div className="absolute top-20 right-10 w-72 h-72 bg-fuchsia-200 rounded-full filter blur-3xl opacity-20 animate-pulse pointer-events-none"></div>
+      <div className="absolute bottom-20 left-10 w-72 h-72 bg-purple-200 rounded-full filter blur-3xl opacity-20 animate-pulse pointer-events-none" style={{ animationDelay: '1s' }}></div>
+
+      <div className="max-w-5xl mx-auto relative z-10">
         {/* Header */}
         <div className="text-center mb-12 animate-fade-in-up">
+          <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm mb-4 border border-purple-100">
+            <Sparkles className="w-4 h-4 text-purple-600" />
+            <span className="text-sm font-semibold text-gray-700">AI-Powered Processing</span>
+          </div>
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Upload Your Product Images
+            Upload Your <span className="text-gradient">Product Images</span>
           </h1>
           <p className="text-xl text-gray-600">
             Drag & drop your images and let our AI align them perfectly
@@ -235,20 +243,26 @@ export default function UploadPage() {
 
         {/* Info Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-          <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border-2 border-purple-100 text-center animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-            <div className="text-4xl mb-3">⚡</div>
-            <h3 className="font-bold text-gray-900 mb-2">Lightning Fast</h3>
-            <p className="text-sm text-gray-600">~3 seconds per image</p>
+          <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-100 text-center hover:shadow-xl hover:scale-105 transition-all duration-300 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+            <div className="w-16 h-16 mx-auto mb-4 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+              <Zap className="w-8 h-8 text-white" />
+            </div>
+            <h3 className="font-bold text-gray-900 mb-2 text-lg">Lightning Fast</h3>
+            <p className="text-sm text-gray-600">~3 seconds per image with our optimized AI</p>
           </div>
-          <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border-2 border-purple-100 text-center animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
-            <div className="text-4xl mb-3">🎯</div>
-            <h3 className="font-bold text-gray-900 mb-2">Pixel Perfect</h3>
-            <p className="text-sm text-gray-600">AI-powered alignment</p>
+          <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-100 text-center hover:shadow-xl hover:scale-105 transition-all duration-300 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+            <div className="w-16 h-16 mx-auto mb-4 rounded-xl gradient-purple-fuchsia flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+              <Sparkles className="w-8 h-8 text-white" />
+            </div>
+            <h3 className="font-bold text-gray-900 mb-2 text-lg">Pixel Perfect</h3>
+            <p className="text-sm text-gray-600">AI-powered precision alignment every time</p>
           </div>
-          <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border-2 border-purple-100 text-center animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
-            <div className="text-4xl mb-3">🔒</div>
-            <h3 className="font-bold text-gray-900 mb-2">Secure & Private</h3>
-            <p className="text-sm text-gray-600">Encrypted & deleted after 30 days</p>
+          <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-100 text-center hover:shadow-xl hover:scale-105 transition-all duration-300 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
+            <div className="w-16 h-16 mx-auto mb-4 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+              <Shield className="w-8 h-8 text-white" />
+            </div>
+            <h3 className="font-bold text-gray-900 mb-2 text-lg">Secure & Private</h3>
+            <p className="text-sm text-gray-600">End-to-end encrypted, auto-deleted after 30 days</p>
           </div>
         </div>
       </div>
