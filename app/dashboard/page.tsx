@@ -1,16 +1,19 @@
 'use client'
 
-import { useState, useEffect, Suspense } from 'react'
+import { useState, Suspense, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { toast } from 'react-hot-toast'
-import { Upload, Download, Loader, CheckCircle, XCircle, Clock, ImageIcon } from 'lucide-react'
+import { Upload, Download, Loader, CheckCircle, XCircle, Clock } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
+import { useRecentJobs } from '@/hooks/queries'
+import { useJobStatus } from '@/hooks/useJobStatus'
 import { SkeletonDashboard } from '@/components/ui/Skeleton'
 import EmptyState from '@/components/EmptyState'
 import OnboardingChecklist from '@/components/OnboardingChecklist'
 import PostDownloadModal from '@/components/PostDownloadModal'
 import QuotaWarningBanner from '@/components/QuotaWarningBanner'
+import { useQueryClient } from '@tanstack/react-query'
 
 interface ProcessingJob {
   job_id: string
@@ -28,12 +31,33 @@ function DashboardContent() {
   const searchParams = useSearchParams()
   const currentJobId = searchParams?.get('job')
   const { user, refreshUser } = useAuth()
+  const queryClient = useQueryClient()
 
-  const [currentJob, setCurrentJob] = useState<ProcessingJob | null>(null)
-  const [recentJobs, setRecentJobs] = useState<ProcessingJob[]>([])
-  const [isLoading, setIsLoading] = useState(true)
   const [showOnboarding, setShowOnboarding] = useState(true)
   const [showPostDownloadModal, setShowPostDownloadModal] = useState(false)
+
+  // React Query for jobs list (cached, no duplicate calls)
+  const { data: recentJobs = [], isLoading } = useRecentJobs(50)
+
+  // SSE for real-time job status (replaces polling)
+  const { status: currentJobStatus, isConnected } = useJobStatus(currentJobId, {
+    onComplete: async (data) => {
+      // Refresh user data to update usage
+      await refreshUser()
+
+      // Invalidate and refetch jobs list
+      queryClient.invalidateQueries({ queryKey: ['jobs', 'recent'] })
+
+      // Remove job query param from URL
+      if (data.status === 'completed') {
+        window.history.replaceState({}, '', '/dashboard')
+      }
+    },
+    onError: (error) => {
+      console.error('[Dashboard] SSE error:', error)
+      // Don't show toast, already handled in hook
+    }
+  })
 
   // Onboarding checklist items
   const checklistItems = [
@@ -68,98 +92,6 @@ function DashboardContent() {
       }
     }
   ]
-
-
-  useEffect(() => {
-    if (currentJobId) {
-      pollJobStatus(currentJobId)
-    }
-    loadRecentJobs()
-    refreshUser()
-  }, [currentJobId])
-
-  const pollJobStatus = async (jobId: string) => {
-    const token = localStorage.getItem('auth_token')
-    let pollCount = 0
-    const MAX_POLL_ATTEMPTS = 300 // Max 5 minutes at 5s interval (300 * 5s = 1500s = 25 min)
-
-    const interval = setInterval(async () => {
-      pollCount++
-
-      // Stop polling after max attempts
-      if (pollCount > MAX_POLL_ATTEMPTS) {
-        console.log('Max polling attempts reached, stopping')
-        clearInterval(interval)
-        toast.error('Job processing is taking longer than expected')
-        return
-      }
-
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/jobs/${jobId}/status`,
-          {
-            headers: {
-              'Authorization': `Bearer ${token}`,
-            },
-          }
-        )
-
-        // If job not found (404) or any error, stop polling
-        if (!response.ok) {
-          if (response.status === 404) {
-            console.log('Job not found, stopping polling')
-            clearInterval(interval)
-            // Remove job query param from URL
-            window.history.replaceState({}, '', '/dashboard')
-            return
-          }
-          // For other errors (500, 429, etc), also stop polling to avoid spam
-          console.error(`Error ${response.status}, stopping polling`)
-          clearInterval(interval)
-          return
-        }
-
-        const data = await response.json()
-        setCurrentJob(data)
-
-        if (data.status === 'completed') {
-          clearInterval(interval)
-          toast.success('Processing completed!')
-          refreshUser() // Aggiorna usage
-        } else if (data.status === 'failed') {
-          clearInterval(interval)
-          toast.error('Processing failed')
-        }
-      } catch (error) {
-        console.error('Error polling job status:', error)
-        // Stop polling on network errors too
-        clearInterval(interval)
-      }
-    }, 5000) // Increased from 2s to 5s to reduce API calls
-
-    return () => clearInterval(interval)
-  }
-
-  const loadRecentJobs = async () => {
-    setIsLoading(true)
-    try {
-      const token = localStorage.getItem('auth_token')
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/jobs`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      })
-
-      if (response.ok) {
-        const data = await response.json()
-        setRecentJobs(data.jobs || [])
-      }
-    } catch (error) {
-      console.error('Error loading jobs:', error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
 
   const handleDownload = async (jobId: string) => {
     try {
@@ -219,6 +151,17 @@ function DashboardContent() {
   if (!user) {
     return <SkeletonDashboard />
   }
+
+  // Convert SSE status to ProcessingJob format if exists
+  const currentJob: ProcessingJob | null = currentJobStatus && currentJobId ? {
+    job_id: currentJobId,
+    status: currentJobStatus.status,
+    progress: currentJobStatus.progress,
+    processed_count: 0,
+    total_count: 1,
+    created_at: new Date().toISOString(),
+    job_name: undefined
+  } : null
 
   return (
     <div className="py-8 px-4 md:px-8">
@@ -292,20 +235,28 @@ function DashboardContent() {
           />
         )}
 
-        {/* Current Processing Job */}
+        {/* Current Processing Job (SSE real-time) */}
         {currentJob && currentJob.status !== 'completed' && (
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border-2 border-fuchsia-300 shadow-xl mb-8 glow-purple animate-scale-in">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
                 <Loader className="w-6 h-6 text-fuchsia-600 animate-spin" />
-                {currentJob.job_name || 'Processing...'}
+                {currentJobStatus?.message || 'Processing...'}
               </h2>
-              <span className="text-sm text-gray-600">Job ID: {currentJob.job_id?.slice(0, 8) || 'N/A'}</span>
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-600">Job ID: {currentJob.job_id?.slice(0, 8) || 'N/A'}</span>
+                {isConnected && (
+                  <span className="flex items-center gap-1 text-xs text-green-600">
+                    <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                    Live
+                  </span>
+                )}
+              </div>
             </div>
 
             <div className="mb-6">
               <div className="flex justify-between text-sm text-gray-600 mb-2">
-                <span>{currentJob.processed_count || 0} / {currentJob.total_count || currentJob.image_count || 1} images</span>
+                <span>{currentJobStatus?.message || 'Processing...'}</span>
                 <span>{currentJob.progress || 0}%</span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-4">
@@ -316,8 +267,8 @@ function DashboardContent() {
               </div>
             </div>
 
-            <p className="text-gray-600">
-              Estimated time remaining: ~{Math.max(0, ((currentJob.total_count || currentJob.image_count || 1) - (currentJob.processed_count || 0)) * 3)} seconds
+            <p className="text-sm text-gray-500">
+              Real-time updates via Server-Sent Events • No polling required
             </p>
           </div>
         )}

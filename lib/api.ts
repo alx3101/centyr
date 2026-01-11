@@ -496,12 +496,16 @@ class ApiClient {
   }
 
   /**
-   * @deprecated Use getJobDetails() instead (endpoint not in new API)
+   * Get User Jobs - GET /api/v1/jobs
+   *
+   * Get all jobs for the current user
+   * Returns a list of jobs ordered by creation date (most recent first)
+   *
+   * @param limit - Maximum number of jobs to return (default: 50)
+   * @returns List of user jobs with metadata
    */
-  async getJobs() {
-    // This endpoint doesn't exist in the new API
-    // You may need to implement pagination or list endpoint
-    throw new Error('getJobs() is deprecated and not available in new API')
+  async getJobs(limit: number = 50): Promise<{ jobs: any[]; count: number }> {
+    return this.request<{ jobs: any[]; count: number }>(`/api/v1/jobs?limit=${limit}`)
   }
 
   /**
