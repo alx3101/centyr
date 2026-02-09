@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { api, JobResponse, JobStatus } from '@/lib/api'
 import { AuthGuard } from '@/components/guards/AuthGuard'
+import { useConfirm } from '@/components/ui/ConfirmModal'
 import { ArrowLeft, Download, Trash2, Clock, CheckCircle, XCircle, Loader, Image as ImageIcon, Zap, Info, Upload } from 'lucide-react'
 
 export default function JobDetailPage() {
@@ -19,12 +20,14 @@ export default function JobDetailPage() {
 function JobDetailContent() {
   const params = useParams()
   const router = useRouter()
+  const confirm = useConfirm()
   const jobId = params.jobId as string
 
   const [job, setJob] = useState<JobResponse | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [isDownloading, setIsDownloading] = useState(false)
+  const [hasAnimated, setHasAnimated] = useState(false)
 
   useEffect(() => {
     const fetchJobDetails = async () => {
@@ -42,9 +45,16 @@ function JobDetailContent() {
     }
 
     if (jobId) {
-      fetchJobDetails()
+      fetchJobDetails().then(() => {
+        // Trigger animation only on first load
+        if (!hasAnimated) {
+          setHasAnimated(true)
+        }
+      })
     }
-  }, [jobId])
+  }, [jobId]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const [downloadingIndex, setDownloadingIndex] = useState<number | null>(null)
 
   const handleDownload = async () => {
     if (!job) return
@@ -95,8 +105,42 @@ function JobDetailContent() {
     }
   }
 
+  const handleSingleImageDownload = async (imageUrl: string, index: number) => {
+    try {
+      setDownloadingIndex(index)
+
+      const response = await fetch(imageUrl)
+      if (!response.ok) {
+        throw new Error('Download failed')
+      }
+
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `processed-image-${index + 1}.jpg`
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      window.URL.revokeObjectURL(url)
+    } catch (err) {
+      console.error('Download failed:', err)
+      alert('Failed to download image')
+    } finally {
+      setDownloadingIndex(null)
+    }
+  }
+
   const handleDelete = async () => {
-    if (!confirm('Are you sure you want to delete this job?')) return
+    const confirmed = await confirm({
+      title: 'Elimina job',
+      message: 'Sei sicuro di voler eliminare questo job? Questa azione non può essere annullata.',
+      confirmText: 'Sì, elimina',
+      cancelText: 'Annulla',
+      variant: 'destructive'
+    })
+
+    if (!confirmed) return
 
     try {
       await api.deleteJob(jobId)
@@ -186,6 +230,10 @@ function JobDetailContent() {
 
   const statusConfig = getStatusConfig(job.status)
 
+  // Animation class - only on first load to prevent flash on re-renders
+  const animateClass = hasAnimated ? '' : 'animate-fade-in-up'
+  const animateScaleClass = hasAnimated ? '' : 'animate-scale-in'
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-fuchsia-50 py-8 px-4 md:px-8 overflow-hidden relative">
       {/* Background decoration */}
@@ -204,7 +252,7 @@ function JobDetailContent() {
         </nav>
 
         {/* Header Card */}
-        <div className="bg-white/80 backdrop-blur-sm border-2 border-purple-100 rounded-2xl p-6 mb-6 shadow-lg animate-fade-in-up">
+        <div className={`bg-white/80 backdrop-blur-sm border-2 border-purple-100 rounded-2xl p-6 mb-6 shadow-lg ${animateClass}`}>
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
             <div className="flex-grow">
               <div className="flex items-center gap-3 mb-3">
@@ -259,7 +307,7 @@ function JobDetailContent() {
 
         {/* Status Info Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <div className="bg-white/80 backdrop-blur-sm border-2 border-purple-100 rounded-2xl p-5 shadow-lg hover:shadow-xl transition-all animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+          <div className={`bg-white/80 backdrop-blur-sm border-2 border-purple-100 rounded-2xl p-5 shadow-lg hover:shadow-xl transition-all ${animateClass}`} style={{ animationDelay: '0.1s' }}>
             <div className="flex items-center gap-3 mb-2">
               <div className="h-10 w-10 rounded-lg gradient-purple-fuchsia flex items-center justify-center shadow-md">
                 <Clock className="w-5 h-5 text-white" />
@@ -270,7 +318,7 @@ function JobDetailContent() {
             <p className="text-xs text-gray-500 mt-1">{new Date(job.created_at).toLocaleTimeString()}</p>
           </div>
 
-          <div className="bg-white/80 backdrop-blur-sm border-2 border-purple-100 rounded-2xl p-5 shadow-lg hover:shadow-xl transition-all animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
+          <div className={`bg-white/80 backdrop-blur-sm border-2 border-purple-100 rounded-2xl p-5 shadow-lg hover:shadow-xl transition-all ${animateClass}`} style={{ animationDelay: '0.15s' }}>
             <div className="flex items-center gap-3 mb-2">
               <div className="h-10 w-10 rounded-lg gradient-purple-fuchsia flex items-center justify-center shadow-md">
                 <Clock className="w-5 h-5 text-white" />
@@ -282,7 +330,7 @@ function JobDetailContent() {
           </div>
 
           {job.processing_time && (
-            <div className="bg-white/80 backdrop-blur-sm border-2 border-purple-100 rounded-2xl p-5 shadow-lg hover:shadow-xl transition-all animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <div className={`bg-white/80 backdrop-blur-sm border-2 border-purple-100 rounded-2xl p-5 shadow-lg hover:shadow-xl transition-all ${animateClass}`} style={{ animationDelay: '0.2s' }}>
               <div className="flex items-center gap-3 mb-2">
                 <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center shadow-md">
                   <Zap className="w-5 h-5 text-white" />
@@ -297,7 +345,7 @@ function JobDetailContent() {
           )}
 
           {job.image_count && job.image_count > 0 && (
-            <div className="bg-white/80 backdrop-blur-sm border-2 border-purple-100 rounded-2xl p-5 shadow-lg hover:shadow-xl transition-all animate-fade-in-up" style={{ animationDelay: '0.25s' }}>
+            <div className={`bg-white/80 backdrop-blur-sm border-2 border-purple-100 rounded-2xl p-5 shadow-lg hover:shadow-xl transition-all ${animateClass}`} style={{ animationDelay: '0.25s' }}>
               <div className="flex items-center gap-3 mb-2">
                 <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center shadow-md">
                   <ImageIcon className="w-5 h-5 text-white" />
@@ -314,7 +362,7 @@ function JobDetailContent() {
 
         {/* Error Message */}
         {job.error_message && (
-          <div className="bg-red-50 border-2 border-red-200 rounded-2xl p-6 mb-6 shadow-lg animate-fade-in-up">
+          <div className={`bg-red-50 border-2 border-red-200 rounded-2xl p-6 mb-6 shadow-lg ${animateClass}`}>
             <div className="flex items-start gap-3">
               <div className="flex-shrink-0">
                 <XCircle className="w-6 h-6 text-red-600" />
@@ -329,7 +377,7 @@ function JobDetailContent() {
 
         {/* Batch Results */}
         {job.status === JobStatus.COMPLETED && job.batch_mode && job.outputs && job.outputs.length > 0 && (
-          <div className="bg-white/80 backdrop-blur-sm border-2 border-purple-100 rounded-2xl p-6 shadow-lg animate-fade-in-up">
+          <div className={`bg-white/80 backdrop-blur-sm border-2 border-purple-100 rounded-2xl p-6 shadow-lg ${animateClass}`}>
             <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
               <ImageIcon className="w-6 h-6 text-purple-600" />
               Batch Results
@@ -402,15 +450,23 @@ function JobDetailContent() {
                           <span className="font-semibold text-gray-600">Status:</span> <span className="text-green-600 capitalize">{output.status}</span>
                         </div>
                       </div>
-                      <a
-                        href={output.output_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2 w-full px-4 py-3 gradient-purple-fuchsia text-white rounded-lg hover:scale-105 transition-all font-bold shadow-md"
+                      <button
+                        onClick={() => handleSingleImageDownload(output.output_url, index)}
+                        disabled={downloadingIndex === index}
+                        className="flex items-center justify-center gap-2 w-full px-4 py-3 gradient-purple-fuchsia text-white rounded-lg hover:scale-105 transition-all font-bold shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        <Download className="w-4 h-4" />
-                        Download Image {index + 1}
-                      </a>
+                        {downloadingIndex === index ? (
+                          <>
+                            <Loader className="w-4 h-4 animate-spin" />
+                            Downloading...
+                          </>
+                        ) : (
+                          <>
+                            <Download className="w-4 h-4" />
+                            Download Image {index + 1}
+                          </>
+                        )}
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -421,7 +477,7 @@ function JobDetailContent() {
 
         {/* Single Image Comparison */}
         {job.status === JobStatus.COMPLETED && !job.batch_mode && job.input_image_url && job.output_image_url && (
-          <div className="bg-white/80 backdrop-blur-sm border-2 border-purple-100 rounded-2xl p-6 shadow-lg animate-fade-in-up">
+          <div className={`bg-white/80 backdrop-blur-sm border-2 border-purple-100 rounded-2xl p-6 shadow-lg ${animateClass}`}>
             <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
               <ImageIcon className="w-6 h-6 text-purple-600" />
               Image Comparison
@@ -467,7 +523,7 @@ function JobDetailContent() {
 
         {/* Processing/Pending State */}
         {(job.status === JobStatus.PROCESSING || job.status === JobStatus.PENDING) && (
-          <div className="bg-white/80 backdrop-blur-sm border-2 border-blue-200 rounded-2xl p-12 text-center shadow-xl animate-scale-in">
+          <div className={`bg-white/80 backdrop-blur-sm border-2 border-blue-200 rounded-2xl p-12 text-center shadow-xl ${animateScaleClass}`}>
             <Loader className="w-16 h-16 text-blue-600 animate-spin mx-auto mb-6" />
             <h3 className="text-2xl font-bold text-gray-900 mb-3">
               {job.status === JobStatus.PROCESSING ? 'Processing Your Image' : 'Job Queued'}
@@ -486,7 +542,7 @@ function JobDetailContent() {
 
         {/* Failed State */}
         {job.status === JobStatus.FAILED && !job.batch_mode && (
-          <div className="bg-white/80 backdrop-blur-sm border-2 border-red-200 rounded-2xl p-12 text-center shadow-xl animate-scale-in">
+          <div className={`bg-white/80 backdrop-blur-sm border-2 border-red-200 rounded-2xl p-12 text-center shadow-xl ${animateScaleClass}`}>
             <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <XCircle className="w-10 h-10 text-red-600" />
             </div>
