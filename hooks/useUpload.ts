@@ -19,6 +19,15 @@ export interface ProcessingJob {
   completed_at?: string
 }
 
+export interface ProcessingOptions {
+  removeBackground?: boolean
+  customBackground?: File
+  // Premium: custom output size (square, 500-4000px)
+  outputSize?: number
+  // Premium: custom margin (10-200px)
+  margin?: number
+}
+
 export function useUpload() {
   const [files, setFiles] = useState<UploadedFile[]>([])
   const [isUploading, setIsUploading] = useState(false)
@@ -55,7 +64,7 @@ export function useUpload() {
     setFiles([])
   }, [files])
 
-  const uploadAndProcess = async (jobName?: string) => {
+  const uploadAndProcess = async (jobName?: string, options?: ProcessingOptions) => {
     if (files.length === 0) {
       toast.error('No files to upload')
       return null
@@ -72,8 +81,8 @@ export function useUpload() {
         prev.map((f) => ({ ...f, status: 'uploading' as const }))
       )
 
-      // Upload batch with job name
-      const response = await api.uploadBatch(fileArray, jobName)
+      // Upload batch with job name and processing options
+      const response = await api.uploadBatch(fileArray, jobName, options)
 
       // Update all files to processing status
       setFiles((prev) =>

@@ -7,7 +7,7 @@ import Image from 'next/image'
 import { api, JobResponse, JobStatus } from '@/lib/api'
 import { AuthGuard } from '@/components/guards/AuthGuard'
 import { useConfirm } from '@/components/ui/ConfirmModal'
-import { ArrowLeft, Download, Trash2, Clock, CheckCircle, XCircle, Loader, Image as ImageIcon, Zap, Info, Upload } from 'lucide-react'
+import { ArrowLeft, Download, Trash2, Clock, CheckCircle, XCircle, Loader, Image as ImageIcon, Zap, Info, Upload, RotateCw } from 'lucide-react'
 
 export default function JobDetailPage() {
   return (
@@ -27,6 +27,7 @@ function JobDetailContent() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [isDownloading, setIsDownloading] = useState(false)
+  const [isRetrying, setIsRetrying] = useState(false)
   const [hasAnimated, setHasAnimated] = useState(false)
 
   useEffect(() => {
@@ -149,6 +150,43 @@ function JobDetailContent() {
       console.error('Delete failed:', err)
       alert('Failed to delete job')
     }
+  }
+
+  const handleRetry = async () => {
+    const confirmed = await confirm({
+      title: 'Riprova immagini fallite',
+      message: 'Vuoi riprovare a elaborare le immagini non completate?',
+      confirmText: 'Riprova',
+      cancelText: 'Annulla',
+      variant: 'default'
+    })
+
+    if (!confirmed) return
+
+    try {
+      setIsRetrying(true)
+      const result = await api.retryJob(jobId)
+      alert(`Retry avviato per ${result.retry_count} immagini`)
+      // Refresh job data
+      const jobData = await api.getJobDetails(jobId)
+      setJob(jobData)
+    } catch (err: any) {
+      console.error('Retry failed:', err)
+      alert(err.message || 'Retry fallito')
+    } finally {
+      setIsRetrying(false)
+    }
+  }
+
+  const hasIncompleteImages = () => {
+    if (!job || !job.batch_mode || !job.outputs) return false
+    const total = job.image_count || 0
+    for (let i = 0; i < total; i++) {
+      if (i >= job.outputs.length || !job.outputs[i] || job.outputs[i].status === 'failed') {
+        return true
+      }
+    }
+    return false
   }
 
   const getStatusConfig = (status: JobStatus) => {
@@ -290,6 +328,25 @@ function JobDetailContent() {
                     <>
                       <Download className="w-5 h-5" />
                       Download
+                    </>
+                  )}
+                </button>
+              )}
+              {job.batch_mode && hasIncompleteImages() && (
+                <button
+                  onClick={handleRetry}
+                  disabled={isRetrying}
+                  className="flex items-center gap-2 px-6 py-3 bg-amber-500 text-white font-bold rounded-xl hover:bg-amber-600 hover:scale-105 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isRetrying ? (
+                    <>
+                      <Loader className="w-5 h-5 animate-spin" />
+                      Riprovando...
+                    </>
+                  ) : (
+                    <>
+                      <RotateCw className="w-5 h-5" />
+                      Riprova
                     </>
                   )}
                 </button>

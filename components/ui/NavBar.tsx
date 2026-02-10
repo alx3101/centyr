@@ -7,6 +7,7 @@ import { LogOut, Upload, LayoutDashboard, User } from 'lucide-react'
 import toast from 'react-hot-toast'
 import LanguageSelector from '@/components/common/LanguageSelector'
 import { useTranslations } from '@/contexts/LanguageContext'
+import Image from 'next/image'
 
 export default function UploadLayout({
     children,
@@ -35,10 +36,18 @@ export default function UploadLayout({
             <nav className="bg-white/80 backdrop-blur-sm border-b border-purple-100 sticky top-0 z-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16 items-center">
-                        <Link href="/dashboard" className="flex items-center space-x-2">
-                            <div className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-fuchsia-600 bg-clip-text text-transparent">
-                                Centyr
-                            </div>
+                        <Link
+                            href="/"
+                            className="inline-flex items-center hover:scale-105 transition-transform"
+                        >
+                            <Image
+                                src="/logo.svg"
+                                alt="Centyr logo"
+                                width={140}
+                                height={40}
+                                priority
+                            />
+
                         </Link>
 
                         <div className="flex items-center space-x-6">

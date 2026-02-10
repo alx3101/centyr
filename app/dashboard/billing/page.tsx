@@ -244,7 +244,7 @@ export default function BillingPage() {
                   return (
                     <div
                       key={plan.id}
-                      className={`bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 transition-all ${plan.popular
+                      className={`bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 transition-all flex flex-col justify-between h-full ${plan.popular
                         ? 'border-fuchsia-300 shadow-xl relative'
                         : 'border-purple-100 shadow-lg'
                         } ${isCurrent ? 'ring-2 ring-purple-600' : ''}`}

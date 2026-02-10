@@ -314,41 +314,81 @@ function DashboardContent() {
 
         {/* Current Processing Job (SSE real-time) */}
         {currentJob && currentJob.status !== 'completed' && (
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border-2 border-fuchsia-300 shadow-xl mb-8 glow-purple animate-scale-in">
+          <div
+            className={`bg-white/80 backdrop-blur-sm rounded-2xl p-8 border-2 shadow-xl mb-8 animate-scale-in ${currentJob.status === 'pending' ? 'border-amber-300' : 'border-fuchsia-300 glow-purple'}`}
+            role="status"
+            aria-busy={currentJob.status === 'processing'}
+            aria-label={`Job ${currentJob.status === 'pending' ? 'in coda' : 'in elaborazione'}`}
+          >
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
-                <Loader className="w-6 h-6 text-fuchsia-600 animate-spin" />
-                {currentJobStatus?.message || 'Processing...'}
+                {currentJob.status === 'pending' ? (
+                  <div className="relative">
+                    <Clock className="w-6 h-6 text-amber-500" aria-hidden="true" />
+                    <span className="absolute -top-1 -right-1 w-3 h-3 bg-amber-400 rounded-full animate-ping" aria-hidden="true"></span>
+                  </div>
+                ) : (
+                  <Loader className="w-6 h-6 text-fuchsia-600 animate-spin" aria-hidden="true" />
+                )}
+                {currentJob.status === 'pending' ? 'In coda...' : 'Elaborazione in corso...'}
               </h2>
-              <div className="flex items-center gap-3">
-                <span className="text-sm text-gray-600 font-mono">
-                  {currentJob.job_id?.slice(0, 8) || 'N/A'}
-                </span>
-                {isConnected && (
+              <div className="flex items-center gap-2">
+                {isConnected ? (
                   <div className="flex items-center gap-2 bg-green-50 px-3 py-1 rounded-full border border-green-200">
-                    <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                    <span className="text-xs font-bold text-green-700">Live</span>
+                    <span className="w-2 h-2 bg-green-500 rounded-full" aria-hidden="true"></span>
+                    <span className="text-xs font-bold text-green-700">Connesso</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2 bg-gray-50 px-3 py-1 rounded-full border border-gray-200">
+                    <span className="w-2 h-2 bg-gray-400 rounded-full animate-pulse" aria-hidden="true"></span>
+                    <span className="text-xs font-bold text-gray-500">Connessione...</span>
                   </div>
                 )}
               </div>
             </div>
 
+            {/* Live region for screen reader announcements */}
             <div className="mb-4">
               <div className="flex justify-between text-sm text-gray-600 mb-2 font-medium">
-                <span>{currentJobStatus?.message || 'Processing...'}</span>
-                <span className="font-bold">{currentJob.progress || 0}%</span>
+                <span aria-live="polite" aria-atomic="true">
+                  {currentJobStatus?.message || (currentJob.status === 'pending' ? 'In attesa del worker...' : 'Elaborazione immagine...')}
+                </span>
+                {currentJob.status !== 'pending' && (
+                  <span className="font-bold" aria-live="polite">{currentJob.progress || 0}%</span>
+                )}
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden shadow-inner">
-                <div
-                  className="gradient-animated h-3 rounded-full transition-all duration-500"
-                  style={{ width: `${currentJob.progress || 0}%` }}
-                ></div>
+              <div
+                className="w-full bg-gray-200 rounded-full h-3 overflow-hidden shadow-inner"
+                role="progressbar"
+                aria-valuenow={currentJob.status === 'pending' ? 0 : (currentJob.progress || 0)}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-label="Progresso elaborazione"
+              >
+                {currentJob.status === 'pending' ? (
+                  <div className="h-3 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-300 rounded-full animate-pulse" style={{ width: '100%' }}></div>
+                ) : (
+                  <div
+                    className="gradient-animated h-3 rounded-full transition-all duration-500"
+                    style={{ width: `${currentJob.progress || 5}%` }}
+                  ></div>
+                )}
               </div>
+              {currentJob.status === 'pending' && (
+                <p className="text-xs text-amber-600 mt-2 animate-pulse">
+                  Il worker prenderà in carico il job a breve...
+                </p>
+              )}
             </div>
 
-            <div className="flex items-center gap-2 text-sm text-gray-500">
-              <Sparkles className="w-4 h-4" />
-              <span>Real-time updates via Server-Sent Events</span>
+            <div className="flex items-center justify-between text-sm text-gray-500">
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4" />
+                <span>Aggiornamenti in tempo reale</span>
+              </div>
+              <span className="font-mono text-xs bg-gray-100 px-2 py-1 rounded">
+                ID: {currentJob.job_id?.slice(0, 8)}
+              </span>
             </div>
           </div>
         )}
@@ -391,11 +431,10 @@ function DashboardContent() {
                     <button
                       key={filter}
                       onClick={() => setStatusFilter(filter)}
-                      className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${
-                        statusFilter === filter
+                      className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${statusFilter === filter
                           ? 'gradient-purple-fuchsia text-white shadow-md'
                           : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                      }`}
+                        }`}
                     >
                       <span className="flex items-center gap-2">
                         {filter === 'all' && <Filter className="w-4 h-4" />}
@@ -521,15 +560,14 @@ function DashboardContent() {
                   {/* Status and Actions */}
                   <div className="flex items-center gap-3 flex-shrink-0">
                     <span
-                      className={`px-3 py-1 text-xs font-bold rounded-full ${
-                        job.status === 'completed'
+                      className={`px-3 py-1 text-xs font-bold rounded-full ${job.status === 'completed'
                           ? 'bg-green-100 text-green-700'
                           : job.status === 'processing'
-                          ? 'bg-blue-100 text-blue-700'
-                          : job.status === 'failed'
-                          ? 'bg-red-100 text-red-700'
-                          : 'bg-gray-100 text-gray-700'
-                      }`}
+                            ? 'bg-blue-100 text-blue-700'
+                            : job.status === 'failed'
+                              ? 'bg-red-100 text-red-700'
+                              : 'bg-gray-100 text-gray-700'
+                        }`}
                     >
                       {job.status}
                     </span>

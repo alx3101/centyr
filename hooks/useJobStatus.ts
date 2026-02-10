@@ -39,6 +39,16 @@ export function useJobStatus(
 
   const eventSourceRef = useRef<EventSource | null>(null)
   const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const statusRef = useRef<JobStatusUpdate | null>(null)
+
+  // Use refs for callbacks to avoid infinite loops
+  const optionsRef = useRef(options)
+  optionsRef.current = options
+
+  // Update statusRef when status changes
+  useEffect(() => {
+    statusRef.current = status
+  }, [status])
 
   const disconnect = useCallback(() => {
     if (eventSourceRef.current) {
@@ -58,7 +68,7 @@ export function useJobStatus(
     }
 
     // Don't reconnect if already connected
-    if (eventSourceRef.current) {
+    if (eventSourceRef.current && eventSourceRef.current.readyState !== EventSource.CLOSED) {
       return
     }
 
@@ -72,6 +82,7 @@ export function useJobStatus(
     const apiUrl = process.env.NEXT_PUBLIC_API_URL
     const url = `${apiUrl}/api/v1/jobs/${jobId}/stream?token=${token}`
 
+    console.log(`[SSE] Connecting to job ${jobId}...`)
     const eventSource = new EventSource(url)
     eventSourceRef.current = eventSource
 
@@ -86,14 +97,13 @@ export function useJobStatus(
     eventSource.addEventListener('status', (event) => {
       try {
         const data: JobStatusUpdate = JSON.parse(event.data)
+        console.log(`[SSE] Status update:`, data)
         setStatus(data)
-        options.onStatusChange?.(data)
+        optionsRef.current.onStatusChange?.(data)
 
         // Show toast for status changes
-        if (data.status === 'processing') {
+        if (data.status === 'processing' && data.progress > 0) {
           toast.loading(data.message, { id: `job-${jobId}` })
-        } else if (data.status === 'completed') {
-          toast.success(data.message, { id: `job-${jobId}` })
         }
       } catch (err) {
         console.error('[SSE] Failed to parse status event:', err)
@@ -104,65 +114,82 @@ export function useJobStatus(
     eventSource.addEventListener('complete', (event) => {
       try {
         const data: JobStatusUpdate = JSON.parse(event.data)
+        console.log(`[SSE] Complete event:`, data)
         setStatus(data)
-        options.onComplete?.(data)
+        optionsRef.current.onComplete?.(data)
 
         if (data.status === 'completed') {
-          toast.success('Processing completed!', { id: `job-${jobId}` })
+          toast.success('Elaborazione completata!', { id: `job-${jobId}` })
         } else if (data.status === 'failed') {
-          toast.error(data.error_message || 'Processing failed', { id: `job-${jobId}` })
+          toast.error(data.error_message || 'Elaborazione fallita', { id: `job-${jobId}` })
         }
+
+        // Disconnect after completion
+        disconnect()
       } catch (err) {
         console.error('[SSE] Failed to parse complete event:', err)
       }
     })
 
-    // Error event
+    // Error event from server
     eventSource.addEventListener('error', (event: any) => {
       try {
-        const data = JSON.parse(event.data)
-        const errorMsg = data.error || 'Unknown error'
-        setError(errorMsg)
-        options.onError?.(errorMsg)
-        toast.error(errorMsg, { id: `job-${jobId}` })
+        if (event.data) {
+          const data = JSON.parse(event.data)
+          const errorMsg = data.error || 'Unknown error'
+          setError(errorMsg)
+          optionsRef.current.onError?.(errorMsg)
+          toast.error(errorMsg, { id: `job-${jobId}` })
+        }
       } catch (err) {
-        // EventSource onerror fallback
-        console.error('[SSE] Connection error:', err)
+        // Not a JSON error event, ignore
       }
     })
 
     // Close event - server signals to disconnect
-    eventSource.addEventListener('close', (event) => {
+    eventSource.addEventListener('close', () => {
       console.log(`[SSE] Server requested close for job ${jobId}`)
       disconnect()
     })
 
     // Generic error handler (connection issues)
-    eventSource.onerror = (err) => {
-      console.error('[SSE] EventSource error:', err)
+    eventSource.onerror = () => {
+      console.warn('[SSE] Connection error or closed')
       setIsConnected(false)
 
+      // Close the current connection
+      if (eventSourceRef.current) {
+        eventSourceRef.current.close()
+        eventSourceRef.current = null
+      }
+
       // Don't auto-reconnect if job is completed/failed
-      if (status?.status && ['completed', 'failed'].includes(status.status)) {
-        disconnect()
+      const currentStatus = statusRef.current?.status
+      if (currentStatus && ['completed', 'failed'].includes(currentStatus)) {
+        console.log('[SSE] Job finished, not reconnecting')
         return
       }
 
-      // Auto-reconnect after 5 seconds for transient errors
+      // Clear any existing reconnect timeout
+      if (reconnectTimeoutRef.current) {
+        clearTimeout(reconnectTimeoutRef.current)
+      }
+
+      // Auto-reconnect after 3 seconds for transient errors
       reconnectTimeoutRef.current = setTimeout(() => {
         console.log('[SSE] Attempting to reconnect...')
-        disconnect()
         connect()
-      }, 5000)
+      }, 3000)
     }
 
     return eventSource
-  }, [jobId, options, status?.status, disconnect])
+  }, [jobId, disconnect])
 
   // Setup and cleanup
   useEffect(() => {
     if (!jobId) {
       disconnect()
+      setStatus(null)
       return
     }
 
@@ -172,7 +199,7 @@ export function useJobStatus(
     return () => {
       disconnect()
     }
-  }, [jobId, connect, disconnect])
+  }, [jobId]) // Only depend on jobId, not connect/disconnect
 
   return {
     status,
@@ -181,7 +208,7 @@ export function useJobStatus(
     disconnect,
     reconnect: () => {
       disconnect()
-      connect()
+      setTimeout(connect, 100)
     }
   }
 }

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { Check, Zap, Crown, Loader } from 'lucide-react'
+import { Check, Zap, Crown, Loader, Building2, Headphones, Shield, Users } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { usePricingPlans } from '@/hooks/usePricingPlans'
 import { api } from '@/lib/api'
@@ -206,6 +206,90 @@ export default function PricingPage() {
               </button>
             </div>
           ))}
+        </div>
+
+        {/* Enterprise Plan */}
+        <div className="mt-16 max-w-4xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+          <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8 md:p-10 border-2 border-gray-700 shadow-2xl relative overflow-hidden">
+            {/* Background decoration */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500 rounded-full filter blur-3xl opacity-10"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-fuchsia-500 rounded-full filter blur-3xl opacity-10"></div>
+
+            <div className="relative z-10 flex flex-col lg:flex-row items-center gap-8">
+              {/* Left: Content */}
+              <div className="flex-1 text-center lg:text-left">
+                <div className="inline-flex items-center gap-2 bg-purple-500/20 text-purple-300 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+                  <Building2 className="w-4 h-4" />
+                  ENTERPRISE
+                </div>
+                <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                  Soluzione Enterprise
+                </h3>
+                <p className="text-gray-300 text-lg mb-6">
+                  Per aziende con esigenze avanzate. Volume illimitato, integrazioni custom, SLA garantito e supporto dedicato.
+                </p>
+
+                {/* Enterprise Features */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                      <Zap className="w-5 h-5 text-purple-400" />
+                    </div>
+                    <div>
+                      <p className="text-white font-semibold">Volume illimitato</p>
+                      <p className="text-gray-400 text-sm">Nessun limite mensile</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                      <Shield className="w-5 h-5 text-purple-400" />
+                    </div>
+                    <div>
+                      <p className="text-white font-semibold">SLA 99.99%</p>
+                      <p className="text-gray-400 text-sm">Uptime garantito</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                      <Users className="w-5 h-5 text-purple-400" />
+                    </div>
+                    <div>
+                      <p className="text-white font-semibold">Team dedicato</p>
+                      <p className="text-gray-400 text-sm">Account manager</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                      <Headphones className="w-5 h-5 text-purple-400" />
+                    </div>
+                    <div>
+                      <p className="text-white font-semibold">Supporto 24/7</p>
+                      <p className="text-gray-400 text-sm">Priorità massima</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right: CTA */}
+              <div className="flex-shrink-0 text-center">
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                  <p className="text-gray-400 text-sm mb-2">A partire da</p>
+                  <div className="text-4xl font-bold text-white mb-1">Custom</div>
+                  <p className="text-gray-400 text-sm mb-6">Prezzo su misura</p>
+                  <a
+                    href="mailto:enterprise@centyr.io?subject=Richiesta%20Piano%20Enterprise"
+                    className="inline-flex items-center gap-2 bg-white text-gray-900 px-8 py-4 rounded-xl font-bold hover:scale-105 transition-all shadow-lg"
+                  >
+                    <Building2 className="w-5 h-5" />
+                    Contatta Sales
+                  </a>
+                  <p className="text-gray-500 text-xs mt-4">
+                    Risposta entro 24h
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* FAQ Section */}

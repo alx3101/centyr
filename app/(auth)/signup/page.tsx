@@ -6,6 +6,7 @@ import { useAuth } from '@/hooks/useAuth'
 import { toast } from 'react-hot-toast'
 import { cognitoOAuthSignIn } from '@/lib/cognito'
 import { GuestGuard } from '@/components/guards/GuestGuard'
+import { Check, Zap, Shield, Clock, Star } from 'lucide-react'
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -50,7 +51,82 @@ export default function SignupPage() {
         <div className="absolute top-20 right-10 w-72 h-72 bg-fuchsia-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float"></div>
         <div className="absolute bottom-20 left-10 w-72 h-72 bg-primary-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float" style={{ animationDelay: '2s' }}></div>
 
-        <div className="max-w-md w-full bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border-2 border-purple-100 relative z-10 animate-scale-in">
+        <div className="max-w-5xl w-full flex flex-col lg:flex-row gap-8 relative z-10">
+          {/* Value Sidebar - Hidden on mobile, shown on lg+ */}
+          <div className="hidden lg:flex lg:w-96 flex-col justify-center animate-fade-in-up">
+            <div className="bg-gradient-to-br from-purple-600 to-fuchsia-600 rounded-2xl p-8 text-white shadow-2xl">
+              <h2 className="text-2xl font-bold mb-6">Perché scegliere Centyr?</h2>
+
+              <div className="space-y-5">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Zap className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold mb-1">Elaborazione Istantanea</h3>
+                    <p className="text-purple-100 text-sm">Centinaia di foto elaborate in pochi secondi con la nostra AI</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Clock className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold mb-1">Risparmia 10+ Ore/Settimana</h3>
+                    <p className="text-purple-100 text-sm">Automatizza l'editing manuale delle foto prodotto</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Shield className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold mb-1">30 Giorni Soddisfatti</h3>
+                    <p className="text-purple-100 text-sm">Garanzia di rimborso completo, senza domande</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Social proof */}
+              <div className="mt-8 pt-6 border-t border-white/20">
+                <div className="flex items-center gap-1 mb-2">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                  ))}
+                  <span className="ml-2 text-sm font-semibold">4.9/5</span>
+                </div>
+                <p className="text-purple-100 text-sm mb-4">Valutazione media dei nostri clienti</p>
+
+                <div className="flex items-center gap-3">
+                  <div className="flex -space-x-2">
+                    {['MB', 'ET', 'AR', 'SM'].map((initials, i) => (
+                      <div key={i} className="w-8 h-8 rounded-full bg-white/30 border-2 border-white flex items-center justify-center text-xs font-bold">
+                        {initials}
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-sm text-purple-100">
+                    <span className="font-bold text-white">12,000+</span> e-commerce attivi
+                  </p>
+                </div>
+              </div>
+
+              {/* Features list */}
+              <div className="mt-6 space-y-2">
+                {['10 job gratis al mese', 'Nessuna carta richiesta', 'Setup in 60 secondi'].map((feature, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-green-300" />
+                    <span className="text-sm">{feature}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Signup Form */}
+          <div className="flex-1 max-w-md mx-auto lg:mx-0 w-full bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border-2 border-purple-100 animate-scale-in">
           <div className="text-center mb-8">
             <Link href="/" className="text-3xl font-bold text-gradient inline-block mb-2">
               Centyr
@@ -207,13 +283,14 @@ export default function SignupPage() {
             </p>
           </div>
 
-          {/* Free trial badge */}
-          <div className="mt-6 bg-gradient-to-r from-purple-50 to-fuchsia-50 border-2 border-fuchsia-200 rounded-xl p-4 text-center">
+          {/* Free trial badge - shown on mobile only */}
+          <div className="mt-6 bg-gradient-to-r from-purple-50 to-fuchsia-50 border-2 border-fuchsia-200 rounded-xl p-4 text-center lg:hidden">
             <p className="text-sm font-semibold text-gray-900">
               🎉 Start with 10 free jobs/month
             </p>
             <p className="text-xs text-gray-600 mt-1">No credit card required</p>
           </div>
+        </div>
         </div>
       </div>
     </GuestGuard>

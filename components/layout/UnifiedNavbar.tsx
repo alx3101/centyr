@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { LogOut, LayoutDashboard, Upload, User, Menu, X, Home } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useState } from 'react'
+import Image from 'next/image'
 
 export function UnifiedNavbar() {
   const { user, isAuthenticated, isLoading, logout } = useAuth()
@@ -20,10 +21,16 @@ export function UnifiedNavbar() {
   // Durante il loading iniziale, mostra una navbar placeholder per evitare flash
   if (isLoading) {
     return (
-      <nav className="bg-white/80 backdrop-blur-md border-b border-purple-100 sticky top-0 z-50 shadow-sm">
+      <nav className="bg-white/80 backdrop-blur-md py-4 border-b border-purple-100 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
-            <div className="text-2xl font-bold text-gradient">Centyr</div>
+            <Image
+              src="/logo.svg"
+              alt="Centyr logo"
+              width={150}
+              height={90}
+              priority
+            />
             <div className="flex items-center space-x-4">
               <div className="w-20 h-8 bg-gray-200 rounded animate-pulse"></div>
             </div>
@@ -48,15 +55,22 @@ export function UnifiedNavbar() {
   ]
 
   return (
-    <nav className="bg-white/80 backdrop-blur-md border-b border-purple-100 sticky top-0 z-50 shadow-sm">
+    <nav className="bg-white/80 backdrop-blur-md py-3 border-b border-purple-100 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           {/* Logo */}
           <Link
-            href={isAuthenticated ? "/dashboard" : "/"}
-            className="text-2xl font-bold text-gradient hover:scale-105 transition-transform"
+            href="/"
+            className="inline-flex items-center hover:scale-105 transition-transform"
           >
-            Centyr
+            <Image
+              src="/logo.svg"
+              alt="Centyr logo"
+              width={150}
+              height={90}
+              priority
+            />
+
           </Link>
 
           {/* Desktop Navigation */}
@@ -72,8 +86,8 @@ export function UnifiedNavbar() {
                       key={link.href}
                       href={link.href}
                       className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${isActive
-                          ? 'bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white'
-                          : 'text-gray-700 hover:bg-purple-100 hover:text-purple-700'
+                        ? 'bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white'
+                        : 'text-gray-700 hover:bg-purple-100 hover:text-purple-700'
                         }`}
                     >
                       <Icon size={18} />
@@ -163,8 +177,8 @@ export function UnifiedNavbar() {
                         href={link.href}
                         onClick={() => setMobileMenuOpen(false)}
                         className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all ${isActive
-                            ? 'bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white'
-                            : 'text-gray-700 hover:bg-purple-50'
+                          ? 'bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white'
+                          : 'text-gray-700 hover:bg-purple-50'
                           }`}
                       >
                         <Icon size={20} />

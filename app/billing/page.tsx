@@ -6,10 +6,12 @@ import { api } from '@/lib/api'
 import { useRouter } from 'next/navigation'
 import { CreditCard, Calendar, Zap, AlertCircle, ExternalLink, Loader } from 'lucide-react'
 import toast from 'react-hot-toast'
+import { useConfirm } from '@/components/ui/ConfirmModal'
 
 export default function BillingPage() {
   const { user, isAuthenticated, isLoading: authLoading } = useAuth()
   const router = useRouter()
+  const confirm = useConfirm()
   const [loading, setLoading] = useState(false)
   const [cancelLoading, setCancelLoading] = useState(false)
 
@@ -39,9 +41,13 @@ export default function BillingPage() {
   }
 
   const handleCancelSubscription = async () => {
-    const confirmed = window.confirm(
-      'Are you sure you want to cancel your subscription? It will remain active until the end of your billing period.'
-    )
+    const confirmed = await confirm({
+      title: 'Annulla abbonamento',
+      message: 'Sei sicuro di voler annullare l\'abbonamento? Rimarrà attivo fino alla fine del periodo di fatturazione corrente.',
+      confirmText: 'Sì, annulla',
+      cancelText: 'No, mantieni',
+      variant: 'destructive'
+    })
 
     if (!confirmed) return
 

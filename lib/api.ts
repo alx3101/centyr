@@ -102,6 +102,15 @@ export interface UploadResponse {
   job_id: string
 }
 
+export interface ProcessingOptions {
+  removeBackground?: boolean
+  customBackground?: File
+  // Premium: custom output size (square, 500-4000px)
+  outputSize?: number
+  // Premium: custom margin (10-200px)
+  margin?: number
+}
+
 export interface HealthCheckResponse {
   status: string
   services: {
@@ -283,6 +292,7 @@ class ApiClient {
    *
    * @param files - Array of image files to process
    * @param jobName - Optional name for the batch job
+   * @param options - Optional processing options (removeBackground, customBackground)
    * @returns job_id to track the processing status
    * @throws {Error} 400: Validation error or batch size exceeded
    * @throws {Error} 413: File too large
@@ -290,7 +300,7 @@ class ApiClient {
    * @throws {Error} 503: Service unavailable
    * @throws {Error} 500: Unexpected error
    */
-  async uploadBatch(files: File[], jobName?: string): Promise<UploadResponse> {
+  async uploadBatch(files: File[], jobName?: string, options?: ProcessingOptions): Promise<UploadResponse> {
     const formData = new FormData()
 
     // Add all files
@@ -301,6 +311,26 @@ class ApiClient {
     // Add job name if provided
     if (jobName) {
       formData.append('job_name', jobName)
+    }
+
+    // Add processing options
+    if (options?.removeBackground) {
+      formData.append('remove_background', 'true')
+    }
+
+    // Add custom background image if provided
+    if (options?.customBackground) {
+      formData.append('background_image', options.customBackground)
+    }
+
+    // Premium: custom output size
+    if (options?.outputSize) {
+      formData.append('output_size', options.outputSize.toString())
+    }
+
+    // Premium: custom margin
+    if (options?.margin) {
+      formData.append('margin', options.margin.toString())
     }
 
     const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null
@@ -383,6 +413,20 @@ class ApiClient {
   async deleteJob(jobId: string): Promise<any> {
     return this.request(`/api/v1/jobs/${jobId}`, {
       method: 'DELETE',
+    })
+  }
+
+  /**
+   * Retry Job - POST /api/v1/jobs/{job_id}/retry
+   *
+   * Retry failed/incomplete images in a batch job.
+   * Re-sends SQS messages for images that were not processed.
+   *
+   * @param jobId - Job ID
+   */
+  async retryJob(jobId: string): Promise<{ job_id: string; retry_count: number; status: string; message: string }> {
+    return this.request(`/api/v1/jobs/${jobId}/retry`, {
+      method: 'POST',
     })
   }
 

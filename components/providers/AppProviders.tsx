@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useState } from 'react'
 import { AuthProvider } from '@/contexts/AuthContext'
 import { LanguageProvider } from '@/contexts/LanguageContext'
+import { ConfirmProvider } from '@/components/ui/ConfirmModal'
 import { AppShell } from '@/components/layout/AppShell'
 
 interface AppProvidersProps {
@@ -34,9 +35,11 @@ export function AppProviders({ children }: AppProvidersProps) {
     <QueryClientProvider client={queryClient}>
       <LanguageProvider>
         <AuthProvider>
-          <AppShell>
-            {children}
-          </AppShell>
+          <ConfirmProvider>
+            <AppShell>
+              {children}
+            </AppShell>
+          </ConfirmProvider>
         </AuthProvider>
       </LanguageProvider>
     </QueryClientProvider>
