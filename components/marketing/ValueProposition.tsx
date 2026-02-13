@@ -16,7 +16,7 @@ export default function ValueProposition() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
-            <div className="text-4xl font-bold text-gradient mb-2">&lt;3s</div>
+            <div className="text-4xl font-bold text-gradient mb-2">&lt;10s</div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">Lightning Fast</h3>
             <p className="text-gray-600">
               Process images in seconds, not minutes. Handle hundreds of photos at once effortlessly.

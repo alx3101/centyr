@@ -20,7 +20,6 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <TrustBadges />
       <TrustedBy />
       <ValueProposition />
       <HowItWorks />

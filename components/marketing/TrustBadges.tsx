@@ -29,7 +29,7 @@ export default function TrustBadges() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
-            <div className="text-2xl font-bold text-gray-900">&lt;3s</div>
+            <div className="text-2xl font-bold text-gray-900">&lt;10s</div>
             <div className="text-sm text-gray-600">Avg. processing</div>
           </div>
 

@@ -441,7 +441,7 @@ function JobDetailContent() {
               <span className="text-sm font-normal text-gray-500">({job.outputs.length} images)</span>
             </h2>
             <div className="space-y-6">
-              {job.outputs.map((output, index) => (
+              {job.outputs.filter(Boolean).map((output, index) => (
                 <div key={index} className="bg-gradient-to-br from-purple-50/50 to-fuchsia-50/50 border-2 border-gray-200 rounded-xl p-6">
                   <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
                     <span className="bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white px-3 py-1 rounded-full text-sm">
@@ -486,6 +486,7 @@ function JobDetailContent() {
                         </span>
                       </div>
                       <div className="relative aspect-square bg-gradient-to-br from-purple-50 to-fuchsia-50 rounded-xl overflow-hidden border-2 border-purple-300 glow-purple shadow-md">
+
                         <Image
                           src={output.output_url}
                           alt={`Processed image ${index + 1}`}

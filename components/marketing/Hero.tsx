@@ -102,7 +102,7 @@ export default function Hero() {
           >
             {/* AFTER Image (Bottom Layer) */}
             <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-purple-50 via-fuchsia-50 to-white">
-              <div className="w-48 h-48 gradient-purple-fuchsia rounded-lg opacity-90"></div>
+              <img src="before.png" alt="" />
             </div>
 
             {/* BEFORE Image (Top Layer with Clip) */}
@@ -110,12 +110,13 @@ export default function Hero() {
               className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200"
               style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
             >
-              <div className="w-48 h-48 bg-gray-400 rounded-lg transform rotate-12"></div>
+              <img src="after.png" alt="" />
+
             </div>
 
             {/* Slider Line */}
             <div
-              className="absolute top-0 bottom-0 w-1 bg-white shadow-lg"
+              className="absolute top-0 bottom-0 w-1 bg-purple-500 shadow-lg"
               style={{ left: `${sliderPosition}%` }}
             >
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-xl flex items-center justify-center">

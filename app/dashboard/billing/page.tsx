@@ -75,7 +75,7 @@ export default function BillingPage() {
     period: plan.period
   }))
 
-  const currentPlan = user.subscription.plan_name
+  const currentPlan = user.subscription
   const usagePercentage = (user.subscription.current_period_uploads / user.subscription.monthly_limit) * 100
 
   return (
@@ -110,7 +110,7 @@ export default function BillingPage() {
                 <h2 className="text-2xl font-bold text-gray-900">Current Subscription</h2>
               </div>
               <span className="px-5 py-2 gradient-purple-fuchsia text-white text-sm font-bold rounded-full shadow-lg glow-purple">
-                {currentPlan.toUpperCase()}
+                {currentPlan.plan_name.toUpperCase()}
               </span>
             </div>
 
@@ -156,7 +156,7 @@ export default function BillingPage() {
               </div>
             </div>
 
-            {currentPlan !== 'free' && (
+            {currentPlan.plan_name !== 'free' && (
               <button
                 onClick={handleManageBilling}
                 disabled={isLoadingPortal}
@@ -238,7 +238,7 @@ export default function BillingPage() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {plans.map((plan) => {
-                  const isCurrent = plan.id.toLowerCase() === currentPlan.toLowerCase()
+                  const isCurrent = plan.id.toLowerCase() === currentPlan.plan.toLowerCase()
                   const isLoading = loadingPlanId === plan.id
 
                   return (

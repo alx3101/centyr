@@ -1,19 +1,16 @@
 'use client'
 
-import { useState, Suspense, useMemo } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useState, useEffect, Suspense, useMemo } from 'react'
 import Link from 'next/link'
 import { toast } from 'react-hot-toast'
-import { Upload, Download, Loader, CheckCircle, XCircle, Clock, TrendingUp, Zap, Award, Sparkles, Activity, Filter, Image as ImageIcon } from 'lucide-react'
+import { Upload, Download, Loader, CheckCircle, XCircle, Clock, TrendingUp, Zap, Award, Activity, Filter, Image as ImageIcon } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useRecentJobs } from '@/hooks/queries'
-import { useJobStatus } from '@/hooks/useJobStatus'
 import { SkeletonDashboard } from '@/components/ui/Skeleton'
 import EmptyState from '@/components/EmptyState'
 import OnboardingChecklist from '@/components/OnboardingChecklist'
 import PostDownloadModal from '@/components/PostDownloadModal'
 import QuotaWarningBanner from '@/components/QuotaWarningBanner'
-import { useQueryClient } from '@tanstack/react-query'
 
 interface Job {
   job_id: string
@@ -24,6 +21,9 @@ interface Job {
   output_image_url?: string
   input_image_url?: string
   error_message?: string
+  image_count?: number
+  batch_mode?: boolean
+  processed_count?: number
   metadata?: {
     image_count?: number
     batch_mode?: boolean
@@ -32,50 +32,28 @@ interface Job {
   }
 }
 
-interface ProcessingJob {
-  job_id: string
-  status: 'pending' | 'processing' | 'completed' | 'failed'
-  progress: number
-  processed_count: number
-  total_count: number
-  created_at: string
-  job_name?: string
-  image_count?: number
-  batch_mode?: boolean
-}
-
 function DashboardContent() {
-  const searchParams = useSearchParams()
-  const currentJobId = searchParams?.get('job')
-  const { user, refreshUser } = useAuth()
-  const queryClient = useQueryClient()
+  const { user } = useAuth()
 
   const [showOnboarding, setShowOnboarding] = useState(true)
   const [showPostDownloadModal, setShowPostDownloadModal] = useState(false)
   const [statusFilter, setStatusFilter] = useState<'all' | 'completed' | 'processing' | 'failed' | 'pending'>('all')
 
-  // React Query for jobs list (cached, no duplicate calls)
-  const { data: recentJobs = [], isLoading } = useRecentJobs(50) as { data: Job[], isLoading: boolean }
+  // React Query for jobs list - polls every 5s when there are processing jobs
+  const [pollingInterval, setPollingInterval] = useState<number | false>(false)
+  const { data: recentJobs = [], isLoading } = useRecentJobs(50, pollingInterval) as { data: Job[], isLoading: boolean }
+
+  // Enable polling when there are processing/pending jobs
+  const hasProcessingJobs = recentJobs.some(j => j.status === 'processing' || j.status === 'pending')
+  useEffect(() => {
+    setPollingInterval(hasProcessingJobs ? 5000 : false)
+  }, [hasProcessingJobs])
 
   // Filtered jobs based on status
   const filteredJobs = useMemo(() => {
     if (statusFilter === 'all') return recentJobs
     return recentJobs.filter(job => job.status === statusFilter)
   }, [recentJobs, statusFilter])
-
-  // SSE for real-time job status (replaces polling)
-  const { status: currentJobStatus, isConnected } = useJobStatus(currentJobId, {
-    onComplete: async (data) => {
-      await refreshUser()
-      queryClient.invalidateQueries({ queryKey: ['jobs', 'recent'] })
-      if (data.status === 'completed') {
-        window.history.replaceState({}, '', '/dashboard')
-      }
-    },
-    onError: (error) => {
-      console.error('[Dashboard] SSE error:', error)
-    }
-  })
 
   // Onboarding checklist items
   const checklistItems = [
@@ -129,7 +107,7 @@ function DashboardContent() {
 
       const blob = await response.blob()
       const contentDisposition = response.headers.get('Content-Disposition')
-      let filename = 'aligned_image.jpg'
+      let filename = blob.type === 'application/zip' ? `job-${jobId}.zip` : `processed-${jobId}.webp`
       if (contentDisposition) {
         const filenameMatch = contentDisposition.match(/filename="(.+)"/)
         if (filenameMatch) {
@@ -173,16 +151,6 @@ function DashboardContent() {
   if (!user) {
     return <SkeletonDashboard />
   }
-
-  const currentJob: ProcessingJob | null = currentJobStatus && currentJobId ? {
-    job_id: currentJobId,
-    status: currentJobStatus.status,
-    progress: currentJobStatus.progress,
-    processed_count: 0,
-    total_count: 1,
-    created_at: new Date().toISOString(),
-    job_name: undefined
-  } : null
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-fuchsia-50 py-8 px-4 md:px-8 overflow-hidden relative">
@@ -310,87 +278,6 @@ function DashboardContent() {
             items={checklistItems}
             onDismiss={() => setShowOnboarding(false)}
           />
-        )}
-
-        {/* Current Processing Job (SSE real-time) */}
-        {currentJob && currentJob.status !== 'completed' && (
-          <div
-            className={`bg-white/80 backdrop-blur-sm rounded-2xl p-8 border-2 shadow-xl mb-8 animate-scale-in ${currentJob.status === 'pending' ? 'border-amber-300' : 'border-fuchsia-300 glow-purple'}`}
-            role="status"
-            aria-busy={currentJob.status === 'processing'}
-            aria-label={`Job ${currentJob.status === 'pending' ? 'in coda' : 'in elaborazione'}`}
-          >
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
-                {currentJob.status === 'pending' ? (
-                  <div className="relative">
-                    <Clock className="w-6 h-6 text-amber-500" aria-hidden="true" />
-                    <span className="absolute -top-1 -right-1 w-3 h-3 bg-amber-400 rounded-full animate-ping" aria-hidden="true"></span>
-                  </div>
-                ) : (
-                  <Loader className="w-6 h-6 text-fuchsia-600 animate-spin" aria-hidden="true" />
-                )}
-                {currentJob.status === 'pending' ? 'In coda...' : 'Elaborazione in corso...'}
-              </h2>
-              <div className="flex items-center gap-2">
-                {isConnected ? (
-                  <div className="flex items-center gap-2 bg-green-50 px-3 py-1 rounded-full border border-green-200">
-                    <span className="w-2 h-2 bg-green-500 rounded-full" aria-hidden="true"></span>
-                    <span className="text-xs font-bold text-green-700">Connesso</span>
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-2 bg-gray-50 px-3 py-1 rounded-full border border-gray-200">
-                    <span className="w-2 h-2 bg-gray-400 rounded-full animate-pulse" aria-hidden="true"></span>
-                    <span className="text-xs font-bold text-gray-500">Connessione...</span>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Live region for screen reader announcements */}
-            <div className="mb-4">
-              <div className="flex justify-between text-sm text-gray-600 mb-2 font-medium">
-                <span aria-live="polite" aria-atomic="true">
-                  {currentJobStatus?.message || (currentJob.status === 'pending' ? 'In attesa del worker...' : 'Elaborazione immagine...')}
-                </span>
-                {currentJob.status !== 'pending' && (
-                  <span className="font-bold" aria-live="polite">{currentJob.progress || 0}%</span>
-                )}
-              </div>
-              <div
-                className="w-full bg-gray-200 rounded-full h-3 overflow-hidden shadow-inner"
-                role="progressbar"
-                aria-valuenow={currentJob.status === 'pending' ? 0 : (currentJob.progress || 0)}
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-label="Progresso elaborazione"
-              >
-                {currentJob.status === 'pending' ? (
-                  <div className="h-3 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-300 rounded-full animate-pulse" style={{ width: '100%' }}></div>
-                ) : (
-                  <div
-                    className="gradient-animated h-3 rounded-full transition-all duration-500"
-                    style={{ width: `${currentJob.progress || 5}%` }}
-                  ></div>
-                )}
-              </div>
-              {currentJob.status === 'pending' && (
-                <p className="text-xs text-amber-600 mt-2 animate-pulse">
-                  Il worker prenderà in carico il job a breve...
-                </p>
-              )}
-            </div>
-
-            <div className="flex items-center justify-between text-sm text-gray-500">
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4" />
-                <span>Aggiornamenti in tempo reale</span>
-              </div>
-              <span className="font-mono text-xs bg-gray-100 px-2 py-1 rounded">
-                ID: {currentJob.job_id?.slice(0, 8)}
-              </span>
-            </div>
-          </div>
         )}
 
         {/* Quick Actions */}
@@ -557,6 +444,24 @@ function DashboardContent() {
                     </div>
                   </div>
 
+                  {/* Progress for processing/batch jobs */}
+                  {(job.status === 'processing' || job.status === 'pending') && (job.batch_mode || job.metadata?.batch_mode) && (
+                    <div className="hidden md:flex items-center gap-3 flex-shrink-0 min-w-[140px]">
+                      <div className="w-full">
+                        <div className="flex justify-between text-xs font-semibold text-gray-600 mb-1">
+                          <span>{job.processed_count ?? 0}/{job.image_count ?? job.metadata?.image_count ?? 0}</span>
+                          <span>{job.image_count ? Math.round(((job.processed_count ?? 0) / job.image_count) * 100) : 0}%</span>
+                        </div>
+                        <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                          <div
+                            className="gradient-purple-fuchsia h-2 rounded-full transition-all duration-500"
+                            style={{ width: `${job.image_count ? Math.round(((job.processed_count ?? 0) / job.image_count) * 100) : 0}%` }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   {/* Status and Actions */}
                   <div className="flex items-center gap-3 flex-shrink-0">
                     <span
@@ -569,7 +474,9 @@ function DashboardContent() {
                               : 'bg-gray-100 text-gray-700'
                         }`}
                     >
-                      {job.status}
+                      {job.status === 'processing' && (job.batch_mode || job.metadata?.batch_mode)
+                        ? `${job.processed_count ?? 0}/${job.image_count ?? job.metadata?.image_count ?? '?'}`
+                        : job.status}
                     </span>
 
                     {job.status === 'completed' && (

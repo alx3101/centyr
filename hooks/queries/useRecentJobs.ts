@@ -10,8 +10,9 @@ import { api } from '@/lib/api'
  * - Automatic caching
  * - Automatic invalidation when new jobs are created
  * - Deduplicates calls
+ * - Auto-polls when refetchInterval is set (e.g. when jobs are processing)
  */
-export function useRecentJobs(limit: number = 50) {
+export function useRecentJobs(limit: number = 50, refetchInterval?: number | false) {
   return useQuery({
     queryKey: ['jobs', 'recent', limit],
     queryFn: async () => {
@@ -22,5 +23,6 @@ export function useRecentJobs(limit: number = 50) {
     cacheTime: 5 * 60 * 1000, // 5 minutes
     retry: 1,
     refetchOnWindowFocus: false,
+    refetchInterval: refetchInterval || false,
   })
 }

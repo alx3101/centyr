@@ -69,7 +69,7 @@ export default function UploadPage() {
 
     // Check credits
     if (files.length + acceptedFiles.length > remainingCredits) {
-      toast.error(`Hai solo ${remainingCredits} crediti rimasti questo mese.`)
+      toast.error(`Hai solo ${remainingCredits} jobs rimasti questo mese.`)
       return
     }
 
@@ -152,23 +152,20 @@ export default function UploadPage() {
           {/* Quota Indicator */}
           <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border-2 border-purple-100 shadow-sm">
             <div className="flex items-center gap-3">
-              <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                usagePercentage > 90 ? 'bg-red-100' : usagePercentage > 70 ? 'bg-amber-100' : 'bg-green-100'
-              }`}>
-                <Zap className={`w-5 h-5 ${
-                  usagePercentage > 90 ? 'text-red-600' : usagePercentage > 70 ? 'text-amber-600' : 'text-green-600'
-                }`} />
+              <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${usagePercentage > 90 ? 'bg-red-100' : usagePercentage > 70 ? 'bg-amber-100' : 'bg-green-100'
+                }`}>
+                <Zap className={`w-5 h-5 ${usagePercentage > 90 ? 'text-red-600' : usagePercentage > 70 ? 'text-amber-600' : 'text-green-600'
+                  }`} />
               </div>
               <div>
                 <div className="flex items-center gap-2">
                   <span className="font-bold text-gray-900">{remainingCredits}</span>
-                  <span className="text-gray-500 text-sm">crediti rimasti</span>
+                  <span className="text-gray-500 text-sm">jobs rimasti</span>
                 </div>
                 <div className="w-32 bg-gray-200 rounded-full h-1.5 mt-1">
                   <div
-                    className={`h-1.5 rounded-full transition-all ${
-                      usagePercentage > 90 ? 'bg-red-500' : usagePercentage > 70 ? 'bg-amber-500' : 'bg-green-500'
-                    }`}
+                    className={`h-1.5 rounded-full transition-all ${usagePercentage > 90 ? 'bg-red-500' : usagePercentage > 70 ? 'bg-amber-500' : 'bg-green-500'
+                      }`}
                     style={{ width: `${100 - usagePercentage}%` }}
                   />
                 </div>
@@ -190,26 +187,23 @@ export default function UploadPage() {
                   <button
                     onClick={() => index < stepIndex && setCurrentStep(step.id)}
                     disabled={index > stepIndex}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all ${
-                      isActive
-                        ? 'bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-lg'
-                        : isCompleted
-                          ? 'bg-green-100 text-green-700 cursor-pointer hover:bg-green-200'
-                          : 'bg-gray-100 text-gray-400'
-                    }`}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all ${isActive
+                      ? 'bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-lg'
+                      : isCompleted
+                        ? 'bg-green-100 text-green-700 cursor-pointer hover:bg-green-200'
+                        : 'bg-gray-100 text-gray-400'
+                      }`}
                   >
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                      isActive ? 'bg-white/20' : isCompleted ? 'bg-green-500 text-white' : 'bg-gray-200'
-                    }`}>
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${isActive ? 'bg-white/20' : isCompleted ? 'bg-green-500 text-white' : 'bg-gray-200'
+                      }`}>
                       {isCompleted ? <Check className="w-4 h-4" /> : <Icon className="w-4 h-4" />}
                     </div>
                     <span className="font-semibold hidden sm:block">{step.label}</span>
                   </button>
 
                   {index < STEPS.length - 1 && (
-                    <div className={`flex-1 h-1 mx-2 rounded ${
-                      index < stepIndex ? 'bg-green-400' : 'bg-gray-200'
-                    }`} />
+                    <div className={`flex-1 h-1 mx-2 rounded ${index < stepIndex ? 'bg-green-400' : 'bg-gray-200'
+                      }`} />
                   )}
                 </div>
               )
@@ -239,9 +233,8 @@ export default function UploadPage() {
               >
                 <input {...getInputProps()} />
                 <div className="flex flex-col items-center justify-center text-center">
-                  <div className={`w-20 h-20 rounded-full flex items-center justify-center mb-4 transition-all ${
-                    isDragActive ? 'bg-fuchsia-500 scale-110' : 'gradient-purple-fuchsia'
-                  }`}>
+                  <div className={`w-20 h-20 rounded-full flex items-center justify-center mb-4 transition-all ${isDragActive ? 'bg-fuchsia-500 scale-110' : 'gradient-purple-fuchsia'
+                    }`}>
                     <Upload className="w-10 h-10 text-white" />
                   </div>
                   <p className="text-xl font-bold text-gray-900 mb-2">
@@ -259,9 +252,8 @@ export default function UploadPage() {
               </div>
 
               {/* Batch limit info */}
-              <div className={`flex items-center gap-3 p-4 rounded-xl mb-6 ${
-                maxBatchSize === 1 ? 'bg-amber-50 border border-amber-200' : 'bg-purple-50 border border-purple-200'
-              }`}>
+              <div className={`flex items-center gap-3 p-4 rounded-xl mb-6 ${maxBatchSize === 1 ? 'bg-amber-50 border border-amber-200' : 'bg-purple-50 border border-purple-200'
+                }`}>
                 <Info className={`w-5 h-5 flex-shrink-0 ${maxBatchSize === 1 ? 'text-amber-600' : 'text-purple-600'}`} />
                 <div className="flex-1">
                   <p className={`text-sm ${maxBatchSize === 1 ? 'text-amber-800' : 'text-purple-800'}`}>
@@ -355,9 +347,8 @@ export default function UploadPage() {
                 </h3>
 
                 {/* Background Removal */}
-                <div className={`relative p-4 rounded-xl border-2 transition-all ${
-                  removeBackground ? 'border-fuchsia-400 bg-fuchsia-50' : 'border-gray-200 bg-white'
-                } ${!isPremium ? 'opacity-60' : ''}`}>
+                <div className={`relative p-4 rounded-xl border-2 transition-all ${removeBackground ? 'border-fuchsia-400 bg-fuchsia-50' : 'border-gray-200 bg-white'
+                  } ${!isPremium ? 'opacity-60' : ''}`}>
                   <label className="flex items-start gap-4 cursor-pointer">
                     <input
                       type="checkbox"
@@ -580,7 +571,9 @@ export default function UploadPage() {
               <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex items-center gap-3">
                 <Zap className="w-5 h-5 text-blue-600" />
                 <div>
-                  <p className="font-semibold text-blue-900">Tempo stimato: ~{files.length * 3} secondi</p>
+                  <p className="font-semibold text-blue-900">
+                    Tempo stimato: ~{Math.floor((files.length * 17 + 180) / (60 * 3))} minuti
+                  </p>
                   <p className="text-sm text-blue-700">Verrai reindirizzato alla dashboard per monitorare il progresso</p>
                 </div>
               </div>
@@ -656,7 +649,7 @@ export default function UploadPage() {
             </div>
             <div>
               <h4 className="font-semibold text-gray-900 text-sm">Veloce</h4>
-              <p className="text-xs text-gray-600">~3 sec per immagine</p>
+              <p className="text-xs text-gray-600">~10 sec per immagine</p>
             </div>
           </div>
           <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-purple-100 flex items-start gap-3">
