@@ -22,14 +22,16 @@ export function AppProviders({ children }: AppProvidersProps) {
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 60 * 1000, // 1 minute
-            cacheTime: 5 * 60 * 1000, // 5 minutes
-            refetchOnWindowFocus: false, // Disable refetch on window focus
-            retry: 1, // Retry failed requests once
+            staleTime: 60 * 1000,         // 1 minuto
+            refetchOnWindowFocus: false,  // Non refetch quando focus cambia
+            retry: 1,                      // Ritenta una volta
+            // cacheTime NON è più supportato qui
           },
         },
       })
   )
+
+
 
   return (
     <QueryClientProvider client={queryClient}>
