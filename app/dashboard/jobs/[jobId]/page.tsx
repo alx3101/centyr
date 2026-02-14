@@ -571,8 +571,11 @@ function JobDetailContent() {
                     src={job.output_image_url}
                     alt="Processed image"
                     fill
+                    placeholder="blur"
+                    blurDataURL="/blur-placeholder.png"
                     className="object-contain"
                   />
+
                 </div>
               </div>
             </div>

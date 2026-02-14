@@ -20,7 +20,7 @@ export function useRecentJobs(limit: number = 50, refetchInterval?: number | fal
       return response.jobs || []
     },
     staleTime: 30 * 1000, // 30 seconds - jobs list can change frequently
-    cacheTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 5 * 60 * 1000, // 5 minutes
     retry: 1,
     refetchOnWindowFocus: false,
     refetchInterval: refetchInterval || false,

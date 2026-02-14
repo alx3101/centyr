@@ -31,7 +31,8 @@ export default function UploadPage() {
   const [customBackground, setCustomBackground] = useState<File | null>(null)
   const [customBackgroundPreview, setCustomBackgroundPreview] = useState<string | null>(null)
   const [outputSize, setOutputSize] = useState<number>(1000)
-  const [margin, setMargin] = useState<number>(50)
+  const [marginPercent, setMarginPercent] = useState<number>(5)
+
 
   // Derived state
   const isPremium = user?.subscription?.plan !== 'free'
@@ -42,6 +43,11 @@ export default function UploadPage() {
   const usagePercentage = (currentUploads / monthlyLimit) * 100
 
   const stepIndex = STEPS.findIndex(s => s.id === currentStep)
+
+  const marginPixels = useMemo(() => {
+    return Math.round((outputSize * marginPercent) / 100)
+  }, [outputSize, marginPercent])
+
 
   const canProceed = useMemo(() => {
     switch (currentStep) {
@@ -116,11 +122,12 @@ export default function UploadPage() {
     const options = {
       removeBackground,
       customBackground: customBackground || undefined,
-      ...(isPremium && outputSize !== 1000 ? { outputSize } : {}),
-      ...(isPremium && margin !== 50 ? { margin } : {}),
+      outputSize,
+      margin: marginPixels,
     }
 
     const jobId = await uploadAndProcess(jobName.trim(), options)
+
     if (jobId) {
       toast.success('Job avviato! Reindirizzamento alla dashboard...')
       setTimeout(() => {
@@ -128,6 +135,7 @@ export default function UploadPage() {
       }, 1500)
     }
   }
+
 
   const totalFileSize = useMemo(() => {
     return files.reduce((acc, f) => acc + f.file.size, 0) / 1024 / 1024
@@ -435,19 +443,15 @@ export default function UploadPage() {
                 </div>
 
                 {/* Output Settings */}
-                <div className={`p-4 rounded-xl border-2 border-gray-200 bg-white ${!isPremium ? 'opacity-60' : ''}`}>
+                <div className="p-4 rounded-xl border-2 border-gray-200 bg-white">
                   <div className="flex items-center gap-2 mb-4">
                     <Settings className="w-5 h-5 text-purple-600" />
                     <span className="font-semibold text-gray-900">Impostazioni Output</span>
-                    {!isPremium && (
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-fuchsia-100 text-fuchsia-700 text-xs font-semibold rounded-full">
-                        <Lock className="w-3 h-3" />
-                        Premium
-                      </span>
-                    )}
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    {/* Output Size */}
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Dimensione Output
@@ -459,9 +463,8 @@ export default function UploadPage() {
                           max="4000"
                           step="100"
                           value={outputSize}
-                          onChange={(e) => isPremium && setOutputSize(Number(e.target.value))}
-                          disabled={!isPremium}
-                          className="flex-1 h-2 bg-purple-200 rounded-lg appearance-none cursor-pointer disabled:cursor-not-allowed accent-fuchsia-500"
+                          onChange={(e) => setOutputSize(Number(e.target.value))}
+                          className="flex-1 h-2 bg-purple-200 rounded-lg appearance-none cursor-pointer accent-fuchsia-500"
                         />
                         <span className="w-24 text-center px-3 py-1 bg-purple-100 text-purple-700 rounded-lg font-mono text-sm">
                           {outputSize}×{outputSize}
@@ -469,6 +472,7 @@ export default function UploadPage() {
                       </div>
                     </div>
 
+                    {/* Margin Percent */}
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Margine
@@ -476,30 +480,27 @@ export default function UploadPage() {
                       <div className="flex items-center gap-3">
                         <input
                           type="range"
-                          min="10"
-                          max="200"
-                          step="10"
-                          value={margin}
-                          onChange={(e) => isPremium && setMargin(Number(e.target.value))}
-                          disabled={!isPremium}
-                          className="flex-1 h-2 bg-purple-200 rounded-lg appearance-none cursor-pointer disabled:cursor-not-allowed accent-fuchsia-500"
+                          min="0"
+                          max="100"
+                          step="0.5"
+                          value={marginPercent}
+                          onChange={(e) => setMarginPercent(Number(e.target.value))}
+                          className="flex-1 h-2 bg-purple-200 rounded-lg appearance-none cursor-pointer accent-fuchsia-500"
                         />
-                        <span className="w-16 text-center px-3 py-1 bg-purple-100 text-purple-700 rounded-lg font-mono text-sm">
-                          {margin}px
-                        </span>
+                        <div className="w-28 text-center px-3 py-1 bg-purple-100 text-purple-700 rounded-lg font-mono text-sm">
+                          {marginPercent}%
+                          <div className="text-xs text-purple-500">
+                            {marginPixels}px
+                          </div>
+                        </div>
                       </div>
+                      <p className="text-xs text-gray-500 mt-2">
+                        Percentuale rispetto alla dimensione di output.
+                      </p>
                     </div>
                   </div>
-
-                  {!isPremium && (
-                    <div className="mt-4 pt-4 border-t border-gray-200">
-                      <Link href="/pricing" className="inline-flex items-center gap-2 text-fuchsia-600 font-semibold hover:text-fuchsia-700">
-                        <Zap className="w-4 h-4" />
-                        Fai upgrade per sbloccare tutte le opzioni
-                      </Link>
-                    </div>
-                  )}
                 </div>
+
               </div>
             </div>
           )}
@@ -544,7 +545,7 @@ export default function UploadPage() {
                       {outputSize}×{outputSize}px
                     </span>
                     <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
-                      Margine {margin}px
+                      Margine {marginPercent}% ({marginPixels}px)
                     </span>
                   </div>
                 </div>

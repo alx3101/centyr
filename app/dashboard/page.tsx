@@ -148,7 +148,7 @@ function DashboardContent() {
     return { completed, failed, processing, successRate, total: recentJobs.length }
   }, [recentJobs, user])
 
-  if (!user) {
+  if (isLoading && user) {
     return <SkeletonDashboard />
   }
 
@@ -319,8 +319,8 @@ function DashboardContent() {
                       key={filter}
                       onClick={() => setStatusFilter(filter)}
                       className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${statusFilter === filter
-                          ? 'gradient-purple-fuchsia text-white shadow-md'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                        ? 'gradient-purple-fuchsia text-white shadow-md'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                         }`}
                     >
                       <span className="flex items-center gap-2">
@@ -466,12 +466,12 @@ function DashboardContent() {
                   <div className="flex items-center gap-3 flex-shrink-0">
                     <span
                       className={`px-3 py-1 text-xs font-bold rounded-full ${job.status === 'completed'
-                          ? 'bg-green-100 text-green-700'
-                          : job.status === 'processing'
-                            ? 'bg-blue-100 text-blue-700'
-                            : job.status === 'failed'
-                              ? 'bg-red-100 text-red-700'
-                              : 'bg-gray-100 text-gray-700'
+                        ? 'bg-green-100 text-green-700'
+                        : job.status === 'processing'
+                          ? 'bg-blue-100 text-blue-700'
+                          : job.status === 'failed'
+                            ? 'bg-red-100 text-red-700'
+                            : 'bg-gray-100 text-gray-700'
                         }`}
                     >
                       {job.status === 'processing' && (job.batch_mode || job.metadata?.batch_mode)

@@ -36,7 +36,7 @@ export function usePricingPlans() {
           period: 'month',
           stripe_price_id: null,
           stripe_product_id: 'free',
-          features: ['10 jobs/month', 'Standard processing', 'Email support'],
+          features: ['3 jobs/month', 'Standard processing', 'Email support'],
           popular: false,
           monthly_limit: 10,
           metadata: {}

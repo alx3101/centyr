@@ -111,16 +111,6 @@ export interface ProcessingOptions {
   margin?: number
 }
 
-export interface HealthCheckResponse {
-  status: string
-  services: {
-    dynamodb: boolean
-    s3: boolean
-    redis: boolean
-    cognito: boolean
-  }
-}
-
 export interface PricingPlan {
   id: string
   name: string
@@ -191,30 +181,6 @@ class ApiClient {
     }
 
     return response.json()
-  }
-
-  // ===========================
-  // Health & Root Endpoints
-  // ===========================
-
-  /**
-   * Health Check - GET /health
-   *
-   * Checks connectivity to all critical services:
-   * - DynamoDB (subscriptions table)
-   * - S3 (bucket accessibility)
-   * - Redis (Celery broker)
-   * - Cognito (JWKS endpoint)
-   */
-  async healthCheck(): Promise<HealthCheckResponse> {
-    return this.request<HealthCheckResponse>('/health')
-  }
-
-  /**
-   * Root - GET /
-   */
-  async getRoot(): Promise<any> {
-    return this.request('//')
   }
 
   // ===========================
@@ -390,18 +356,6 @@ class ApiClient {
   }
 
   /**
-   * Get Job Result - GET /api/v1/jobs/{job_id}/result
-   *
-   * Get the processed image result
-   * Requires authentication. Redirects to the S3 URL if processing is complete.
-   *
-   * @param jobId - Job ID
-   */
-  async getJobResult(jobId: string): Promise<any> {
-    return this.request(`/api/v1/jobs/${jobId}/result`)
-  }
-
-  /**
    * Delete Job - DELETE /api/v1/jobs/{job_id}
    *
    * Delete a job and its associated resources
@@ -510,28 +464,6 @@ class ApiClient {
     })
   }
 
-  // ===========================
-  // Legacy/Compatibility Methods
-  // ===========================
-
-  /**
-   * @deprecated Use getCurrentUser() instead
-   */
-  async getUser() {
-    return this.getCurrentUser()
-  }
-
-  /**
-   * @deprecated Use uploadImage() instead
-   */
-  async processImages(files: File[]) {
-    // For backward compatibility, upload the first file
-    if (files.length === 0) {
-      throw new Error('No files provided')
-    }
-    return this.uploadImage(files[0])
-  }
-
   /**
    * @deprecated Use getJobStatus() instead
    */
@@ -552,35 +484,6 @@ class ApiClient {
     return this.request<{ jobs: any[]; count: number }>(`/api/v1/jobs?limit=${limit}`)
   }
 
-  /**
-   * @deprecated Use getJobResult() instead (endpoint not in new API)
-   */
-  async downloadProcessedImages(jobId: string) {
-    return this.getJobResult(jobId)
-  }
-
-  /**
-   * @deprecated Auth endpoints removed - use AWS Cognito directly
-   */
-  async login(_email: string, _password: string) {
-    throw new Error('login() is deprecated - use AWS Cognito authentication')
-  }
-
-  /**
-   * @deprecated Auth endpoints removed - use AWS Cognito directly
-   */
-  async signup(_email: string, _password: string, _fullName: string) {
-    throw new Error('signup() is deprecated - use AWS Cognito authentication')
-  }
-
-  /**
-   * @deprecated Use createCheckoutSession() instead
-   */
-  async getSubscription() {
-    // Subscription info is now included in getCurrentUser()
-    const user = await this.getCurrentUser()
-    return user.subscription
-  }
 }
 
 export const api = new ApiClient(API_BASE_URL)

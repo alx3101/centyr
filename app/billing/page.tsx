@@ -162,7 +162,7 @@ export default function BillingPage() {
                     <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center">
                       <span className="text-green-600 text-xs">✓</span>
                     </div>
-                    10 jobs/month
+                    3 jobs/month
                   </li>
                   <li className="flex items-center gap-2 text-gray-700">
                     <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center">
