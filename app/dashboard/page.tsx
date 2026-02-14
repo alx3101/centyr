@@ -148,7 +148,7 @@ function DashboardContent() {
     return { completed, failed, processing, successRate, total: recentJobs.length }
   }, [recentJobs, user])
 
-  if (isLoading && user) {
+  if (isLoading || !user) {
     return <SkeletonDashboard />
   }
 
