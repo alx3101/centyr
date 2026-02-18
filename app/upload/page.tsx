@@ -223,7 +223,7 @@ export default function UploadPage() {
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl border-2 border-purple-100 shadow-xl overflow-hidden">
           {/* Step 1: Upload */}
           {currentStep === 'upload' && (
-            <div className="p-8 animate-fade-in">
+            <div className="p-4 md:p-8 animate-fade-in">
               <h2 className="text-2xl font-bold text-gray-900 mb-2">Carica le tue immagini</h2>
               <p className="text-gray-600 mb-6">Trascina le foto prodotto o clicca per selezionarle</p>
 
@@ -294,7 +294,7 @@ export default function UploadPage() {
                     </button>
                   </div>
 
-                  <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
                     {files.map((uploadedFile, index) => (
                       <div
                         key={uploadedFile.id}
@@ -325,7 +325,7 @@ export default function UploadPage() {
 
           {/* Step 2: Configure */}
           {currentStep === 'configure' && (
-            <div className="p-8 animate-fade-in">
+            <div className="p-4 md:p-8 animate-fade-in">
               <h2 className="text-2xl font-bold text-gray-900 mb-2">Configura il job</h2>
               <p className="text-gray-600 mb-6">Personalizza le opzioni di elaborazione</p>
 
@@ -507,7 +507,7 @@ export default function UploadPage() {
 
           {/* Step 3: Review */}
           {currentStep === 'review' && (
-            <div className="p-8 animate-fade-in">
+            <div className="p-4 md:p-8 animate-fade-in">
               <h2 className="text-2xl font-bold text-gray-900 mb-2">Rivedi e avvia</h2>
               <p className="text-gray-600 mb-6">Controlla i dettagli prima di avviare l'elaborazione</p>
 
@@ -554,7 +554,7 @@ export default function UploadPage() {
               {/* Image Preview Grid */}
               <div className="mb-6">
                 <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-3">Anteprima</h4>
-                <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2">
+                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
                   {files.slice(0, 16).map((file) => (
                     <div key={file.id} className="aspect-square rounded-lg overflow-hidden border border-purple-200">
                       <img src={file.preview} alt="" className="w-full h-full object-cover" />
@@ -596,7 +596,7 @@ export default function UploadPage() {
           )}
 
           {/* Navigation Footer */}
-          <div className="px-8 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
+          <div className="px-4 md:px-8 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
             <div>
               {stepIndex > 0 && (
                 <button

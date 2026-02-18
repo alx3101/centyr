@@ -293,8 +293,8 @@ function JobDetailContent() {
         <div className={`bg-white/80 backdrop-blur-sm border-2 border-purple-100 rounded-2xl p-6 mb-6 shadow-lg ${animateClass}`}>
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
             <div className="flex-grow">
-              <div className="flex items-center gap-3 mb-3">
-                <h1 className="text-3xl md:text-4xl font-bold text-gradient">
+              <div className="flex flex-wrap items-center gap-3 mb-3">
+                <h1 className="text-xl md:text-3xl lg:text-4xl font-bold text-gradient">
                   {job.job_name || 'Untitled Job'}
                 </h1>
                 <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full border-2 ${statusConfig.color} font-bold`}>
@@ -442,7 +442,7 @@ function JobDetailContent() {
             </h2>
             <div className="space-y-6">
               {job.outputs.filter(Boolean).map((output, index) => (
-                <div key={index} className="bg-gradient-to-br from-purple-50/50 to-fuchsia-50/50 border-2 border-gray-200 rounded-xl p-6">
+                <div key={index} className="bg-gradient-to-br from-purple-50/50 to-fuchsia-50/50 border-2 border-gray-200 rounded-xl p-4 md:p-6">
                   <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
                     <span className="bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white px-3 py-1 rounded-full text-sm">
                       #{index + 1}
@@ -584,7 +584,7 @@ function JobDetailContent() {
 
         {/* Processing/Pending State */}
         {(job.status === JobStatus.PROCESSING || job.status === JobStatus.PENDING) && (
-          <div className={`bg-white/80 backdrop-blur-sm border-2 border-blue-200 rounded-2xl p-12 text-center shadow-xl ${animateScaleClass}`}>
+          <div className={`bg-white/80 backdrop-blur-sm border-2 border-blue-200 rounded-2xl p-6 md:p-12 text-center shadow-xl ${animateScaleClass}`}>
             <Loader className="w-16 h-16 text-blue-600 animate-spin mx-auto mb-6" />
             <h3 className="text-2xl font-bold text-gray-900 mb-3">
               {job.status === JobStatus.PROCESSING ? 'Processing Your Image' : 'Job Queued'}
@@ -603,7 +603,7 @@ function JobDetailContent() {
 
         {/* Failed State */}
         {job.status === JobStatus.FAILED && !job.batch_mode && (
-          <div className={`bg-white/80 backdrop-blur-sm border-2 border-red-200 rounded-2xl p-12 text-center shadow-xl ${animateScaleClass}`}>
+          <div className={`bg-white/80 backdrop-blur-sm border-2 border-red-200 rounded-2xl p-6 md:p-12 text-center shadow-xl ${animateScaleClass}`}>
             <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <XCircle className="w-10 h-10 text-red-600" />
             </div>

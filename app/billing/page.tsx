@@ -83,13 +83,13 @@ export default function BillingPage() {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Billing & Subscription</h1>
+          <h1 className="text-2xl md:text-4xl font-bold text-gray-900 mb-2">Billing & Subscription</h1>
           <p className="text-gray-600">Manage your plan and payment methods</p>
         </div>
 
         {/* Current Plan Card */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 border-2 border-purple-200 mb-8">
-          <div className="flex items-center justify-between mb-6">
+        <div className="bg-white rounded-2xl shadow-xl p-5 md:p-8 border-2 border-purple-200 mb-8">
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-1">
                 {isPremium ? 'Premium Plan' : 'Free Plan'}

@@ -167,10 +167,10 @@ function DashboardContent() {
               {stats && stats.total > 0 ? `${stats.total} jobs processed` : 'Ready to process'}
             </span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2 leading-tight">
+          <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-2 leading-tight">
             Welcome back, <span className="text-gradient">{user.email.split('@')[0]}</span>!
           </h1>
-          <p className="text-xl text-gray-600">
+          <p className="text-base md:text-xl text-gray-600">
             Your AI-powered image processing hub
           </p>
         </div>
@@ -485,10 +485,10 @@ function DashboardContent() {
                           e.preventDefault()
                           handleDownload(job.job_id)
                         }}
-                        className="hidden md:flex items-center gap-2 px-4 py-2 gradient-purple-fuchsia text-white rounded-lg font-bold hover:scale-105 transition-all shadow-md"
+                        className="flex items-center gap-2 px-3 py-2 md:px-4 gradient-purple-fuchsia text-white rounded-lg font-bold hover:scale-105 transition-all shadow-md text-sm"
                       >
                         <Download className="w-4 h-4" />
-                        Download
+                        <span className="hidden md:inline">Download</span>
                       </button>
                     )}
                   </div>

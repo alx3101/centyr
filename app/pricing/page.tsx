@@ -21,7 +21,7 @@ export default function PricingPage() {
       <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-fuchsia-50 py-12 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
               Simple, Transparent Pricing
             </h1>
             <p className="text-xl text-gray-600">Loading plans...</p>
@@ -82,7 +82,7 @@ export default function PricingPage() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16 animate-fade-in-up">
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
             Simple, Transparent Pricing
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -119,14 +119,14 @@ export default function PricingPage() {
         )}
 
         {/* Pricing Cards */}
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mt-4">
           {plans.map((plan, index) => (
             <div
               key={plan.name}
               className={`
                 relative bg-white/80 backdrop-blur-sm rounded-2xl p-8 border-2
                 ${plan.popular
-                  ? 'border-fuchsia-400 shadow-2xl scale-105'
+                  ? 'border-fuchsia-400 shadow-2xl md:scale-105'
                   : 'border-purple-200 shadow-xl'
                 }
                 animate-fade-in-up
