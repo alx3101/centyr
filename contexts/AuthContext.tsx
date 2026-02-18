@@ -133,6 +133,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         toast.success('Account created! Check your email to verify.')
         setAuthStatus('unauthenticated')
+        router.push(`/confirm-email?email=${encodeURIComponent(email)}`)
         return { success: true }
       } catch (error: any) {
         const message = error.message || 'Signup failed'

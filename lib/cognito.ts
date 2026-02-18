@@ -62,7 +62,7 @@ export function cognitoSignUp(
       )
     }
 
-    userPool.signUp(email, password, attributeList, [], (err, result) => {
+    userPool.signUp(email, password, attributeList, [], (err, _result) => {
       if (err) {
         resolve({
           success: false,
@@ -346,23 +346,16 @@ export function cognitoChangePassword(
  * 6. Scopes: email, openid, profile
  */
 export function cognitoOAuthSignIn(provider: 'Google' | 'Apple' | 'GitHub') {
-  const region = process.env.NEXT_PUBLIC_COGNITO_REGION
-  const userPoolId = process.env.NEXT_PUBLIC_COGNITO_USER_POOL_ID
   const clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID
+  const cognitoDomain = process.env.NEXT_PUBLIC_COGNITO_DOMAIN // e.g. https://your-prefix.auth.eu-west-1.amazoncognito.com
   const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`
-
-  // Extract domain from user pool ID (format: region_xxxxx)
-  const domain = `${userPoolId}` // Your Cognito domain
-
-  // Cognito Hosted UI URL
-  const cognitoDomain = `https://${domain}.auth.${region}.amazoncognito.com`
 
   const oauthUrl = `${cognitoDomain}/oauth2/authorize?` +
     `identity_provider=${provider}&` +
     `redirect_uri=${encodeURIComponent(redirectUri)}&` +
     `response_type=code&` +
     `client_id=${clientId}&` +
-    `scope=email openid profile`
+    `scope=email+openid+profile`
 
   // Redirect to Cognito Hosted UI
   window.location.href = oauthUrl
