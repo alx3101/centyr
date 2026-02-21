@@ -102,7 +102,7 @@ export default function LiveStats() {
         {/* Bottom CTA */}
         <div className="mt-10 text-center">
           <p className="text-gray-400 text-sm">
-            Unisciti a migliaia di e-commerce che stanno già usando Centyr
+            Join thousands of e-commerce stores already using Centyr
           </p>
         </div>
       </div>

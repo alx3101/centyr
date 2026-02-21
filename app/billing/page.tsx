@@ -42,10 +42,10 @@ export default function BillingPage() {
 
   const handleCancelSubscription = async () => {
     const confirmed = await confirm({
-      title: 'Annulla abbonamento',
-      message: 'Sei sicuro di voler annullare l\'abbonamento? Rimarrà attivo fino alla fine del periodo di fatturazione corrente.',
-      confirmText: 'Sì, annulla',
-      cancelText: 'No, mantieni',
+      title: 'Cancel Subscription',
+      message: 'Are you sure you want to cancel your subscription? It will remain active until the end of the current billing period.',
+      confirmText: 'Yes, cancel',
+      cancelText: 'No, keep it',
       variant: 'destructive'
     })
 

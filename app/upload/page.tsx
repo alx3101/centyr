@@ -12,9 +12,9 @@ import { useAuth } from '@/contexts/AuthContext'
 type Step = 'upload' | 'configure' | 'review'
 
 const STEPS: { id: Step; label: string; icon: typeof Upload }[] = [
-  { id: 'upload', label: 'Carica', icon: Upload },
-  { id: 'configure', label: 'Configura', icon: Settings },
-  { id: 'review', label: 'Rivedi', icon: Eye },
+  { id: 'upload', label: 'Upload', icon: Upload },
+  { id: 'configure', label: 'Configure', icon: Settings },
+  { id: 'review', label: 'Review', icon: Eye },
 ]
 
 export default function UploadPage() {
@@ -65,7 +65,7 @@ export default function UploadPage() {
   const onDrop = (acceptedFiles: File[]) => {
     const totalFiles = files.length + acceptedFiles.length
     if (totalFiles > maxBatchSize) {
-      toast.error(`Massimo ${maxBatchSize} immagini per batch. ${!isPremium ? 'Fai upgrade per processare di più!' : ''}`)
+      toast.error(`Maximum ${maxBatchSize} images per batch. ${!isPremium ? 'Upgrade to process more!' : ''}`)
       const remainingSlots = maxBatchSize - files.length
       if (remainingSlots > 0) {
         addFiles(acceptedFiles.slice(0, remainingSlots))
@@ -75,7 +75,7 @@ export default function UploadPage() {
 
     // Check credits
     if (files.length + acceptedFiles.length > remainingCredits) {
-      toast.error(`Hai solo ${remainingCredits} jobs rimasti questo mese.`)
+      toast.error(`You only have ${remainingCredits} jobs left this month.`)
       return
     }
 
@@ -95,11 +95,11 @@ export default function UploadPage() {
 
   const handleNext = () => {
     if (currentStep === 'upload' && files.length === 0) {
-      toast.error('Carica almeno un\'immagine')
+      toast.error('Upload at least one image')
       return
     }
     if (currentStep === 'configure' && !jobName.trim()) {
-      toast.error('Inserisci un nome per il job')
+      toast.error('Enter a job name')
       return
     }
 
@@ -129,7 +129,7 @@ export default function UploadPage() {
     const jobId = await uploadAndProcess(jobName.trim(), options)
 
     if (jobId) {
-      toast.success('Job avviato! Reindirizzamento alla dashboard...')
+      toast.success('Job started! Redirecting to dashboard...')
       setTimeout(() => {
         router.push(`/dashboard?job=${jobId}`)
       }, 1500)
@@ -152,9 +152,9 @@ export default function UploadPage() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
           <div>
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
-              Nuovo <span className="text-gradient">Job</span>
+              New <span className="text-gradient">Job</span>
             </h1>
-            <p className="text-gray-600 mt-1">Elabora le tue foto prodotto con l'AI</p>
+            <p className="text-gray-600 mt-1">Process your product photos with AI</p>
           </div>
 
           {/* Quota Indicator */}
@@ -168,7 +168,7 @@ export default function UploadPage() {
               <div>
                 <div className="flex items-center gap-2">
                   <span className="font-bold text-gray-900">{remainingCredits}</span>
-                  <span className="text-gray-500 text-sm">jobs rimasti</span>
+                  <span className="text-gray-500 text-sm">jobs remaining</span>
                 </div>
                 <div className="w-32 bg-gray-200 rounded-full h-1.5 mt-1">
                   <div
@@ -224,8 +224,8 @@ export default function UploadPage() {
           {/* Step 1: Upload */}
           {currentStep === 'upload' && (
             <div className="p-4 md:p-8 animate-fade-in">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Carica le tue immagini</h2>
-              <p className="text-gray-600 mb-6">Trascina le foto prodotto o clicca per selezionarle</p>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">Upload your images</h2>
+              <p className="text-gray-600 mb-6">Drag your product photos or click to select</p>
 
               {/* Drop Zone */}
               <div
@@ -246,9 +246,9 @@ export default function UploadPage() {
                     <Upload className="w-10 h-10 text-white" />
                   </div>
                   <p className="text-xl font-bold text-gray-900 mb-2">
-                    {isDragActive ? 'Rilascia qui!' : 'Trascina le immagini qui'}
+                    {isDragActive ? 'Drop it here!' : 'Drag images here'}
                   </p>
-                  <p className="text-gray-600 mb-4">oppure clicca per sfogliare</p>
+                  <p className="text-gray-600 mb-4">or click to browse</p>
 
                   <div className="flex flex-wrap gap-2 justify-center">
                     <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">JPG</span>
@@ -266,12 +266,12 @@ export default function UploadPage() {
                 <div className="flex-1">
                   <p className={`text-sm ${maxBatchSize === 1 ? 'text-amber-800' : 'text-purple-800'}`}>
                     {maxBatchSize === 1
-                      ? 'Piano Free: 1 immagine per job. '
-                      : `Puoi caricare fino a ${maxBatchSize} immagini per job.`
+                      ? 'Free Plan: 1 image per job. '
+                      : `You can upload up to ${maxBatchSize} images per job.`
                     }
                     {maxBatchSize === 1 && (
                       <Link href="/pricing" className="font-semibold underline hover:no-underline">
-                        Fai upgrade per batch illimitati
+                        Upgrade for unlimited batches
                       </Link>
                     )}
                   </p>
@@ -283,14 +283,14 @@ export default function UploadPage() {
                 <div className="animate-fade-in">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="font-bold text-gray-900">
-                      {files.length} {files.length === 1 ? 'immagine' : 'immagini'} caricata
+                      {files.length} {files.length === 1 ? 'image' : 'images'} added
                       <span className="text-gray-500 font-normal ml-2">({totalFileSize.toFixed(1)} MB)</span>
                     </h3>
                     <button
                       onClick={clearFiles}
                       className="text-sm text-red-600 hover:text-red-700 font-semibold"
                     >
-                      Rimuovi tutte
+                      Remove all
                     </button>
                   </div>
 
@@ -326,32 +326,32 @@ export default function UploadPage() {
           {/* Step 2: Configure */}
           {currentStep === 'configure' && (
             <div className="p-4 md:p-8 animate-fade-in">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Configura il job</h2>
-              <p className="text-gray-600 mb-6">Personalizza le opzioni di elaborazione</p>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">Configure job</h2>
+              <p className="text-gray-600 mb-6">Customize your processing options</p>
 
               {/* Job Name */}
               <div className="mb-8">
                 <label htmlFor="jobName" className="block text-sm font-semibold text-gray-700 mb-2">
-                  Nome del Job <span className="text-red-500">*</span>
+                  Job Name <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   id="jobName"
                   value={jobName}
                   onChange={(e) => setJobName(e.target.value)}
-                  placeholder="es. Collezione Estate 2024, Catalogo Prodotti..."
+                  placeholder="e.g. Summer Collection 2024, Product Catalog..."
                   className="w-full px-4 py-3 border-2 border-purple-200 rounded-xl focus:outline-none focus:border-fuchsia-400 transition-colors text-lg"
                   maxLength={100}
                   autoFocus
                 />
-                <p className="text-xs text-gray-500 mt-2">Un nome descrittivo per identificare questo batch</p>
+                <p className="text-xs text-gray-500 mt-2">A descriptive name to identify this batch</p>
               </div>
 
               {/* Processing Options */}
               <div className="space-y-6">
                 <h3 className="font-bold text-gray-900 flex items-center gap-2">
                   <Sparkles className="w-5 h-5 text-fuchsia-500" />
-                  Opzioni di elaborazione
+                  Processing Options
                 </h3>
 
                 {/* Background Removal */}
@@ -363,7 +363,7 @@ export default function UploadPage() {
                       checked={removeBackground}
                       onChange={(e) => {
                         if (!isPremium) {
-                          toast.error('Fai upgrade a Premium per usare la rimozione sfondo')
+                          toast.error('Upgrade to Premium to use background removal')
                           return
                         }
                         setRemoveBackground(e.target.checked)
@@ -380,7 +380,7 @@ export default function UploadPage() {
                     />
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="font-semibold text-gray-900">Rimuovi Sfondo</span>
+                        <span className="font-semibold text-gray-900">Remove Background</span>
                         {!isPremium && (
                           <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-fuchsia-100 text-fuchsia-700 text-xs font-semibold rounded-full">
                             <Lock className="w-3 h-3" />
@@ -389,7 +389,7 @@ export default function UploadPage() {
                         )}
                       </div>
                       <p className="text-sm text-gray-500">
-                        L'AI rimuove automaticamente lo sfondo per immagini pulite
+                        AI automatically removes the background for clean product shots
                       </p>
                     </div>
                   </label>
@@ -397,7 +397,7 @@ export default function UploadPage() {
                   {/* Custom Background */}
                   {removeBackground && isPremium && (
                     <div className="mt-4 pt-4 border-t border-fuchsia-200 animate-fade-in">
-                      <p className="text-sm font-medium text-gray-700 mb-3">Sfondo personalizzato (opzionale)</p>
+                      <p className="text-sm font-medium text-gray-700 mb-3">Custom background (optional)</p>
                       {!customBackground ? (
                         <label className="flex items-center justify-center h-24 border-2 border-dashed border-purple-300 rounded-xl cursor-pointer hover:border-fuchsia-400 hover:bg-white transition-all">
                           <input
@@ -414,14 +414,14 @@ export default function UploadPage() {
                           />
                           <div className="text-center">
                             <ImageIcon className="w-6 h-6 text-purple-400 mx-auto mb-1" />
-                            <span className="text-sm text-gray-600">Carica immagine sfondo</span>
+                            <span className="text-sm text-gray-600">Upload background image</span>
                           </div>
                         </label>
                       ) : (
                         <div className="flex items-center gap-4">
                           <img
                             src={customBackgroundPreview!}
-                            alt="Sfondo personalizzato"
+                            alt="Custom background"
                             className="h-24 rounded-xl object-cover border-2 border-purple-200"
                           />
                           <button
@@ -434,7 +434,7 @@ export default function UploadPage() {
                             }}
                             className="text-red-600 hover:text-red-700 text-sm font-semibold"
                           >
-                            Rimuovi
+                            Remove
                           </button>
                         </div>
                       )}
@@ -446,7 +446,7 @@ export default function UploadPage() {
                 <div className="p-4 rounded-xl border-2 border-gray-200 bg-white">
                   <div className="flex items-center gap-2 mb-4">
                     <Settings className="w-5 h-5 text-purple-600" />
-                    <span className="font-semibold text-gray-900">Impostazioni Output</span>
+                    <span className="font-semibold text-gray-900">Output Settings</span>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -454,7 +454,7 @@ export default function UploadPage() {
                     {/* Output Size */}
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Dimensione Output
+                        Output Size
                       </label>
                       <div className="flex items-center gap-3">
                         <input
@@ -475,7 +475,7 @@ export default function UploadPage() {
                     {/* Margin Percent */}
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Margine
+                        Margin
                       </label>
                       <div className="flex items-center gap-3">
                         <input
@@ -495,7 +495,7 @@ export default function UploadPage() {
                         </div>
                       </div>
                       <p className="text-xs text-gray-500 mt-2">
-                        Percentuale rispetto alla dimensione di output.
+                        Percentage relative to the output size.
                       </p>
                     </div>
                   </div>
@@ -508,8 +508,8 @@ export default function UploadPage() {
           {/* Step 3: Review */}
           {currentStep === 'review' && (
             <div className="p-4 md:p-8 animate-fade-in">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Rivedi e avvia</h2>
-              <p className="text-gray-600 mb-6">Controlla i dettagli prima di avviare l'elaborazione</p>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">Review & start</h2>
+              <p className="text-gray-600 mb-6">Check the details before starting processing</p>
 
               {/* Summary Card */}
               <div className="bg-gradient-to-br from-purple-50 to-fuchsia-50 rounded-2xl p-6 border-2 border-purple-200 mb-6">
@@ -519,33 +519,33 @@ export default function UploadPage() {
                     <p className="text-xl font-bold text-gray-900">{jobName}</p>
                   </div>
                   <div>
-                    <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-2">Immagini</h4>
+                    <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-2">Images</h4>
                     <p className="text-xl font-bold text-gray-900">{files.length} file ({totalFileSize.toFixed(1)} MB)</p>
                   </div>
                 </div>
 
                 {/* Options Summary */}
                 <div className="mt-6 pt-6 border-t border-purple-200">
-                  <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-3">Opzioni</h4>
+                  <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-3">Options</h4>
                   <div className="flex flex-wrap gap-2">
                     <span className="px-3 py-1 bg-white text-purple-700 rounded-full text-sm font-medium border border-purple-200">
-                      Allineamento AI
+                      AI Alignment
                     </span>
                     {removeBackground && (
                       <span className="px-3 py-1 bg-fuchsia-100 text-fuchsia-700 rounded-full text-sm font-medium">
-                        Rimozione Sfondo
+                        Background Removal
                       </span>
                     )}
                     {customBackground && (
                       <span className="px-3 py-1 bg-fuchsia-100 text-fuchsia-700 rounded-full text-sm font-medium">
-                        Sfondo Custom
+                        Custom Background
                       </span>
                     )}
                     <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
                       {outputSize}×{outputSize}px
                     </span>
                     <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
-                      Margine {marginPercent}% ({marginPixels}px)
+                      Margin {marginPercent}% ({marginPixels}px)
                     </span>
                   </div>
                 </div>
@@ -553,7 +553,7 @@ export default function UploadPage() {
 
               {/* Image Preview Grid */}
               <div className="mb-6">
-                <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-3">Anteprima</h4>
+                <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-3">Preview</h4>
                 <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
                   {files.slice(0, 16).map((file) => (
                     <div key={file.id} className="aspect-square rounded-lg overflow-hidden border border-purple-200">
@@ -573,9 +573,9 @@ export default function UploadPage() {
                 <Zap className="w-5 h-5 text-blue-600" />
                 <div>
                   <p className="font-semibold text-blue-900">
-                    Tempo stimato: ~{Math.floor((files.length * 17 + 180) / (60 * 3))} minuti
+                    Estimated time: ~{Math.floor((files.length * 17 + 180) / (60 * 3))} minutes
                   </p>
-                  <p className="text-sm text-blue-700">Verrai reindirizzato alla dashboard per monitorare il progresso</p>
+                  <p className="text-sm text-blue-700">You'll be redirected to the dashboard to track progress</p>
                 </div>
               </div>
 
@@ -584,10 +584,10 @@ export default function UploadPage() {
                 <div className="mt-4 bg-red-50 border border-red-200 rounded-xl p-4 flex items-center gap-3">
                   <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
                   <div>
-                    <p className="font-semibold text-red-900">Crediti insufficienti</p>
+                    <p className="font-semibold text-red-900">Insufficient credits</p>
                     <p className="text-sm text-red-700">
-                      Hai {remainingCredits} crediti ma stai cercando di elaborare {files.length} immagini.{' '}
-                      <Link href="/pricing" className="underline font-semibold">Fai upgrade</Link>
+                      You have {remainingCredits} credits but are trying to process {files.length} images.{' '}
+                      <Link href="/pricing" className="underline font-semibold">Upgrade</Link>
                     </p>
                   </div>
                 </div>
@@ -604,7 +604,7 @@ export default function UploadPage() {
                   className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-900 font-semibold transition-colors"
                 >
                   <ChevronLeft className="w-5 h-5" />
-                  Indietro
+                  Back
                 </button>
               )}
             </div>
@@ -616,7 +616,7 @@ export default function UploadPage() {
                   disabled={!canProceed}
                   className="flex items-center gap-2 px-6 py-3 gradient-purple-fuchsia text-white font-bold rounded-xl hover:scale-105 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
-                  Continua
+                  Continue
                   <ChevronRight className="w-5 h-5" />
                 </button>
               ) : (
@@ -628,12 +628,12 @@ export default function UploadPage() {
                   {isUploading ? (
                     <>
                       <Loader className="w-5 h-5 animate-spin" />
-                      Elaborazione...
+                      Processing...
                     </>
                   ) : (
                     <>
                       <Sparkles className="w-5 h-5" />
-                      Avvia Elaborazione
+                      Start Processing
                     </>
                   )}
                 </button>
@@ -649,8 +649,8 @@ export default function UploadPage() {
               <Zap className="w-5 h-5 text-amber-600" />
             </div>
             <div>
-              <h4 className="font-semibold text-gray-900 text-sm">Veloce</h4>
-              <p className="text-xs text-gray-600">~10 sec per immagine</p>
+              <h4 className="font-semibold text-gray-900 text-sm">Fast</h4>
+              <p className="text-xs text-gray-600">~10 sec per image</p>
             </div>
           </div>
           <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-purple-100 flex items-start gap-3">
@@ -658,8 +658,8 @@ export default function UploadPage() {
               <Sparkles className="w-5 h-5 text-purple-600" />
             </div>
             <div>
-              <h4 className="font-semibold text-gray-900 text-sm">Precisione AI</h4>
-              <p className="text-xs text-gray-600">Allineamento perfetto</p>
+              <h4 className="font-semibold text-gray-900 text-sm">AI Precision</h4>
+              <p className="text-xs text-gray-600">Perfect alignment</p>
             </div>
           </div>
           <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-purple-100 flex items-start gap-3">
@@ -667,8 +667,8 @@ export default function UploadPage() {
               <Shield className="w-5 h-5 text-green-600" />
             </div>
             <div>
-              <h4 className="font-semibold text-gray-900 text-sm">Sicuro</h4>
-              <p className="text-xs text-gray-600">Crittografia E2E</p>
+              <h4 className="font-semibold text-gray-900 text-sm">Secure</h4>
+              <p className="text-xs text-gray-600">End-to-end encryption</p>
             </div>
           </div>
         </div>

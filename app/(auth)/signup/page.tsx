@@ -55,7 +55,7 @@ export default function SignupPage() {
           {/* Value Sidebar - Hidden on mobile, shown on lg+ */}
           <div className="hidden lg:flex lg:w-96 flex-col justify-center animate-fade-in-up">
             <div className="bg-gradient-to-br from-purple-600 to-fuchsia-600 rounded-2xl p-8 text-white shadow-2xl">
-              <h2 className="text-2xl font-bold mb-6">Perché scegliere Centyr?</h2>
+              <h2 className="text-2xl font-bold mb-6">Why choose Centyr?</h2>
 
               <div className="space-y-5">
                 <div className="flex items-start gap-4">
@@ -63,8 +63,8 @@ export default function SignupPage() {
                     <Zap className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-bold mb-1">Elaborazione Istantanea</h3>
-                    <p className="text-purple-100 text-sm">Centinaia di foto elaborate in pochi secondi con la nostra AI</p>
+                    <h3 className="font-bold mb-1">Instant Processing</h3>
+                    <p className="text-purple-100 text-sm">Hundreds of photos processed in seconds with our AI</p>
                   </div>
                 </div>
 
@@ -73,8 +73,8 @@ export default function SignupPage() {
                     <Clock className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-bold mb-1">Risparmia 10+ Ore/Settimana</h3>
-                    <p className="text-purple-100 text-sm">Automatizza l'editing manuale delle foto prodotto</p>
+                    <h3 className="font-bold mb-1">Save 10+ Hours/Week</h3>
+                    <p className="text-purple-100 text-sm">Automate manual product photo editing</p>
                   </div>
                 </div>
 
@@ -83,8 +83,8 @@ export default function SignupPage() {
                     <Shield className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-bold mb-1">30 Giorni Soddisfatti</h3>
-                    <p className="text-purple-100 text-sm">Garanzia di rimborso completo, senza domande</p>
+                    <h3 className="font-bold mb-1">30-Day Guarantee</h3>
+                    <p className="text-purple-100 text-sm">Full money-back guarantee, no questions asked</p>
                   </div>
                 </div>
               </div>
@@ -97,7 +97,7 @@ export default function SignupPage() {
                   ))}
                   <span className="ml-2 text-sm font-semibold">4.9/5</span>
                 </div>
-                <p className="text-purple-100 text-sm mb-4">Valutazione media dei nostri clienti</p>
+                <p className="text-purple-100 text-sm mb-4">Average rating from our customers</p>
 
                 <div className="flex items-center gap-3">
                   <div className="flex -space-x-2">
@@ -108,14 +108,14 @@ export default function SignupPage() {
                     ))}
                   </div>
                   <p className="text-sm text-purple-100">
-                    <span className="font-bold text-white">12,000+</span> e-commerce attivi
+                    <span className="font-bold text-white">12,000+</span> active e-commerce stores
                   </p>
                 </div>
               </div>
 
               {/* Features list */}
               <div className="mt-6 space-y-2">
-                {['10 job gratis al mese', 'Nessuna carta richiesta', 'Setup in 60 secondi'].map((feature, i) => (
+                {['3 free jobs/month', 'No credit card required', 'Setup in 60 seconds'].map((feature, i) => (
                   <div key={i} className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-green-300" />
                     <span className="text-sm">{feature}</span>
@@ -286,7 +286,7 @@ export default function SignupPage() {
           {/* Free trial badge - shown on mobile only */}
           <div className="mt-6 bg-gradient-to-r from-purple-50 to-fuchsia-50 border-2 border-fuchsia-200 rounded-xl p-4 text-center lg:hidden">
             <p className="text-sm font-semibold text-gray-900">
-              🎉 Start with 10 free jobs/month
+              🎉 Start with 3 free jobs/month
             </p>
             <p className="text-xs text-gray-600 mt-1">No credit card required</p>
           </div>

@@ -1,36 +1,36 @@
 export default function Testimonials() {
   const testimonials = [
     {
-      content: 'Risparmiamo €500 al mese in editing foto. Il ROI è stato immediato. Centyr ha trasformato completamente il nostro workflow.',
+      content: 'We save €500/month on photo editing. The ROI was immediate. Centyr completely transformed our workflow.',
       name: 'Marco Bianchi',
       role: 'CEO & Founder',
       company: 'TechStyle Store',
       rating: 5,
-      result: 'ROI 15x in 3 mesi',
+      result: 'ROI 15x in 3 months',
     },
     {
-      content: 'Prima passavo 3 ore al giorno ad allineare foto prodotto. Ora carico tutto e in 5 minuti ho il catalogo pronto.',
+      content: 'I used to spend 3 hours a day aligning product photos. Now I upload everything and in 5 minutes my catalog is ready.',
       name: 'Emma Thompson',
       role: 'E-commerce Manager',
       company: 'Luxe Jewelry Co.',
       rating: 5,
-      result: '90% tempo risparmiato',
+      result: '90% time saved',
     },
     {
-      content: 'Funziona perfettamente anche con packaging complessi. La qualità è professionale, i clienti notano la differenza.',
+      content: 'Works perfectly even with complex packaging. The quality is professional — customers notice the difference.',
       name: 'Alessandro Rossi',
-      role: 'Direttore Marketing',
+      role: 'Marketing Director',
       company: 'Fragranze Italia',
       rating: 5,
-      result: '+40% conversioni',
+      result: '+40% conversions',
     },
     {
-      content: 'Gestisco 5 negozi online con oltre 2000 prodotti. Centyr mi ha permesso di standardizzare tutto il catalogo in un weekend.',
+      content: 'I manage 5 online stores with over 2000 products. Centyr let me standardize the entire catalog in a weekend.',
       name: 'Sofia Martinez',
       role: 'Operations Manager',
       company: 'MultiStore Group',
       rating: 5,
-      result: '2000+ foto elaborate',
+      result: '2000+ photos processed',
     },
   ]
 
@@ -39,13 +39,13 @@ export default function Testimonials() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-green-100 px-4 py-2 rounded-full mb-6">
-            <span className="text-green-600 font-semibold text-sm">12,000+ e-commerce soddisfatti</span>
+            <span className="text-green-600 font-semibold text-sm">12,000+ satisfied e-commerce stores</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Amato dai Professionisti
+            Loved by Professionals
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Scopri perché migliaia di e-commerce scelgono Centyr per le loro foto prodotto
+            Discover why thousands of e-commerce stores choose Centyr for their product photos
           </p>
         </div>
 
@@ -97,19 +97,19 @@ export default function Testimonials() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div>
               <p className="text-4xl font-bold">12,000+</p>
-              <p className="text-purple-100 text-sm">E-commerce attivi</p>
+              <p className="text-purple-100 text-sm">Active e-commerce stores</p>
             </div>
             <div>
               <p className="text-4xl font-bold">5M+</p>
-              <p className="text-purple-100 text-sm">Foto elaborate</p>
+              <p className="text-purple-100 text-sm">Photos processed</p>
             </div>
             <div>
               <p className="text-4xl font-bold">99.9%</p>
-              <p className="text-purple-100 text-sm">Uptime garantito</p>
+              <p className="text-purple-100 text-sm">Guaranteed uptime</p>
             </div>
             <div>
               <p className="text-4xl font-bold">4.9/5</p>
-              <p className="text-purple-100 text-sm">Rating clienti</p>
+              <p className="text-purple-100 text-sm">Customer rating</p>
             </div>
           </div>
         </div>

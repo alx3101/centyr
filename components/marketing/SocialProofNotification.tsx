@@ -4,21 +4,21 @@ import { useState, useEffect } from 'react'
 import { CheckCircle, Image as ImageIcon, Zap } from 'lucide-react'
 
 const NOTIFICATIONS = [
-  { name: 'Marco B.', city: 'Milano', action: 'ha elaborato', count: 47, type: 'images' },
-  { name: 'Sofia R.', city: 'Roma', action: 'ha elaborato', count: 120, type: 'images' },
-  { name: 'Alessandro M.', city: 'Torino', action: 'si è iscritto a', count: 0, type: 'signup' },
-  { name: 'Giulia P.', city: 'Firenze', action: 'ha elaborato', count: 85, type: 'images' },
-  { name: 'Luca T.', city: 'Napoli', action: 'è passato a', count: 0, type: 'upgrade' },
-  { name: 'Emma C.', city: 'Bologna', action: 'ha elaborato', count: 200, type: 'images' },
-  { name: 'Francesco D.', city: 'Verona', action: 'si è iscritto a', count: 0, type: 'signup' },
-  { name: 'Chiara L.', city: 'Padova', action: 'ha elaborato', count: 63, type: 'images' },
-  { name: 'Andrea V.', city: 'Genova', action: 'è passato a', count: 0, type: 'upgrade' },
-  { name: 'Martina S.', city: 'Palermo', action: 'ha elaborato', count: 95, type: 'images' },
+  { name: 'Marco B.', city: 'Milan', action: 'processed', count: 47, type: 'images' },
+  { name: 'Sofia R.', city: 'Rome', action: 'processed', count: 120, type: 'images' },
+  { name: 'Alessandro M.', city: 'Turin', action: 'signed up for', count: 0, type: 'signup' },
+  { name: 'Giulia P.', city: 'Florence', action: 'processed', count: 85, type: 'images' },
+  { name: 'Luca T.', city: 'Naples', action: 'upgraded to', count: 0, type: 'upgrade' },
+  { name: 'Emma C.', city: 'Bologna', action: 'processed', count: 200, type: 'images' },
+  { name: 'Francesco D.', city: 'Verona', action: 'signed up for', count: 0, type: 'signup' },
+  { name: 'Chiara L.', city: 'Padua', action: 'processed', count: 63, type: 'images' },
+  { name: 'Andrea V.', city: 'Genoa', action: 'upgraded to', count: 0, type: 'upgrade' },
+  { name: 'Martina S.', city: 'Palermo', action: 'processed', count: 95, type: 'images' },
 ]
 
 function getTimeAgo() {
   const minutes = Math.floor(Math.random() * 10) + 1
-  return `${minutes} min fa`
+  return `${minutes} min ago`
 }
 
 export default function SocialProofNotification() {
@@ -62,7 +62,7 @@ export default function SocialProofNotification() {
   const getMessage = () => {
     switch (notification.type) {
       case 'images':
-        return `${notification.action} ${notification.count} immagini`
+        return `${notification.action} ${notification.count} images`
       case 'signup':
         return `${notification.action} Centyr`
       case 'upgrade':

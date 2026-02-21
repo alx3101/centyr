@@ -6,6 +6,7 @@ export interface User {
   email: string
   email_verified: boolean
   username: string
+  name?: string
   subscription: {
     plan: string
     plan_name: string

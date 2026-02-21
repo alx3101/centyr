@@ -4,38 +4,38 @@ export default function Security() {
   const securityFeatures = [
     {
       icon: Lock,
-      title: 'Crittografia End-to-End',
-      description: 'Tutte le immagini sono crittografate in transito (TLS 1.3) e a riposo (AES-256).',
+      title: 'End-to-End Encryption',
+      description: 'All images are encrypted in transit (TLS 1.3) and at rest (AES-256).',
       color: 'purple'
     },
     {
       icon: Server,
       title: 'Server EU',
-      description: 'I tuoi dati restano in Europa. Infrastruttura AWS con certificazione ISO 27001.',
+      description: 'Your data stays in Europe. AWS infrastructure with ISO 27001 certification.',
       color: 'fuchsia'
     },
     {
       icon: Eye,
       title: 'Privacy by Design',
-      description: 'Non usiamo le tue immagini per training. I tuoi prodotti restano tuoi.',
+      description: 'We never use your images for training. Your products remain yours.',
       color: 'purple'
     },
     {
       icon: FileCheck,
       title: 'GDPR Compliant',
-      description: 'Piena conformità GDPR. DPA disponibile per clienti enterprise.',
+      description: 'Full GDPR compliance. DPA available for enterprise clients.',
       color: 'fuchsia'
     },
     {
       icon: RefreshCw,
-      title: 'Auto-cancellazione',
-      description: 'Le immagini vengono eliminate automaticamente dopo 30 giorni.',
+      title: 'Auto-deletion',
+      description: 'Images are automatically deleted after 30 days.',
       color: 'purple'
     },
     {
       icon: Shield,
       title: 'SOC 2 Type II',
-      description: 'Audit annuali indipendenti per garantire i massimi standard di sicurezza.',
+      description: 'Annual independent audits to ensure the highest security standards.',
       color: 'fuchsia'
     }
   ]
@@ -51,13 +51,13 @@ export default function Security() {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-green-500/20 px-4 py-2 rounded-full mb-6 border border-green-500/30">
             <Shield className="w-5 h-5 text-green-400" />
-            <span className="text-green-400 font-semibold text-sm">Sicurezza Enterprise-Grade</span>
+            <span className="text-green-400 font-semibold text-sm">Enterprise-Grade Security</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            I Tuoi Dati Sono Al Sicuro
+            Your Data Is Safe
           </h2>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            Sicurezza e privacy sono la nostra priorità. Ecco come proteggiamo le tue immagini.
+            Security and privacy are our top priority. Here's how we protect your images.
           </p>
         </div>
 

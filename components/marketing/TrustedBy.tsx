@@ -81,7 +81,7 @@ export default function TrustedBy() {
             </div>
             <div className="flex-1 text-center md:text-left">
               <blockquote className="text-lg text-gray-700 italic mb-3">
-                "Centyr ha rivoluzionato il nostro workflow. Prima impiegavamo 2 ore al giorno per allineare le foto, ora sono 5 minuti. Il ROI è stato immediato."
+                "Centyr revolutionized our workflow. We used to spend 2 hours a day aligning photos — now it's 5 minutes. The ROI was immediate."
               </blockquote>
               <div>
                 <p className="font-bold text-gray-900">Marco Rossi</p>

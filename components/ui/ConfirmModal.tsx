@@ -115,7 +115,7 @@ export function ConfirmProvider({ children }: ConfirmProviderProps) {
                 onClick={handleCancel}
                 className="flex-1 px-4 py-2.5 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-colors"
               >
-                {options.cancelText || 'Annulla'}
+                {options.cancelText || 'Cancel'}
               </button>
               <button
                 onClick={handleConfirm}
@@ -126,7 +126,7 @@ export function ConfirmProvider({ children }: ConfirmProviderProps) {
                     : 'bg-purple-600 text-white hover:bg-purple-700'
                 )}
               >
-                {options.confirmText || 'Conferma'}
+                {options.confirmText || 'Confirm'}
               </button>
             </div>
           </div>

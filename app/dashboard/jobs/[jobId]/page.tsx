@@ -134,10 +134,10 @@ function JobDetailContent() {
 
   const handleDelete = async () => {
     const confirmed = await confirm({
-      title: 'Elimina job',
-      message: 'Sei sicuro di voler eliminare questo job? Questa azione non può essere annullata.',
-      confirmText: 'Sì, elimina',
-      cancelText: 'Annulla',
+      title: 'Delete job',
+      message: 'Are you sure you want to delete this job? This action cannot be undone.',
+      confirmText: 'Yes, delete',
+      cancelText: 'Cancel',
       variant: 'destructive'
     })
 
@@ -154,10 +154,10 @@ function JobDetailContent() {
 
   const handleRetry = async () => {
     const confirmed = await confirm({
-      title: 'Riprova immagini fallite',
-      message: 'Vuoi riprovare a elaborare le immagini non completate?',
-      confirmText: 'Riprova',
-      cancelText: 'Annulla',
+      title: 'Retry failed images',
+      message: 'Do you want to retry processing the incomplete images?',
+      confirmText: 'Retry',
+      cancelText: 'Cancel',
       variant: 'default'
     })
 
@@ -166,7 +166,7 @@ function JobDetailContent() {
     try {
       setIsRetrying(true)
       const result = await api.retryJob(jobId)
-      alert(`Retry avviato per ${result.retry_count} immagini`)
+      alert(`Retry started for ${result.retry_count} images`)
       // Refresh job data
       const jobData = await api.getJobDetails(jobId)
       setJob(jobData)
@@ -341,12 +341,12 @@ function JobDetailContent() {
                   {isRetrying ? (
                     <>
                       <Loader className="w-5 h-5 animate-spin" />
-                      Riprovando...
+                      Retrying...
                     </>
                   ) : (
                     <>
                       <RotateCw className="w-5 h-5" />
-                      Riprova
+                      Retry
                     </>
                   )}
                 </button>

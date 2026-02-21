@@ -223,10 +223,10 @@ export default function PricingPage() {
                   ENTERPRISE
                 </div>
                 <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                  Soluzione Enterprise
+                  Enterprise Solution
                 </h3>
                 <p className="text-gray-300 text-lg mb-6">
-                  Per aziende con esigenze avanzate. Volume illimitato, integrazioni custom, SLA garantito e supporto dedicato.
+                  For companies with advanced needs. Unlimited volume, custom integrations, guaranteed SLA and dedicated support.
                 </p>
 
                 {/* Enterprise Features */}
@@ -236,8 +236,8 @@ export default function PricingPage() {
                       <Zap className="w-5 h-5 text-purple-400" />
                     </div>
                     <div>
-                      <p className="text-white font-semibold">Volume illimitato</p>
-                      <p className="text-gray-400 text-sm">Nessun limite mensile</p>
+                      <p className="text-white font-semibold">Unlimited volume</p>
+                      <p className="text-gray-400 text-sm">No monthly limits</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -246,7 +246,7 @@ export default function PricingPage() {
                     </div>
                     <div>
                       <p className="text-white font-semibold">SLA 99.99%</p>
-                      <p className="text-gray-400 text-sm">Uptime garantito</p>
+                      <p className="text-gray-400 text-sm">Guaranteed uptime</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -254,7 +254,7 @@ export default function PricingPage() {
                       <Users className="w-5 h-5 text-purple-400" />
                     </div>
                     <div>
-                      <p className="text-white font-semibold">Team dedicato</p>
+                      <p className="text-white font-semibold">Dedicated team</p>
                       <p className="text-gray-400 text-sm">Account manager</p>
                     </div>
                   </div>
@@ -263,8 +263,8 @@ export default function PricingPage() {
                       <Headphones className="w-5 h-5 text-purple-400" />
                     </div>
                     <div>
-                      <p className="text-white font-semibold">Supporto 24/7</p>
-                      <p className="text-gray-400 text-sm">Priorità massima</p>
+                      <p className="text-white font-semibold">24/7 Support</p>
+                      <p className="text-gray-400 text-sm">Maximum priority</p>
                     </div>
                   </div>
                 </div>
@@ -273,18 +273,18 @@ export default function PricingPage() {
               {/* Right: CTA */}
               <div className="flex-shrink-0 text-center">
                 <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-                  <p className="text-gray-400 text-sm mb-2">A partire da</p>
+                  <p className="text-gray-400 text-sm mb-2">Starting from</p>
                   <div className="text-4xl font-bold text-white mb-1">Custom</div>
-                  <p className="text-gray-400 text-sm mb-6">Prezzo su misura</p>
+                  <p className="text-gray-400 text-sm mb-6">Tailored pricing</p>
                   <a
-                    href="mailto:enterprise@centyr.io?subject=Richiesta%20Piano%20Enterprise"
+                    href="mailto:enterprise@centyr.io?subject=Enterprise%20Plan%20Request"
                     className="inline-flex items-center gap-2 bg-white text-gray-900 px-8 py-4 rounded-xl font-bold hover:scale-105 transition-all shadow-lg"
                   >
                     <Building2 className="w-5 h-5" />
-                    Contatta Sales
+                    Contact Sales
                   </a>
                   <p className="text-gray-500 text-xs mt-4">
-                    Risposta entro 24h
+                    Response within 24h
                   </p>
                 </div>
               </div>
