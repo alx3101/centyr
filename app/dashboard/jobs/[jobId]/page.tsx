@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
-import Image from 'next/image'
+import Image from 'next/image' // used inside ImageWithLoader
 import { api, JobResponse, JobStatus } from '@/lib/api'
 import { AuthGuard } from '@/components/guards/AuthGuard'
 import { useConfirm } from '@/components/ui/ConfirmModal'
@@ -14,6 +14,33 @@ export default function JobDetailPage() {
     <AuthGuard>
       <JobDetailContent />
     </AuthGuard>
+  )
+}
+
+function ImageWithLoader({ src, alt, className }: { src: string; alt: string; className?: string }) {
+  const [loaded, setLoaded] = useState(false)
+  return (
+    <>
+      {!loaded && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-purple-50 to-fuchsia-50">
+          <div className="relative w-12 h-12">
+            <div className="absolute inset-0 rounded-full border-4 border-purple-200"></div>
+            <div className="absolute inset-0 rounded-full border-4 border-t-purple-600 animate-spin"></div>
+          </div>
+          <div className="space-y-2 w-3/4">
+            <div className="h-2 bg-purple-200 rounded-full animate-pulse"></div>
+            <div className="h-2 bg-purple-100 rounded-full animate-pulse w-3/4 mx-auto"></div>
+          </div>
+        </div>
+      )}
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        className={`object-contain transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'} ${className ?? ''}`}
+        onLoad={() => setLoaded(true)}
+      />
+    </>
   )
 }
 
@@ -458,12 +485,7 @@ function JobDetailContent() {
                       </div>
                       <div className="relative aspect-square bg-gray-100 rounded-xl overflow-hidden border-2 border-gray-300 shadow-md">
                         {output.input_url && (
-                          <Image
-                            src={output.input_url}
-                            alt={`Original image ${index + 1}`}
-                            fill
-                            className="object-contain"
-                          />
+                          <ImageWithLoader src={output.input_url} alt={`Original image ${index + 1}`} />
                         )}
                       </div>
                       <div className="grid grid-cols-2 gap-2 text-xs">
@@ -486,13 +508,7 @@ function JobDetailContent() {
                         </span>
                       </div>
                       <div className="relative aspect-square bg-gradient-to-br from-purple-50 to-fuchsia-50 rounded-xl overflow-hidden border-2 border-purple-300 glow-purple shadow-md">
-
-                        <Image
-                          src={output.output_url}
-                          alt={`Processed image ${index + 1}`}
-                          fill
-                          className="object-contain"
-                        />
+                        <ImageWithLoader src={output.output_url} alt={`Processed image ${index + 1}`} />
                       </div>
                       <div className="grid grid-cols-2 gap-2 text-xs mb-3">
                         <div className="bg-white rounded-lg px-3 py-2 border border-purple-200">
@@ -548,12 +564,7 @@ function JobDetailContent() {
                   <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">Input</span>
                 </div>
                 <div className="relative aspect-square bg-gray-100 rounded-xl overflow-hidden border-2 border-gray-300 shadow-md">
-                  <Image
-                    src={job.input_image_url}
-                    alt="Original image"
-                    fill
-                    className="object-contain"
-                  />
+                  <ImageWithLoader src={job.input_image_url} alt="Original image" />
                 </div>
               </div>
 
@@ -567,15 +578,7 @@ function JobDetailContent() {
                   </span>
                 </div>
                 <div className="relative aspect-square bg-gradient-to-br from-purple-50 to-fuchsia-50 rounded-xl overflow-hidden border-2 border-purple-300 glow-purple shadow-md">
-                  <Image
-                    src={job.output_image_url}
-                    alt="Processed image"
-                    fill
-                    placeholder="blur"
-                    blurDataURL="/blur-placeholder.png"
-                    className="object-contain"
-                  />
-
+                  <ImageWithLoader src={job.output_image_url} alt="Processed image" />
                 </div>
               </div>
             </div>
