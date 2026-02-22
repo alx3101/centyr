@@ -13,10 +13,10 @@ export default function TrustedBy() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10">
           <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">
-            Scelto da oltre 12,000 e-commerce
+            Trusted by 12,000+ e-commerce stores
           </p>
           <h3 className="text-2xl font-bold text-gray-900">
-            I brand che si fidano di noi
+            Brands that trust us
           </h3>
         </div>
 
@@ -49,28 +49,6 @@ export default function TrustedBy() {
           ))}
         </div>
 
-        {/* Stats Row */}
-        <div className="mt-12 pt-8 border-t border-gray-100">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div>
-              <div className="text-3xl font-bold text-gradient">12,000+</div>
-              <div className="text-sm text-gray-500 mt-1">E-commerce attivi</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-gradient">5M+</div>
-              <div className="text-sm text-gray-500 mt-1">Immagini elaborate</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-gradient">4.9/5</div>
-              <div className="text-sm text-gray-500 mt-1">Valutazione media</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-gradient">99.9%</div>
-              <div className="text-sm text-gray-500 mt-1">Uptime garantito</div>
-            </div>
-          </div>
-        </div>
-
         {/* Testimonial Quote */}
         <div className="mt-12 bg-gradient-to-br from-purple-50 to-fuchsia-50 rounded-2xl p-8 border border-purple-100">
           <div className="flex flex-col md:flex-row items-center gap-6">
@@ -93,7 +71,7 @@ export default function TrustedBy() {
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                Verificato
+                Verified
               </div>
               <div className="flex items-center justify-center gap-0.5 mt-2">
                 {[...Array(5)].map((_, i) => (
