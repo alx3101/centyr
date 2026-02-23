@@ -176,41 +176,41 @@ function DashboardContent() {
         </div>
 
         {/* Stats Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-8">
           {/* Plan Card */}
-          <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-100 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 relative overflow-hidden">
+          <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border-2 border-purple-100 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-purple-100 rounded-full -mr-16 -mt-16 opacity-50"></div>
             <div className="relative">
-              <div className="flex items-center justify-between mb-4">
-                <div className="h-12 w-12 rounded-xl gradient-purple-fuchsia flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
-                  <Award className="w-6 h-6 text-white" />
+              <div className="flex items-center justify-between mb-3 sm:mb-4">
+                <div className="h-9 w-9 sm:h-12 sm:w-12 rounded-xl gradient-purple-fuchsia flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
+                  <Award className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
                 </div>
-                <span className="px-3 py-1 gradient-purple-fuchsia text-white text-xs font-bold rounded-full shadow-md">
+                <span className="px-2 py-1 sm:px-3 gradient-purple-fuchsia text-white text-xs font-bold rounded-full shadow-md">
                   {user.subscription.plan_name.toUpperCase()}
                 </span>
               </div>
-              <p className="text-4xl font-bold text-gradient mb-1">{user.subscription.monthly_limit}</p>
-              <p className="text-sm text-gray-600 font-semibold">jobs per month</p>
+              <p className="text-2xl sm:text-4xl font-bold text-gradient mb-1">{user.subscription.monthly_limit}</p>
+              <p className="text-xs sm:text-sm text-gray-600 font-semibold">jobs / month</p>
             </div>
           </div>
 
           {/* Usage Card */}
-          <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-100 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 relative overflow-hidden">
+          <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border-2 border-purple-100 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-fuchsia-100 rounded-full -mr-16 -mt-16 opacity-50"></div>
             <div className="relative">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="h-12 w-12 rounded-xl gradient-purple-fuchsia flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
-                  <TrendingUp className="w-6 h-6 text-white" />
+              <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                <div className="h-9 w-9 sm:h-12 sm:w-12 rounded-xl gradient-purple-fuchsia flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
+                  <TrendingUp className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
                 </div>
-                <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wider">Usage</h3>
+                <h3 className="text-xs sm:text-sm font-bold text-gray-700 uppercase tracking-wider">Usage</h3>
               </div>
-              <div className="flex items-baseline gap-2 mb-3">
-                <p className="text-4xl font-bold text-gray-900">{user.subscription.current_period_uploads}</p>
-                <p className="text-xl text-gray-400 font-bold">/ {user.subscription.monthly_limit}</p>
+              <div className="flex items-baseline gap-1 sm:gap-2 mb-3">
+                <p className="text-2xl sm:text-4xl font-bold text-gray-900">{user.subscription.current_period_uploads}</p>
+                <p className="text-base sm:text-xl text-gray-400 font-bold">/ {user.subscription.monthly_limit}</p>
               </div>
-              <div className="relative w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
+              <div className="relative w-full bg-gray-200 rounded-full h-2 overflow-hidden">
                 <div
-                  className="gradient-purple-fuchsia h-2.5 rounded-full transition-all duration-700 ease-out relative"
+                  className="gradient-purple-fuchsia h-2 rounded-full transition-all duration-700 ease-out relative"
                   style={{ width: `${Math.min(usagePercentage, 100)}%` }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent shimmer"></div>
@@ -221,25 +221,25 @@ function DashboardContent() {
           </div>
 
           {/* Remaining Card */}
-          <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-100 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 relative overflow-hidden">
+          <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border-2 border-purple-100 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-green-100 rounded-full -mr-16 -mt-16 opacity-50"></div>
             <div className="relative">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
-                  <Zap className="w-6 h-6 text-white" />
+              <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                <div className="h-9 w-9 sm:h-12 sm:w-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
+                  <Zap className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
                 </div>
-                <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wider">Available</h3>
+                <h3 className="text-xs sm:text-sm font-bold text-gray-700 uppercase tracking-wider">Available</h3>
               </div>
-              <p className="text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-1">
+              <p className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-1">
                 {user.subscription.monthly_limit - user.subscription.current_period_uploads}
               </p>
-              <p className="text-sm text-gray-600 font-semibold">jobs left</p>
+              <p className="text-xs sm:text-sm text-gray-600 font-semibold">jobs left</p>
               {user.subscription.monthly_limit - user.subscription.current_period_uploads < user.subscription.monthly_limit / 2 && (
                 <Link
                   href="/pricing"
-                  className="inline-flex items-center gap-1 text-sm text-green-600 hover:text-emerald-600 font-bold mt-3 transition-all group-hover:gap-2"
+                  className="inline-flex items-center gap-1 text-xs sm:text-sm text-green-600 hover:text-emerald-600 font-bold mt-2 sm:mt-3 transition-all group-hover:gap-2"
                 >
-                  Upgrade plan <span>→</span>
+                  Upgrade <span>→</span>
                 </Link>
               )}
             </div>
@@ -247,19 +247,19 @@ function DashboardContent() {
 
           {/* Success Rate Card */}
           {stats && stats.total > 0 && (
-            <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 border-purple-100 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 relative overflow-hidden">
+            <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border-2 border-purple-100 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-amber-100 rounded-full -mr-16 -mt-16 opacity-50"></div>
               <div className="relative">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
-                    <Activity className="w-6 h-6 text-white" />
+                <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                  <div className="h-9 w-9 sm:h-12 sm:w-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
+                    <Activity className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
                   </div>
-                  <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wider">Success</h3>
+                  <h3 className="text-xs sm:text-sm font-bold text-gray-700 uppercase tracking-wider">Success</h3>
                 </div>
-                <p className="text-4xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent mb-1">
+                <p className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent mb-1">
                   {stats.successRate}%
                 </p>
-                <p className="text-sm text-gray-600 font-semibold">{stats.completed} of {stats.total}</p>
+                <p className="text-xs sm:text-sm text-gray-600 font-semibold">{stats.completed} of {stats.total}</p>
               </div>
             </div>
           )}
