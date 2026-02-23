@@ -39,7 +39,7 @@ export default function RootLayout({
         </head>
 
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} overflow-x-hidden`}>
         <AppProviders>
           {children}
           <Toaster
