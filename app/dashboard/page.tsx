@@ -168,7 +168,7 @@ function DashboardContent() {
             </span>
           </div>
           <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-2 leading-tight">
-            Welcome back, <span className="text-gradient">{user.email.split('@')[0]}</span>!
+            Welcome back, <span className="text-gradient">{user.name || user.email.split('@')[0]}</span>!
           </h1>
           <p className="text-base md:text-xl text-gray-600">
             Your AI-powered image processing hub
