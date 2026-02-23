@@ -39,7 +39,7 @@ export default function Hero() {
             <span className="text-sm font-semibold text-gray-700">Processing 1M+ images monthly</span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+          <h1 className="text-4xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
             Perfect Product Photos,<br />
             <span className="text-gradient">Automatically</span>
           </h1>
