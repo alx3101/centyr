@@ -26,7 +26,7 @@ export function AppShell({ children }: AppShellProps) {
   return (
     <>
       <UnifiedNavbar />
-      <main>{children}</main>
+      <main className="overflow-x-hidden">{children}</main>
       {!hideFooter && <Footer />}
     </>
   )
