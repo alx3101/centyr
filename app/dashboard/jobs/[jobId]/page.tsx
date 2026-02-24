@@ -133,11 +133,21 @@ function JobDetailContent() {
     }
   }
 
-  const handleSingleImageDownload = async (imageUrl: string, index: number) => {
+  const handleSingleImageDownload = async (_imageUrl: string, index: number) => {
     try {
       setDownloadingIndex(index)
 
-      const response = await fetch(imageUrl)
+      const token = localStorage.getItem('auth_token')
+      if (!token) {
+        alert('Please log in to download')
+        return
+      }
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/jobs/${job!.job_id}/download?index=${index}`,
+        { headers: { 'Authorization': `Bearer ${token}` } }
+      )
+
       if (!response.ok) {
         throw new Error('Download failed')
       }
@@ -146,7 +156,7 @@ function JobDetailContent() {
       const url = window.URL.createObjectURL(blob)
       const a = document.createElement('a')
       a.href = url
-      a.download = `processed-image-${index + 1}.jpg`
+      a.download = `processed-image-${index + 1}.webp`
       document.body.appendChild(a)
       a.click()
       document.body.removeChild(a)
