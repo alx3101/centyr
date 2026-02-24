@@ -67,8 +67,6 @@ body {
 /* Smooth scrolling for anchor links */
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
-  max-width: 100%;
 }
 
 /* Custom scrollbar with gradient */

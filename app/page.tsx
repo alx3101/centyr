@@ -8,8 +8,6 @@ import Security from '@/components/marketing/Security'
 import Testimonials from '@/components/marketing/Testimonials'
 import Pricing from '@/components/marketing/Pricing'
 import FinalCTA from '@/components/marketing/FinalCTA'
-import SocialProofNotification from '@/components/marketing/SocialProofNotification'
-
 export const metadata = {
   title: 'Centyr - AI Product Photo Alignment',
   description: 'Align product photos in seconds with AI. No design skills needed.',
@@ -27,7 +25,6 @@ export default function Home() {
       <Testimonials />
       <Pricing />
       <FinalCTA />
-      <SocialProofNotification />
     </>
   )
 }
