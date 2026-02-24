@@ -19,7 +19,7 @@ const nextConfig = {
               "font-src 'self' fonts.gstatic.com data:",
               "img-src 'self' data: blob: centry-prod.s3.eu-west-3.amazonaws.com centry-images-dev.s3.eu-west-3.amazonaws.com",
               "frame-src js.stripe.com",
-              "connect-src 'self' api.stripe.com vitals.vercel-insights.com *.amazonaws.com",
+              "connect-src 'self' api.centyr.tech api.stripe.com vitals.vercel-insights.com *.amazonaws.com",
             ].join('; '),
           },
         ],
