@@ -347,7 +347,9 @@ export function cognitoChangePassword(
  */
 export function cognitoOAuthSignIn(provider: 'Google' | 'Apple' | 'GitHub') {
   const clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID
-  const cognitoDomain = process.env.NEXT_PUBLIC_COGNITO_DOMAIN // e.g. https://your-prefix.auth.eu-west-1.amazoncognito.com
+  const domain = process.env.NEXT_PUBLIC_COGNITO_DOMAIN // e.g. centry-backend-dev
+  const region = process.env.NEXT_PUBLIC_COGNITO_REGION
+  const cognitoDomain = `https://${domain}.auth.${region}.amazoncognito.com`
   const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`
 
   const oauthUrl = `${cognitoDomain}/oauth2/authorize?` +
