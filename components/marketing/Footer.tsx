@@ -106,27 +106,27 @@ export default function Footer() {
             <h4 className="text-white font-bold mb-4 text-lg">Legal</h4>
             <ul className="space-y-3">
               <li>
-                <Link href="#" className="hover:text-white transition">
+                <Link href="/privacy" className="hover:text-white transition">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-white transition">
+                <Link href="/terms" className="hover:text-white transition">
                   Terms of Service
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-white transition">
+                <Link href="/gdpr-compliance" className="hover:text-white transition">
                   GDPR Compliance
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-white transition">
+                <Link href="/security" className="hover:text-white transition">
                   Security
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-white transition">
+                <Link href="/sla" className="hover:text-white transition">
                   SLA
                 </Link>
               </li>
