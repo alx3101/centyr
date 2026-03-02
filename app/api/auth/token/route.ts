@@ -28,7 +28,11 @@ export async function POST(request: NextRequest) {
   const data = await tokenResponse.json()
 
   if (!tokenResponse.ok) {
-    return NextResponse.json(data, { status: tokenResponse.status })
+    console.error('[auth/token] Cognito error:', tokenResponse.status, data)
+    return NextResponse.json(
+      { error: data.error, error_description: data.error_description },
+      { status: tokenResponse.status }
+    )
   }
 
   return NextResponse.json(data)

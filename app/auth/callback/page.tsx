@@ -39,7 +39,8 @@ export default function AuthCallbackPage() {
         })
 
         if (!tokenResponse.ok) {
-          throw new Error('Failed to exchange authorization code')
+          const errData = await tokenResponse.json()
+          throw new Error(errData.error_description || errData.error || 'Failed to exchange authorization code')
         }
 
         const tokens = await tokenResponse.json()
