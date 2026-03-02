@@ -31,32 +31,11 @@ export default function AuthCallbackPage() {
           return
         }
 
-        // Exchange authorization code for tokens
-        // This would typically be done on the backend, but Cognito SDK handles it
-        const region = process.env.NEXT_PUBLIC_COGNITO_REGION
-        const userPoolId = process.env.NEXT_PUBLIC_COGNITO_USER_POOL_ID
-        const clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID
-        const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`
-
-        // Extract domain from user pool ID
-        const domain = process.env.NEXT_PUBLIC_COGNITO_DOMAIN  // prefix or full https:// URL
-        const cognitoDomain = domain?.startsWith('https://')
-          ? domain
-          : `https://${domain}.auth.${region}.amazoncognito.com`
-
-
-        // Exchange code for tokens
-        const tokenResponse = await fetch(`${cognitoDomain}/oauth2/token`, {
+        // Exchange authorization code for tokens via server-side API route (avoids CORS)
+        const tokenResponse = await fetch('/api/auth/token', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: new URLSearchParams({
-            grant_type: 'authorization_code',
-            client_id: clientId || '',
-            code: code,
-            redirect_uri: redirectUri,
-          }).toString(),
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code }),
         })
 
         if (!tokenResponse.ok) {
