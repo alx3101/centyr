@@ -154,7 +154,7 @@ export default function UploadPage() {
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
               New <span className="text-gradient">Job</span>
             </h1>
-            <p className="text-gray-600 mt-1">Process your product photos with AI</p>
+            <p className="text-gray-600 mt-1">Each upload creates a <span className="font-semibold text-gray-800">job</span> — our AI aligns and processes your photos automatically.</p>
           </div>
 
           {/* Quota Indicator */}
