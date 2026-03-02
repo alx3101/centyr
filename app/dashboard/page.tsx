@@ -47,7 +47,7 @@ function JobThumbnail({ job }: { job: Job }) {
   return (
     <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden bg-gray-100 shadow-md group-hover:shadow-lg transition-shadow">
       {imgLoading && (
-        <div className="absolute inset-0 bg-gray-200 animate-pulse" />
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-100 to-fuchsia-100 animate-pulse" />
       )}
       <img
         src={src}
