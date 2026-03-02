@@ -21,13 +21,13 @@ export default function AuthCallbackPage() {
 
         if (errorParam) {
           setError(errorDescription || errorParam)
-          setTimeout(() => router.push('/login'), 3000)
+          // setTimeout(() => router.push('/login'), 3000)
           return
         }
 
         if (!code) {
           setError('No authorization code received')
-          setTimeout(() => router.push('/login'), 3000)
+          // setTimeout(() => router.push('/login'), 3000)
           return
         }
 
@@ -71,7 +71,7 @@ export default function AuthCallbackPage() {
       } catch (err: any) {
         console.error('OAuth callback error:', err)
         setError(err.message || 'Authentication failed')
-        setTimeout(() => router.push('/login'), 3000)
+        // setTimeout(() => router.push('/login'), 3000)
       }
     }
 
@@ -89,7 +89,7 @@ export default function AuthCallbackPage() {
           </div>
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Authentication Failed</h1>
           <p className="text-gray-600 mb-4">{error}</p>
-          <p className="text-sm text-gray-500">Redirecting to login...</p>
+          <p className="text-sm text-gray-500">Check the browser console for details.</p>
         </div>
       </div>
     )
