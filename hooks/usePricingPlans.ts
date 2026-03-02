@@ -16,13 +16,9 @@ export function usePricingPlans() {
     try {
       setIsLoading(true)
       setError(null)
-      console.log('Fetching pricing plans...')
       const response = await api.getPricingPlans()
-      console.log('Pricing plans response:', response)
       setPlans(response.plans)
     } catch (err: any) {
-      console.error('Failed to fetch pricing plans:', err)
-      console.error('Error details:', err.response || err.message)
       setError(err.message || 'Failed to load pricing plans')
 
       // Fallback to hardcoded plans if API fails

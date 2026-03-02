@@ -19,13 +19,11 @@ export default function AuthCallbackPage() {
 
         if (errorParam) {
           setError(errorDescription || errorParam)
-          // setTimeout(() => router.push('/login'), 3000)
           return
         }
 
         if (!code) {
           setError('No authorization code received')
-          // setTimeout(() => router.push('/login'), 3000)
           return
         }
 
@@ -48,13 +46,6 @@ export default function AuthCallbackPage() {
           throw new Error('No ID token received')
         }
 
-        // DEBUG: log token claims to browser console
-        try {
-          const payload = JSON.parse(atob(idToken.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')))
-          console.log('[auth/callback] id_token claims:', payload)
-        } catch {}
-
-
         // Store token
         localStorage.setItem('auth_token', idToken)
 
@@ -67,9 +58,7 @@ export default function AuthCallbackPage() {
         // Full page reload so AuthContext re-checks with the new token in localStorage
         window.location.replace('/dashboard')
       } catch (err: any) {
-        console.error('OAuth callback error:', err)
         setError(err.message || 'Authentication failed')
-        // setTimeout(() => router.push('/login'), 3000)
       }
     }
 
@@ -86,8 +75,7 @@ export default function AuthCallbackPage() {
             </svg>
           </div>
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Authentication Failed</h1>
-          <p className="text-gray-600 mb-4">{error}</p>
-          <p className="text-sm text-gray-500">Check the browser console for details.</p>
+          <p className="text-gray-600">{error}</p>
         </div>
       </div>
     )
