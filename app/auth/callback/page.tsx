@@ -1,13 +1,11 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { api } from '@/lib/api'
 import { setAuth } from '@/lib/auth'
 import { Loader } from 'lucide-react'
 
 export default function AuthCallbackPage() {
-  const router = useRouter()
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -66,8 +64,8 @@ export default function AuthCallbackPage() {
         // Save auth state
         setAuth(idToken, userData)
 
-        // Redirect to dashboard
-        router.push('/dashboard')
+        // Full page reload so AuthContext re-checks with the new token in localStorage
+        window.location.replace('/dashboard')
       } catch (err: any) {
         console.error('OAuth callback error:', err)
         setError(err.message || 'Authentication failed')
@@ -76,7 +74,7 @@ export default function AuthCallbackPage() {
     }
 
     handleOAuthCallback()
-  }, [router])
+  }, [])
 
   if (error) {
     return (

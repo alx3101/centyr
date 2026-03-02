@@ -52,7 +52,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setAuthStatus('checking')
 
     try {
-      const idToken = await cognitoGetIdToken()
+      // Try Cognito SDK session first (email/password login)
+      let idToken = await cognitoGetIdToken()
+
+      // Fallback: localStorage token set by Hosted UI OAuth callback
+      if (!idToken) {
+        idToken = localStorage.getItem('auth_token')
+      }
 
       if (!idToken) {
         clearAuthStorage()
@@ -61,7 +67,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return
       }
 
-      // Cache token (solo dopo verifica Cognito)
+      // Cache token
       localStorage.setItem('auth_token', idToken)
 
       const userData = await api.getCurrentUser()
