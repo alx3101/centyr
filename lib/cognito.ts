@@ -359,7 +359,8 @@ export function cognitoOAuthSignIn(provider: 'Google' | 'Apple' | 'GitHub') {
     `redirect_uri=${encodeURIComponent(redirectUri)}&` +
     `response_type=code&` +
     `client_id=${clientId}&` +
-    `scope=email+openid+profile`
+    `scope=email+openid+profile&` +
+    `prompt=select_account`
 
   // Redirect to Cognito Hosted UI
   window.location.href = oauthUrl
