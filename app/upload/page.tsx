@@ -182,6 +182,14 @@ export default function UploadPage() {
           </div>
         </div>
 
+        {/* What is a job */}
+        <div className="bg-purple-50 border border-purple-200 rounded-xl px-4 py-3 mb-6 flex items-start gap-3">
+          <Info className="w-5 h-5 text-purple-600 flex-shrink-0 mt-0.5" />
+          <p className="text-sm text-purple-800">
+            <span className="font-semibold">What&apos;s a job?</span> A job is a batch of one or more images sent to our AI for processing. Each job has a name, tracks progress in real time, and keeps your results available for download in the dashboard.
+          </p>
+        </div>
+
         {/* Progress Stepper */}
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 mb-8 border-2 border-purple-100 shadow-lg">
           <div className="flex items-center justify-between">

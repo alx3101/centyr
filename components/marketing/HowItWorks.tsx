@@ -57,7 +57,10 @@ export default function HowItWorks() {
                 </svg>
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-3">AI Does Its Thing</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-600 mb-2">
+                Your images are queued as a <span className="font-semibold text-gray-800">job</span> and processed by our AI in seconds.
+              </p>
+              <p className="text-gray-500 text-sm">
                 Grab a coffee. Actually, don't. It'll be done before you finish pouring.
               </p>
             </div>
