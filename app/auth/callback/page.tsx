@@ -39,8 +39,10 @@ export default function AuthCallbackPage() {
         const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`
 
         // Extract domain from user pool ID
-        const domain = process.env.NEXT_PUBLIC_COGNITO_DOMAIN  // ✅ Usa il dominio configurato
-        const cognitoDomain = `https://${domain}.auth.${region}.amazoncognito.com`
+        const domain = process.env.NEXT_PUBLIC_COGNITO_DOMAIN  // prefix or full https:// URL
+        const cognitoDomain = domain?.startsWith('https://')
+          ? domain
+          : `https://${domain}.auth.${region}.amazoncognito.com`
 
 
         // Exchange code for tokens
