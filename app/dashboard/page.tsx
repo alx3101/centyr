@@ -32,6 +32,59 @@ interface Job {
   }
 }
 
+function JobThumbnail({ job }: { job: Job }) {
+  const [imgLoading, setImgLoading] = useState(true)
+  const src = job.output_image_url || job.input_image_url
+
+  if (!src) {
+    return (
+      <div className="w-16 h-16 md:w-20 md:h-20 rounded-lg bg-gradient-to-br from-purple-100 to-fuchsia-100 flex items-center justify-center shadow-md">
+        <ImageIcon className="w-8 h-8 text-gray-400" />
+      </div>
+    )
+  }
+
+  return (
+    <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden bg-gray-100 shadow-md group-hover:shadow-lg transition-shadow">
+      {imgLoading && (
+        <div className="absolute inset-0 bg-gray-200 animate-pulse" />
+      )}
+      <img
+        src={src}
+        alt={job.job_name || 'Job thumbnail'}
+        className={`w-full h-full object-cover transition-opacity duration-300 ${imgLoading ? 'opacity-0' : 'opacity-100'}`}
+        onLoad={() => setImgLoading(false)}
+        onError={(e) => {
+          setImgLoading(false)
+          const target = e.target as HTMLImageElement
+          target.style.display = 'none'
+          target.nextElementSibling?.classList.remove('hidden')
+        }}
+      />
+      <div className="hidden absolute inset-0 bg-gradient-to-br from-purple-100 to-fuchsia-100 flex items-center justify-center">
+        <ImageIcon className="w-8 h-8 text-gray-400" />
+      </div>
+      <div className="absolute top-1 right-1">
+        {job.status === 'completed' && (
+          <div className="bg-green-500 rounded-full p-1">
+            <CheckCircle className="w-3 h-3 text-white" />
+          </div>
+        )}
+        {job.status === 'processing' && (
+          <div className="bg-blue-500 rounded-full p-1">
+            <Loader className="w-3 h-3 text-white animate-spin" />
+          </div>
+        )}
+        {job.status === 'failed' && (
+          <div className="bg-red-500 rounded-full p-1">
+            <XCircle className="w-3 h-3 text-white" />
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
 function DashboardContent() {
   const { user } = useAuth()
 
@@ -378,46 +431,8 @@ function DashboardContent() {
                   style={{ animationDelay: `${index * 0.05}s` }}
                 >
                   {/* Thumbnail */}
-                  <div className="relative flex-shrink-0">
-                    {job.output_image_url || job.input_image_url ? (
-                      <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden bg-gray-100 shadow-md group-hover:shadow-lg transition-shadow">
-                        <img
-                          src={job.output_image_url || job.input_image_url}
-                          alt={job.job_name || 'Job thumbnail'}
-                          className="w-full h-full object-cover"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement
-                            target.style.display = 'none'
-                            target.nextElementSibling?.classList.remove('hidden')
-                          }}
-                        />
-                        <div className="hidden absolute inset-0 bg-gradient-to-br from-purple-100 to-fuchsia-100 flex items-center justify-center">
-                          <ImageIcon className="w-8 h-8 text-gray-400" />
-                        </div>
-                        {/* Status indicator overlay */}
-                        <div className="absolute top-1 right-1">
-                          {job.status === 'completed' && (
-                            <div className="bg-green-500 rounded-full p-1">
-                              <CheckCircle className="w-3 h-3 text-white" />
-                            </div>
-                          )}
-                          {job.status === 'processing' && (
-                            <div className="bg-blue-500 rounded-full p-1">
-                              <Loader className="w-3 h-3 text-white animate-spin" />
-                            </div>
-                          )}
-                          {job.status === 'failed' && (
-                            <div className="bg-red-500 rounded-full p-1">
-                              <XCircle className="w-3 h-3 text-white" />
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="w-16 h-16 md:w-20 md:h-20 rounded-lg bg-gradient-to-br from-purple-100 to-fuchsia-100 flex items-center justify-center shadow-md">
-                        <ImageIcon className="w-8 h-8 text-gray-400" />
-                      </div>
-                    )}
+                  <div className="flex-shrink-0">
+                    <JobThumbnail job={job} />
                   </div>
 
                   {/* Job Info */}
