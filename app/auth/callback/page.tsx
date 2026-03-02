@@ -50,6 +50,13 @@ export default function AuthCallbackPage() {
           throw new Error('No ID token received')
         }
 
+        // DEBUG: log token claims to browser console
+        try {
+          const payload = JSON.parse(atob(idToken.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')))
+          console.log('[auth/callback] id_token claims:', payload)
+        } catch {}
+
+
         // Store token
         localStorage.setItem('auth_token', idToken)
 
