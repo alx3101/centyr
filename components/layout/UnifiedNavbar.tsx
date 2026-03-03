@@ -6,11 +6,14 @@ import { LogOut, LayoutDashboard, Upload, User, Menu, X, Home } from 'lucide-rea
 import { useAuth } from '@/contexts/AuthContext'
 import { useState } from 'react'
 import Image from 'next/image'
+import LanguageSelector from '@/components/common/LanguageSelector'
+import { useTranslations } from '@/contexts/LanguageContext'
 
 export function UnifiedNavbar() {
   const { user, isAuthenticated, isLoading, logout } = useAuth()
   const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const t = useTranslations()
 
   // Non mostrare navbar su pagine di login/signup
   const isAuthPage = pathname?.startsWith('/login') || pathname?.startsWith('/signup')
@@ -42,16 +45,16 @@ export function UnifiedNavbar() {
 
   // Links per utenti autenticati
   const authenticatedLinks = [
-    { href: '/', label: 'Home', icon: Home },
-    { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { href: '/upload', label: 'Upload', icon: Upload },
+    { href: '/', label: t.nav.home, icon: Home },
+    { href: '/dashboard', label: t.nav.dashboard, icon: LayoutDashboard },
+    { href: '/upload', label: t.nav.upload, icon: Upload },
   ]
 
-  // Links pubblici (marketing)
+  // Links pubblici (marketing) - ordine rispecchia la pagina
   const publicLinks = [
-    { href: '#features', label: 'Features' },
-    { href: '#pricing', label: 'Pricing' },
-    { href: '#testimonials', label: 'Testimonials' },
+    { href: '#features', label: t.nav.features },
+    { href: '#testimonials', label: t.nav.testimonials },
+    { href: '#pricing', label: t.nav.pricing },
   ]
 
   return (
@@ -125,28 +128,34 @@ export function UnifiedNavbar() {
                   </span>
                 </div>
 
+                {/* Language Selector */}
+                <LanguageSelector />
+
                 {/* Logout button */}
                 <button
                   onClick={logout}
                   className="flex items-center space-x-2 px-4 py-2 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition-all duration-200"
                 >
                   <LogOut size={18} />
-                  <span className="hidden sm:inline font-medium">Logout</span>
+                  <span className="hidden sm:inline font-medium">{t.common.logout}</span>
                 </button>
               </>
             ) : (
               <>
+                {/* Language Selector */}
+                <LanguageSelector />
+
                 <Link
                   href="/login"
                   className="text-gray-600 hover:text-fuchsia-600 transition-colors hidden sm:block font-medium"
                 >
-                  Sign In
+                  {t.common.login}
                 </Link>
                 <Link
                   href="/signup"
                   className="gradient-purple-fuchsia text-white px-6 py-2 rounded-lg font-semibold hover:scale-105 hover:shadow-lg transition-all duration-300"
                 >
-                  Get Started
+                  {t.nav.getStarted}
                 </Link>
               </>
             )}
@@ -188,7 +197,7 @@ export function UnifiedNavbar() {
                   })}
                   {user && (
                     <div className="px-4 py-3 bg-purple-50 rounded-lg mt-2">
-                      <p className="text-sm text-gray-600">Signed in as</p>
+                      <p className="text-sm text-gray-600">{t.nav.signedInAs}</p>
                       <p className="font-medium text-gray-900">{user.email}</p>
                     </div>
                   )}
@@ -211,14 +220,14 @@ export function UnifiedNavbar() {
                     onClick={() => setMobileMenuOpen(false)}
                     className="px-4 py-3 text-gray-700 hover:bg-purple-50 rounded-lg transition-all font-medium"
                   >
-                    Sign In
+                    {t.common.login}
                   </Link>
                   <Link
                     href="/signup"
                     onClick={() => setMobileMenuOpen(false)}
                     className="px-4 py-3 gradient-purple-fuchsia text-white rounded-lg font-semibold text-center"
                   >
-                    Get Started
+                    {t.nav.getStarted}
                   </Link>
                 </>
               )}

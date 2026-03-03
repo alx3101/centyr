@@ -1,11 +1,17 @@
+'use client'
+
+import { useTranslations } from '@/contexts/LanguageContext'
+
 export default function TrustedBy() {
+  const t = useTranslations()
+
   const companies = [
-    { name: 'ModaStyle', category: 'Fashion' },
-    { name: 'TechGadget', category: 'Electronics' },
-    { name: 'CasaBella', category: 'Home & Living' },
-    { name: 'SportMax', category: 'Sports' },
-    { name: 'BeautyLab', category: 'Cosmetics' },
-    { name: 'GourmetItalia', category: 'Food' },
+    { name: 'ModaStyle',      category: t.marketing.trustedBy.catFashion },
+    { name: 'TechGadget',     category: t.marketing.trustedBy.catElectronics },
+    { name: 'CasaBella',      category: t.marketing.trustedBy.catHome },
+    { name: 'SportMax',       category: t.marketing.trustedBy.catSports },
+    { name: 'BeautyLab',      category: t.marketing.trustedBy.catCosmetics },
+    { name: 'GourmetItalia',  category: t.marketing.trustedBy.catFood },
   ]
 
   return (
@@ -13,10 +19,10 @@ export default function TrustedBy() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10">
           <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">
-            Trusted by 12,000+ e-commerce stores
+            {t.marketing.trustedBy.tagline}
           </p>
           <h3 className="text-2xl font-bold text-gray-900">
-            Brands that trust us
+            {t.marketing.trustedBy.title}
           </h3>
         </div>
 
@@ -28,7 +34,6 @@ export default function TrustedBy() {
               className="flex flex-col items-center justify-center group"
             >
               <div className="h-12 flex items-center justify-center opacity-60 group-hover:opacity-100 transition-opacity grayscale group-hover:grayscale-0">
-                {/* Stylized text logo */}
                 <div className="text-center">
                   <span
                     className="text-xl font-bold tracking-tight"
@@ -59,11 +64,11 @@ export default function TrustedBy() {
             </div>
             <div className="flex-1 text-center md:text-left">
               <blockquote className="text-lg text-gray-700 italic mb-3">
-                "Centyr revolutionized our workflow. We used to spend 2 hours a day aligning photos — now it's 5 minutes. The ROI was immediate."
+                {t.marketing.trustedBy.quote}
               </blockquote>
               <div>
-                <p className="font-bold text-gray-900">Marco Rossi</p>
-                <p className="text-sm text-gray-500">CEO, ModaStyle - Milano</p>
+                <p className="font-bold text-gray-900">{t.marketing.trustedBy.quoteAuthor}</p>
+                <p className="text-sm text-gray-500">{t.marketing.trustedBy.quoteRole}</p>
               </div>
             </div>
             <div className="flex-shrink-0 text-center">
@@ -71,7 +76,7 @@ export default function TrustedBy() {
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                Verified
+                {t.marketing.trustedBy.verified}
               </div>
               <div className="flex items-center justify-center gap-0.5 mt-2">
                 {[...Array(5)].map((_, i) => (

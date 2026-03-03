@@ -1,6 +1,11 @@
+'use client'
+
 import Link from 'next/link'
+import { useTranslations } from '@/contexts/LanguageContext'
 
 export default function FinalCTA() {
+  const t = useTranslations()
+
   return (
     <section className="relative py-20 md:py-32 bg-gradient-to-br from-purple-600 via-fuchsia-600 to-purple-700 overflow-hidden">
       {/* Background decoration */}
@@ -12,14 +17,14 @@ export default function FinalCTA() {
           <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
-          <span className="text-sm font-semibold text-white">Start processing in under 60 seconds</span>
+          <span className="text-sm font-semibold text-white">{t.marketing.finalCta.badge}</span>
         </div>
 
         <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
-          Ready to Transform Your<br />Product Images?
+          {t.marketing.finalCta.title}<br />{t.marketing.finalCta.titleLine2}
         </h2>
         <p className="text-xl text-purple-100 mb-10 max-w-2xl mx-auto">
-          Join 1,000+ stores using professional AI to perfect their product photos. Start free, no credit card required.
+          {t.marketing.finalCta.subtitle}
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -30,13 +35,13 @@ export default function FinalCTA() {
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
-            Start Free Trial
+            {t.marketing.finalCta.ctaPrimary}
           </Link>
           <Link
             href="#pricing"
             className="inline-flex items-center gap-2 bg-transparent text-white px-8 py-4 rounded-xl text-lg font-bold border-2 border-white/30 hover:bg-white/10 hover:border-white/50 transition-all duration-300"
           >
-            View Pricing
+            {t.marketing.finalCta.ctaSecondary}
           </Link>
         </div>
 
@@ -46,19 +51,19 @@ export default function FinalCTA() {
             <svg className="w-5 h-5 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
-            <span>No credit card required</span>
+            <span>{t.marketing.finalCta.trustNoCreditCard}</span>
           </div>
           <div className="flex items-center gap-2">
             <svg className="w-5 h-5 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
-            <span>3 free jobs/month</span>
+            <span>{t.marketing.finalCta.trustFreeJobs}</span>
           </div>
           <div className="flex items-center gap-2">
             <svg className="w-5 h-5 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
             </svg>
-            <span>30-day money-back guarantee</span>
+            <span>{t.marketing.finalCta.trustMoneyBack}</span>
           </div>
         </div>
       </div>

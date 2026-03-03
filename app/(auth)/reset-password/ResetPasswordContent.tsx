@@ -39,6 +39,7 @@ export function ResetPasswordContent() {
         toast.success('Password reset successfully! Please sign in.')
         router.push('/login')
       } else {
+        console.error('[ResetPassword] Cognito error:', result.error)
         toast.error(result.error || 'Password reset failed')
       }
     } finally {

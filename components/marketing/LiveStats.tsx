@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from 'react'
 import { Activity, Users, Image as ImageIcon, Zap } from 'lucide-react'
+import { useTranslations } from '@/contexts/LanguageContext'
 
 export default function LiveStats() {
+  const t = useTranslations()
   const [stats, setStats] = useState({
     imagesProcessed: 5247832,
     activeUsers: 847,
@@ -48,7 +50,7 @@ export default function LiveStats() {
             <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
           </span>
           <span className="text-green-400 font-semibold text-sm uppercase tracking-wider">
-            Stats in tempo reale
+            {t.marketing.liveStats.badge}
           </span>
         </div>
 
@@ -61,7 +63,7 @@ export default function LiveStats() {
             <div className="text-4xl md:text-5xl font-bold text-white mb-2 tabular-nums">
               {formatNumber(stats.imagesProcessed)}
             </div>
-            <div className="text-purple-300 font-medium">Immagini elaborate</div>
+            <div className="text-purple-300 font-medium">{t.marketing.liveStats.imagesProcessed}</div>
             <div className="text-green-400 text-sm mt-1 flex items-center justify-center gap-1">
               <Activity className="w-3 h-3" />
               +{Math.floor(Math.random() * 50) + 10}/min
@@ -76,10 +78,10 @@ export default function LiveStats() {
             <div className="text-4xl md:text-5xl font-bold text-white mb-2 tabular-nums">
               {stats.activeUsers}
             </div>
-            <div className="text-fuchsia-300 font-medium">Utenti attivi ora</div>
+            <div className="text-fuchsia-300 font-medium">{t.marketing.liveStats.activeUsers}</div>
             <div className="text-fuchsia-400 text-sm mt-1 flex items-center justify-center gap-1">
               <span className="w-2 h-2 bg-fuchsia-400 rounded-full animate-pulse"></span>
-              Online adesso
+              {t.marketing.liveStats.onlineNow}
             </div>
           </div>
 
@@ -91,10 +93,10 @@ export default function LiveStats() {
             <div className="text-4xl md:text-5xl font-bold text-white mb-2 tabular-nums">
               {stats.avgProcessingTime.toFixed(1)}s
             </div>
-            <div className="text-amber-300 font-medium">Tempo medio</div>
+            <div className="text-amber-300 font-medium">{t.marketing.liveStats.avgProcessing}</div>
             <div className="text-amber-400 text-sm mt-1 flex items-center justify-center gap-1">
               <Zap className="w-3 h-3" />
-              Ultra veloce
+              {t.marketing.liveStats.ultraFast}
             </div>
           </div>
         </div>
@@ -102,7 +104,7 @@ export default function LiveStats() {
         {/* Bottom CTA */}
         <div className="mt-10 text-center">
           <p className="text-gray-400 text-sm">
-            Join thousands of e-commerce stores already using Centyr
+            {t.marketing.liveStats.joinText}
           </p>
         </div>
       </div>

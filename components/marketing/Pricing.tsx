@@ -4,8 +4,10 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePricingPlans } from '@/hooks/usePricingPlans'
 import { useAuth } from '@/contexts/AuthContext'
+import { useTranslations } from '@/contexts/LanguageContext'
 
 export default function Pricing() {
+  const t = useTranslations()
   const { plans, isLoading, error } = usePricingPlans()
   const { isAuthenticated } = useAuth()
   const [billingPeriod, setBillingPeriod] = useState<'month' | 'year'>('month')
@@ -28,10 +30,10 @@ export default function Pricing() {
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Simple, Transparent Pricing
+            {t.marketing.pricing.title}
           </h2>
           <p className="text-xl text-gray-600 mb-6">
-            Start free, scale as you grow. No hidden fees.
+            {t.marketing.pricing.subtitle}
           </p>
 
           {/* Billing Period Toggle */}
@@ -43,7 +45,7 @@ export default function Pricing() {
                 : 'text-gray-600 hover:text-gray-900'
                 }`}
             >
-              Monthly
+              {t.marketing.pricing.monthly}
             </button>
             <button
               onClick={() => setBillingPeriod('year')}
@@ -52,7 +54,7 @@ export default function Pricing() {
                 : 'text-gray-600 hover:text-gray-900'
                 }`}
             >
-              Yearly
+              {t.marketing.pricing.yearly}
             </button>
           </div>
         </div>
@@ -61,14 +63,14 @@ export default function Pricing() {
         {isLoading && (
           <div className="text-center py-12">
             <div className="w-12 h-12 border-4 border-gray-900 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading...</p>
+            <p className="text-gray-600">{t.marketing.pricing.loading}</p>
           </div>
         )}
 
         {/* Error State */}
         {error && !isLoading && (
           <div className="text-center bg-red-50 border-2 border-red-200 rounded-2xl p-6 max-w-2xl mx-auto mb-12">
-            <p className="text-red-600 font-semibold">Failed to load pricing plans</p>
+            <p className="text-red-600 font-semibold">{t.marketing.pricing.errorTitle}</p>
             <p className="text-sm text-red-500 mt-2">{error}</p>
           </div>
         )}
@@ -76,11 +78,11 @@ export default function Pricing() {
         {/* Plans Grid */}
         {!isLoading && filteredPlans.length > 0 && (
           <div className="flex flex-wrap justify-center gap-6 mb-12">
-            {filteredPlans.map((plan, index) => {
+            {filteredPlans.map((plan) => {
               const getCTA = () => {
-                if (plan.price === 0) return 'Start Free'
-                if (plan.monthly_limit >= 500) return 'Contact Sales'
-                return isAuthenticated ? 'Upgrade' : 'Start 14-Day Trial'
+                if (plan.price === 0) return t.marketing.pricing.startFree
+                if (plan.monthly_limit >= 500) return t.marketing.pricing.contactSales
+                return isAuthenticated ? t.marketing.pricing.upgrade : t.marketing.pricing.startTrial
               }
 
               const getCTALink = () => {
@@ -100,7 +102,7 @@ export default function Pricing() {
                   {plan.popular && (
                     <div className="mb-4">
                       <span className="gradient-purple-fuchsia text-white px-4 py-1.5 rounded-full text-xs font-bold">
-                        MOST POPULAR
+                        {t.marketing.pricing.mostPopular}
                       </span>
                     </div>
                   )}
@@ -113,23 +115,19 @@ export default function Pricing() {
                       {plan.period === 'year' ? (plan.price / 12).toFixed(2) : plan.price.toFixed(2)}
                     </span>
                     <span className="text-gray-600">
-                      /month
+                      {t.marketing.pricing.perMonth}
                     </span>
                     {plan.period === 'year' && (
                       <div className="text-sm mt-1 text-gray-500">
-                        {plan.currency === 'EUR' ? '€' : '$'}{plan.price.toFixed(2)} billed yearly
+                        {plan.currency === 'EUR' ? '€' : '$'}{plan.price.toFixed(2)} {t.marketing.pricing.billedYearly}
                       </div>
                     )}
                   </div>
                   <ul className="space-y-3 mb-8 flex-grow">
                     {plan.features.map((feature, idx) => (
                       <li key={idx} className="flex items-start text-sm">
-                        <span className="mr-2 flex-shrink-0 text-gray-900">
-                          ✓
-                        </span>
-                        <span className="text-gray-600">
-                          {feature}
-                        </span>
+                        <span className="mr-2 flex-shrink-0 text-gray-900">✓</span>
+                        <span className="text-gray-600">{feature}</span>
                       </li>
                     ))}
                   </ul>

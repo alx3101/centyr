@@ -1,43 +1,18 @@
+'use client'
+
 import { Shield, Lock, Server, Eye, FileCheck, RefreshCw } from 'lucide-react'
+import { useTranslations } from '@/contexts/LanguageContext'
 
 export default function Security() {
+  const t = useTranslations()
+
   const securityFeatures = [
-    {
-      icon: Lock,
-      title: 'End-to-End Encryption',
-      description: 'All images are encrypted in transit (TLS 1.3) and at rest (AES-256).',
-      color: 'purple'
-    },
-    {
-      icon: Server,
-      title: 'Server EU',
-      description: 'Your data stays in Europe. AWS infrastructure with ISO 27001 certification.',
-      color: 'fuchsia'
-    },
-    {
-      icon: Eye,
-      title: 'Privacy by Design',
-      description: 'We never use your images for training. Your products remain yours.',
-      color: 'purple'
-    },
-    {
-      icon: FileCheck,
-      title: 'GDPR Compliant',
-      description: 'Full GDPR compliance. DPA available for enterprise clients.',
-      color: 'fuchsia'
-    },
-    {
-      icon: RefreshCw,
-      title: 'Auto-deletion',
-      description: 'Images are automatically deleted after 30 days.',
-      color: 'purple'
-    },
-    {
-      icon: Shield,
-      title: 'SOC 2 Type II',
-      description: 'Annual independent audits to ensure the highest security standards.',
-      color: 'fuchsia'
-    }
+    { icon: Lock,      title: t.marketing.security.f1Title, description: t.marketing.security.f1Desc, color: 'purple' },
+    { icon: Server,    title: t.marketing.security.f2Title, description: t.marketing.security.f2Desc, color: 'fuchsia' },
+    { icon: Eye,       title: t.marketing.security.f3Title, description: t.marketing.security.f3Desc, color: 'purple' },
+    { icon: FileCheck, title: t.marketing.security.f4Title, description: t.marketing.security.f4Desc, color: 'fuchsia' },
+    { icon: RefreshCw, title: t.marketing.security.f5Title, description: t.marketing.security.f5Desc, color: 'purple' },
+    { icon: Shield,    title: t.marketing.security.f6Title, description: t.marketing.security.f6Desc, color: 'fuchsia' },
   ]
 
   return (
@@ -51,13 +26,13 @@ export default function Security() {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-green-500/20 px-4 py-2 rounded-full mb-6 border border-green-500/30">
             <Shield className="w-5 h-5 text-green-400" />
-            <span className="text-green-400 font-semibold text-sm">Enterprise-Grade Security</span>
+            <span className="text-green-400 font-semibold text-sm">{t.marketing.security.badge}</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Your Data Is Safe
+            {t.marketing.security.title}
           </h2>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            Security and privacy are our top priority. Here's how we protect your images.
+            {t.marketing.security.subtitle}
           </p>
         </div>
 
@@ -98,7 +73,7 @@ export default function Security() {
             </div>
             <div>
               <p className="text-white font-semibold text-sm">SOC 2</p>
-              <p className="text-xs text-gray-500">Type II Certified</p>
+              <p className="text-xs text-gray-500">{t.marketing.security.soc2Certified}</p>
             </div>
           </div>
 
@@ -110,7 +85,7 @@ export default function Security() {
             </div>
             <div>
               <p className="text-white font-semibold text-sm">GDPR</p>
-              <p className="text-xs text-gray-500">EU Compliant</p>
+              <p className="text-xs text-gray-500">{t.marketing.security.gdprCompliant}</p>
             </div>
           </div>
 
@@ -122,7 +97,7 @@ export default function Security() {
             </div>
             <div>
               <p className="text-white font-semibold text-sm">SSL/TLS</p>
-              <p className="text-xs text-gray-500">256-bit Encrypted</p>
+              <p className="text-xs text-gray-500">{t.marketing.security.sslEncrypted}</p>
             </div>
           </div>
 
@@ -134,7 +109,7 @@ export default function Security() {
             </div>
             <div>
               <p className="text-white font-semibold text-sm">ISO 27001</p>
-              <p className="text-xs text-gray-500">AWS Infrastructure</p>
+              <p className="text-xs text-gray-500">{t.marketing.security.awsInfra}</p>
             </div>
           </div>
         </div>

@@ -19,10 +19,12 @@ export default function ForgotPasswordPage() {
 
     try {
       const result = await cognitoForgotPassword(email)
+      console.log('[ForgotPassword] Cognito result:', result)
       if (result.success) {
         toast.success('Reset code sent! Check your email.')
         router.push(`/reset-password?email=${encodeURIComponent(email)}`)
       } else {
+        console.error('[ForgotPassword] Cognito error:', result.error)
         toast.error(result.error || 'Failed to send reset code')
       }
     } finally {

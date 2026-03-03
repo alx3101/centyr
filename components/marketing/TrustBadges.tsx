@@ -1,4 +1,10 @@
+'use client'
+
+import { useTranslations } from '@/contexts/LanguageContext'
+
 export default function TrustBadges() {
+  const t = useTranslations()
+
   return (
     <section className="py-12 border-y border-purple-100 bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -10,7 +16,7 @@ export default function TrustBadges() {
               </svg>
             </div>
             <div className="text-2xl font-bold text-gray-900">1,000+</div>
-            <div className="text-sm text-gray-600">Active stores</div>
+            <div className="text-sm text-gray-600">{t.marketing.trustBadges.stat1Label}</div>
           </div>
 
           <div className="flex flex-col items-center gap-2">
@@ -20,7 +26,7 @@ export default function TrustBadges() {
               </svg>
             </div>
             <div className="text-2xl font-bold text-gray-900">1M+</div>
-            <div className="text-sm text-gray-600">Images/month</div>
+            <div className="text-sm text-gray-600">{t.marketing.trustBadges.stat2Label}</div>
           </div>
 
           <div className="flex flex-col items-center gap-2">
@@ -30,7 +36,7 @@ export default function TrustBadges() {
               </svg>
             </div>
             <div className="text-2xl font-bold text-gray-900">&lt;10s</div>
-            <div className="text-sm text-gray-600">Avg. processing</div>
+            <div className="text-sm text-gray-600">{t.marketing.trustBadges.stat3Label}</div>
           </div>
 
           <div className="flex flex-col items-center gap-2">
@@ -40,7 +46,7 @@ export default function TrustBadges() {
               </svg>
             </div>
             <div className="text-2xl font-bold text-gray-900">99.9%</div>
-            <div className="text-sm text-gray-600">Uptime SLA</div>
+            <div className="text-sm text-gray-600">{t.marketing.trustBadges.stat4Label}</div>
           </div>
         </div>
       </div>

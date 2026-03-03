@@ -2,52 +2,51 @@
 
 import { useState, useEffect } from 'react'
 import { CheckCircle, Image as ImageIcon, Zap } from 'lucide-react'
+import { useTranslations } from '@/contexts/LanguageContext'
 
 const NOTIFICATIONS = [
-  { name: 'Marco B.', city: 'Milan', action: 'processed', count: 47, type: 'images' },
-  { name: 'Sofia R.', city: 'Rome', action: 'processed', count: 120, type: 'images' },
-  { name: 'Alessandro M.', city: 'Turin', action: 'signed up for', count: 0, type: 'signup' },
-  { name: 'Giulia P.', city: 'Florence', action: 'processed', count: 85, type: 'images' },
-  { name: 'Luca T.', city: 'Naples', action: 'upgraded to', count: 0, type: 'upgrade' },
-  { name: 'Emma C.', city: 'Bologna', action: 'processed', count: 200, type: 'images' },
-  { name: 'Francesco D.', city: 'Verona', action: 'signed up for', count: 0, type: 'signup' },
-  { name: 'Chiara L.', city: 'Padua', action: 'processed', count: 63, type: 'images' },
-  { name: 'Andrea V.', city: 'Genoa', action: 'upgraded to', count: 0, type: 'upgrade' },
-  { name: 'Martina S.', city: 'Palermo', action: 'processed', count: 95, type: 'images' },
+  { name: 'Marco B.',      city: 'Milan',    action: 'images',  count: 47 },
+  { name: 'Sofia R.',      city: 'Rome',     action: 'images',  count: 120 },
+  { name: 'Alessandro M.', city: 'Turin',    action: 'signup',  count: 0 },
+  { name: 'Giulia P.',     city: 'Florence', action: 'images',  count: 85 },
+  { name: 'Luca T.',       city: 'Naples',   action: 'upgrade', count: 0 },
+  { name: 'Emma C.',       city: 'Bologna',  action: 'images',  count: 200 },
+  { name: 'Francesco D.',  city: 'Verona',   action: 'signup',  count: 0 },
+  { name: 'Chiara L.',     city: 'Padua',    action: 'images',  count: 63 },
+  { name: 'Andrea V.',     city: 'Genoa',    action: 'upgrade', count: 0 },
+  { name: 'Martina S.',    city: 'Palermo',  action: 'images',  count: 95 },
 ]
 
-function getTimeAgo() {
+function getTimeAgo(minAgoLabel: string) {
   const minutes = Math.floor(Math.random() * 10) + 1
-  return `${minutes} min ago`
+  return `${minutes} ${minAgoLabel}`
 }
 
 export default function SocialProofNotification() {
+  const t = useTranslations()
   const [isVisible, setIsVisible] = useState(false)
   const [currentNotification, setCurrentNotification] = useState(0)
   const [timeAgo, setTimeAgo] = useState('')
 
   useEffect(() => {
-    // Initial delay before showing first notification
     const initialDelay = setTimeout(() => {
-      setTimeAgo(getTimeAgo())
+      setTimeAgo(getTimeAgo(t.marketing.socialProof.minAgo))
       setIsVisible(true)
     }, 5000)
 
     return () => clearTimeout(initialDelay)
-  }, [])
+  }, [t.marketing.socialProof.minAgo])
 
   useEffect(() => {
     if (!isVisible) return
 
-    // Hide after 5 seconds
     const hideTimeout = setTimeout(() => {
       setIsVisible(false)
     }, 5000)
 
-    // Show next notification after 8 seconds
     const nextTimeout = setTimeout(() => {
       setCurrentNotification((prev) => (prev + 1) % NOTIFICATIONS.length)
-      setTimeAgo(getTimeAgo())
+      setTimeAgo(getTimeAgo(t.marketing.socialProof.minAgo))
       setIsVisible(true)
     }, 15000)
 
@@ -55,25 +54,25 @@ export default function SocialProofNotification() {
       clearTimeout(hideTimeout)
       clearTimeout(nextTimeout)
     }
-  }, [isVisible, currentNotification])
+  }, [isVisible, currentNotification, t.marketing.socialProof.minAgo])
 
   const notification = NOTIFICATIONS[currentNotification]
 
   const getMessage = () => {
-    switch (notification.type) {
+    switch (notification.action) {
       case 'images':
-        return `${notification.action} ${notification.count} images`
+        return t.marketing.socialProof.processedImages.replace('{count}', String(notification.count))
       case 'signup':
-        return `${notification.action} Centyr`
+        return t.marketing.socialProof.signedUp
       case 'upgrade':
-        return `${notification.action} Premium`
+        return t.marketing.socialProof.upgraded
       default:
-        return notification.action
+        return ''
     }
   }
 
   const getIcon = () => {
-    switch (notification.type) {
+    switch (notification.action) {
       case 'images':
         return <ImageIcon className="w-5 h-5 text-purple-600" />
       case 'signup':
@@ -99,7 +98,7 @@ export default function SocialProofNotification() {
           <div className="flex-1 min-w-0">
             <p className="text-sm text-gray-900">
               <span className="font-bold">{notification.name}</span>
-              <span className="text-gray-500"> da {notification.city}</span>
+              <span className="text-gray-500"> {t.marketing.socialProof.from} {notification.city}</span>
             </p>
             <p className="text-sm text-gray-700 font-medium">{getMessage()}</p>
             <p className="text-xs text-gray-400 mt-1">{timeAgo}</p>

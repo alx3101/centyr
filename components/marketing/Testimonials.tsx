@@ -1,51 +1,57 @@
+'use client'
+
+import { useTranslations } from '@/contexts/LanguageContext'
+
 export default function Testimonials() {
+  const t = useTranslations()
+
   const testimonials = [
     {
-      content: 'We save €500/month on photo editing. The ROI was immediate. Centyr completely transformed our workflow.',
+      content: t.marketing.testimonials.t1Content,
       name: 'Marco Bianchi',
       role: 'CEO & Founder',
       company: 'TechStyle Store',
       rating: 5,
-      result: 'ROI 15x in 3 months',
+      result: t.marketing.testimonials.t1Result,
     },
     {
-      content: 'I used to spend 3 hours a day aligning product photos. Now I upload everything and in 5 minutes my catalog is ready.',
+      content: t.marketing.testimonials.t2Content,
       name: 'Emma Thompson',
       role: 'E-commerce Manager',
       company: 'Luxe Jewelry Co.',
       rating: 5,
-      result: '90% time saved',
+      result: t.marketing.testimonials.t2Result,
     },
     {
-      content: 'Works perfectly even with complex packaging. The quality is professional — customers notice the difference.',
+      content: t.marketing.testimonials.t3Content,
       name: 'Alessandro Rossi',
       role: 'Marketing Director',
       company: 'Fragranze Italia',
       rating: 5,
-      result: '+40% conversions',
+      result: t.marketing.testimonials.t3Result,
     },
     {
-      content: 'I manage 5 online stores with over 2000 products. Centyr let me standardize the entire catalog in a weekend.',
+      content: t.marketing.testimonials.t4Content,
       name: 'Sofia Martinez',
       role: 'Operations Manager',
       company: 'MultiStore Group',
       rating: 5,
-      result: '2000+ photos processed',
+      result: t.marketing.testimonials.t4Result,
     },
   ]
 
   return (
-    <section className="py-20 md:py-32 bg-gray-50">
+    <section id="testimonials" className="py-20 md:py-32 bg-gray-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-green-100 px-4 py-2 rounded-full mb-6">
-            <span className="text-green-600 font-semibold text-sm">12,000+ satisfied e-commerce stores</span>
+            <span className="text-green-600 font-semibold text-sm">{t.marketing.testimonials.badge}</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Loved by Professionals
+            {t.marketing.testimonials.title}
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Discover why thousands of e-commerce stores choose Centyr for their product photos
+            {t.marketing.testimonials.subtitle}
           </p>
         </div>
 
@@ -66,7 +72,7 @@ export default function Testimonials() {
 
               {/* Quote */}
               <p className="text-gray-700 mb-6 text-lg leading-relaxed">
-                "{testimonial.content}"
+                &ldquo;{testimonial.content}&rdquo;
               </p>
 
               {/* Result badge */}
@@ -97,19 +103,19 @@ export default function Testimonials() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div>
               <p className="text-4xl font-bold">12,000+</p>
-              <p className="text-purple-100 text-sm">Active e-commerce stores</p>
+              <p className="text-purple-100 text-sm">{t.marketing.testimonials.stat1Label}</p>
             </div>
             <div>
               <p className="text-4xl font-bold">5M+</p>
-              <p className="text-purple-100 text-sm">Photos processed</p>
+              <p className="text-purple-100 text-sm">{t.marketing.testimonials.stat2Label}</p>
             </div>
             <div>
               <p className="text-4xl font-bold">99.9%</p>
-              <p className="text-purple-100 text-sm">Guaranteed uptime</p>
+              <p className="text-purple-100 text-sm">{t.marketing.testimonials.stat3Label}</p>
             </div>
             <div>
               <p className="text-4xl font-bold">4.9/5</p>
-              <p className="text-purple-100 text-sm">Customer rating</p>
+              <p className="text-purple-100 text-sm">{t.marketing.testimonials.stat4Label}</p>
             </div>
           </div>
         </div>
