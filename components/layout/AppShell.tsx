@@ -15,17 +15,23 @@ interface AppShellProps {
 export function AppShell({ children }: AppShellProps) {
   const pathname = usePathname()
 
+  const isAuthPage =
+    !pathname ||
+    pathname.startsWith('/login') ||
+    pathname.startsWith('/signup') ||
+    pathname.startsWith('/forgot-password') ||
+    pathname.startsWith('/reset-password')
+
   // Nascondi footer su queste pagine
   const hideFooter =
-    pathname?.startsWith('/login') ||
-    pathname?.startsWith('/signup') ||
+    isAuthPage ||
     pathname?.startsWith('/dashboard') ||
     pathname?.startsWith('/upload') ||
     pathname?.startsWith('/billing')
 
   return (
     <>
-      <UnifiedNavbar />
+      {!isAuthPage && <UnifiedNavbar />}
       <main className="overflow-x-hidden">{children}</main>
       {!hideFooter && <Footer />}
     </>
