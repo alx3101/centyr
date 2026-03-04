@@ -7,11 +7,13 @@ import { cognitoConfirmPassword } from '@/lib/cognito'
 import toast from 'react-hot-toast'
 import { GuestGuard } from '@/components/guards/GuestGuard'
 import { KeyRound, ArrowLeft } from 'lucide-react'
+import { useTranslations } from '@/contexts/LanguageContext'
 
 export function ResetPasswordContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const email = searchParams.get('email') || ''
+  const t = useTranslations()
 
   const [code, setCode] = useState('')
   const [newPassword, setNewPassword] = useState('')
@@ -22,12 +24,12 @@ export function ResetPasswordContent() {
     e.preventDefault()
 
     if (newPassword !== confirmPassword) {
-      toast.error('Passwords do not match')
+      toast.error(t.auth.passwordMismatch)
       return
     }
 
     if (newPassword.length < 8) {
-      toast.error('Password must be at least 8 characters')
+      toast.error(t.auth.passwordTooShort)
       return
     }
 
@@ -36,7 +38,7 @@ export function ResetPasswordContent() {
     try {
       const result = await cognitoConfirmPassword(email, code, newPassword)
       if (result.success) {
-        toast.success('Password reset successfully! Please sign in.')
+        toast.success(t.auth.resetSuccess)
         router.push('/login')
       } else {
         console.error('[ResetPassword] Cognito error:', result.error)
@@ -61,10 +63,10 @@ export function ResetPasswordContent() {
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-purple-100 mb-4">
               <KeyRound className="w-8 h-8 text-purple-600" />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Reset Password</h1>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">{t.auth.resetPasswordTitle}</h1>
             {email && (
               <p className="text-gray-600 text-sm">
-                Enter the code sent to <span className="font-semibold text-gray-800">{email}</span>
+                {t.auth.enterCodeSentTo} <span className="font-semibold text-gray-800">{email}</span>
               </p>
             )}
           </div>
@@ -72,7 +74,7 @@ export function ResetPasswordContent() {
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label htmlFor="code" className="block text-sm font-semibold text-gray-700 mb-2">
-                Verification Code
+                {t.auth.verificationCode}
               </label>
               <input
                 id="code"
@@ -88,7 +90,7 @@ export function ResetPasswordContent() {
 
             <div>
               <label htmlFor="newPassword" className="block text-sm font-semibold text-gray-700 mb-2">
-                New Password
+                {t.auth.newPassword}
               </label>
               <input
                 id="newPassword"
@@ -99,12 +101,12 @@ export function ResetPasswordContent() {
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-fuchsia-400 focus:outline-none transition-colors"
                 placeholder="••••••••"
               />
-              <p className="text-xs text-gray-500 mt-1">Must be at least 8 characters</p>
+              <p className="text-xs text-gray-500 mt-1">{t.auth.mustBe8Chars}</p>
             </div>
 
             <div>
               <label htmlFor="confirmPassword" className="block text-sm font-semibold text-gray-700 mb-2">
-                Confirm New Password
+                {t.auth.confirmNewPassword}
               </label>
               <input
                 id="confirmPassword"
@@ -122,15 +124,15 @@ export function ResetPasswordContent() {
               disabled={isLoading}
               className="w-full gradient-purple-fuchsia text-white py-3 px-4 rounded-xl font-bold hover:scale-105 transition-all duration-300 shadow-lg glow-purple disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? 'Resetting...' : 'Reset Password'}
+              {isLoading ? t.auth.resetting : t.auth.resetPasswordTitle}
             </button>
           </form>
 
           <div className="mt-6 text-center space-y-3">
             <p className="text-sm text-gray-600">
-              Didn't receive a code?{' '}
+              {t.auth.didntReceiveCode}{' '}
               <Link href="/forgot-password" className="text-purple-600 hover:text-fuchsia-600 font-semibold">
-                Request again
+                {t.auth.requestAgain}
               </Link>
             </p>
             <Link
@@ -138,7 +140,7 @@ export function ResetPasswordContent() {
               className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-purple-600 font-semibold transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
-              Back to Sign In
+              {t.auth.backToSignIn}
             </Link>
           </div>
         </div>

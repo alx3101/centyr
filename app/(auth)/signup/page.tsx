@@ -7,6 +7,7 @@ import { toast } from 'react-hot-toast'
 import { cognitoOAuthSignIn } from '@/lib/cognito'
 import { GuestGuard } from '@/components/guards/GuestGuard'
 import { Check, Zap, Shield, Clock, Star } from 'lucide-react'
+import { useTranslations } from '@/contexts/LanguageContext'
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -16,17 +17,18 @@ export default function SignupPage() {
     confirmPassword: '',
   })
   const { signup, isLoading } = useAuth()
+  const t = useTranslations()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     if (formData.password !== formData.confirmPassword) {
-      toast.error('Passwords do not match')
+      toast.error(t.auth.passwordMismatch)
       return
     }
 
     if (formData.password.length < 8) {
-      toast.error('Password must be at least 8 characters')
+      toast.error(t.auth.passwordTooShort)
       return
     }
 
@@ -55,7 +57,7 @@ export default function SignupPage() {
           {/* Value Sidebar - Hidden on mobile, shown on lg+ */}
           <div className="hidden lg:flex lg:w-96 flex-col justify-center animate-fade-in-up">
             <div className="bg-gradient-to-br from-purple-600 to-fuchsia-600 rounded-2xl p-8 text-white shadow-2xl">
-              <h2 className="text-2xl font-bold mb-6">Why choose Centyr?</h2>
+              <h2 className="text-2xl font-bold mb-6">{t.auth.whyChoose}</h2>
 
               <div className="space-y-5">
                 <div className="flex items-start gap-4">
@@ -63,8 +65,8 @@ export default function SignupPage() {
                     <Zap className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-bold mb-1">Instant Processing</h3>
-                    <p className="text-purple-100 text-sm">Hundreds of photos processed in seconds with our AI</p>
+                    <h3 className="font-bold mb-1">{t.auth.instantProcessing}</h3>
+                    <p className="text-purple-100 text-sm">{t.auth.instantProcessingDesc}</p>
                   </div>
                 </div>
 
@@ -73,8 +75,8 @@ export default function SignupPage() {
                     <Clock className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-bold mb-1">Save 10+ Hours/Week</h3>
-                    <p className="text-purple-100 text-sm">Automate manual product photo editing</p>
+                    <h3 className="font-bold mb-1">{t.auth.saveHours}</h3>
+                    <p className="text-purple-100 text-sm">{t.auth.saveHoursDesc}</p>
                   </div>
                 </div>
 
@@ -83,8 +85,8 @@ export default function SignupPage() {
                     <Shield className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-bold mb-1">30-Day Guarantee</h3>
-                    <p className="text-purple-100 text-sm">Full money-back guarantee, no questions asked</p>
+                    <h3 className="font-bold mb-1">{t.auth.guarantee}</h3>
+                    <p className="text-purple-100 text-sm">{t.auth.guaranteeDesc}</p>
                   </div>
                 </div>
               </div>
@@ -97,7 +99,7 @@ export default function SignupPage() {
                   ))}
                   <span className="ml-2 text-sm font-semibold">4.9/5</span>
                 </div>
-                <p className="text-purple-100 text-sm mb-4">Average rating from our customers</p>
+                <p className="text-purple-100 text-sm mb-4">{t.auth.avgRating}</p>
 
                 <div className="flex items-center gap-3">
                   <div className="flex -space-x-2">
@@ -108,14 +110,14 @@ export default function SignupPage() {
                     ))}
                   </div>
                   <p className="text-sm text-purple-100">
-                    <span className="font-bold text-white">12,000+</span> active e-commerce stores
+                    <span className="font-bold text-white">12,000+</span> {t.auth.activeStores}
                   </p>
                 </div>
               </div>
 
               {/* Features list */}
               <div className="mt-6 space-y-2">
-                {['3 free jobs/month', 'No credit card required', 'Setup in 60 seconds'].map((feature, i) => (
+                {[t.auth.freeJobsBadge, t.auth.noCreditCard, t.auth.setupIn60].map((feature, i) => (
                   <div key={i} className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-green-300" />
                     <span className="text-sm">{feature}</span>
@@ -131,14 +133,14 @@ export default function SignupPage() {
             <Link href="/" className="text-3xl font-bold text-gradient inline-block mb-2">
               Centyr
             </Link>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Create Account</h1>
-            <p className="text-gray-600">Start aligning your product photos</p>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">{t.auth.signupButton}</h1>
+            <p className="text-gray-600">{t.auth.signupSubtitle}</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label htmlFor="fullName" className="block text-sm font-semibold text-gray-700 mb-2">
-                Full Name
+                {t.common.fullName}
               </label>
               <input
                 id="fullName"
@@ -154,7 +156,7 @@ export default function SignupPage() {
 
             <div>
               <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
-                Email Address
+                {t.auth.emailAddress}
               </label>
               <input
                 id="email"
@@ -170,7 +172,7 @@ export default function SignupPage() {
 
             <div>
               <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-2">
-                Password
+                {t.common.password}
               </label>
               <input
                 id="password"
@@ -182,12 +184,12 @@ export default function SignupPage() {
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-fuchsia-400 focus:outline-none transition-colors"
                 placeholder="••••••••"
               />
-              <p className="text-xs text-gray-500 mt-1">Must be at least 8 characters</p>
+              <p className="text-xs text-gray-500 mt-1">{t.auth.mustBe8Chars}</p>
             </div>
 
             <div>
               <label htmlFor="confirmPassword" className="block text-sm font-semibold text-gray-700 mb-2">
-                Confirm Password
+                {t.auth.confirmPassword}
               </label>
               <input
                 id="confirmPassword"
@@ -208,13 +210,13 @@ export default function SignupPage() {
                 className="w-4 h-4 mt-1 text-primary-600 border-gray-300 rounded focus:ring-fuchsia-500"
               />
               <label className="ml-2 text-sm text-gray-600">
-                I agree to the{' '}
+                {t.auth.agreeToTerms}{' '}
                 <Link href="/terms" className="text-primary-600 hover:text-fuchsia-600 font-semibold">
-                  Terms of Service
+                  {t.auth.termsOfService}
                 </Link>{' '}
-                and{' '}
+                {t.auth.and}{' '}
                 <Link href="/privacy" className="text-primary-600 hover:text-fuchsia-600 font-semibold">
-                  Privacy Policy
+                  {t.auth.privacyPolicy}
                 </Link>
               </label>
             </div>
@@ -224,7 +226,7 @@ export default function SignupPage() {
               disabled={isLoading}
               className="w-full gradient-purple-fuchsia text-white py-3 px-4 rounded-xl font-bold hover:scale-105 transition-all duration-300 shadow-lg glow-purple disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? 'Creating account...' : 'Create Account'}
+              {isLoading ? t.auth.creatingAccount : t.auth.signupButton}
             </button>
           </form>
 
@@ -234,7 +236,7 @@ export default function SignupPage() {
               <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white/80 text-gray-500">Or continue with</span>
+              <span className="px-2 bg-white/80 text-gray-500">{t.auth.orContinueWith}</span>
             </div>
           </div>
 
@@ -276,9 +278,9 @@ export default function SignupPage() {
 
           <div className="mt-6 text-center">
             <p className="text-gray-600">
-              Already have an account?{' '}
+              {t.auth.hasAccount}{' '}
               <Link href="/login" className="text-primary-600 hover:text-fuchsia-600 font-bold transition-colors">
-                Sign in
+                {t.auth.signIn}
               </Link>
             </p>
           </div>
@@ -286,9 +288,9 @@ export default function SignupPage() {
           {/* Free trial badge - shown on mobile only */}
           <div className="mt-6 bg-gradient-to-r from-purple-50 to-fuchsia-50 border-2 border-fuchsia-200 rounded-xl p-4 text-center lg:hidden">
             <p className="text-sm font-semibold text-gray-900">
-              🎉 Start with 3 free jobs/month
+              {t.auth.startFreeJobsBadge}
             </p>
-            <p className="text-xs text-gray-600 mt-1">No credit card required</p>
+            <p className="text-xs text-gray-600 mt-1">{t.auth.noCreditCard}</p>
           </div>
         </div>
         </div>

@@ -3,6 +3,7 @@
 import { AlertTriangle, Zap, X } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
+import { useTranslations } from '@/contexts/LanguageContext'
 
 interface QuotaWarningBannerProps {
   currentUploads: number
@@ -16,6 +17,7 @@ export default function QuotaWarningBanner({
   plan
 }: QuotaWarningBannerProps) {
   const [isDismissed, setIsDismissed] = useState(false)
+  const t = useTranslations()
 
   const percentage = (currentUploads / limit) * 100
   const remaining = limit - currentUploads
@@ -50,25 +52,21 @@ export default function QuotaWarningBanner({
             isAtLimit ? 'text-red-900' : 'text-orange-900'
           }`}>
             {isAtLimit
-              ? '🚨 Monthly Limit Reached'
-              : '⚠️ Running Low on Credits'
+              ? t.quota.limitReached
+              : t.quota.runningLow
             }
           </h3>
 
           <p className={`text-sm mb-4 ${
             isAtLimit ? 'text-red-700' : 'text-orange-700'
           }`}>
-            {isAtLimit ? (
-              <>
-                You've used all <span className="font-bold">{limit} images</span> this month.
-                Upgrade to Pro for unlimited uploads!
-              </>
-            ) : (
-              <>
-                You've used <span className="font-bold">{currentUploads}/{limit} images</span> this month.
-                Only <span className="font-bold">{remaining} left</span>!
-              </>
-            )}
+            {isAtLimit
+              ? t.quota.usedAll.replace('{limit}', String(limit))
+              : t.quota.usedPartial
+                  .replace('{current}', String(currentUploads))
+                  .replace('{limit}', String(limit))
+                  .replace('{remaining}', String(remaining))
+            }
           </p>
 
           {/* Progress Bar */}
@@ -87,24 +85,24 @@ export default function QuotaWarningBanner({
           <div className="bg-white/80 rounded-xl p-4 mb-4">
             <p className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
               <Zap className="w-4 h-4 text-fuchsia-600" />
-              Upgrade to Pro and get:
+              {t.quota.upgradeTitle}
             </p>
             <ul className="space-y-1 text-sm text-gray-700">
               <li className="flex items-start gap-2">
                 <span className="text-green-500 mt-0.5">✓</span>
-                <span><strong>Unlimited</strong> image uploads per month</span>
+                <span>{t.quota.benefit1}</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-500 mt-0.5">✓</span>
-                <span><strong>Bulk processing</strong> - upload 100s at once</span>
+                <span>{t.quota.benefit2}</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-500 mt-0.5">✓</span>
-                <span><strong>Priority support</strong> and faster processing</span>
+                <span>{t.quota.benefit3}</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-500 mt-0.5">✓</span>
-                <span><strong>API access</strong> for automation</span>
+                <span>{t.quota.benefit4}</span>
               </li>
             </ul>
           </div>
@@ -115,7 +113,7 @@ export default function QuotaWarningBanner({
               href="/pricing"
               className="flex-1 text-center gradient-purple-fuchsia text-white px-6 py-3 rounded-xl font-bold hover:scale-105 transition-all duration-300 shadow-lg"
             >
-              {isAtLimit ? 'Upgrade Now to Continue' : 'Upgrade to Pro - $19/mo'}
+              {isAtLimit ? t.quota.upgradeContinue : t.quota.upgradePro}
             </Link>
             {!isAtLimit && (
               <button

@@ -33,6 +33,8 @@ export interface Translations {
     testimonials: string
     getStarted: string
     signedInAs: string
+    overview: string
+    billing: string
   }
 
   // Auth
@@ -55,6 +57,45 @@ export interface Translations {
     signupSuccess: string
     signupFailed: string
     logoutSuccess: string
+    emailAddress: string
+    signingIn: string
+    orContinueWith: string
+    backToSignIn: string
+    forgotPasswordTitle: string
+    forgotPasswordSubtitle: string
+    sendResetCode: string
+    sending: string
+    resetCodeSent: string
+    resetPasswordTitle: string
+    enterCodeSentTo: string
+    verificationCode: string
+    newPassword: string
+    confirmNewPassword: string
+    resetting: string
+    resetSuccess: string
+    didntReceiveCode: string
+    requestAgain: string
+    creatingAccount: string
+    mustBe8Chars: string
+    agreeToTerms: string
+    termsOfService: string
+    and: string
+    privacyPolicy: string
+    signIn: string
+    signUp: string
+    whyChoose: string
+    instantProcessing: string
+    instantProcessingDesc: string
+    saveHours: string
+    saveHoursDesc: string
+    guarantee: string
+    guaranteeDesc: string
+    avgRating: string
+    activeStores: string
+    freeJobsBadge: string
+    noCreditCard: string
+    setupIn60: string
+    startFreeJobsBadge: string
   }
 
   // Dashboard
@@ -77,6 +118,42 @@ export interface Translations {
     jobId: string
     estimatedTime: string
     seconds: string
+    jobsProcessed: string
+    readyToProcess: string
+    aiPoweredHub: string
+    jobsPerMonth: string
+    jobsLeft: string
+    upgrade: string
+    available: string
+    success: string
+    usageLabel: string
+    noJobsTitle: string
+    noJobsDesc: string
+    uploadNow: string
+    watchDemo: string
+    filterAll: string
+    filterCompleted: string
+    filterProcessing: string
+    filterFailed: string
+    filterPending: string
+    noJobsStatus: string
+    showAllJobs: string
+    uploadNewImages: string
+    downloadCompleted: string
+    downloadFailed: string
+    batch: string
+    tipJpgPng: string
+    tipBackground: string
+    tipBulk: string
+    checklistUploadTitle: string
+    checklistUploadDesc: string
+    checklistUploadAction: string
+    checklistDownloadTitle: string
+    checklistDownloadDesc: string
+    checklistDownloadAction: string
+    checklistExploreTitle: string
+    checklistExploreDesc: string
+    checklistExploreAction: string
   }
 
   // Upload
@@ -98,6 +175,134 @@ export interface Translations {
     upgradeNow: string
     quotaExceeded: string
     maxFiles: string
+    newJob: string
+    newJobSubtitle: string
+    jobsRemaining: string
+    whatIsJob: string
+    jobExplanation: string
+    stepUpload: string
+    stepConfigure: string
+    stepReview: string
+    uploadStepTitle: string
+    uploadStepSubtitle: string
+    dropHere: string
+    dragHere: string
+    orBrowse: string
+    freePlanLimit: string
+    canUploadTo: string
+    upgradeUnlimited: string
+    imageAdded: string
+    imagesAdded: string
+    configureTitle: string
+    configureSubtitle: string
+    jobNameLabel: string
+    jobNamePlaceholder: string
+    jobNameHelper: string
+    processingOptions: string
+    removeBackground: string
+    removeBackgroundDesc: string
+    premium: string
+    customBackground: string
+    uploadBackgroundImage: string
+    outputSettings: string
+    outputSize: string
+    margin: string
+    marginHelper: string
+    reviewTitle: string
+    reviewSubtitle: string
+    summaryJob: string
+    summaryImages: string
+    summaryOptions: string
+    summaryPreview: string
+    aiAlignment: string
+    backgroundRemoval: string
+    customBackgroundLabel: string
+    estimatedTimeLabel: string
+    redirectInfo: string
+    insufficientCredits: string
+    insufficientCreditsDesc: string
+    continueBtn: string
+    startProcessing: string
+    processingBtn: string
+    fast: string
+    fastDesc: string
+    aiPrecision: string
+    aiPrecisionDesc: string
+    secure: string
+    secureDesc: string
+    jobStarted: string
+    uploadAtLeastOne: string
+    enterJobName: string
+    maxBatchExceeded: string
+    upgradeToProcess: string
+    onlyCreditsLeft: string
+    upgradePremium: string
+  }
+
+  // Billing
+  billing: {
+    title: string
+    subtitle: string
+    subscriptionManagement: string
+    currentSubscription: string
+    monthlyQuota: string
+    usedThisMonth: string
+    remaining: string
+    jobsPerMonth: string
+    jobsLeft: string
+    manageBillingPortal: string
+    opening: string
+    runningLow: string
+    runningLowDesc: string
+    viewUpgradeOptions: string
+    availablePlans: string
+    monthly: string
+    yearly: string
+    mostPopular: string
+    currentPlanBadge: string
+    save20: string
+    processingBtn: string
+    currentPlanBtn: string
+    upgradeTo: string
+    billingHistory: string
+    noBillingHistory: string
+    billingHistoryDesc: string
+    cannotPurchase: string
+    failedCheckout: string
+    failedPortal: string
+    perYear: string
+    perMonth: string
+  }
+
+  // Onboarding
+  onboarding: {
+    title: string
+    subtitle: string
+    ofCompleted: string
+    completed: string
+    congratulations: string
+    congratulationsDesc: string
+  }
+
+  // Post Download Modal
+  postDownload: {
+    title: string
+    subtitle: string
+    runningLow: string
+    runningLowDesc: string
+    upgradePro: string
+    upgradeProDesc: string
+    upgradeNow: string
+    whatsNext: string
+    processMore: string
+    processMoreDesc: string
+    unlockBulk: string
+    unlockBulkDesc: string
+    loveCentyr: string
+    referralDesc: string
+    referralCredits: string
+    copy: string
+    copied: string
   }
 
   // Pricing
@@ -139,6 +344,17 @@ export interface Translations {
     upgradeMessage: string
     dailyLimit: string
     monthlyLimit: string
+    limitReached: string
+    runningLow: string
+    usedAll: string
+    usedPartial: string
+    upgradeTitle: string
+    benefit1: string
+    benefit2: string
+    benefit3: string
+    benefit4: string
+    upgradeContinue: string
+    upgradePro: string
   }
 
   // Notifications
@@ -374,6 +590,8 @@ export const translations: Record<Language, Translations> = {
       testimonials: 'Testimonials',
       getStarted: 'Get Started',
       signedInAs: 'Signed in as',
+      overview: 'Overview',
+      billing: 'Billing',
     },
 
     auth: {
@@ -395,6 +613,45 @@ export const translations: Record<Language, Translations> = {
       signupSuccess: 'Account created! Please login.',
       signupFailed: 'Signup failed',
       logoutSuccess: 'Logged out successfully',
+      emailAddress: 'Email Address',
+      signingIn: 'Signing in...',
+      orContinueWith: 'Or continue with',
+      backToSignIn: 'Back to Sign In',
+      forgotPasswordTitle: 'Forgot Password?',
+      forgotPasswordSubtitle: "Enter your email and we'll send you a reset code.",
+      sendResetCode: 'Send Reset Code',
+      sending: 'Sending...',
+      resetCodeSent: 'Reset code sent! Check your email.',
+      resetPasswordTitle: 'Reset Password',
+      enterCodeSentTo: 'Enter the code sent to',
+      verificationCode: 'Verification Code',
+      newPassword: 'New Password',
+      confirmNewPassword: 'Confirm New Password',
+      resetting: 'Resetting...',
+      resetSuccess: 'Password reset successfully! Please sign in.',
+      didntReceiveCode: "Didn't receive a code?",
+      requestAgain: 'Request again',
+      creatingAccount: 'Creating account...',
+      mustBe8Chars: 'Must be at least 8 characters',
+      agreeToTerms: 'I agree to the',
+      termsOfService: 'Terms of Service',
+      and: 'and',
+      privacyPolicy: 'Privacy Policy',
+      signIn: 'Sign in',
+      signUp: 'Sign up',
+      whyChoose: 'Why choose Centyr?',
+      instantProcessing: 'Instant Processing',
+      instantProcessingDesc: 'Hundreds of photos processed in seconds with our AI',
+      saveHours: 'Save 10+ Hours/Week',
+      saveHoursDesc: 'Automate manual product photo editing',
+      guarantee: '30-Day Guarantee',
+      guaranteeDesc: 'Full money-back guarantee, no questions asked',
+      avgRating: 'Average rating from our customers',
+      activeStores: 'active e-commerce stores',
+      freeJobsBadge: '3 free jobs/month',
+      noCreditCard: 'No credit card required',
+      setupIn60: 'Setup in 60 seconds',
+      startFreeJobsBadge: '🎉 Start with 3 free jobs/month',
     },
 
     dashboard: {
@@ -416,6 +673,42 @@ export const translations: Record<Language, Translations> = {
       jobId: 'Job ID',
       estimatedTime: 'Estimated time remaining',
       seconds: 'seconds',
+      jobsProcessed: 'jobs processed',
+      readyToProcess: 'Ready to process',
+      aiPoweredHub: 'Your AI-powered image processing hub',
+      jobsPerMonth: 'jobs / month',
+      jobsLeft: 'jobs left',
+      upgrade: 'Upgrade',
+      available: 'Available',
+      success: 'Success',
+      usageLabel: 'Usage',
+      noJobsTitle: 'No jobs processed yet',
+      noJobsDesc: 'Upload your first product photo to see the magic of AI-powered alignment',
+      uploadNow: 'Upload Now',
+      watchDemo: 'Watch Demo',
+      filterAll: 'all',
+      filterCompleted: 'completed',
+      filterProcessing: 'processing',
+      filterFailed: 'failed',
+      filterPending: 'pending',
+      noJobsStatus: 'No jobs found with status:',
+      showAllJobs: 'Show All Jobs',
+      uploadNewImages: 'Upload New Images',
+      downloadCompleted: 'Download completed!',
+      downloadFailed: 'Download failed',
+      batch: 'Batch',
+      tipJpgPng: 'Works best with JPG/PNG files',
+      tipBackground: 'White or grey backgrounds give best results',
+      tipBulk: 'Process multiple images in bulk with Pro plan',
+      checklistUploadTitle: 'Upload your first image',
+      checklistUploadDesc: 'Try our AI-powered alignment with a product photo',
+      checklistUploadAction: 'Upload Now',
+      checklistDownloadTitle: 'Download your result',
+      checklistDownloadDesc: 'Get your perfectly aligned image',
+      checklistDownloadAction: 'View Jobs',
+      checklistExploreTitle: 'Explore features',
+      checklistExploreDesc: 'Check out bulk upload and other pro features',
+      checklistExploreAction: 'Learn More',
     },
 
     upload: {
@@ -436,6 +729,131 @@ export const translations: Record<Language, Translations> = {
       upgradeNow: 'Upgrade now',
       quotaExceeded: 'Monthly limit exceeded. Please upgrade your plan.',
       maxFiles: 'Maximum files per upload',
+      newJob: 'New Job',
+      newJobSubtitle: 'Each upload creates a job — our AI aligns and processes your photos automatically.',
+      jobsRemaining: 'jobs remaining',
+      whatIsJob: "What's a job?",
+      jobExplanation: 'A job is a batch of one or more images sent to our AI for processing. Each job has a name, tracks progress in real time, and keeps your results available for download in the dashboard.',
+      stepUpload: 'Upload',
+      stepConfigure: 'Configure',
+      stepReview: 'Review',
+      uploadStepTitle: 'Upload your images',
+      uploadStepSubtitle: 'Drag your product photos or click to select',
+      dropHere: 'Drop it here!',
+      dragHere: 'Drag images here',
+      orBrowse: 'or click to browse',
+      freePlanLimit: 'Free Plan: 1 image per job.',
+      canUploadTo: 'You can upload up to {count} images per job.',
+      upgradeUnlimited: 'Upgrade for unlimited batches',
+      imageAdded: 'image added',
+      imagesAdded: 'images added',
+      configureTitle: 'Configure job',
+      configureSubtitle: 'Customize your processing options',
+      jobNameLabel: 'Job Name',
+      jobNamePlaceholder: 'e.g. Summer Collection 2024, Product Catalog...',
+      jobNameHelper: 'A descriptive name to identify this batch',
+      processingOptions: 'Processing Options',
+      removeBackground: 'Remove Background',
+      removeBackgroundDesc: 'AI automatically removes the background for clean product shots',
+      premium: 'Premium',
+      customBackground: 'Custom background (optional)',
+      uploadBackgroundImage: 'Upload background image',
+      outputSettings: 'Output Settings',
+      outputSize: 'Output Size',
+      margin: 'Margin',
+      marginHelper: 'Percentage relative to the output size.',
+      reviewTitle: 'Review & start',
+      reviewSubtitle: 'Check the details before starting processing',
+      summaryJob: 'Job',
+      summaryImages: 'Images',
+      summaryOptions: 'Options',
+      summaryPreview: 'Preview',
+      aiAlignment: 'AI Alignment',
+      backgroundRemoval: 'Background Removal',
+      customBackgroundLabel: 'Custom Background',
+      estimatedTimeLabel: 'Estimated time: ~{minutes} minutes',
+      redirectInfo: "You'll be redirected to the dashboard to track progress",
+      insufficientCredits: 'Insufficient credits',
+      insufficientCreditsDesc: 'You have {remaining} credits but are trying to process {count} images.',
+      continueBtn: 'Continue',
+      startProcessing: 'Start Processing',
+      processingBtn: 'Processing...',
+      fast: 'Fast',
+      fastDesc: '~10 sec per image',
+      aiPrecision: 'AI Precision',
+      aiPrecisionDesc: 'Perfect alignment',
+      secure: 'Secure',
+      secureDesc: 'End-to-end encryption',
+      jobStarted: 'Job started! Redirecting to dashboard...',
+      uploadAtLeastOne: 'Upload at least one image',
+      enterJobName: 'Enter a job name',
+      maxBatchExceeded: 'Maximum {count} images per batch.',
+      upgradeToProcess: 'Upgrade to process more!',
+      onlyCreditsLeft: 'You only have {count} jobs left this month.',
+      upgradePremium: 'Upgrade to Premium to use background removal',
+    },
+
+    billing: {
+      title: 'Billing & Subscription',
+      subtitle: 'Manage your subscription and billing information',
+      subscriptionManagement: 'Subscription Management',
+      currentSubscription: 'Current Subscription',
+      monthlyQuota: 'Monthly Quota',
+      usedThisMonth: 'Used This Month',
+      remaining: 'Remaining',
+      jobsPerMonth: 'jobs/month',
+      jobsLeft: 'jobs left',
+      manageBillingPortal: 'Manage Billing Portal',
+      opening: 'Opening...',
+      runningLow: "You're running low on credits",
+      runningLowDesc: "You've used {percentage}% of your monthly quota. Consider upgrading to avoid interruptions.",
+      viewUpgradeOptions: 'View upgrade options →',
+      availablePlans: 'Available Plans',
+      monthly: 'Monthly',
+      yearly: 'Yearly',
+      mostPopular: 'MOST POPULAR',
+      currentPlanBadge: 'CURRENT PLAN',
+      save20: 'Save 20% vs monthly',
+      processingBtn: 'Processing...',
+      currentPlanBtn: 'Current Plan',
+      upgradeTo: 'Upgrade to',
+      billingHistory: 'Billing History',
+      noBillingHistory: 'No billing history yet',
+      billingHistoryDesc: 'Your invoices and payment history will appear here',
+      cannotPurchase: 'This plan cannot be purchased online',
+      failedCheckout: 'Failed to start checkout',
+      failedPortal: 'Failed to open billing portal',
+      perYear: '/year',
+      perMonth: '/month',
+    },
+
+    onboarding: {
+      title: '🚀 Get Started with Centyr',
+      subtitle: 'Complete these steps to unlock the full potential',
+      ofCompleted: 'of',
+      completed: 'completed',
+      congratulations: '🎉 Congratulations!',
+      congratulationsDesc: "You've completed the onboarding. You're all set to create amazing aligned images!",
+    },
+
+    postDownload: {
+      title: 'Download Complete! ✨',
+      subtitle: 'Your perfectly aligned image is ready',
+      runningLow: '⚠️ Running Low on Credits',
+      runningLowDesc: 'You have {remaining}/{total} uploads remaining this month',
+      upgradePro: 'Upgrade to Pro',
+      upgradeProDesc: 'Get unlimited uploads, bulk processing, and priority support for just $19/month',
+      upgradeNow: 'Upgrade Now',
+      whatsNext: "What's next?",
+      processMore: 'Process More Images',
+      processMoreDesc: 'Upload another batch',
+      unlockBulk: 'Unlock Bulk Upload',
+      unlockBulkDesc: 'Process 100s of images at once',
+      loveCentyr: 'Love Centyr?',
+      referralDesc: 'Share with a friend and you both get',
+      referralCredits: '5 free image credits!',
+      copy: 'Copy',
+      copied: '✓ Copied',
     },
 
     pricing: {
@@ -475,6 +893,17 @@ export const translations: Record<Language, Translations> = {
       upgradeMessage: 'Upgrade your plan for more images',
       dailyLimit: 'Daily limit reached',
       monthlyLimit: 'Monthly limit reached',
+      limitReached: '🚨 Monthly Limit Reached',
+      runningLow: '⚠️ Running Low on Credits',
+      usedAll: "You've used all {limit} images this month. Upgrade to Pro for unlimited uploads!",
+      usedPartial: "You've used {current}/{limit} images this month. Only {remaining} left!",
+      upgradeTitle: 'Upgrade to Pro and get:',
+      benefit1: 'Unlimited image uploads per month',
+      benefit2: 'Bulk processing - upload 100s at once',
+      benefit3: 'Priority support and faster processing',
+      benefit4: 'API access for automation',
+      upgradeContinue: 'Upgrade Now to Continue',
+      upgradePro: 'Upgrade to Pro - $19/mo',
     },
 
     notifications: {
@@ -707,6 +1136,8 @@ export const translations: Record<Language, Translations> = {
       testimonials: 'Testimonianze',
       getStarted: 'Inizia Gratis',
       signedInAs: 'Accesso come',
+      overview: 'Panoramica',
+      billing: 'Fatturazione',
     },
 
     auth: {
@@ -728,6 +1159,45 @@ export const translations: Record<Language, Translations> = {
       signupSuccess: 'Account creato! Effettua il login.',
       signupFailed: 'Registrazione fallita',
       logoutSuccess: 'Logout effettuato con successo',
+      emailAddress: 'Indirizzo Email',
+      signingIn: 'Accesso in corso...',
+      orContinueWith: 'Oppure continua con',
+      backToSignIn: 'Torna al Login',
+      forgotPasswordTitle: 'Password Dimenticata?',
+      forgotPasswordSubtitle: "Inserisci la tua email e ti invieremo un codice di reset.",
+      sendResetCode: 'Invia Codice di Reset',
+      sending: 'Invio in corso...',
+      resetCodeSent: 'Codice inviato! Controlla la tua email.',
+      resetPasswordTitle: 'Reimposta Password',
+      enterCodeSentTo: 'Inserisci il codice inviato a',
+      verificationCode: 'Codice di Verifica',
+      newPassword: 'Nuova Password',
+      confirmNewPassword: 'Conferma Nuova Password',
+      resetting: 'Reimpostazione in corso...',
+      resetSuccess: 'Password reimpostata con successo! Effettua il login.',
+      didntReceiveCode: 'Non hai ricevuto il codice?',
+      requestAgain: 'Richiedi di nuovo',
+      creatingAccount: 'Creazione account in corso...',
+      mustBe8Chars: 'Deve essere di almeno 8 caratteri',
+      agreeToTerms: 'Accetto i',
+      termsOfService: 'Termini di Servizio',
+      and: 'e la',
+      privacyPolicy: 'Privacy Policy',
+      signIn: 'Accedi',
+      signUp: 'Registrati',
+      whyChoose: 'Perché scegliere Centyr?',
+      instantProcessing: 'Elaborazione Istantanea',
+      instantProcessingDesc: 'Centinaia di foto elaborate in pochi secondi con la nostra AI',
+      saveHours: 'Risparmia 10+ Ore/Settimana',
+      saveHoursDesc: 'Automatizza la modifica manuale delle foto prodotto',
+      guarantee: 'Garanzia 30 Giorni',
+      guaranteeDesc: 'Rimborso completo garantito, senza domande',
+      avgRating: 'Valutazione media dai nostri clienti',
+      activeStores: 'negozi e-commerce attivi',
+      freeJobsBadge: '3 lavori gratuiti/mese',
+      noCreditCard: 'Nessuna carta di credito richiesta',
+      setupIn60: 'Configurazione in 60 secondi',
+      startFreeJobsBadge: '🎉 Inizia con 3 lavori gratuiti/mese',
     },
 
     dashboard: {
@@ -749,6 +1219,42 @@ export const translations: Record<Language, Translations> = {
       jobId: 'ID Lavoro',
       estimatedTime: 'Tempo stimato rimanente',
       seconds: 'secondi',
+      jobsProcessed: 'lavori elaborati',
+      readyToProcess: 'Pronto per elaborare',
+      aiPoweredHub: 'Il tuo hub di elaborazione immagini con AI',
+      jobsPerMonth: 'lavori / mese',
+      jobsLeft: 'lavori rimanenti',
+      upgrade: 'Aggiorna',
+      available: 'Disponibili',
+      success: 'Successo',
+      usageLabel: 'Utilizzo',
+      noJobsTitle: 'Nessun lavoro elaborato ancora',
+      noJobsDesc: "Carica la tua prima foto prodotto per vedere la magia dell'AI",
+      uploadNow: 'Carica Ora',
+      watchDemo: 'Guarda Demo',
+      filterAll: 'tutti',
+      filterCompleted: 'completati',
+      filterProcessing: 'in elaborazione',
+      filterFailed: 'falliti',
+      filterPending: 'in attesa',
+      noJobsStatus: 'Nessun lavoro trovato con stato:',
+      showAllJobs: 'Mostra Tutti i Lavori',
+      uploadNewImages: 'Carica Nuove Immagini',
+      downloadCompleted: 'Download completato!',
+      downloadFailed: 'Download fallito',
+      batch: 'Batch',
+      tipJpgPng: 'Funziona meglio con file JPG/PNG',
+      tipBackground: 'Gli sfondi bianchi o grigi danno i migliori risultati',
+      tipBulk: 'Elabora più immagini in blocco con il piano Pro',
+      checklistUploadTitle: 'Carica la tua prima immagine',
+      checklistUploadDesc: "Prova l'allineamento AI con una foto prodotto",
+      checklistUploadAction: 'Carica Ora',
+      checklistDownloadTitle: 'Scarica il tuo risultato',
+      checklistDownloadDesc: 'Ottieni la tua immagine perfettamente allineata',
+      checklistDownloadAction: 'Vedi Lavori',
+      checklistExploreTitle: 'Esplora le funzionalità',
+      checklistExploreDesc: 'Scopri il caricamento in blocco e altre funzioni pro',
+      checklistExploreAction: 'Scopri di Più',
     },
 
     upload: {
@@ -769,6 +1275,131 @@ export const translations: Record<Language, Translations> = {
       upgradeNow: 'Aggiorna ora',
       quotaExceeded: 'Limite mensile superato. Aggiorna il tuo piano.',
       maxFiles: 'Massimo file per caricamento',
+      newJob: 'Nuovo Lavoro',
+      newJobSubtitle: "Ogni caricamento crea un lavoro — la nostra AI allinea ed elabora automaticamente le tue foto.",
+      jobsRemaining: 'lavori rimanenti',
+      whatIsJob: "Cos'è un lavoro?",
+      jobExplanation: "Un lavoro è un batch di una o più immagini inviate alla nostra AI per l'elaborazione. Ogni lavoro ha un nome, traccia il progresso in tempo reale e mantiene i risultati disponibili per il download nella dashboard.",
+      stepUpload: 'Carica',
+      stepConfigure: 'Configura',
+      stepReview: 'Revisione',
+      uploadStepTitle: 'Carica le tue immagini',
+      uploadStepSubtitle: 'Trascina le tue foto prodotto o clicca per selezionarle',
+      dropHere: 'Rilascia qui!',
+      dragHere: 'Trascina le immagini qui',
+      orBrowse: 'o clicca per sfogliare',
+      freePlanLimit: 'Piano Gratuito: 1 immagine per lavoro.',
+      canUploadTo: 'Puoi caricare fino a {count} immagini per lavoro.',
+      upgradeUnlimited: 'Aggiorna per batch illimitati',
+      imageAdded: 'immagine aggiunta',
+      imagesAdded: 'immagini aggiunte',
+      configureTitle: 'Configura lavoro',
+      configureSubtitle: 'Personalizza le opzioni di elaborazione',
+      jobNameLabel: 'Nome Lavoro',
+      jobNamePlaceholder: 'es. Collezione Estate 2024, Catalogo Prodotti...',
+      jobNameHelper: 'Un nome descrittivo per identificare questo batch',
+      processingOptions: 'Opzioni di Elaborazione',
+      removeBackground: 'Rimuovi Sfondo',
+      removeBackgroundDesc: "L'AI rimuove automaticamente lo sfondo per foto prodotto pulite",
+      premium: 'Premium',
+      customBackground: 'Sfondo personalizzato (opzionale)',
+      uploadBackgroundImage: 'Carica immagine di sfondo',
+      outputSettings: 'Impostazioni Output',
+      outputSize: 'Dimensione Output',
+      margin: 'Margine',
+      marginHelper: 'Percentuale relativa alla dimensione output.',
+      reviewTitle: 'Revisione & avvio',
+      reviewSubtitle: "Controlla i dettagli prima di avviare l'elaborazione",
+      summaryJob: 'Lavoro',
+      summaryImages: 'Immagini',
+      summaryOptions: 'Opzioni',
+      summaryPreview: 'Anteprima',
+      aiAlignment: 'Allineamento AI',
+      backgroundRemoval: 'Rimozione Sfondo',
+      customBackgroundLabel: 'Sfondo Personalizzato',
+      estimatedTimeLabel: 'Tempo stimato: ~{minutes} minuti',
+      redirectInfo: 'Verrai reindirizzato alla dashboard per tracciare il progresso',
+      insufficientCredits: 'Crediti insufficienti',
+      insufficientCreditsDesc: 'Hai {remaining} crediti ma stai cercando di elaborare {count} immagini.',
+      continueBtn: 'Continua',
+      startProcessing: 'Avvia Elaborazione',
+      processingBtn: 'Elaborazione...',
+      fast: 'Veloce',
+      fastDesc: '~10 sec per immagine',
+      aiPrecision: 'Precisione AI',
+      aiPrecisionDesc: 'Allineamento perfetto',
+      secure: 'Sicuro',
+      secureDesc: 'Crittografia end-to-end',
+      jobStarted: 'Lavoro avviato! Reindirizzamento alla dashboard...',
+      uploadAtLeastOne: 'Carica almeno una immagine',
+      enterJobName: 'Inserisci un nome per il lavoro',
+      maxBatchExceeded: 'Massimo {count} immagini per batch.',
+      upgradeToProcess: 'Aggiorna per elaborarne di più!',
+      onlyCreditsLeft: 'Hai solo {count} lavori rimanenti questo mese.',
+      upgradePremium: 'Aggiorna a Premium per usare la rimozione dello sfondo',
+    },
+
+    billing: {
+      title: 'Fatturazione e Abbonamento',
+      subtitle: "Gestisci il tuo abbonamento e le informazioni di fatturazione",
+      subscriptionManagement: 'Gestione Abbonamento',
+      currentSubscription: 'Abbonamento Attuale',
+      monthlyQuota: 'Quota Mensile',
+      usedThisMonth: 'Usato Questo Mese',
+      remaining: 'Rimanenti',
+      jobsPerMonth: 'lavori/mese',
+      jobsLeft: 'lavori rimanenti',
+      manageBillingPortal: 'Gestisci Portale Fatturazione',
+      opening: 'Apertura...',
+      runningLow: 'Stai esaurendo i crediti',
+      runningLowDesc: "Hai usato il {percentage}% della tua quota mensile. Considera un aggiornamento per evitare interruzioni.",
+      viewUpgradeOptions: 'Vedi opzioni di aggiornamento →',
+      availablePlans: 'Piani Disponibili',
+      monthly: 'Mensile',
+      yearly: 'Annuale',
+      mostPopular: 'PIÙ POPOLARE',
+      currentPlanBadge: 'PIANO ATTUALE',
+      save20: 'Risparmia 20% vs mensile',
+      processingBtn: 'Elaborazione...',
+      currentPlanBtn: 'Piano Attuale',
+      upgradeTo: 'Passa a',
+      billingHistory: 'Storico Fatturazione',
+      noBillingHistory: 'Nessuno storico di fatturazione ancora',
+      billingHistoryDesc: 'Le tue fatture e lo storico pagamenti appariranno qui',
+      cannotPurchase: 'Questo piano non può essere acquistato online',
+      failedCheckout: 'Impossibile avviare il checkout',
+      failedPortal: 'Impossibile aprire il portale di fatturazione',
+      perYear: '/anno',
+      perMonth: '/mese',
+    },
+
+    onboarding: {
+      title: '🚀 Inizia con Centyr',
+      subtitle: 'Completa questi passaggi per sbloccare tutto il potenziale',
+      ofCompleted: 'di',
+      completed: 'completati',
+      congratulations: '🎉 Congratulazioni!',
+      congratulationsDesc: "Hai completato l'onboarding. Sei pronto per creare immagini allineate perfettamente!",
+    },
+
+    postDownload: {
+      title: 'Download Completato! ✨',
+      subtitle: 'La tua immagine perfettamente allineata è pronta',
+      runningLow: '⚠️ Crediti in Esaurimento',
+      runningLowDesc: 'Hai {remaining}/{total} caricamenti rimanenti questo mese',
+      upgradePro: 'Passa a Pro',
+      upgradeProDesc: 'Ottieni caricamenti illimitati, elaborazione in blocco e supporto prioritario a soli $19/mese',
+      upgradeNow: 'Aggiorna Ora',
+      whatsNext: 'Cosa fare adesso?',
+      processMore: 'Elabora Altre Immagini',
+      processMoreDesc: 'Carica un altro batch',
+      unlockBulk: 'Sblocca Caricamento in Blocco',
+      unlockBulkDesc: 'Elabora centinaia di immagini contemporaneamente',
+      loveCentyr: 'Ti piace Centyr?',
+      referralDesc: 'Condividi con un amico e ricevete entrambi',
+      referralCredits: '5 crediti immagine gratuiti!',
+      copy: 'Copia',
+      copied: '✓ Copiato',
     },
 
     pricing: {
@@ -808,6 +1439,17 @@ export const translations: Record<Language, Translations> = {
       upgradeMessage: 'Aggiorna il tuo piano per più immagini',
       dailyLimit: 'Limite giornaliero raggiunto',
       monthlyLimit: 'Limite mensile raggiunto',
+      limitReached: '🚨 Limite Mensile Raggiunto',
+      runningLow: '⚠️ Crediti in Esaurimento',
+      usedAll: "Hai usato tutte le {limit} immagini di questo mese. Passa a Pro per caricamenti illimitati!",
+      usedPartial: "Hai usato {current}/{limit} immagini questo mese. Ne restano solo {remaining}!",
+      upgradeTitle: 'Passa a Pro e ottieni:',
+      benefit1: 'Caricamenti illimitati per mese',
+      benefit2: 'Elaborazione in blocco - carica centinaia in una volta',
+      benefit3: 'Supporto prioritario ed elaborazione più veloce',
+      benefit4: 'Accesso API per automazione',
+      upgradeContinue: 'Aggiorna Ora per Continuare',
+      upgradePro: 'Passa a Pro - $19/mese',
     },
 
     notifications: {

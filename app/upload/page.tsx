@@ -8,16 +8,12 @@ import { Upload, X, Check, Loader, Sparkles, Zap, Shield, ImageIcon, Lock, Chevr
 import { useDropzone } from 'react-dropzone'
 import { useUpload } from '@/hooks/useUpload'
 import { useAuth } from '@/contexts/AuthContext'
+import { useTranslations } from '@/contexts/LanguageContext'
 
 type Step = 'upload' | 'configure' | 'review'
 
-const STEPS: { id: Step; label: string; icon: typeof Upload }[] = [
-  { id: 'upload', label: 'Upload', icon: Upload },
-  { id: 'configure', label: 'Configure', icon: Settings },
-  { id: 'review', label: 'Review', icon: Eye },
-]
-
 export default function UploadPage() {
+  const t = useTranslations()
   const router = useRouter()
   const { user } = useAuth()
   const { files, isUploading, addFiles, removeFile, clearFiles, uploadAndProcess } = useUpload()
@@ -33,6 +29,12 @@ export default function UploadPage() {
   const [outputSize, setOutputSize] = useState<number>(1000)
   const [marginPercent, setMarginPercent] = useState<number>(5)
 
+
+  const STEPS: { id: Step; label: string; icon: typeof Upload }[] = [
+    { id: 'upload', label: t.upload.stepUpload, icon: Upload },
+    { id: 'configure', label: t.upload.stepConfigure, icon: Settings },
+    { id: 'review', label: t.upload.stepReview, icon: Eye },
+  ]
 
   // Derived state
   const isPremium = user?.subscription?.plan !== 'free'
@@ -65,7 +67,7 @@ export default function UploadPage() {
   const onDrop = (acceptedFiles: File[]) => {
     const totalFiles = files.length + acceptedFiles.length
     if (totalFiles > maxBatchSize) {
-      toast.error(`Maximum ${maxBatchSize} images per batch. ${!isPremium ? 'Upgrade to process more!' : ''}`)
+      toast.error(`${t.upload.maxBatchExceeded.replace('{count}', String(maxBatchSize))} ${!isPremium ? t.upload.upgradeToProcess : ''}`)
       const remainingSlots = maxBatchSize - files.length
       if (remainingSlots > 0) {
         addFiles(acceptedFiles.slice(0, remainingSlots))
@@ -75,7 +77,7 @@ export default function UploadPage() {
 
     // Check credits
     if (files.length + acceptedFiles.length > remainingCredits) {
-      toast.error(`You only have ${remainingCredits} jobs left this month.`)
+      toast.error(t.upload.onlyCreditsLeft.replace('{count}', String(remainingCredits)))
       return
     }
 
@@ -95,11 +97,11 @@ export default function UploadPage() {
 
   const handleNext = () => {
     if (currentStep === 'upload' && files.length === 0) {
-      toast.error('Upload at least one image')
+      toast.error(t.upload.uploadAtLeastOne)
       return
     }
     if (currentStep === 'configure' && !jobName.trim()) {
-      toast.error('Enter a job name')
+      toast.error(t.upload.enterJobName)
       return
     }
 
@@ -129,7 +131,7 @@ export default function UploadPage() {
     const jobId = await uploadAndProcess(jobName.trim(), options)
 
     if (jobId) {
-      toast.success('Job started! Redirecting to dashboard...')
+      toast.success(t.upload.jobStarted)
       setTimeout(() => {
         router.push(`/dashboard?job=${jobId}`)
       }, 1500)
@@ -152,9 +154,9 @@ export default function UploadPage() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
           <div>
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
-              New <span className="text-gradient">Job</span>
+              {t.upload.newJob}
             </h1>
-            <p className="text-gray-600 mt-1">Each upload creates a <span className="font-semibold text-gray-800">job</span> — our AI aligns and processes your photos automatically.</p>
+            <p className="text-gray-600 mt-1">{t.upload.newJobSubtitle}</p>
           </div>
 
           {/* Quota Indicator */}
@@ -168,7 +170,7 @@ export default function UploadPage() {
               <div>
                 <div className="flex items-center gap-2">
                   <span className="font-bold text-gray-900">{remainingCredits}</span>
-                  <span className="text-gray-500 text-sm">jobs remaining</span>
+                  <span className="text-gray-500 text-sm">{t.upload.jobsRemaining}</span>
                 </div>
                 <div className="w-32 bg-gray-200 rounded-full h-1.5 mt-1">
                   <div
@@ -186,7 +188,7 @@ export default function UploadPage() {
         <div className="bg-purple-50 border border-purple-200 rounded-xl px-4 py-3 mb-6 flex items-start gap-3">
           <Info className="w-5 h-5 text-purple-600 flex-shrink-0 mt-0.5" />
           <p className="text-sm text-purple-800">
-            <span className="font-semibold">What&apos;s a job?</span> A job is a batch of one or more images sent to our AI for processing. Each job has a name, tracks progress in real time, and keeps your results available for download in the dashboard.
+            <span className="font-semibold">{t.upload.whatIsJob}</span> {t.upload.jobExplanation}
           </p>
         </div>
 
@@ -232,8 +234,8 @@ export default function UploadPage() {
           {/* Step 1: Upload */}
           {currentStep === 'upload' && (
             <div className="p-4 md:p-8 animate-fade-in">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Upload your images</h2>
-              <p className="text-gray-600 mb-6">Drag your product photos or click to select</p>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">{t.upload.uploadStepTitle}</h2>
+              <p className="text-gray-600 mb-6">{t.upload.uploadStepSubtitle}</p>
 
               {/* Drop Zone */}
               <div
@@ -254,9 +256,9 @@ export default function UploadPage() {
                     <Upload className="w-10 h-10 text-white" />
                   </div>
                   <p className="text-xl font-bold text-gray-900 mb-2">
-                    {isDragActive ? 'Drop it here!' : 'Drag images here'}
+                    {isDragActive ? t.upload.dropHere : t.upload.dragHere}
                   </p>
-                  <p className="text-gray-600 mb-4">or click to browse</p>
+                  <p className="text-gray-600 mb-4">{t.upload.orBrowse}</p>
 
                   <div className="flex flex-wrap gap-2 justify-center">
                     <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">JPG</span>
@@ -274,12 +276,12 @@ export default function UploadPage() {
                 <div className="flex-1">
                   <p className={`text-sm ${maxBatchSize === 1 ? 'text-amber-800' : 'text-purple-800'}`}>
                     {maxBatchSize === 1
-                      ? 'Free Plan: 1 image per job. '
-                      : `You can upload up to ${maxBatchSize} images per job.`
+                      ? t.upload.freePlanLimit + ' '
+                      : t.upload.canUploadTo.replace('{count}', String(maxBatchSize))
                     }
                     {maxBatchSize === 1 && (
                       <Link href="/pricing" className="font-semibold underline hover:no-underline">
-                        Upgrade for unlimited batches
+                        {t.upload.upgradeUnlimited}
                       </Link>
                     )}
                   </p>
@@ -291,14 +293,14 @@ export default function UploadPage() {
                 <div className="animate-fade-in">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="font-bold text-gray-900">
-                      {files.length} {files.length === 1 ? 'image' : 'images'} added
+                      {files.length} {files.length === 1 ? t.upload.imageAdded : t.upload.imagesAdded}
                       <span className="text-gray-500 font-normal ml-2">({totalFileSize.toFixed(1)} MB)</span>
                     </h3>
                     <button
                       onClick={clearFiles}
                       className="text-sm text-red-600 hover:text-red-700 font-semibold"
                     >
-                      Remove all
+                      {t.upload.removeAll}
                     </button>
                   </div>
 
@@ -334,32 +336,32 @@ export default function UploadPage() {
           {/* Step 2: Configure */}
           {currentStep === 'configure' && (
             <div className="p-4 md:p-8 animate-fade-in">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Configure job</h2>
-              <p className="text-gray-600 mb-6">Customize your processing options</p>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">{t.upload.configureTitle}</h2>
+              <p className="text-gray-600 mb-6">{t.upload.configureSubtitle}</p>
 
               {/* Job Name */}
               <div className="mb-8">
                 <label htmlFor="jobName" className="block text-sm font-semibold text-gray-700 mb-2">
-                  Job Name <span className="text-red-500">*</span>
+                  {t.upload.jobNameLabel} <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   id="jobName"
                   value={jobName}
                   onChange={(e) => setJobName(e.target.value)}
-                  placeholder="e.g. Summer Collection 2024, Product Catalog..."
+                  placeholder={t.upload.jobNamePlaceholder}
                   className="w-full px-4 py-3 border-2 border-purple-200 rounded-xl focus:outline-none focus:border-fuchsia-400 transition-colors text-lg"
                   maxLength={100}
                   autoFocus
                 />
-                <p className="text-xs text-gray-500 mt-2">A descriptive name to identify this batch</p>
+                <p className="text-xs text-gray-500 mt-2">{t.upload.jobNameHelper}</p>
               </div>
 
               {/* Processing Options */}
               <div className="space-y-6">
                 <h3 className="font-bold text-gray-900 flex items-center gap-2">
                   <Sparkles className="w-5 h-5 text-fuchsia-500" />
-                  Processing Options
+                  {t.upload.processingOptions}
                 </h3>
 
                 {/* Background Removal */}
@@ -371,7 +373,7 @@ export default function UploadPage() {
                       checked={removeBackground}
                       onChange={(e) => {
                         if (!isPremium) {
-                          toast.error('Upgrade to Premium to use background removal')
+                          toast.error(t.upload.upgradePremium)
                           return
                         }
                         setRemoveBackground(e.target.checked)
@@ -388,16 +390,16 @@ export default function UploadPage() {
                     />
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="font-semibold text-gray-900">Remove Background</span>
+                        <span className="font-semibold text-gray-900">{t.upload.removeBackground}</span>
                         {!isPremium && (
                           <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-fuchsia-100 text-fuchsia-700 text-xs font-semibold rounded-full">
                             <Lock className="w-3 h-3" />
-                            Premium
+                            {t.upload.premium}
                           </span>
                         )}
                       </div>
                       <p className="text-sm text-gray-500">
-                        AI automatically removes the background for clean product shots
+                        {t.upload.removeBackgroundDesc}
                       </p>
                     </div>
                   </label>
@@ -405,7 +407,7 @@ export default function UploadPage() {
                   {/* Custom Background */}
                   {removeBackground && isPremium && (
                     <div className="mt-4 pt-4 border-t border-fuchsia-200 animate-fade-in">
-                      <p className="text-sm font-medium text-gray-700 mb-3">Custom background (optional)</p>
+                      <p className="text-sm font-medium text-gray-700 mb-3">{t.upload.customBackground}</p>
                       {!customBackground ? (
                         <label className="flex items-center justify-center h-24 border-2 border-dashed border-purple-300 rounded-xl cursor-pointer hover:border-fuchsia-400 hover:bg-white transition-all">
                           <input
@@ -422,7 +424,7 @@ export default function UploadPage() {
                           />
                           <div className="text-center">
                             <ImageIcon className="w-6 h-6 text-purple-400 mx-auto mb-1" />
-                            <span className="text-sm text-gray-600">Upload background image</span>
+                            <span className="text-sm text-gray-600">{t.upload.uploadBackgroundImage}</span>
                           </div>
                         </label>
                       ) : (
@@ -454,7 +456,7 @@ export default function UploadPage() {
                 <div className="p-4 rounded-xl border-2 border-gray-200 bg-white">
                   <div className="flex items-center gap-2 mb-4">
                     <Settings className="w-5 h-5 text-purple-600" />
-                    <span className="font-semibold text-gray-900">Output Settings</span>
+                    <span className="font-semibold text-gray-900">{t.upload.outputSettings}</span>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -462,7 +464,7 @@ export default function UploadPage() {
                     {/* Output Size */}
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Output Size
+                        {t.upload.outputSize}
                       </label>
                       <div className="flex items-center gap-3">
                         <input
@@ -483,7 +485,7 @@ export default function UploadPage() {
                     {/* Margin Percent */}
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Margin
+                        {t.upload.margin}
                       </label>
                       <div className="flex items-center gap-3">
                         <input
@@ -503,7 +505,7 @@ export default function UploadPage() {
                         </div>
                       </div>
                       <p className="text-xs text-gray-500 mt-2">
-                        Percentage relative to the output size.
+                        {t.upload.marginHelper}
                       </p>
                     </div>
                   </div>
@@ -516,44 +518,44 @@ export default function UploadPage() {
           {/* Step 3: Review */}
           {currentStep === 'review' && (
             <div className="p-4 md:p-8 animate-fade-in">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Review & start</h2>
-              <p className="text-gray-600 mb-6">Check the details before starting processing</p>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">{t.upload.reviewTitle}</h2>
+              <p className="text-gray-600 mb-6">{t.upload.reviewSubtitle}</p>
 
               {/* Summary Card */}
               <div className="bg-gradient-to-br from-purple-50 to-fuchsia-50 rounded-2xl p-6 border-2 border-purple-200 mb-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-2">Job</h4>
+                    <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-2">{t.upload.summaryJob}</h4>
                     <p className="text-xl font-bold text-gray-900">{jobName}</p>
                   </div>
                   <div>
-                    <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-2">Images</h4>
+                    <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-2">{t.upload.summaryImages}</h4>
                     <p className="text-xl font-bold text-gray-900">{files.length} file ({totalFileSize.toFixed(1)} MB)</p>
                   </div>
                 </div>
 
                 {/* Options Summary */}
                 <div className="mt-6 pt-6 border-t border-purple-200">
-                  <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-3">Options</h4>
+                  <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-3">{t.upload.summaryOptions}</h4>
                   <div className="flex flex-wrap gap-2">
                     <span className="px-3 py-1 bg-white text-purple-700 rounded-full text-sm font-medium border border-purple-200">
-                      AI Alignment
+                      {t.upload.aiAlignment}
                     </span>
                     {removeBackground && (
                       <span className="px-3 py-1 bg-fuchsia-100 text-fuchsia-700 rounded-full text-sm font-medium">
-                        Background Removal
+                        {t.upload.backgroundRemoval}
                       </span>
                     )}
                     {customBackground && (
                       <span className="px-3 py-1 bg-fuchsia-100 text-fuchsia-700 rounded-full text-sm font-medium">
-                        Custom Background
+                        {t.upload.customBackgroundLabel}
                       </span>
                     )}
                     <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
                       {outputSize}×{outputSize}px
                     </span>
                     <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
-                      Margin {marginPercent}% ({marginPixels}px)
+                      {t.upload.margin} {marginPercent}% ({marginPixels}px)
                     </span>
                   </div>
                 </div>
@@ -561,7 +563,7 @@ export default function UploadPage() {
 
               {/* Image Preview Grid */}
               <div className="mb-6">
-                <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-3">Preview</h4>
+                <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-3">{t.upload.summaryPreview}</h4>
                 <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
                   {files.slice(0, 16).map((file) => (
                     <div key={file.id} className="aspect-square rounded-lg overflow-hidden border border-purple-200">
@@ -581,9 +583,9 @@ export default function UploadPage() {
                 <Zap className="w-5 h-5 text-blue-600" />
                 <div>
                   <p className="font-semibold text-blue-900">
-                    Estimated time: ~{Math.floor((files.length * 17 + 180) / (60 * 3))} minutes
+                    {t.upload.estimatedTimeLabel.replace('{minutes}', String(Math.floor((files.length * 17 + 180) / (60 * 3))))}
                   </p>
-                  <p className="text-sm text-blue-700">You'll be redirected to the dashboard to track progress</p>
+                  <p className="text-sm text-blue-700">{t.upload.redirectInfo}</p>
                 </div>
               </div>
 
@@ -592,10 +594,12 @@ export default function UploadPage() {
                 <div className="mt-4 bg-red-50 border border-red-200 rounded-xl p-4 flex items-center gap-3">
                   <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
                   <div>
-                    <p className="font-semibold text-red-900">Insufficient credits</p>
+                    <p className="font-semibold text-red-900">{t.upload.insufficientCredits}</p>
                     <p className="text-sm text-red-700">
-                      You have {remainingCredits} credits but are trying to process {files.length} images.{' '}
-                      <Link href="/pricing" className="underline font-semibold">Upgrade</Link>
+                      {t.upload.insufficientCreditsDesc
+                        .replace('{remaining}', String(remainingCredits))
+                        .replace('{count}', String(files.length))}{' '}
+                      <Link href="/pricing" className="underline font-semibold">{t.dashboard.upgrade}</Link>
                     </p>
                   </div>
                 </div>
@@ -612,7 +616,7 @@ export default function UploadPage() {
                   className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-900 font-semibold transition-colors"
                 >
                   <ChevronLeft className="w-5 h-5" />
-                  Back
+                  {t.common.back}
                 </button>
               )}
             </div>
@@ -624,7 +628,7 @@ export default function UploadPage() {
                   disabled={!canProceed}
                   className="flex items-center gap-2 px-6 py-3 gradient-purple-fuchsia text-white font-bold rounded-xl hover:scale-105 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
-                  Continue
+                  {t.upload.continueBtn}
                   <ChevronRight className="w-5 h-5" />
                 </button>
               ) : (
@@ -636,12 +640,12 @@ export default function UploadPage() {
                   {isUploading ? (
                     <>
                       <Loader className="w-5 h-5 animate-spin" />
-                      Processing...
+                      {t.upload.processingBtn}
                     </>
                   ) : (
                     <>
                       <Sparkles className="w-5 h-5" />
-                      Start Processing
+                      {t.upload.startProcessing}
                     </>
                   )}
                 </button>
@@ -657,8 +661,8 @@ export default function UploadPage() {
               <Zap className="w-5 h-5 text-amber-600" />
             </div>
             <div>
-              <h4 className="font-semibold text-gray-900 text-sm">Fast</h4>
-              <p className="text-xs text-gray-600">~10 sec per image</p>
+              <h4 className="font-semibold text-gray-900 text-sm">{t.upload.fast}</h4>
+              <p className="text-xs text-gray-600">{t.upload.fastDesc}</p>
             </div>
           </div>
           <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-purple-100 flex items-start gap-3">
@@ -666,8 +670,8 @@ export default function UploadPage() {
               <Sparkles className="w-5 h-5 text-purple-600" />
             </div>
             <div>
-              <h4 className="font-semibold text-gray-900 text-sm">AI Precision</h4>
-              <p className="text-xs text-gray-600">Perfect alignment</p>
+              <h4 className="font-semibold text-gray-900 text-sm">{t.upload.aiPrecision}</h4>
+              <p className="text-xs text-gray-600">{t.upload.aiPrecisionDesc}</p>
             </div>
           </div>
           <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-purple-100 flex items-start gap-3">
@@ -675,8 +679,8 @@ export default function UploadPage() {
               <Shield className="w-5 h-5 text-green-600" />
             </div>
             <div>
-              <h4 className="font-semibold text-gray-900 text-sm">Secure</h4>
-              <p className="text-xs text-gray-600">End-to-end encryption</p>
+              <h4 className="font-semibold text-gray-900 text-sm">{t.upload.secure}</h4>
+              <p className="text-xs text-gray-600">{t.upload.secureDesc}</p>
             </div>
           </div>
         </div>

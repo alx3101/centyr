@@ -7,9 +7,11 @@ import Link from 'next/link'
 import { CreditCard, Calendar, ExternalLink, AlertCircle, Loader, Sparkles, Zap, TrendingUp } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { api } from '@/lib/api'
+import { useTranslations } from '@/contexts/LanguageContext'
 
 export default function BillingPage() {
   const { user } = useAuth()
+  const t = useTranslations()
   const [isLoadingPortal, setIsLoadingPortal] = useState(false)
   const [loadingPlanId, setLoadingPlanId] = useState<string | null>(null)
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'yearly'>('monthly')
@@ -17,7 +19,7 @@ export default function BillingPage() {
 
   const handleUpgrade = async (stripePriceId: string | null, planId: string) => {
     if (!stripePriceId) {
-      toast.error('This plan cannot be purchased online')
+      toast.error(t.billing.cannotPurchase)
       return
     }
 
@@ -32,7 +34,7 @@ export default function BillingPage() {
       // Redirect to Stripe Checkout
       window.location.href = checkout.checkout_url
     } catch (error: any) {
-      toast.error(error.message || 'Failed to start checkout')
+      toast.error(error.message || t.billing.failedCheckout)
       setLoadingPlanId(null)
     }
   }
@@ -47,7 +49,7 @@ export default function BillingPage() {
       // Redirect to Stripe Customer Portal
       window.location.href = response.portal_url
     } catch (error: any) {
-      toast.error(error.message || 'Failed to open billing portal')
+      toast.error(error.message || t.billing.failedPortal)
       setIsLoadingPortal(false)
     }
   }
@@ -89,13 +91,13 @@ export default function BillingPage() {
         <div className="mb-8">
           <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm mb-4 border border-purple-100">
             <Sparkles className="w-4 h-4 text-purple-600" />
-            <span className="text-sm font-semibold text-gray-700">Subscription Management</span>
+            <span className="text-sm font-semibold text-gray-700">{t.billing.subscriptionManagement}</span>
           </div>
           <h1 className="text-3xl md:text-5xl font-bold mb-3">
-            <span className="text-gradient">Billing & Subscription</span>
+            <span className="text-gradient">{t.billing.title}</span>
           </h1>
           <p className="text-lg text-gray-600">
-            Manage your subscription and billing information
+            {t.billing.subtitle}
           </p>
         </div>
 
@@ -107,7 +109,7 @@ export default function BillingPage() {
                 <div className="w-12 h-12 gradient-purple-fuchsia rounded-xl flex items-center justify-center shadow-md">
                   <CreditCard className="w-6 h-6 text-white" />
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900">Current Subscription</h2>
+                <h2 className="text-2xl font-bold text-gray-900">{t.billing.currentSubscription}</h2>
               </div>
               <span className="px-5 py-2 gradient-purple-fuchsia text-white text-sm font-bold rounded-full shadow-lg glow-purple">
                 {currentPlan.plan_name.toUpperCase()}
@@ -120,10 +122,10 @@ export default function BillingPage() {
                   <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-purple-500 to-fuchsia-500 flex items-center justify-center shadow-md">
                     <TrendingUp className="w-5 h-5 text-white" />
                   </div>
-                  <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">Monthly Quota</p>
+                  <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">{t.billing.monthlyQuota}</p>
                 </div>
                 <p className="text-3xl font-bold text-gray-900">{user.subscription.monthly_limit}</p>
-                <p className="text-sm text-gray-500 mt-1">jobs/month</p>
+                <p className="text-sm text-gray-500 mt-1">{t.billing.jobsPerMonth}</p>
               </div>
 
               <div className="bg-gradient-to-br from-purple-50 to-fuchsia-50 rounded-xl p-5 border border-purple-100">
@@ -131,7 +133,7 @@ export default function BillingPage() {
                   <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center shadow-md">
                     <Zap className="w-5 h-5 text-white" />
                   </div>
-                  <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">Used This Month</p>
+                  <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">{t.billing.usedThisMonth}</p>
                 </div>
                 <p className="text-3xl font-bold text-gray-900">{user.subscription.current_period_uploads}</p>
                 <div className="mt-3 w-full bg-gray-200 rounded-full h-2.5">
@@ -147,12 +149,12 @@ export default function BillingPage() {
                   <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center shadow-md">
                     <Sparkles className="w-5 h-5 text-white" />
                   </div>
-                  <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">Remaining</p>
+                  <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">{t.billing.remaining}</p>
                 </div>
                 <p className="text-3xl font-bold text-gradient">
                   {user.subscription.monthly_limit - user.subscription.current_period_uploads}
                 </p>
-                <p className="text-sm text-gray-500 mt-1">jobs left</p>
+                <p className="text-sm text-gray-500 mt-1">{t.billing.jobsLeft}</p>
               </div>
             </div>
 
@@ -165,12 +167,12 @@ export default function BillingPage() {
                 {isLoadingPortal ? (
                   <>
                     <Loader className="w-5 h-5 animate-spin" />
-                    Opening...
+                    {t.billing.opening}
                   </>
                 ) : (
                   <>
                     <ExternalLink size={18} />
-                    Manage Billing Portal
+                    {t.billing.manageBillingPortal}
                   </>
                 )}
               </button>
@@ -185,16 +187,16 @@ export default function BillingPage() {
               </div>
               <div>
                 <h3 className="text-xl font-bold text-orange-900 mb-2">
-                  You're running low on credits
+                  {t.billing.runningLow}
                 </h3>
                 <p className="text-orange-700 mb-3">
-                  You've used {Math.round(usagePercentage)}% of your monthly quota. Consider upgrading to avoid interruptions.
+                  {t.billing.runningLowDesc.replace('{percentage}', String(Math.round(usagePercentage)))}
                 </p>
                 <Link
                   href="#plans"
                   className="inline-flex items-center gap-2 px-4 py-2 bg-orange-600 text-white font-bold rounded-lg hover:bg-orange-700 hover:scale-105 transition-all duration-300 shadow-md"
                 >
-                  View upgrade options →
+                  {t.billing.viewUpgradeOptions}
                 </Link>
               </div>
             </div>
@@ -203,7 +205,7 @@ export default function BillingPage() {
           {/* Available Plans */}
           <div id="plans">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-              <h2 className="text-2xl font-bold text-gray-900">Available Plans</h2>
+              <h2 className="text-2xl font-bold text-gray-900">{t.billing.availablePlans}</h2>
 
               {/* Billing Period Toggle */}
               <div className="flex items-center gap-3 bg-gray-100 rounded-lg p-1">
@@ -214,7 +216,7 @@ export default function BillingPage() {
                     : 'text-gray-600 hover:text-gray-900'
                     }`}
                 >
-                  Monthly
+                  {t.billing.monthly}
                 </button>
                 <button
                   onClick={() => setBillingPeriod('yearly')}
@@ -223,7 +225,7 @@ export default function BillingPage() {
                     : 'text-gray-600 hover:text-gray-900'
                     }`}
                 >
-                  Yearly
+                  {t.billing.yearly}
                   <span className="absolute -top-2 -right-2 bg-green-500 text-white text-xs px-2 py-0.5 rounded-full">
                     -20%
                   </span>
@@ -252,7 +254,7 @@ export default function BillingPage() {
                       {plan.popular && (
                         <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                           <span className="px-4 py-1 bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white text-xs font-bold rounded-full shadow-lg">
-                            MOST POPULAR
+                            {t.billing.mostPopular}
                           </span>
                         </div>
                       )}
@@ -260,7 +262,7 @@ export default function BillingPage() {
                       {isCurrent && (
                         <div className="mb-3">
                           <span className="px-3 py-1 bg-purple-100 text-purple-700 text-xs font-bold rounded-full">
-                            CURRENT PLAN
+                            {t.billing.currentPlanBadge}
                           </span>
                         </div>
                       )}
@@ -272,11 +274,11 @@ export default function BillingPage() {
                           {plan.price === 0 ? '€0' : `€${plan.price.toFixed(2)}`}
                         </span>
                         <span className="text-gray-600">
-                          /{plan.period === 'year' ? 'year' : 'month'}
+                          {plan.period === 'year' ? t.billing.perYear : t.billing.perMonth}
                         </span>
                         {plan.period === 'year' && plan.price > 0 && (
                           <div className="text-sm text-green-600 font-semibold mt-1">
-                            Save 20% vs monthly
+                            {t.billing.save20}
                           </div>
                         )}
                       </div>
@@ -307,12 +309,12 @@ export default function BillingPage() {
                         {isLoading ? (
                           <>
                             <Loader className="w-5 h-5 animate-spin" />
-                            Processing...
+                            {t.billing.processingBtn}
                           </>
                         ) : isCurrent ? (
-                          'Current Plan'
+                          t.billing.currentPlanBtn
                         ) : (
-                          `Upgrade to ${plan.name}`
+                          `${t.billing.upgradeTo} ${plan.name}`
                         )}
                       </button>
                     </div>
@@ -328,16 +330,16 @@ export default function BillingPage() {
               <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center shadow-md">
                 <Calendar className="w-6 h-6 text-white" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900">Billing History</h2>
+              <h2 className="text-2xl font-bold text-gray-900">{t.billing.billingHistory}</h2>
             </div>
 
             <div className="text-center py-12">
               <div className="w-20 h-20 bg-gradient-to-br from-purple-100 to-fuchsia-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <Calendar className="w-10 h-10 text-purple-600" />
               </div>
-              <p className="text-lg font-semibold text-gray-700 mb-2">No billing history yet</p>
+              <p className="text-lg font-semibold text-gray-700 mb-2">{t.billing.noBillingHistory}</p>
               <p className="text-gray-500">
-                Your invoices and payment history will appear here
+                {t.billing.billingHistoryDesc}
               </p>
             </div>
           </div>

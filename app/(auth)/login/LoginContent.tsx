@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { useAuth } from '@/hooks/useAuth'
 import { cognitoOAuthSignIn } from '@/lib/cognito'
 import { GuestGuard } from '@/components/guards/GuestGuard'
+import { useTranslations } from '@/contexts/LanguageContext'
 
 export function LoginContent() {
   const [email, setEmail] = useState('')
@@ -14,6 +15,7 @@ export function LoginContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const returnUrl = searchParams?.get('returnUrl') || '/dashboard'
+  const t = useTranslations()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -39,14 +41,14 @@ export function LoginContent() {
           <Link href="/" className="text-3xl font-bold text-gradient inline-block mb-2">
             Centyr
           </Link>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Welcome Back</h1>
-          <p className="text-gray-600">Sign in to your account</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">{t.auth.loginTitle}</h1>
+          <p className="text-gray-600">{t.auth.loginSubtitle}</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
-              Email Address
+              {t.auth.emailAddress}
             </label>
             <input
               id="email"
@@ -61,7 +63,7 @@ export function LoginContent() {
 
           <div>
             <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-2">
-              Password
+              {t.common.password}
             </label>
             <input
               id="password"
@@ -77,10 +79,10 @@ export function LoginContent() {
           <div className="flex items-center justify-between">
             <label className="flex items-center">
               <input type="checkbox" className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-fuchsia-500" />
-              <span className="ml-2 text-sm text-gray-600">Remember me</span>
+              <span className="ml-2 text-sm text-gray-600">{t.auth.rememberMe}</span>
             </label>
             <Link href="/forgot-password" className="text-sm text-primary-600 hover:text-fuchsia-600 font-semibold">
-              Forgot password?
+              {t.auth.forgotPassword}
             </Link>
           </div>
 
@@ -89,15 +91,15 @@ export function LoginContent() {
             disabled={isLoading}
             className="w-full gradient-purple-fuchsia text-white py-3 px-4 rounded-xl font-bold hover:scale-105 transition-all duration-300 shadow-lg glow-purple disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isLoading ? 'Signing in...' : 'Sign In'}
+            {isLoading ? t.auth.signingIn : t.auth.loginButton}
           </button>
         </form>
 
         <div className="mt-6 text-center">
           <p className="text-gray-600">
-            Don't have an account?{' '}
+            {t.auth.noAccount}{' '}
             <Link href="/signup" className="text-primary-600 hover:text-fuchsia-600 font-bold transition-colors">
-              Sign up
+              {t.auth.signUp}
             </Link>
           </p>
         </div>
@@ -109,7 +111,7 @@ export function LoginContent() {
               <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">Or continue with</span>
+              <span className="px-2 bg-white text-gray-500">{t.auth.orContinueWith}</span>
             </div>
           </div>
 

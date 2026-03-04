@@ -7,11 +7,13 @@ import { cognitoForgotPassword } from '@/lib/cognito'
 import toast from 'react-hot-toast'
 import { GuestGuard } from '@/components/guards/GuestGuard'
 import { Mail, ArrowLeft } from 'lucide-react'
+import { useTranslations } from '@/contexts/LanguageContext'
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
+  const t = useTranslations()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -21,7 +23,7 @@ export default function ForgotPasswordPage() {
       const result = await cognitoForgotPassword(email)
       console.log('[ForgotPassword] Cognito result:', result)
       if (result.success) {
-        toast.success('Reset code sent! Check your email.')
+        toast.success(t.auth.resetCodeSent)
         router.push(`/reset-password?email=${encodeURIComponent(email)}`)
       } else {
         console.error('[ForgotPassword] Cognito error:', result.error)
@@ -46,14 +48,14 @@ export default function ForgotPasswordPage() {
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-purple-100 mb-4">
               <Mail className="w-8 h-8 text-purple-600" />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Forgot Password?</h1>
-            <p className="text-gray-600 text-sm">Enter your email and we'll send you a reset code.</p>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">{t.auth.forgotPasswordTitle}</h1>
+            <p className="text-gray-600 text-sm">{t.auth.forgotPasswordSubtitle}</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
-                Email Address
+                {t.auth.emailAddress}
               </label>
               <input
                 id="email"
@@ -71,7 +73,7 @@ export default function ForgotPasswordPage() {
               disabled={isLoading}
               className="w-full gradient-purple-fuchsia text-white py-3 px-4 rounded-xl font-bold hover:scale-105 transition-all duration-300 shadow-lg glow-purple disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? 'Sending...' : 'Send Reset Code'}
+              {isLoading ? t.auth.sending : t.auth.sendResetCode}
             </button>
           </form>
 
@@ -81,7 +83,7 @@ export default function ForgotPasswordPage() {
               className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-purple-600 font-semibold transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
-              Back to Sign In
+              {t.auth.backToSignIn}
             </Link>
           </div>
         </div>

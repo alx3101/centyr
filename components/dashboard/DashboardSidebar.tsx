@@ -4,16 +4,18 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { LayoutDashboard, Upload, Settings, CreditCard, Menu, X } from 'lucide-react'
+import { useTranslations } from '@/contexts/LanguageContext'
 
 export function DashboardSidebar() {
   const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const t = useTranslations()
 
   const menuItems = [
-    { href: '/dashboard', label: 'Overview', icon: LayoutDashboard },
-    { href: '/upload', label: 'Upload', icon: Upload },
-    { href: '/dashboard/settings', label: 'Settings', icon: Settings },
-    { href: '/dashboard/billing', label: 'Billing', icon: CreditCard },
+    { href: '/dashboard', label: t.nav.overview, icon: LayoutDashboard },
+    { href: '/upload', label: t.nav.upload, icon: Upload },
+    { href: '/dashboard/settings', label: t.nav.settings, icon: Settings },
+    { href: '/dashboard/billing', label: t.nav.billing, icon: CreditCard },
   ]
 
   return (

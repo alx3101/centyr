@@ -11,6 +11,7 @@ import EmptyState from '@/components/EmptyState'
 import OnboardingChecklist from '@/components/OnboardingChecklist'
 import PostDownloadModal from '@/components/PostDownloadModal'
 import QuotaWarningBanner from '@/components/QuotaWarningBanner'
+import { useTranslations } from '@/contexts/LanguageContext'
 
 interface Job {
   job_id: string
@@ -87,6 +88,7 @@ function JobThumbnail({ job }: { job: Job }) {
 
 function DashboardContent() {
   const { user } = useAuth()
+  const t = useTranslations()
 
   const [showOnboarding, setShowOnboarding] = useState(true)
   const [showPostDownloadModal, setShowPostDownloadModal] = useState(false)
@@ -112,31 +114,31 @@ function DashboardContent() {
   const checklistItems = [
     {
       id: 'upload',
-      title: 'Upload your first image',
-      description: 'Try our AI-powered alignment with a product photo',
+      title: t.dashboard.checklistUploadTitle,
+      description: t.dashboard.checklistUploadDesc,
       completed: recentJobs.length > 0,
       action: {
-        label: 'Upload Now',
+        label: t.dashboard.checklistUploadAction,
         href: '/upload'
       }
     },
     {
       id: 'download',
-      title: 'Download your result',
-      description: 'Get your perfectly aligned image',
+      title: t.dashboard.checklistDownloadTitle,
+      description: t.dashboard.checklistDownloadDesc,
       completed: recentJobs.some(job => job.status === 'completed'),
       action: {
-        label: 'View Jobs',
+        label: t.dashboard.checklistDownloadAction,
         href: '#recent-jobs'
       }
     },
     {
       id: 'explore',
-      title: 'Explore features',
-      description: 'Check out bulk upload and other pro features',
+      title: t.dashboard.checklistExploreTitle,
+      description: t.dashboard.checklistExploreDesc,
       completed: false,
       action: {
-        label: 'Learn More',
+        label: t.dashboard.checklistExploreAction,
         href: '/pricing'
       }
     }
@@ -177,14 +179,14 @@ function DashboardContent() {
       window.URL.revokeObjectURL(url)
       document.body.removeChild(a)
 
-      toast.success('Download completed!')
+      toast.success(t.dashboard.downloadCompleted)
 
       setTimeout(() => {
         setShowPostDownloadModal(true)
       }, 500)
     } catch (error) {
       console.error('Download error:', error)
-      toast.error('Download failed')
+      toast.error(t.dashboard.downloadFailed)
     }
   }
 
@@ -217,14 +219,14 @@ function DashboardContent() {
           <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm mb-4 border border-purple-100">
             <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
             <span className="text-sm font-semibold text-gray-700">
-              {stats && stats.total > 0 ? `${stats.total} jobs processed` : 'Ready to process'}
+              {stats && stats.total > 0 ? `${stats.total} ${t.dashboard.jobsProcessed}` : t.dashboard.readyToProcess}
             </span>
           </div>
           <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-2 leading-tight">
             Welcome back, <span className="text-gradient">{user.name || user.email.split('@')[0]}</span>!
           </h1>
           <p className="text-base md:text-xl text-gray-600">
-            Your AI-powered image processing hub
+            {t.dashboard.aiPoweredHub}
           </p>
         </div>
 
@@ -243,7 +245,7 @@ function DashboardContent() {
                 </span>
               </div>
               <p className="text-2xl sm:text-4xl font-bold text-gradient mb-1">{user.subscription.monthly_limit}</p>
-              <p className="text-xs sm:text-sm text-gray-600 font-semibold">jobs / month</p>
+              <p className="text-xs sm:text-sm text-gray-600 font-semibold">{t.dashboard.jobsPerMonth}</p>
             </div>
           </div>
 
@@ -255,7 +257,7 @@ function DashboardContent() {
                 <div className="h-9 w-9 sm:h-12 sm:w-12 rounded-xl gradient-purple-fuchsia flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
                   <TrendingUp className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
                 </div>
-                <h3 className="text-xs sm:text-sm font-bold text-gray-700 uppercase tracking-wider">Usage</h3>
+                <h3 className="text-xs sm:text-sm font-bold text-gray-700 uppercase tracking-wider">{t.dashboard.usageLabel}</h3>
               </div>
               <div className="flex items-baseline gap-1 sm:gap-2 mb-3">
                 <p className="text-2xl sm:text-4xl font-bold text-gray-900">{user.subscription.current_period_uploads}</p>
@@ -281,18 +283,18 @@ function DashboardContent() {
                 <div className="h-9 w-9 sm:h-12 sm:w-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
                   <Zap className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
                 </div>
-                <h3 className="text-xs sm:text-sm font-bold text-gray-700 uppercase tracking-wider">Available</h3>
+                <h3 className="text-xs sm:text-sm font-bold text-gray-700 uppercase tracking-wider">{t.dashboard.available}</h3>
               </div>
               <p className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-1">
                 {user.subscription.monthly_limit - user.subscription.current_period_uploads}
               </p>
-              <p className="text-xs sm:text-sm text-gray-600 font-semibold">jobs left</p>
+              <p className="text-xs sm:text-sm text-gray-600 font-semibold">{t.dashboard.jobsLeft}</p>
               {user.subscription.monthly_limit - user.subscription.current_period_uploads < user.subscription.monthly_limit / 2 && (
                 <Link
                   href="/pricing"
                   className="inline-flex items-center gap-1 text-xs sm:text-sm text-green-600 hover:text-emerald-600 font-bold mt-2 sm:mt-3 transition-all group-hover:gap-2"
                 >
-                  Upgrade <span>→</span>
+                  {t.dashboard.upgrade} <span>→</span>
                 </Link>
               )}
             </div>
@@ -307,12 +309,12 @@ function DashboardContent() {
                   <div className="h-9 w-9 sm:h-12 sm:w-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
                     <Activity className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
                   </div>
-                  <h3 className="text-xs sm:text-sm font-bold text-gray-700 uppercase tracking-wider">Success</h3>
+                  <h3 className="text-xs sm:text-sm font-bold text-gray-700 uppercase tracking-wider">{t.dashboard.success}</h3>
                 </div>
                 <p className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent mb-1">
                   {stats.successRate}%
                 </p>
-                <p className="text-xs sm:text-sm text-gray-600 font-semibold">{stats.completed} of {stats.total}</p>
+                <p className="text-xs sm:text-sm text-gray-600 font-semibold">{stats.completed} {t.onboarding.ofCompleted} {stats.total}</p>
               </div>
             </div>
           )}
@@ -340,7 +342,7 @@ function DashboardContent() {
             className="inline-flex items-center gap-3 gradient-purple-fuchsia text-white px-8 py-4 rounded-xl font-bold hover:scale-105 transition-all duration-300 shadow-lg glow-purple"
           >
             <Upload className="w-5 h-5" />
-            Upload New Images
+            {t.dashboard.uploadNewImages}
           </Link>
         </div>
 
@@ -349,7 +351,7 @@ function DashboardContent() {
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
             <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
               <Clock className="w-6 h-6 text-purple-600" />
-              Recent Jobs
+              {t.dashboard.recentJobs}
               {filteredJobs.length !== recentJobs.length && (
                 <span className="text-sm font-normal text-gray-500">
                   ({filteredJobs.length} of {recentJobs.length})
@@ -361,6 +363,13 @@ function DashboardContent() {
             {recentJobs.length > 0 && (
               <div className="flex flex-wrap gap-2">
                 {(['all', 'completed', 'processing', 'failed', 'pending'] as const).map((filter) => {
+                  const filterLabels = {
+                    all: t.dashboard.filterAll,
+                    completed: t.dashboard.filterCompleted,
+                    processing: t.dashboard.filterProcessing,
+                    failed: t.dashboard.filterFailed,
+                    pending: t.dashboard.filterPending,
+                  }
                   const count = filter === 'all'
                     ? recentJobs.length
                     : recentJobs.filter(j => j.status === filter).length
@@ -382,7 +391,7 @@ function DashboardContent() {
                         {filter === 'processing' && <Loader className="w-4 h-4" />}
                         {filter === 'failed' && <XCircle className="w-4 h-4" />}
                         {filter === 'pending' && <Clock className="w-4 h-4" />}
-                        <span className="capitalize">{filter}</span>
+                        <span className="capitalize">{filterLabels[filter]}</span>
                         <span className="opacity-75">({count})</span>
                       </span>
                     </button>
@@ -399,26 +408,26 @@ function DashboardContent() {
           ) : recentJobs.length === 0 ? (
             <EmptyState
               icon={Upload}
-              title="No jobs processed yet"
-              description="Upload your first product photo to see the magic of AI-powered alignment"
-              actionLabel="Upload Now"
+              title={t.dashboard.noJobsTitle}
+              description={t.dashboard.noJobsDesc}
+              actionLabel={t.dashboard.uploadNow}
               actionHref="/upload"
-              secondaryLabel="Watch Demo"
+              secondaryLabel={t.dashboard.watchDemo}
               onSecondaryAction={() => window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank')}
               tips={[
-                'Works best with JPG/PNG files',
-                'White or grey backgrounds give best results',
-                'Process multiple images in bulk with Pro plan'
+                t.dashboard.tipJpgPng,
+                t.dashboard.tipBackground,
+                t.dashboard.tipBulk,
               ]}
             />
           ) : filteredJobs.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-gray-500 font-medium">No jobs found with status: {statusFilter}</p>
+              <p className="text-gray-500 font-medium">{t.dashboard.noJobsStatus} {statusFilter}</p>
               <button
                 onClick={() => setStatusFilter('all')}
                 className="mt-4 px-4 py-2 gradient-purple-fuchsia text-white rounded-lg font-semibold hover:scale-105 transition-all"
               >
-                Show All Jobs
+                {t.dashboard.showAllJobs}
               </button>
             </div>
           ) : (
@@ -453,7 +462,7 @@ function DashboardContent() {
                       )}
                       {job.metadata?.batch_mode && (
                         <span className="text-xs bg-fuchsia-100 text-fuchsia-700 px-2 py-1 rounded-full font-semibold">
-                          Batch
+                          {t.dashboard.batch}
                         </span>
                       )}
                     </div>
@@ -503,7 +512,7 @@ function DashboardContent() {
                         className="flex items-center gap-1 md:gap-2 px-2 md:px-4 py-2 gradient-purple-fuchsia text-white rounded-lg font-bold hover:scale-105 transition-all shadow-md text-sm"
                       >
                         <Download className="w-4 h-4" />
-                        <span className="hidden md:inline">Download</span>
+                        <span className="hidden md:inline">{t.dashboard.download}</span>
                       </button>
                     )}
                   </div>

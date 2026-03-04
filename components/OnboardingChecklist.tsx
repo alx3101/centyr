@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { CheckCircle2, Circle, X } from 'lucide-react'
 import Link from 'next/link'
+import { useTranslations } from '@/contexts/LanguageContext'
 
 interface ChecklistItem {
   id: string
@@ -22,6 +23,7 @@ interface OnboardingChecklistProps {
 
 export default function OnboardingChecklist({ items, onDismiss }: OnboardingChecklistProps) {
   const [isDismissed, setIsDismissed] = useState(false)
+  const t = useTranslations()
 
   const completedCount = items.filter(item => item.completed).length
   const totalCount = items.length
@@ -39,10 +41,10 @@ export default function OnboardingChecklist({ items, onDismiss }: OnboardingChec
       <div className="flex items-start justify-between mb-4">
         <div>
           <h3 className="text-xl font-bold text-gray-900 mb-1 flex items-center gap-2">
-            🚀 Get Started with Centyr
+            {t.onboarding.title}
           </h3>
           <p className="text-sm text-gray-600">
-            Complete these steps to unlock the full potential
+            {t.onboarding.subtitle}
           </p>
         </div>
         {onDismiss && (
@@ -58,7 +60,7 @@ export default function OnboardingChecklist({ items, onDismiss }: OnboardingChec
       {/* Progress Bar */}
       <div className="mb-6">
         <div className="flex justify-between text-sm text-gray-600 mb-2">
-          <span>{completedCount} of {totalCount} completed</span>
+          <span>{completedCount} {t.onboarding.ofCompleted} {totalCount} {t.onboarding.completed}</span>
           <span className="font-semibold">{Math.round(progress)}%</span>
         </div>
         <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
@@ -115,9 +117,9 @@ export default function OnboardingChecklist({ items, onDismiss }: OnboardingChec
 
       {completedCount === totalCount && (
         <div className="mt-6 p-4 bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl text-center">
-          <p className="text-green-900 font-bold mb-2">🎉 Congratulations!</p>
+          <p className="text-green-900 font-bold mb-2">{t.onboarding.congratulations}</p>
           <p className="text-sm text-green-700">
-            You've completed the onboarding. You're all set to create amazing aligned images!
+            {t.onboarding.congratulationsDesc}
           </p>
         </div>
       )}
