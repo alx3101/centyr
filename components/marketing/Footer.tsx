@@ -16,8 +16,7 @@ export default function Footer() {
             <ul className="space-y-3">
               <li><Link href="/#features" className="hover:text-white transition">{t.marketing.footer.features}</Link></li>
               <li><Link href="/pricing" className="hover:text-white transition">{t.marketing.footer.pricing}</Link></li>
-              <li><Link href="/help#api" className="hover:text-white transition">{t.marketing.footer.apiDocs}</Link></li>
-              <li><Link href="/roadmap" className="hover:text-white transition">{t.marketing.footer.roadmap}</Link></li>
+<li><Link href="/roadmap" className="hover:text-white transition">{t.marketing.footer.roadmap}</Link></li>
               <li><Link href="/status" className="hover:text-white transition">{t.marketing.footer.status}</Link></li>
             </ul>
           </div>

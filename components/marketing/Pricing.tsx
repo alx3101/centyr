@@ -1,16 +1,49 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import { usePricingPlans } from '@/hooks/usePricingPlans'
 import { useAuth } from '@/contexts/AuthContext'
 import { useTranslations } from '@/contexts/LanguageContext'
+import { api } from '@/lib/api'
+import { useRouter } from 'next/navigation'
+import toast from 'react-hot-toast'
 
 export default function Pricing() {
   const t = useTranslations()
   const { plans, isLoading, error } = usePricingPlans()
   const { isAuthenticated } = useAuth()
+  const router = useRouter()
   const [billingPeriod, setBillingPeriod] = useState<'month' | 'year'>('month')
+  const [loadingPlanId, setLoadingPlanId] = useState<string | null>(null)
+
+  const handlePlanClick = async (plan: typeof plans[0]) => {
+    if (plan.price === 0) {
+      router.push(isAuthenticated ? '/dashboard' : '/signup')
+      return
+    }
+
+    if (!plan.stripe_price_id) return
+
+    if (!isAuthenticated) {
+      sessionStorage.setItem('pending_plan_id', plan.id)
+      sessionStorage.setItem('pending_price_id', plan.stripe_price_id)
+      router.push('/login?redirect=/pricing')
+      return
+    }
+
+    setLoadingPlanId(plan.stripe_product_id)
+    try {
+      const checkout = await api.createCheckoutSession({
+        price_id: plan.stripe_price_id,
+        success_url: `${window.location.origin}/billing/success`,
+        cancel_url: `${window.location.origin}/pricing`,
+      })
+      window.location.href = checkout.checkout_url
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to start checkout')
+      setLoadingPlanId(null)
+    }
+  }
 
   // Raggruppa i piani per stripe_product_id e filtra per periodo
   const filteredPlans = plans
@@ -79,17 +112,7 @@ export default function Pricing() {
         {!isLoading && filteredPlans.length > 0 && (
           <div className="flex flex-wrap justify-center gap-6 mb-12">
             {filteredPlans.map((plan) => {
-              const getCTA = () => {
-                if (plan.price === 0) return t.marketing.pricing.startFree
-                if (plan.monthly_limit >= 500) return t.marketing.pricing.contactSales
-                return isAuthenticated ? t.marketing.pricing.upgrade : t.marketing.pricing.startTrial
-              }
-
-              const getCTALink = () => {
-                if (plan.price === 0) return isAuthenticated ? '/dashboard' : '/signup'
-                if (plan.monthly_limit >= 500) return '#contact'
-                return isAuthenticated ? '/dashboard/billing' : '/signup'
-              }
+              const ctaLabel = plan.price === 0 ? t.marketing.pricing.startFree : 'Inizia Ora'
 
               return (
                 <div
@@ -131,15 +154,16 @@ export default function Pricing() {
                       </li>
                     ))}
                   </ul>
-                  <Link
-                    href={getCTALink()}
-                    className={`block w-full text-center px-6 py-4 rounded-xl font-bold transition-all shadow-md hover:shadow-lg hover:scale-105 ${plan.popular
+                  <button
+                    onClick={() => handlePlanClick(plan)}
+                    disabled={loadingPlanId === plan.stripe_product_id}
+                    className={`block w-full text-center px-6 py-4 rounded-xl font-bold transition-all shadow-md hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed ${plan.popular
                       ? 'gradient-purple-fuchsia text-white'
                       : 'bg-white border-2 border-purple-300 text-gray-900 hover:border-purple-400'
                       }`}
                   >
-                    {getCTA()}
-                  </Link>
+                    {loadingPlanId === plan.stripe_product_id ? '...' : ctaLabel}
+                  </button>
                 </div>
               )
             })}
