@@ -51,7 +51,7 @@ export default function Hero() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/upload"
+              href="/signup"
               className="gradient-purple-fuchsia text-white px-8 py-4 rounded-xl text-lg font-bold hover:scale-105 transition-all duration-300 shadow-lg inline-flex items-center justify-center gap-2"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
