@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Check } from 'lucide-react'
 import { usePricingPlans } from '@/hooks/usePricingPlans'
 import { useAuth } from '@/contexts/AuthContext'
 import { useTranslations } from '@/contexts/LanguageContext'
@@ -149,7 +150,7 @@ export default function Pricing() {
                   <ul className="space-y-3 mb-8 flex-grow">
                     {plan.features.map((feature, idx) => (
                       <li key={idx} className="flex items-start text-sm">
-                        <span className="mr-2 flex-shrink-0 text-gray-900">✓</span>
+                        <Check className="w-4 h-4 mr-2 flex-shrink-0 text-gray-900" />
                         <span className="text-gray-600">{feature}</span>
                       </li>
                     ))}

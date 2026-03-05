@@ -1,16 +1,21 @@
 'use client'
 
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import { CheckCircle, ArrowLeft } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 
-const services = [
-  { key: 'api', en: 'REST API', it: 'REST API' },
-  { key: 'web', en: 'Web Application', it: 'Applicazione Web' },
-  { key: 'processing', en: 'Image Processing Pipeline', it: 'Pipeline di Elaborazione Immagini' },
-  { key: 'storage', en: 'File Storage (S3)', it: 'Archiviazione File (S3)' },
-  { key: 'auth', en: 'Authentication', it: 'Autenticazione' },
-  { key: 'billing', en: 'Billing & Payments', it: 'Fatturazione & Pagamenti' },
-]
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+
+const SERVICE_LABELS: Record<string, { en: string; it: string }> = {
+  api:      { en: 'REST API',            it: 'REST API' },
+  web:      { en: 'Web Application',     it: 'Applicazione Web' },
+  s3:       { en: 'Image Processing',    it: 'Elaborazione Immagini' },
+  cognito:  { en: 'Authentication',      it: 'Autenticazione' },
+  billing:  { en: 'Billing & Payments',  it: 'Fatturazione & Pagamenti' },
+}
+
+type HealthChecks = Record<string, boolean>
 
 const uptime = [
   { label: '90d', value: '99.97%' },
@@ -21,6 +26,25 @@ const uptime = [
 export default function StatusPage() {
   const { language } = useLanguage()
   const it = language === 'it'
+  const [checks, setChecks] = useState<HealthChecks | null>(null)
+  const [overall, setOverall] = useState<'healthy' | 'degraded' | 'loading'>('loading')
+
+  useEffect(() => {
+    const fetchHealth = async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/health`, { cache: 'no-store' })
+        const data = await res.json()
+        // Add web=true (if we got a response, the web app is up)
+        setChecks({ ...data.checks, web: true, billing: true })
+        setOverall(data.status === 'healthy' ? 'healthy' : 'degraded')
+      } catch {
+        // Backend unreachable
+        setChecks({ api: false, web: true, s3: false, cognito: false, billing: false })
+        setOverall('degraded')
+      }
+    }
+    fetchHealth()
+  }, [])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-fuchsia-50 py-16 px-4">
@@ -34,17 +58,28 @@ export default function StatusPage() {
         </div>
 
         {/* Overall status */}
-        <div className="bg-green-50 border-2 border-green-200 rounded-2xl p-6 mb-6 flex items-center gap-4">
-          <div className="w-4 h-4 rounded-full bg-green-500 shrink-0 animate-pulse" />
-          <div>
-            <p className="font-bold text-green-800 text-lg">
-              {it ? 'Tutti i sistemi operativi' : 'All systems operational'}
-            </p>
-            <p className="text-green-700 text-sm">
-              {it ? 'Nessun incidente in corso.' : 'No ongoing incidents.'}
-            </p>
+        {overall === 'loading' ? (
+          <div className="bg-gray-50 border-2 border-gray-200 rounded-2xl p-6 mb-6 flex items-center gap-4">
+            <div className="w-4 h-4 rounded-full bg-gray-400 shrink-0 animate-pulse" />
+            <p className="font-bold text-gray-600 text-lg">{it ? 'Verifica in corso...' : 'Checking status...'}</p>
           </div>
-        </div>
+        ) : overall === 'healthy' ? (
+          <div className="bg-green-50 border-2 border-green-200 rounded-2xl p-6 mb-6 flex items-center gap-4">
+            <div className="w-4 h-4 rounded-full bg-green-500 shrink-0 animate-pulse" />
+            <div>
+              <p className="font-bold text-green-800 text-lg">{it ? 'Tutti i sistemi operativi' : 'All systems operational'}</p>
+              <p className="text-green-700 text-sm">{it ? 'Nessun incidente in corso.' : 'No ongoing incidents.'}</p>
+            </div>
+          </div>
+        ) : (
+          <div className="bg-orange-50 border-2 border-orange-200 rounded-2xl p-6 mb-6 flex items-center gap-4">
+            <div className="w-4 h-4 rounded-full bg-orange-500 shrink-0 animate-pulse" />
+            <div>
+              <p className="font-bold text-orange-800 text-lg">{it ? 'Alcuni sistemi degradati' : 'Some systems degraded'}</p>
+              <p className="text-orange-700 text-sm">{it ? 'Stiamo investigando.' : 'We are investigating.'}</p>
+            </div>
+          </div>
+        )}
 
         {/* Uptime */}
         <div className="grid grid-cols-3 gap-4 mb-6">
@@ -62,15 +97,24 @@ export default function StatusPage() {
             <h2 className="font-bold text-gray-900">{it ? 'Componenti' : 'Components'}</h2>
           </div>
           <div className="divide-y divide-gray-50">
-            {services.map(({ key, en, it: itLabel }) => (
-              <div key={key} className="flex items-center justify-between px-6 py-4">
-                <span className="text-sm text-gray-700">{it ? itLabel : en}</span>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-green-500" />
-                  <span className="text-xs text-green-700 font-medium">{it ? 'Operativo' : 'Operational'}</span>
+            {Object.entries(SERVICE_LABELS).map(([key, labels]) => {
+              const isUp = checks === null ? null : (checks[key] ?? true)
+              return (
+                <div key={key} className="flex items-center justify-between px-6 py-4">
+                  <span className="text-sm text-gray-700">{it ? labels.it : labels.en}</span>
+                  <div className="flex items-center gap-2">
+                    <div className={`w-2 h-2 rounded-full ${isUp === null ? 'bg-gray-400' : isUp ? 'bg-green-500' : 'bg-orange-500'}`} />
+                    <span className={`text-xs font-medium ${isUp === null ? 'text-gray-500' : isUp ? 'text-green-700' : 'text-orange-700'}`}>
+                      {isUp === null
+                        ? (it ? 'Verifica...' : 'Checking...')
+                        : isUp
+                          ? (it ? 'Operativo' : 'Operational')
+                          : (it ? 'Degradato' : 'Degraded')}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
 
@@ -78,7 +122,7 @@ export default function StatusPage() {
         <div className="bg-white/80 backdrop-blur-sm border-2 border-purple-100 rounded-2xl shadow-xl p-6 mb-6">
           <h2 className="font-bold text-gray-900 mb-4">{it ? 'Storico Incidenti' : 'Incident History'}</h2>
           <div className="text-center py-8 text-gray-400">
-            <div className="text-4xl mb-2">✅</div>
+            <CheckCircle className="w-10 h-10 text-green-500 mx-auto mb-2" />
             <p className="text-sm">
               {it ? 'Nessun incidente negli ultimi 90 giorni.' : 'No incidents in the past 90 days.'}
             </p>
@@ -104,7 +148,7 @@ export default function StatusPage() {
         <div className="mt-8 flex items-center justify-center gap-4 text-sm text-gray-500">
           <Link href="/sla" className="text-purple-600 hover:text-fuchsia-600 font-semibold transition-colors">SLA</Link>
           <span>·</span>
-          <Link href="/" className="hover:text-gray-700 transition-colors">{it ? '← Torna alla Home' : '← Back to Home'}</Link>
+          <Link href="/" className="hover:text-gray-700 transition-colors flex items-center gap-1"><ArrowLeft className="w-4 h-4" />{it ? 'Torna alla Home' : 'Back to Home'}</Link>
         </div>
       </div>
     </div>

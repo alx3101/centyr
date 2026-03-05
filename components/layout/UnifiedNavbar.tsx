@@ -52,9 +52,9 @@ export function UnifiedNavbar() {
 
   // Links pubblici (marketing) - ordine rispecchia la pagina
   const publicLinks = [
-    { href: '#features', label: t.nav.features },
-    { href: '#testimonials', label: t.nav.testimonials },
-    { href: '#pricing', label: t.nav.pricing },
+    { href: '/#features', label: t.nav.features },
+    { href: '/#testimonials', label: t.nav.testimonials },
+    { href: '/#pricing', label: t.nav.pricing },
   ]
 
   return (

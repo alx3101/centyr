@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { Rocket, Globe, Zap, TrendingUp, Lock, Brain, ArrowLeft, ArrowRight } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 
 const openRoles = [
@@ -47,23 +48,16 @@ export default function CareersPage() {
           <section>
             <h2 className="text-xl font-bold text-gray-900 mb-4">{it ? 'Perché Centyr' : 'Why Centyr'}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-              {(it ? [
-                ['🚀', 'Prodotto reale, utenti reali, impatto immediato'],
-                ['🌍', 'Team remoto, infrastruttura EU'],
-                ['⚡', 'Stack moderno: Next.js, Python, AWS, AI/ML'],
-                ['📈', 'Equity disponibile per early hires'],
-                ['🔒', 'Focus su privacy e qualità del codice'],
-                ['🧠', 'Problemi tecnici interessanti (CV, scaling, UX)'],
-              ] : [
-                ['🚀', 'Real product, real users, immediate impact'],
-                ['🌍', 'Remote team, EU infrastructure'],
-                ['⚡', 'Modern stack: Next.js, Python, AWS, AI/ML'],
-                ['📈', 'Equity available for early hires'],
-                ['🔒', 'Focus on privacy and code quality'],
-                ['🧠', 'Interesting technical problems (CV, scaling, UX)'],
-              ]).map(([icon, text]) => (
+              {([
+                { Icon: Rocket, text: it ? 'Prodotto reale, utenti reali, impatto immediato' : 'Real product, real users, immediate impact' },
+                { Icon: Globe, text: it ? 'Team remoto, infrastruttura EU' : 'Remote team, EU infrastructure' },
+                { Icon: Zap, text: it ? 'Stack moderno: Next.js, Python, AWS, AI/ML' : 'Modern stack: Next.js, Python, AWS, AI/ML' },
+                { Icon: TrendingUp, text: it ? 'Equity disponibile per early hires' : 'Equity available for early hires' },
+                { Icon: Lock, text: it ? 'Focus su privacy e qualità del codice' : 'Focus on privacy and code quality' },
+                { Icon: Brain, text: it ? 'Problemi tecnici interessanti (CV, scaling, UX)' : 'Interesting technical problems (CV, scaling, UX)' },
+              ] as { Icon: (p: { className?: string }) => JSX.Element; text: string }[]).map(({ Icon, text }) => (
                 <div key={text} className="flex items-start gap-2 bg-purple-50 rounded-xl p-3 border border-purple-100">
-                  <span>{icon}</span>
+                  <Icon className="w-4 h-4 text-purple-600 shrink-0 mt-0.5" />
                   <span className="text-gray-700">{text}</span>
                 </div>
               ))}
@@ -87,7 +81,7 @@ export default function CareersPage() {
                     href={`mailto:support@centyr.tech?subject=${encodeURIComponent(it ? role.title.it : role.title.en)}`}
                     className="mt-3 inline-block text-sm text-purple-600 font-medium hover:underline"
                   >
-                    {it ? 'Candidati →' : 'Apply →'}
+                    <span className="inline-flex items-center gap-1">{it ? 'Candidati' : 'Apply'} <ArrowRight className="w-3 h-3" /></span>
                   </a>
                 </div>
               ))}
@@ -118,7 +112,7 @@ export default function CareersPage() {
             {it ? 'Chi Siamo' : 'About'}
           </Link>
           <span>·</span>
-          <Link href="/" className="hover:text-gray-700 transition-colors">{it ? '← Torna alla Home' : '← Back to Home'}</Link>
+          <Link href="/" className="hover:text-gray-700 transition-colors flex items-center gap-1"><ArrowLeft className="w-4 h-4" />{it ? 'Torna alla Home' : 'Back to Home'}</Link>
         </div>
       </div>
     </div>

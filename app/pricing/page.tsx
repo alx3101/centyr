@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { Check, Zap, Crown, Loader, Building2, Headphones, Shield, Users } from 'lucide-react'
+import { Check, Zap, Crown, Loader, Building2, Headphones, Shield, Users, ArrowLeft } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { usePricingPlans } from '@/hooks/usePricingPlans'
 import { api } from '@/lib/api'
@@ -346,7 +346,7 @@ export default function PricingPage() {
         {/* Back to Home */}
         <div className="text-center mt-12">
           <Link href="/" className="text-purple-600 hover:text-fuchsia-600 font-semibold">
-            ← Back to Home
+            <ArrowLeft className="w-4 h-4 inline mr-1" />Back to Home
           </Link>
         </div>
       </div>

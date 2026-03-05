@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 
 const roadmapData = {
@@ -178,14 +179,14 @@ export default function RoadmapPage() {
             href="mailto:support@centyr.tech?subject=Feature request"
             className="inline-block bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-semibold px-6 py-2.5 rounded-xl hover:opacity-90 transition text-sm"
           >
-            {it ? 'Invia un\'idea →' : 'Send an idea →'}
+            <span className="inline-flex items-center gap-1">{it ? 'Invia un\'idea' : 'Send an idea'} <ArrowRight className="w-4 h-4" /></span>
           </a>
         </div>
 
         <div className="mt-8 flex items-center justify-center gap-4 text-sm text-gray-500">
           <Link href="/status" className="text-purple-600 hover:text-fuchsia-600 font-semibold transition-colors">Status</Link>
           <span>·</span>
-          <Link href="/" className="hover:text-gray-700 transition-colors">{it ? '← Torna alla Home' : '← Back to Home'}</Link>
+          <Link href="/" className="hover:text-gray-700 transition-colors flex items-center gap-1"><ArrowLeft className="w-4 h-4" />{it ? 'Torna alla Home' : 'Back to Home'}</Link>
         </div>
       </div>
     </div>

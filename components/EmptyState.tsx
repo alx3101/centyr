@@ -1,6 +1,6 @@
 'use client'
 
-import { LucideIcon } from 'lucide-react'
+import { LucideIcon, Lightbulb, Check } from 'lucide-react'
 import Link from 'next/link'
 
 interface EmptyStateProps {
@@ -67,12 +67,12 @@ export default function EmptyState({
       {tips && tips.length > 0 && (
         <div className="max-w-md mx-auto bg-gradient-to-br from-purple-50 to-fuchsia-50 rounded-xl p-6 border-2 border-purple-100">
           <p className="font-semibold text-gray-900 mb-3 flex items-center justify-center gap-2">
-            <span>💡</span> Quick Tips
+            <Lightbulb className="w-4 h-4 text-amber-500" /> Quick Tips
           </p>
           <ul className="space-y-2 text-left text-sm text-gray-700">
             {tips.map((tip, index) => (
               <li key={index} className="flex items-start gap-2">
-                <span className="text-green-500 mt-0.5">✓</span>
+                <Check className="w-4 h-4 text-green-500 mt-0.5 shrink-0" />
                 <span>{tip}</span>
               </li>
             ))}

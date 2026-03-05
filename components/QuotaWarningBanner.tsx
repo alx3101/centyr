@@ -1,6 +1,6 @@
 'use client'
 
-import { AlertTriangle, Zap, X } from 'lucide-react'
+import { AlertTriangle, Zap, X, Check } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 import { useTranslations } from '@/contexts/LanguageContext'
@@ -89,19 +89,19 @@ export default function QuotaWarningBanner({
             </p>
             <ul className="space-y-1 text-sm text-gray-700">
               <li className="flex items-start gap-2">
-                <span className="text-green-500 mt-0.5">✓</span>
+                <Check className="w-4 h-4 text-green-500 mt-0.5 shrink-0" />
                 <span>{t.quota.benefit1}</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-green-500 mt-0.5">✓</span>
+                <Check className="w-4 h-4 text-green-500 mt-0.5 shrink-0" />
                 <span>{t.quota.benefit2}</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-green-500 mt-0.5">✓</span>
+                <Check className="w-4 h-4 text-green-500 mt-0.5 shrink-0" />
                 <span>{t.quota.benefit3}</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-green-500 mt-0.5">✓</span>
+                <Check className="w-4 h-4 text-green-500 mt-0.5 shrink-0" />
                 <span>{t.quota.benefit4}</span>
               </li>
             </ul>

@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense, useMemo } from 'react'
 import Link from 'next/link'
 import { toast } from 'react-hot-toast'
-import { Upload, Download, Loader, CheckCircle, XCircle, Clock, TrendingUp, Zap, Award, Activity, Filter, Image as ImageIcon } from 'lucide-react'
+import { Upload, Download, Loader, CheckCircle, XCircle, Clock, TrendingUp, Zap, Award, Activity, Filter, Image as ImageIcon, ArrowRight } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useRecentJobs } from '@/hooks/queries'
 import { SkeletonDashboard } from '@/components/ui/Skeleton'
@@ -294,7 +294,7 @@ function DashboardContent() {
                   href="/pricing"
                   className="inline-flex items-center gap-1 text-xs sm:text-sm text-green-600 hover:text-emerald-600 font-bold mt-2 sm:mt-3 transition-all group-hover:gap-2"
                 >
-                  {t.dashboard.upgrade} <span>→</span>
+                  {t.dashboard.upgrade} <ArrowRight className="w-4 h-4" />
                 </Link>
               )}
             </div>

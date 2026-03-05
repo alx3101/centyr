@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { MessageSquare, Lock, Shield, Building2, Lightbulb, ArrowLeft } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function ContactPage() {
@@ -23,7 +24,7 @@ export default function ContactPage() {
           {/* Channels */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="bg-purple-50 rounded-xl p-5 border border-purple-100">
-              <div className="text-2xl mb-2">💬</div>
+              <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mb-3"><MessageSquare className="w-5 h-5 text-purple-600" /></div>
               <h3 className="font-bold text-gray-900 mb-1">{it ? 'Supporto Tecnico' : 'Technical Support'}</h3>
               <p className="text-xs text-gray-500 mb-3">
                 {it ? 'Problemi con l\'account, jobs, elaborazione immagini.' : 'Issues with account, jobs, image processing.'}
@@ -34,7 +35,7 @@ export default function ContactPage() {
             </div>
 
             <div className="bg-purple-50 rounded-xl p-5 border border-purple-100">
-              <div className="text-2xl mb-2">🔒</div>
+              <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mb-3"><Lock className="w-5 h-5 text-purple-600" /></div>
               <h3 className="font-bold text-gray-900 mb-1">{it ? 'Privacy & GDPR' : 'Privacy & GDPR'}</h3>
               <p className="text-xs text-gray-500 mb-3">
                 {it ? 'Diritti degli interessati, richieste di cancellazione dati.' : 'Data subject rights, deletion requests.'}
@@ -45,7 +46,7 @@ export default function ContactPage() {
             </div>
 
             <div className="bg-purple-50 rounded-xl p-5 border border-purple-100">
-              <div className="text-2xl mb-2">🛡️</div>
+              <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mb-3"><Shield className="w-5 h-5 text-purple-600" /></div>
               <h3 className="font-bold text-gray-900 mb-1">{it ? 'Sicurezza' : 'Security'}</h3>
               <p className="text-xs text-gray-500 mb-3">
                 {it ? 'Segnalazione vulnerabilità, responsible disclosure.' : 'Vulnerability reports, responsible disclosure.'}
@@ -56,7 +57,7 @@ export default function ContactPage() {
             </div>
 
             <div className="bg-purple-50 rounded-xl p-5 border border-purple-100">
-              <div className="text-2xl mb-2">🏢</div>
+              <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mb-3"><Building2 className="w-5 h-5 text-purple-600" /></div>
               <h3 className="font-bold text-gray-900 mb-1">{it ? 'Enterprise & Partner' : 'Enterprise & Partners'}</h3>
               <p className="text-xs text-gray-500 mb-3">
                 {it ? 'Piani custom, integrazioni API, partnership.' : 'Custom plans, API integrations, partnerships.'}
@@ -95,14 +96,15 @@ export default function ContactPage() {
           </div>
 
           {/* Help center nudge */}
-          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-800">
-            💡 {it
-              ? 'Prima di scrivere, controlla il nostro '
-              : 'Before reaching out, check our '}
-            <Link href="/help" className="underline font-semibold">
-              {it ? 'Centro Assistenza' : 'Help Center'}
-            </Link>
-            {it ? ' — molte domande comuni trovano risposta immediata.' : ' — many common questions are answered there instantly.'}
+          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-800 flex items-start gap-2">
+            <Lightbulb className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+            <span>
+              {it ? 'Prima di scrivere, controlla il nostro ' : 'Before reaching out, check our '}
+              <Link href="/help" className="underline font-semibold">
+                {it ? 'Centro Assistenza' : 'Help Center'}
+              </Link>
+              {it ? ' — molte domande comuni trovano risposta immediata.' : ' — many common questions are answered there instantly.'}
+            </span>
           </div>
         </div>
 
@@ -111,7 +113,7 @@ export default function ContactPage() {
             {it ? 'Centro Assistenza' : 'Help Center'}
           </Link>
           <span>·</span>
-          <Link href="/" className="hover:text-gray-700 transition-colors">{it ? '← Torna alla Home' : '← Back to Home'}</Link>
+          <Link href="/" className="hover:text-gray-700 transition-colors flex items-center gap-1"><ArrowLeft className="w-4 h-4" />{it ? 'Torna alla Home' : 'Back to Home'}</Link>
         </div>
       </div>
     </div>

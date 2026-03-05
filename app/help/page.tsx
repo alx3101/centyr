@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 
 const faqs = [
@@ -77,16 +78,6 @@ const faqs = [
   },
   {
     en: {
-      q: 'Is there an API?',
-      a: 'Yes. Centyr provides a REST API (v1) for programmatic access. API documentation is available to all users. Enterprise plans include dedicated API support and higher rate limits.',
-    },
-    it: {
-      q: 'È disponibile un\'API?',
-      a: 'Sì. Centyr fornisce una REST API (v1) per accesso programmatico. La documentazione API è disponibile per tutti gli utenti. I piani Enterprise includono supporto API dedicato e rate limit più elevati.',
-    },
-  },
-  {
-    en: {
       q: 'Where is my data stored?',
       a: 'All data is stored in the EU — specifically on Amazon Web Services in the eu-west-3 (Paris) region. We are fully GDPR compliant.',
     },
@@ -106,11 +97,19 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
         onClick={() => setOpen(!open)}
       >
         <span>{question}</span>
-        <span className="text-purple-400 shrink-0 text-lg leading-none">{open ? '−' : '+'}</span>
+        <span
+          className="text-purple-400 shrink-0 text-lg leading-none transition-transform duration-300"
+          style={{ transform: open ? 'rotate(45deg)' : 'rotate(0deg)' }}
+        >
+          +
+        </span>
       </button>
-      {open && (
+      <div
+        className="overflow-hidden transition-all duration-300 ease-in-out"
+        style={{ maxHeight: open ? '300px' : '0px', opacity: open ? 1 : 0 }}
+      >
         <p className="pb-4 text-sm text-gray-600 leading-relaxed">{answer}</p>
-      )}
+      </div>
     </div>
   )
 }
@@ -164,7 +163,7 @@ export default function HelpPage() {
             {it ? 'Contatti' : 'Contact'}
           </Link>
           <span>·</span>
-          <Link href="/" className="hover:text-gray-700 transition-colors">{it ? '← Torna alla Home' : '← Back to Home'}</Link>
+          <Link href="/" className="hover:text-gray-700 transition-colors flex items-center gap-1"><ArrowLeft className="w-4 h-4" />{it ? 'Torna alla Home' : 'Back to Home'}</Link>
         </div>
       </div>
     </div>

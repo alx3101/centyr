@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { Target, Zap, Lock, Palette, Globe, CheckCircle, CreditCard, ArrowLeft } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function AboutPage() {
@@ -24,7 +25,9 @@ export default function AboutPage() {
 
           {/* Mission */}
           <section className="text-center">
-            <div className="text-5xl mb-4">🎯</div>
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-100 rounded-2xl mb-4">
+              <Target className="w-8 h-8 text-purple-600" />
+            </div>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">{it ? 'La Nostra Missione' : 'Our Mission'}</h2>
             <p className="text-base text-gray-600 max-w-xl mx-auto">
               {it
@@ -56,17 +59,15 @@ export default function AboutPage() {
           <section>
             <h2 className="text-xl font-bold text-gray-900 mb-6">{it ? 'Come Lavoriamo' : 'How We Work'}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {(it ? [
-                { icon: '⚡', title: 'Batch-first', desc: 'Progettato per volumi. Carica 1 immagine o 500 — la pipeline scala automaticamente senza perdere velocità.' },
-                { icon: '🔒', title: 'Privacy by design', desc: 'Nessun training sui tuoi dati. Immagini eliminate automaticamente dopo 30 giorni. Infrastruttura EU (Paris).' },
-                { icon: '🎨', title: 'Output pronti', desc: 'Risultati subito pubblicabili: sfondi bianchi, proporzioni corrette, centramento preciso al pixel.' },
-              ] : [
-                { icon: '⚡', title: 'Batch-first', desc: 'Designed for volume. Upload 1 image or 500 — the pipeline scales automatically without losing speed.' },
-                { icon: '🔒', title: 'Privacy by design', desc: 'No training on your data. Images automatically deleted after 30 days. EU infrastructure (Paris).' },
-                { icon: '🎨', title: 'Ready-to-publish output', desc: 'Immediately publishable results: white backgrounds, correct proportions, pixel-perfect centering.' },
-              ]).map(({ icon, title, desc }) => (
+              {([
+                { Icon: Zap, title: 'Batch-first', desc: it ? 'Progettato per volumi. Carica 1 immagine o 500 — la pipeline scala automaticamente senza perdere velocità.' : 'Designed for volume. Upload 1 image or 500 — the pipeline scales automatically without losing speed.' },
+                { Icon: Lock, title: 'Privacy by design', desc: it ? 'Nessun training sui tuoi dati. Immagini eliminate automaticamente dopo 30 giorni. Infrastruttura EU (Paris).' : 'No training on your data. Images automatically deleted after 30 days. EU infrastructure (Paris).' },
+                { Icon: Palette, title: it ? 'Output pronti' : 'Ready-to-publish output', desc: it ? 'Risultati subito pubblicabili: sfondi bianchi, proporzioni corrette, centramento preciso al pixel.' : 'Immediately publishable results: white backgrounds, correct proportions, pixel-perfect centering.' },
+              ] as { Icon: (p: { className?: string }) => JSX.Element; title: string; desc: string }[]).map(({ Icon, title, desc }) => (
                 <div key={title} className="bg-purple-50 rounded-xl p-5 border border-purple-100">
-                  <div className="text-3xl mb-2">{icon}</div>
+                  <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center mb-3 shadow-sm">
+                    <Icon className="w-5 h-5 text-purple-600" />
+                  </div>
                   <p className="font-bold text-gray-900 mb-1">{title}</p>
                   <p className="text-xs text-gray-600">{desc}</p>
                 </div>
@@ -78,12 +79,16 @@ export default function AboutPage() {
           <section className="bg-gradient-to-r from-purple-50 to-fuchsia-50 rounded-xl p-6 border border-purple-100">
             <h2 className="text-base font-bold text-gray-900 mb-3">{it ? 'Infrastruttura & Compliance' : 'Infrastructure & Compliance'}</h2>
             <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
-              {[
-                it ? '🇪🇺 Dati sempre in Europa (AWS Paris)' : '🇪🇺 Data always in Europe (AWS Paris)',
-                it ? '🔒 Crittografia TLS 1.3 + AES-256' : '🔒 TLS 1.3 + AES-256 encryption',
-                it ? '✅ Conforme GDPR' : '✅ GDPR compliant',
-                it ? '💳 Pagamenti Stripe PCI DSS L1' : '💳 Stripe PCI DSS L1 payments',
-              ].map(item => <p key={item}>{item}</p>)}
+              {([
+                { Icon: Globe, text: it ? 'Dati sempre in Europa (AWS Paris)' : 'Data always in Europe (AWS Paris)' },
+                { Icon: Lock, text: it ? 'Crittografia TLS 1.3 + AES-256' : 'TLS 1.3 + AES-256 encryption' },
+                { Icon: CheckCircle, text: it ? 'Conforme GDPR' : 'GDPR compliant' },
+                { Icon: CreditCard, text: it ? 'Pagamenti Stripe PCI DSS L1' : 'Stripe PCI DSS L1 payments' },
+              ] as { Icon: (p: { className?: string }) => JSX.Element; text: string }[]).map(({ Icon, text }) => (
+                <p key={text} className="flex items-center gap-2">
+                  <Icon className="w-4 h-4 text-purple-600 shrink-0" />{text}
+                </p>
+              ))}
             </div>
           </section>
 
@@ -99,12 +104,6 @@ export default function AboutPage() {
               >
                 {it ? 'Contattaci' : 'Contact us'}
               </Link>
-              <Link
-                href="/careers"
-                className="border-2 border-purple-200 text-purple-700 font-semibold px-6 py-3 rounded-xl hover:bg-purple-50 transition text-sm"
-              >
-                {it ? 'Lavora con noi' : 'Careers'}
-              </Link>
             </div>
           </section>
         </div>
@@ -112,7 +111,7 @@ export default function AboutPage() {
         <div className="mt-8 flex items-center justify-center gap-4 text-sm text-gray-500">
           <Link href="/press" className="text-purple-600 hover:text-fuchsia-600 font-semibold transition-colors">Press Kit</Link>
           <span>·</span>
-          <Link href="/" className="hover:text-gray-700 transition-colors">{it ? '← Torna alla Home' : '← Back to Home'}</Link>
+          <Link href="/" className="hover:text-gray-700 transition-colors flex items-center gap-1"><ArrowLeft className="w-4 h-4" />{it ? 'Torna alla Home' : 'Back to Home'}</Link>
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@
 
 import { useLanguage } from '@/contexts/LanguageContext'
 import { Language } from '@/i18n/translations'
-import { Globe } from 'lucide-react'
+import { Globe, Check } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
 
 export default function LanguageSelector() {
@@ -10,9 +10,9 @@ export default function LanguageSelector() {
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
-  const languages: { code: Language; name: string; flag: string }[] = [
-    { code: 'en', name: 'English', flag: '🇬🇧' },
-    { code: 'it', name: 'Italiano', flag: '🇮🇹' },
+  const languages: { code: Language; name: string; abbr: string }[] = [
+    { code: 'en', name: 'English', abbr: 'EN' },
+    { code: 'it', name: 'Italiano', abbr: 'IT' },
   ]
 
   // Close dropdown when clicking outside
@@ -37,7 +37,7 @@ export default function LanguageSelector() {
         aria-label="Select language"
       >
         <Globe size={18} />
-        <span className="text-xl">{currentLanguage?.flag}</span>
+        <span className="text-xs font-bold bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded">{currentLanguage?.abbr}</span>
         <span className="hidden sm:inline font-medium">{currentLanguage?.name}</span>
       </button>
 
@@ -56,10 +56,10 @@ export default function LanguageSelector() {
                   : 'text-gray-700 hover:bg-purple-50'
               }`}
             >
-              <span className="text-2xl">{lang.flag}</span>
+              <span className={`text-xs font-bold px-1.5 py-0.5 rounded ${language === lang.code ? 'bg-white/20 text-white' : 'bg-purple-100 text-purple-700'}`}>{lang.abbr}</span>
               <span className="font-medium">{lang.name}</span>
               {language === lang.code && (
-                <span className="ml-auto">✓</span>
+                <Check className="ml-auto w-4 h-4 text-white" />
               )}
             </button>
           ))}

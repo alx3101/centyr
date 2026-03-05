@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { X, Sparkles, Upload, Zap, Share2 } from 'lucide-react'
+import { X, Sparkles, Upload, Zap, Share2, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { useTranslations } from '@/contexts/LanguageContext'
 
@@ -108,7 +108,7 @@ export default function PostDownloadModal({
                     <p className="font-semibold text-gray-900 text-sm">{t.postDownload.processMore}</p>
                     <p className="text-xs text-gray-600">{t.postDownload.processMoreDesc}</p>
                   </div>
-                  <span className="text-primary-600 text-sm">→</span>
+                  <ArrowRight className="w-4 h-4 text-primary-600" />
                 </Link>
 
                 {userPlan === 'free' && (
@@ -121,7 +121,7 @@ export default function PostDownloadModal({
                       <p className="font-semibold text-gray-900 text-sm">{t.postDownload.unlockBulk}</p>
                       <p className="text-xs text-gray-600">{t.postDownload.unlockBulkDesc}</p>
                     </div>
-                    <span className="text-fuchsia-600 text-sm">→</span>
+                    <ArrowRight className="w-4 h-4 text-fuchsia-600" />
                   </Link>
                 )}
               </div>

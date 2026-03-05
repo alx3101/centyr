@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function TermsPage() {
@@ -328,8 +329,8 @@ export default function TermsPage() {
             {it ? 'Informativa sulla Privacy' : 'Privacy Policy'}
           </Link>
           <span className="hidden sm:inline">·</span>
-          <Link href="/" className="hover:text-gray-700 transition-colors">
-            {it ? '← Torna alla Home' : '← Back to Home'}
+          <Link href="/" className="hover:text-gray-700 transition-colors flex items-center gap-1">
+            <ArrowLeft className="w-4 h-4" />{it ? 'Torna alla Home' : 'Back to Home'}
           </Link>
         </div>
       </div>

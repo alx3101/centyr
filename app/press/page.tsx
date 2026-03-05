@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { CheckCircle, XCircle, ArrowLeft, ArrowRight } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function PressPage() {
@@ -65,7 +66,7 @@ export default function PressPage() {
                   <p className="text-xs text-gray-400">{it ? 'Versioni chiaro e scuro' : 'Light and dark versions'}</p>
                 </div>
                 <a href="mailto:support@centyr.tech?subject=Press Kit - Logo" className="text-purple-600 hover:underline text-xs font-medium">
-                  {it ? 'Richiedi →' : 'Request →'}
+                  <span className="inline-flex items-center gap-1">{it ? 'Richiedi' : 'Request'} <ArrowRight className="w-3 h-3" /></span>
                 </a>
               </div>
               <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-200">
@@ -74,7 +75,7 @@ export default function PressPage() {
                   <p className="text-xs text-gray-400">{it ? 'Dashboard, upload, risultati' : 'Dashboard, upload, results'}</p>
                 </div>
                 <a href="mailto:support@centyr.tech?subject=Press Kit - Screenshots" className="text-purple-600 hover:underline text-xs font-medium">
-                  {it ? 'Richiedi →' : 'Request →'}
+                  <span className="inline-flex items-center gap-1">{it ? 'Richiedi' : 'Request'} <ArrowRight className="w-3 h-3" /></span>
                 </a>
               </div>
             </div>
@@ -91,10 +92,10 @@ export default function PressPage() {
           <section>
             <h2 className="text-xl font-bold text-gray-900 mb-3">{it ? 'Linee Guida del Brand' : 'Brand Guidelines'}</h2>
             <div className="space-y-2 text-sm text-gray-600">
-              <p>✅ {it ? '"Centyr" — maiuscola solo la prima lettera.' : '"Centyr" — only capitalize the first letter.'}</p>
-              <p>❌ {it ? 'Non usare "CENTYR" o "centyr".' : 'Do not use "CENTYR" or "centyr".'}</p>
-              <p>✅ {it ? 'Puoi descrivere Centyr come "piattaforma AI per foto prodotto e-commerce".' : 'You may describe Centyr as "AI platform for e-commerce product photos".'}</p>
-              <p>❌ {it ? 'Non modificare i colori o le proporzioni del logo.' : 'Do not alter logo colors or proportions.'}</p>
+              <p className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-green-600 shrink-0 mt-0.5" /><span>{it ? '"Centyr" — maiuscola solo la prima lettera.' : '"Centyr" — only capitalize the first letter.'}</span></p>
+              <p className="flex items-start gap-2"><XCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" /><span>{it ? 'Non usare "CENTYR" o "centyr".' : 'Do not use "CENTYR" or "centyr".'}</span></p>
+              <p className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-green-600 shrink-0 mt-0.5" /><span>{it ? 'Puoi descrivere Centyr come "piattaforma AI per foto prodotto e-commerce".' : 'You may describe Centyr as "AI platform for e-commerce product photos".'}</span></p>
+              <p className="flex items-start gap-2"><XCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" /><span>{it ? 'Non modificare i colori o le proporzioni del logo.' : 'Do not alter logo colors or proportions.'}</span></p>
             </div>
           </section>
 
@@ -115,7 +116,7 @@ export default function PressPage() {
             {it ? 'Chi Siamo' : 'About'}
           </Link>
           <span>·</span>
-          <Link href="/" className="hover:text-gray-700 transition-colors">{it ? '← Torna alla Home' : '← Back to Home'}</Link>
+          <Link href="/" className="hover:text-gray-700 transition-colors flex items-center gap-1"><ArrowLeft className="w-4 h-4" />{it ? 'Torna alla Home' : 'Back to Home'}</Link>
         </div>
       </div>
     </div>

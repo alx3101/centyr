@@ -38,7 +38,6 @@ export default function Footer() {
             <h4 className="text-white font-bold mb-4 text-lg">{t.marketing.footer.companyCol}</h4>
             <ul className="space-y-3">
               <li><Link href="/about" className="hover:text-white transition">{t.marketing.footer.aboutUs}</Link></li>
-              <li><Link href="/careers" className="hover:text-white transition">{t.marketing.footer.careers}</Link></li>
               <li><Link href="/contact" className="hover:text-white transition">{t.marketing.footer.contact}</Link></li>
               <li><Link href="/press" className="hover:text-white transition">{t.marketing.footer.pressKit}</Link></li>
               <li><Link href="/partners" className="hover:text-white transition">{t.marketing.footer.partners}</Link></li>
