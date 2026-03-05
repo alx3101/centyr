@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useAuth } from '@/hooks/useAuth'
 import { api } from '@/lib/api'
 import { useRouter } from 'next/navigation'
-import { CreditCard, Calendar, Zap, AlertCircle, ExternalLink, Loader } from 'lucide-react'
+import { CreditCard, Calendar, Zap, AlertCircle, ExternalLink, Loader, Check, ArrowLeft } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { useConfirm } from '@/components/ui/ConfirmModal'
 
@@ -139,34 +139,28 @@ export default function BillingPage() {
                 <>
                   <li className="flex items-center gap-2 text-gray-700">
                     <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center">
-                      <span className="text-green-600 text-xs">✓</span>
+                      <Check className="w-3 h-3 text-green-600" />
                     </div>
                     500 jobs/month
                   </li>
                   <li className="flex items-center gap-2 text-gray-700">
                     <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center">
-                      <span className="text-green-600 text-xs">✓</span>
+                      <Check className="w-3 h-3 text-green-600" />
                     </div>
                     Priority processing
-                  </li>
-                  <li className="flex items-center gap-2 text-gray-700">
-                    <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center">
-                      <span className="text-green-600 text-xs">✓</span>
-                    </div>
-                    API access
                   </li>
                 </>
               ) : (
                 <>
                   <li className="flex items-center gap-2 text-gray-700">
                     <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center">
-                      <span className="text-green-600 text-xs">✓</span>
+                      <Check className="w-3 h-3 text-green-600" />
                     </div>
                     3 jobs/month
                   </li>
                   <li className="flex items-center gap-2 text-gray-700">
                     <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center">
-                      <span className="text-green-600 text-xs">✓</span>
+                      <Check className="w-3 h-3 text-green-600" />
                     </div>
                     Standard processing
                   </li>
@@ -255,7 +249,7 @@ export default function BillingPage() {
             onClick={() => router.push('/dashboard')}
             className="text-purple-600 hover:text-fuchsia-600 font-semibold"
           >
-            ← Back to Dashboard
+            <ArrowLeft className="w-4 h-4 inline mr-1" />Back to Dashboard
           </button>
         </div>
       </div>

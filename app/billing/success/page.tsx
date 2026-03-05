@@ -57,7 +57,7 @@ export default function BillingSuccessPage() {
 
           {/* Title */}
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Welcome to Premium! 🎉
+            Welcome to Premium!
           </h1>
 
           {/* Description */}

@@ -14,11 +14,10 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-bold mb-4 text-lg">{t.marketing.footer.productCol}</h4>
             <ul className="space-y-3">
-              <li><Link href="#features" className="hover:text-white transition">{t.marketing.footer.features}</Link></li>
-              <li><Link href="#pricing" className="hover:text-white transition">{t.marketing.footer.pricing}</Link></li>
-              <li><Link href="#" className="hover:text-white transition">{t.marketing.footer.apiDocs}</Link></li>
-              <li><Link href="#" className="hover:text-white transition">{t.marketing.footer.roadmap}</Link></li>
-              <li><Link href="#" className="hover:text-white transition">{t.marketing.footer.status}</Link></li>
+              <li><Link href="/#features" className="hover:text-white transition">{t.marketing.footer.features}</Link></li>
+              <li><Link href="/pricing" className="hover:text-white transition">{t.marketing.footer.pricing}</Link></li>
+<li><Link href="/roadmap" className="hover:text-white transition">{t.marketing.footer.roadmap}</Link></li>
+              <li><Link href="/status" className="hover:text-white transition">{t.marketing.footer.status}</Link></li>
             </ul>
           </div>
 
@@ -26,11 +25,11 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-bold mb-4 text-lg">{t.marketing.footer.resourcesCol}</h4>
             <ul className="space-y-3">
-              <li><Link href="#" className="hover:text-white transition">{t.marketing.footer.blog}</Link></li>
-              <li><Link href="#" className="hover:text-white transition">{t.marketing.footer.helpCenter}</Link></li>
-              <li><Link href="#" className="hover:text-white transition">{t.marketing.footer.videoTutorials}</Link></li>
-              <li><Link href="#" className="hover:text-white transition">{t.marketing.footer.caseStudies}</Link></li>
-              <li><Link href="#" className="hover:text-white transition">{t.marketing.footer.community}</Link></li>
+              <li><Link href="/blog" className="hover:text-white transition">{t.marketing.footer.blog}</Link></li>
+              <li><Link href="/help" className="hover:text-white transition">{t.marketing.footer.helpCenter}</Link></li>
+              <li><Link href="/tutorials" className="hover:text-white transition">{t.marketing.footer.videoTutorials}</Link></li>
+              <li><Link href="/case-studies" className="hover:text-white transition">{t.marketing.footer.caseStudies}</Link></li>
+              <li><Link href="/community" className="hover:text-white transition">{t.marketing.footer.community}</Link></li>
             </ul>
           </div>
 
@@ -38,11 +37,10 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-bold mb-4 text-lg">{t.marketing.footer.companyCol}</h4>
             <ul className="space-y-3">
-              <li><Link href="#" className="hover:text-white transition">{t.marketing.footer.aboutUs}</Link></li>
-              <li><Link href="#" className="hover:text-white transition">{t.marketing.footer.careers}</Link></li>
-              <li><Link href="#" className="hover:text-white transition">{t.marketing.footer.contact}</Link></li>
-              <li><Link href="#" className="hover:text-white transition">{t.marketing.footer.pressKit}</Link></li>
-              <li><Link href="#" className="hover:text-white transition">{t.marketing.footer.partners}</Link></li>
+              <li><Link href="/about" className="hover:text-white transition">{t.marketing.footer.aboutUs}</Link></li>
+              <li><Link href="/contact" className="hover:text-white transition">{t.marketing.footer.contact}</Link></li>
+              <li><Link href="/press" className="hover:text-white transition">{t.marketing.footer.pressKit}</Link></li>
+              <li><Link href="/partners" className="hover:text-white transition">{t.marketing.footer.partners}</Link></li>
             </ul>
           </div>
 

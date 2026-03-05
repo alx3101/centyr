@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { Lock, Globe, Shield, Trash2, ArrowLeft } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function SecurityPage() {
@@ -26,19 +27,14 @@ export default function SecurityPage() {
 
         {/* Highlights */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
-          {(it ? [
-            { icon: '🔒', label: 'TLS 1.3 Crittografato' },
-            { icon: '🇪🇺', label: 'Infrastruttura UE' },
-            { icon: '🛡️', label: 'Cloudflare WAF' },
-            { icon: '🗑️', label: 'Eliminazione Auto 30g' },
-          ] : [
-            { icon: '🔒', label: 'TLS 1.3 Encrypted' },
-            { icon: '🇪🇺', label: 'EU Infrastructure' },
-            { icon: '🛡️', label: 'Cloudflare WAF' },
-            { icon: '🗑️', label: 'Auto-Delete 30d' },
-          ]).map(({ icon, label }) => (
+          {([
+            { Icon: Lock, label: it ? 'TLS 1.3 Crittografato' : 'TLS 1.3 Encrypted' },
+            { Icon: Globe, label: it ? 'Infrastruttura UE' : 'EU Infrastructure' },
+            { Icon: Shield, label: 'Cloudflare WAF' },
+            { Icon: Trash2, label: it ? 'Eliminazione Auto 30g' : 'Auto-Delete 30d' },
+          ] as { Icon: (p: { className?: string }) => JSX.Element; label: string }[]).map(({ Icon, label }) => (
             <div key={label} className="bg-white border-2 border-purple-100 rounded-xl p-4 text-center shadow-sm">
-              <div className="text-2xl mb-1">{icon}</div>
+              <div className="flex justify-center mb-2"><Icon className="w-6 h-6 text-purple-600" /></div>
               <div className="text-xs font-semibold text-gray-700">{label}</div>
             </div>
           ))}
@@ -276,7 +272,7 @@ export default function SecurityPage() {
           </Link>
           <span>·</span>
           <Link href="/" className="hover:text-gray-700 transition-colors">
-            {it ? '← Torna alla Home' : '← Back to Home'}
+            <ArrowLeft className="w-4 h-4 inline mr-1" />{it ? 'Torna alla Home' : 'Back to Home'}
           </Link>
         </div>
       </div>

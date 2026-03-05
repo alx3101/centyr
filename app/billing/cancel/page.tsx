@@ -1,6 +1,6 @@
 'use client'
 
-import { XCircle, ArrowLeft, HelpCircle, MessageCircle } from 'lucide-react'
+import { XCircle, ArrowLeft, ArrowRight, HelpCircle, MessageCircle } from 'lucide-react'
 import Link from 'next/link'
 
 export default function BillingCancelPage() {
@@ -95,7 +95,7 @@ export default function BillingCancelPage() {
                   href="/support"
                   className="inline-block mt-2 text-sm font-semibold text-blue-600 hover:underline"
                 >
-                  Chat with us →
+                  <span className="inline-flex items-center gap-1">Chat with us <ArrowRight className="w-3.5 h-3.5" /></span>
                 </Link>
               </div>
             </div>

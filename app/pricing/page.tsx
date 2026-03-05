@@ -1,8 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
-import { Check, Zap, Crown, Loader, Building2, Headphones, Shield, Users } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { Check, Zap, Crown, Loader, Building2, Headphones, Shield, Users, ArrowLeft } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { usePricingPlans } from '@/hooks/usePricingPlans'
 import { api } from '@/lib/api'
@@ -14,6 +14,33 @@ export default function PricingPage() {
   const router = useRouter()
   const [loadingPlanId, setLoadingPlanId] = useState<string | null>(null)
   const { plans: pricingPlans, isLoading: plansLoading } = usePricingPlans()
+
+  const startCheckout = async (stripePriceId: string, planId: string) => {
+    setLoadingPlanId(planId)
+    try {
+      const checkout = await api.createCheckoutSession({
+        price_id: stripePriceId,
+        success_url: `${window.location.origin}/billing/success`,
+        cancel_url: `${window.location.origin}/pricing`,
+      })
+      window.location.href = checkout.checkout_url
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to start checkout')
+      setLoadingPlanId(null)
+    }
+  }
+
+  // After login redirect: auto-trigger checkout if there's a pending plan
+  useEffect(() => {
+    if (!isAuthenticated) return
+    const pendingPlanId = sessionStorage.getItem('pending_plan_id')
+    const pendingPriceId = sessionStorage.getItem('pending_price_id')
+    if (pendingPlanId && pendingPriceId) {
+      sessionStorage.removeItem('pending_plan_id')
+      sessionStorage.removeItem('pending_price_id')
+      startCheckout(pendingPriceId, pendingPlanId)
+    }
+  }, [isAuthenticated])
 
   // Show loading skeleton while fetching plans
   if (plansLoading) {
@@ -41,26 +68,16 @@ export default function PricingPage() {
     }
 
     if (!isAuthenticated) {
-      toast.error('Please login first')
-      router.push('/login')
+      // Save intent and redirect to login
+      sessionStorage.setItem('pending_plan_id', planId)
+      sessionStorage.setItem('pending_price_id', stripePriceId)
+      router.push('/login?redirect=/pricing')
       return
     }
 
-    setLoadingPlanId(planId)
-    try {
-      const checkout = await api.createCheckoutSession({
-        price_id: stripePriceId,
-        success_url: `${window.location.origin}/billing/success`,
-        cancel_url: `${window.location.origin}/pricing`,
-      })
-
-      // Redirect to Stripe Checkout
-      window.location.href = checkout.checkout_url
-    } catch (error: any) {
-      toast.error(error.message || 'Failed to start checkout')
-      setLoadingPlanId(null)
-    }
+    await startCheckout(stripePriceId, planId)
   }
+
 
   // Format plans for UI
   const plans = pricingPlans.map(plan => ({
@@ -69,10 +86,11 @@ export default function PricingPage() {
     period: `/${plan.period}`,
     description: plan.description,
     features: plan.features,
-    cta: plan.price === 0 ? 'Current Plan' : `Upgrade to ${plan.name}`,
+    cta: plan.price === 0 ? 'Inizia Gratis' : 'Abbonati',
     popular: plan.popular,
     current: user?.subscription?.plan_name === plan.id,
     disabled: user?.subscription?.plan === plan.id || plan.price === 0,
+    paid: plan.price > 0,
     stripePriceId: plan.stripe_price_id,
     planId: plan.id
   }))
@@ -328,7 +346,7 @@ export default function PricingPage() {
         {/* Back to Home */}
         <div className="text-center mt-12">
           <Link href="/" className="text-purple-600 hover:text-fuchsia-600 font-semibold">
-            ← Back to Home
+            <ArrowLeft className="w-4 h-4 inline mr-1" />Back to Home
           </Link>
         </div>
       </div>

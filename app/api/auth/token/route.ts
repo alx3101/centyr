@@ -12,7 +12,9 @@ export async function POST(request: NextRequest) {
     ? domain
     : `https://${domain}.auth.${region}.amazoncognito.com`
 
-  const redirectUri = `${appUrl}/auth/callback`
+  const host = request.headers.get('x-forwarded-host') || request.headers.get('host') || 'localhost:3000'
+  const proto = request.headers.get('x-forwarded-proto') || (host.includes('localhost') ? 'http' : 'https')
+  const redirectUri = `${proto}://${host}/auth/callback`
 
   const tokenResponse = await fetch(`${cognitoDomain}/oauth2/token`, {
     method: 'POST',

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { CheckCircle2, Circle, X } from 'lucide-react'
+import { CheckCircle2, Circle, X, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { useTranslations } from '@/contexts/LanguageContext'
 
@@ -107,7 +107,7 @@ export default function OnboardingChecklist({ items, onDismiss }: OnboardingChec
                   href={item.action.href}
                   className="inline-block mt-2 text-sm font-semibold text-primary-600 hover:text-fuchsia-600 transition-colors"
                 >
-                  {item.action.label} →
+                  <span className="inline-flex items-center gap-1">{item.action.label} <ArrowRight className="w-3.5 h-3.5" /></span>
                 </Link>
               )}
             </div>
