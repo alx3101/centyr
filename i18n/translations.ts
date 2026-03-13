@@ -300,11 +300,19 @@ export interface Translations {
     billingHistory: string
     noBillingHistory: string
     billingHistoryDesc: string
+    downloadInvoice: string
+    invoiceStatusPaid: string
+    invoiceStatusOpen: string
+    invoiceStatusVoid: string
+    invoiceStatusRefund: string
+    invoiceTypeInvoice: string
+    invoiceTypeRefund: string
     cannotPurchase: string
     failedCheckout: string
     failedPortal: string
     perYear: string
     perMonth: string
+    updatePaymentMethod: string
   }
 
   // Onboarding
@@ -886,11 +894,19 @@ export const translations: Record<Language, Translations> = {
       billingHistory: 'Billing History',
       noBillingHistory: 'No billing history yet',
       billingHistoryDesc: 'Your invoices and payment history will appear here',
+      downloadInvoice: 'Download invoice',
+      invoiceStatusPaid: 'Paid',
+      invoiceStatusOpen: 'Open',
+      invoiceStatusVoid: 'Void',
+      invoiceStatusRefund: 'Refunded',
+      invoiceTypeInvoice: 'Invoice',
+      invoiceTypeRefund: 'Credit note',
       cannotPurchase: 'This plan cannot be purchased online',
       failedCheckout: 'Failed to start checkout',
       failedPortal: 'Failed to open billing portal',
       perYear: '/year',
       perMonth: '/month',
+      updatePaymentMethod: 'Update Payment Method',
     },
 
     onboarding: {
@@ -1465,11 +1481,19 @@ export const translations: Record<Language, Translations> = {
       billingHistory: 'Storico Fatturazione',
       noBillingHistory: 'Nessuno storico di fatturazione ancora',
       billingHistoryDesc: 'Le tue fatture e lo storico pagamenti appariranno qui',
+      downloadInvoice: 'Scarica fattura',
+      invoiceStatusPaid: 'Pagata',
+      invoiceStatusOpen: 'Aperta',
+      invoiceStatusVoid: 'Annullata',
+      invoiceStatusRefund: 'Rimborsata',
+      invoiceTypeInvoice: 'Fattura',
+      invoiceTypeRefund: 'Nota di credito',
       cannotPurchase: 'Questo piano non può essere acquistato online',
       failedCheckout: 'Impossibile avviare il checkout',
       failedPortal: 'Impossibile aprire il portale di fatturazione',
       perYear: '/anno',
       perMonth: '/mese',
+      updatePaymentMethod: 'Cambia Metodo di Pagamento',
     },
 
     onboarding: {
