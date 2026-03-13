@@ -1,13 +1,21 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
 import { usePricingPlans } from '@/hooks/usePricingPlans'
 import Link from 'next/link'
-import { CreditCard, Calendar, ExternalLink, AlertCircle, Loader, Sparkles, Zap, TrendingUp } from 'lucide-react'
+import { CreditCard, Calendar, ExternalLink, AlertCircle, Loader, Sparkles, Zap, TrendingUp, FileText, ArrowUp, ArrowDown, X, Wallet } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { api } from '@/lib/api'
+import { api, Invoice } from '@/lib/api'
 import { useTranslations } from '@/contexts/LanguageContext'
+
+type PendingPlan = {
+  name: string
+  price: number
+  priceId: string
+  planId: string
+  isUpgrade: boolean
+}
 
 export default function BillingPage() {
   const { user } = useAuth()
@@ -16,22 +24,38 @@ export default function BillingPage() {
   const [loadingPlanId, setLoadingPlanId] = useState<string | null>(null)
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'yearly'>('monthly')
   const { plans: pricingPlans, isLoading: plansLoading } = usePricingPlans()
+  const [invoices, setInvoices] = useState<Invoice[]>([])
+  const [invoicesLoading, setInvoicesLoading] = useState(true)
+  const [pendingPlan, setPendingPlan] = useState<PendingPlan | null>(null)
 
-  const handleUpgrade = async (stripePriceId: string | null, planId: string) => {
+  useEffect(() => {
+    api.getInvoices()
+      .then(r => setInvoices(r.invoices))
+      .catch(() => {})
+      .finally(() => setInvoicesLoading(false))
+  }, [])
+
+  const handleUpgrade = (stripePriceId: string | null, planId: string, planName: string, planPrice: number) => {
     if (!stripePriceId) {
       toast.error(t.billing.cannotPurchase)
       return
     }
+    // Determine upgrade vs downgrade by comparing prices
+    const currentPlanPrice = pricingPlans.find(p => p.id.toLowerCase() === user?.subscription?.plan?.toLowerCase())?.price ?? 0
+    const isUpgrade = planPrice > currentPlanPrice
+    setPendingPlan({ name: planName, price: planPrice, priceId: stripePriceId, planId, isUpgrade })
+  }
 
-    setLoadingPlanId(planId)
+  const confirmUpgrade = async () => {
+    if (!pendingPlan) return
+    setLoadingPlanId(pendingPlan.planId)
+    setPendingPlan(null)
     try {
       const checkout = await api.createCheckoutSession({
-        price_id: stripePriceId,
+        price_id: pendingPlan.priceId,
         success_url: `${window.location.origin}/billing/success`,
         cancel_url: `${window.location.origin}/dashboard/billing`,
       })
-
-      // Redirect to Stripe Checkout
       window.location.href = checkout.checkout_url
     } catch (error: any) {
       toast.error(error.message || t.billing.failedCheckout)
@@ -42,15 +66,26 @@ export default function BillingPage() {
   const handleManageBilling = async () => {
     setIsLoadingPortal(true)
     try {
-      const response = await api.createCustomerPortal({
-        return_url: window.location.href
-      })
-
-      // Redirect to Stripe Customer Portal
+      const response = await api.createCustomerPortal({ return_url: window.location.href })
       window.location.href = response.portal_url
     } catch (error: any) {
       toast.error(error.message || t.billing.failedPortal)
       setIsLoadingPortal(false)
+    }
+  }
+
+  const [isLoadingPayment, setIsLoadingPayment] = useState(false)
+  const handleUpdatePayment = async () => {
+    setIsLoadingPayment(true)
+    try {
+      const response = await api.createCustomerPortal({
+        return_url: window.location.href,
+        flow: 'payment_method_update',
+      })
+      window.location.href = response.portal_url
+    } catch (error: any) {
+      toast.error(error.message || t.billing.failedPortal)
+      setIsLoadingPayment(false)
     }
   }
 
@@ -158,24 +193,32 @@ export default function BillingPage() {
               </div>
             </div>
 
-            {currentPlan.plan_name !== 'free' && (
-              <button
-                onClick={handleManageBilling}
-                disabled={isLoadingPortal}
-                className="flex items-center gap-2 px-6 py-3 border-2 border-purple-300 text-purple-700 rounded-xl font-bold hover:bg-purple-50 hover:scale-105 transition-all duration-300 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isLoadingPortal ? (
-                  <>
-                    <Loader className="w-5 h-5 animate-spin" />
-                    {t.billing.opening}
-                  </>
-                ) : (
-                  <>
-                    <ExternalLink size={18} />
-                    {t.billing.manageBillingPortal}
-                  </>
-                )}
-              </button>
+            {currentPlan.plan !== 'free' && (
+              <div className="flex flex-wrap gap-3">
+                <button
+                  onClick={handleManageBilling}
+                  disabled={isLoadingPortal}
+                  className="flex items-center gap-2 px-6 py-3 border-2 border-purple-300 text-purple-700 rounded-xl font-bold hover:bg-purple-50 hover:scale-105 transition-all duration-300 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isLoadingPortal ? (
+                    <><Loader className="w-5 h-5 animate-spin" />{t.billing.opening}</>
+                  ) : (
+                    <><ExternalLink size={18} />{t.billing.manageBillingPortal}</>
+                  )}
+                </button>
+
+                <button
+                  onClick={handleUpdatePayment}
+                  disabled={isLoadingPayment}
+                  className="flex items-center gap-2 px-6 py-3 border-2 border-gray-200 text-gray-700 rounded-xl font-bold hover:bg-gray-50 hover:scale-105 transition-all duration-300 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isLoadingPayment ? (
+                    <><Loader className="w-5 h-5 animate-spin" />{t.billing.opening}</>
+                  ) : (
+                    <><Wallet size={18} />{t.billing.updatePaymentMethod}</>
+                  )}
+                </button>
+              </div>
             )}
           </div>
 
@@ -297,7 +340,7 @@ export default function BillingPage() {
                       </ul>
 
                       <button
-                        onClick={() => handleUpgrade(plan.stripePriceId, plan.id)}
+                        onClick={() => handleUpgrade(plan.stripePriceId, plan.id, plan.name, plan.price)}
                         disabled={isCurrent || loadingPlanId !== null || !plan.stripePriceId}
                         className={`w-full py-3 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-2 ${isCurrent
                           ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
@@ -324,7 +367,7 @@ export default function BillingPage() {
             )}
           </div>
 
-          {/* Billing History (Placeholder) */}
+          {/* Billing History */}
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border-2 border-purple-100 shadow-lg hover:shadow-xl transition-all">
             <div className="flex items-center space-x-3 mb-6">
               <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center shadow-md">
@@ -333,18 +376,110 @@ export default function BillingPage() {
               <h2 className="text-2xl font-bold text-gray-900">{t.billing.billingHistory}</h2>
             </div>
 
-            <div className="text-center py-12">
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-100 to-fuchsia-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Calendar className="w-10 h-10 text-purple-600" />
+            {invoicesLoading ? (
+              <div className="flex justify-center py-8">
+                <Loader className="w-6 h-6 animate-spin text-purple-600" />
               </div>
-              <p className="text-lg font-semibold text-gray-700 mb-2">{t.billing.noBillingHistory}</p>
-              <p className="text-gray-500">
-                {t.billing.billingHistoryDesc}
-              </p>
-            </div>
+            ) : invoices.length === 0 ? (
+              <div className="text-center py-12">
+                <div className="w-20 h-20 bg-gradient-to-br from-purple-100 to-fuchsia-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Calendar className="w-10 h-10 text-purple-600" />
+                </div>
+                <p className="text-lg font-semibold text-gray-700 mb-2">{t.billing.noBillingHistory}</p>
+                <p className="text-gray-500">{t.billing.billingHistoryDesc}</p>
+              </div>
+            ) : (
+              <div className="divide-y divide-gray-100">
+                {invoices.map(inv => {
+                  const statusLabel = inv.status === 'paid' ? t.billing.invoiceStatusPaid
+                    : inv.status === 'refund' ? t.billing.invoiceStatusRefund
+                    : inv.status === 'void' ? t.billing.invoiceStatusVoid
+                    : t.billing.invoiceStatusOpen
+                  const statusColor = inv.status === 'paid' ? 'bg-green-100 text-green-700'
+                    : inv.status === 'refund' ? 'bg-blue-100 text-blue-700'
+                    : inv.status === 'void' ? 'bg-gray-100 text-gray-500'
+                    : 'bg-yellow-100 text-yellow-700'
+                  const isRefund = inv.type === 'refund'
+                  return (
+                    <div key={inv.id} className="flex items-center justify-between py-4">
+                      <div className="flex items-center gap-3">
+                        <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${isRefund ? 'bg-blue-100' : 'bg-purple-100'}`}>
+                          <FileText className={`w-4 h-4 ${isRefund ? 'text-blue-600' : 'text-purple-600'}`} />
+                        </div>
+                        <div>
+                          <p className="font-semibold text-gray-800">
+                            {new Date(inv.created * 1000).toLocaleDateString()}
+                          </p>
+                          <p className="text-sm text-gray-500">
+                            {isRefund ? t.billing.invoiceTypeRefund : t.billing.invoiceTypeInvoice}
+                            {inv.number ? ` · ${inv.number}` : ''}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <span className={`font-bold ${isRefund ? 'text-blue-600' : 'text-gray-900'}`}>
+                          {isRefund ? '-' : ''}{(inv.amount / 100).toFixed(2)} {inv.currency.toUpperCase()}
+                        </span>
+                        <span className={`text-xs font-semibold px-2 py-1 rounded-full ${statusColor}`}>
+                          {statusLabel}
+                        </span>
+                        {inv.pdf_url && (
+                          <a href={inv.pdf_url} target="_blank" rel="noopener noreferrer" title={t.billing.downloadInvoice} className="text-purple-600 hover:text-fuchsia-600">
+                            <ExternalLink className="w-4 h-4" />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
           </div>
         </div>
       </div>
+
+      {/* Confirmation Modal */}
+      {pendingPlan && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setPendingPlan(null)} />
+          <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 border border-gray-100">
+            <button onClick={() => setPendingPlan(null)} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${pendingPlan.isUpgrade ? 'bg-indigo-100' : 'bg-orange-100'}`}>
+              {pendingPlan.isUpgrade
+                ? <ArrowUp className="w-6 h-6 text-indigo-600" />
+                : <ArrowDown className="w-6 h-6 text-orange-600" />}
+            </div>
+
+            <h3 className="text-lg font-bold text-gray-900 mb-1">
+              {pendingPlan.isUpgrade ? `Passa a ${pendingPlan.name}` : `Passa a ${pendingPlan.name}`}
+            </h3>
+
+            <p className="text-sm text-gray-500 mb-5">
+              {pendingPlan.isUpgrade
+                ? `La differenza proporzionale ai giorni rimanenti del periodo verrà addebitata subito. Il rinnovo mensile sarà €${pendingPlan.price.toFixed(2)}.`
+                : `Il tuo piano rimarrà attivo fino alla fine del periodo corrente, poi passerà a ${pendingPlan.name} (€${pendingPlan.price.toFixed(2)}/mese). Nessun addebito immediato.`}
+            </p>
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => setPendingPlan(null)}
+                className="flex-1 px-4 py-2.5 border border-gray-200 text-gray-700 rounded-xl font-semibold text-sm hover:bg-gray-50 transition-colors"
+              >
+                Annulla
+              </button>
+              <button
+                onClick={confirmUpgrade}
+                className={`flex-1 px-4 py-2.5 text-white rounded-xl font-semibold text-sm transition-colors ${pendingPlan.isUpgrade ? 'bg-indigo-600 hover:bg-indigo-700' : 'bg-orange-500 hover:bg-orange-600'}`}
+              >
+                Conferma
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

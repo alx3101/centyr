@@ -28,6 +28,18 @@ export interface UserInfo {
   }
 }
 
+export interface Invoice {
+  id: string
+  number: string | null
+  amount: number
+  currency: string
+  status: string
+  created: number
+  pdf_url: string | null
+  hosted_url: string | null
+  type: 'invoice' | 'refund'
+}
+
 export interface Features {
   analytics_enabled: boolean;
   max_batch_size: number;
@@ -92,6 +104,7 @@ export interface CreateCheckoutRequest {
 
 export interface CustomerPortalRequest {
   return_url: string
+  flow?: string
 }
 
 export interface CustomerPortalResponse {
@@ -462,6 +475,10 @@ class ApiClient {
       method: 'POST',
       body: JSON.stringify({ cancel_immediately: cancelImmediately }),
     })
+  }
+
+  async getInvoices(): Promise<{ invoices: Invoice[] }> {
+    return this.request('/api/v1/billing/invoices')
   }
 
   /**

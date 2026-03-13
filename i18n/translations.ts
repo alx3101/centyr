@@ -156,6 +156,39 @@ export interface Translations {
     checklistExploreAction: string
   }
 
+  settings: {
+    title: string
+    subtitle: string
+    badge: string
+    profileSection: string
+    usernameLabel: string
+    usernamePlaceholder: string
+    emailLabel: string
+    emailVerified: string
+    emailNotVerified: string
+    saveButton: string
+    savingButton: string
+    passwordSection: string
+    currentPassword: string
+    currentPasswordPlaceholder: string
+    newPassword: string
+    newPasswordPlaceholder: string
+    confirmPassword: string
+    confirmPasswordPlaceholder: string
+    changePasswordButton: string
+    changingButton: string
+    accountSection: string
+    userId: string
+    accountStatus: string
+    currentPlan: string
+    toastProfileSuccess: string
+    toastProfileError: string
+    toastPasswordSuccess: string
+    toastPasswordError: string
+    toastPasswordMismatch: string
+    toastPasswordTooShort: string
+  }
+
   // Upload
   upload: {
     title: string
@@ -267,11 +300,19 @@ export interface Translations {
     billingHistory: string
     noBillingHistory: string
     billingHistoryDesc: string
+    downloadInvoice: string
+    invoiceStatusPaid: string
+    invoiceStatusOpen: string
+    invoiceStatusVoid: string
+    invoiceStatusRefund: string
+    invoiceTypeInvoice: string
+    invoiceTypeRefund: string
     cannotPurchase: string
     failedCheckout: string
     failedPortal: string
     perYear: string
     perMonth: string
+    updatePaymentMethod: string
   }
 
   // Onboarding
@@ -711,6 +752,39 @@ export const translations: Record<Language, Translations> = {
       checklistExploreAction: 'Learn More',
     },
 
+    settings: {
+      title: 'Account Settings',
+      subtitle: 'Manage your account details and preferences',
+      badge: 'Account Management',
+      profileSection: 'Profile Information',
+      usernameLabel: 'Username',
+      usernamePlaceholder: 'Enter your username',
+      emailLabel: 'Email Address',
+      emailVerified: 'Email verified',
+      emailNotVerified: 'Email not verified',
+      saveButton: 'Save Changes',
+      savingButton: 'Saving...',
+      passwordSection: 'Change Password',
+      currentPassword: 'Current Password',
+      currentPasswordPlaceholder: 'Enter current password',
+      newPassword: 'New Password',
+      newPasswordPlaceholder: 'Enter new password (min 8 characters)',
+      confirmPassword: 'Confirm New Password',
+      confirmPasswordPlaceholder: 'Confirm new password',
+      changePasswordButton: 'Change Password',
+      changingButton: 'Changing...',
+      accountSection: 'Account Information',
+      userId: 'User ID',
+      accountStatus: 'Account Status',
+      currentPlan: 'Current Plan',
+      toastProfileSuccess: 'Profile updated successfully!',
+      toastProfileError: 'Failed to update profile',
+      toastPasswordSuccess: 'Password changed successfully!',
+      toastPasswordError: 'Failed to change password',
+      toastPasswordMismatch: 'Passwords do not match',
+      toastPasswordTooShort: 'Password must be at least 8 characters',
+    },
+
     upload: {
       title: 'Upload Images',
       subtitle: 'Drag and drop your product photos to get started',
@@ -820,11 +894,19 @@ export const translations: Record<Language, Translations> = {
       billingHistory: 'Billing History',
       noBillingHistory: 'No billing history yet',
       billingHistoryDesc: 'Your invoices and payment history will appear here',
+      downloadInvoice: 'Download invoice',
+      invoiceStatusPaid: 'Paid',
+      invoiceStatusOpen: 'Open',
+      invoiceStatusVoid: 'Void',
+      invoiceStatusRefund: 'Refunded',
+      invoiceTypeInvoice: 'Invoice',
+      invoiceTypeRefund: 'Credit note',
       cannotPurchase: 'This plan cannot be purchased online',
       failedCheckout: 'Failed to start checkout',
       failedPortal: 'Failed to open billing portal',
       perYear: '/year',
       perMonth: '/month',
+      updatePaymentMethod: 'Update Payment Method',
     },
 
     onboarding: {
@@ -1257,6 +1339,39 @@ export const translations: Record<Language, Translations> = {
       checklistExploreAction: 'Scopri di Più',
     },
 
+    settings: {
+      title: 'Impostazioni Account',
+      subtitle: 'Gestisci i dettagli e le preferenze del tuo account',
+      badge: 'Gestione Account',
+      profileSection: 'Informazioni Profilo',
+      usernameLabel: 'Username',
+      usernamePlaceholder: 'Inserisci il tuo username',
+      emailLabel: 'Indirizzo Email',
+      emailVerified: 'Email verificata',
+      emailNotVerified: 'Email non verificata',
+      saveButton: 'Salva Modifiche',
+      savingButton: 'Salvataggio...',
+      passwordSection: 'Cambia Password',
+      currentPassword: 'Password Attuale',
+      currentPasswordPlaceholder: 'Inserisci la password attuale',
+      newPassword: 'Nuova Password',
+      newPasswordPlaceholder: 'Inserisci nuova password (min 8 caratteri)',
+      confirmPassword: 'Conferma Nuova Password',
+      confirmPasswordPlaceholder: 'Conferma la nuova password',
+      changePasswordButton: 'Cambia Password',
+      changingButton: 'Cambio in corso...',
+      accountSection: 'Informazioni Account',
+      userId: 'ID Utente',
+      accountStatus: 'Stato Account',
+      currentPlan: 'Piano Attuale',
+      toastProfileSuccess: 'Profilo aggiornato!',
+      toastProfileError: 'Aggiornamento fallito',
+      toastPasswordSuccess: 'Password cambiata!',
+      toastPasswordError: 'Cambio password fallito',
+      toastPasswordMismatch: 'Le password non coincidono',
+      toastPasswordTooShort: 'La password deve avere almeno 8 caratteri',
+    },
+
     upload: {
       title: 'Carica Immagini',
       subtitle: 'Trascina e rilascia le tue foto prodotto per iniziare',
@@ -1366,11 +1481,19 @@ export const translations: Record<Language, Translations> = {
       billingHistory: 'Storico Fatturazione',
       noBillingHistory: 'Nessuno storico di fatturazione ancora',
       billingHistoryDesc: 'Le tue fatture e lo storico pagamenti appariranno qui',
+      downloadInvoice: 'Scarica fattura',
+      invoiceStatusPaid: 'Pagata',
+      invoiceStatusOpen: 'Aperta',
+      invoiceStatusVoid: 'Annullata',
+      invoiceStatusRefund: 'Rimborsata',
+      invoiceTypeInvoice: 'Fattura',
+      invoiceTypeRefund: 'Nota di credito',
       cannotPurchase: 'Questo piano non può essere acquistato online',
       failedCheckout: 'Impossibile avviare il checkout',
       failedPortal: 'Impossibile aprire il portale di fatturazione',
       perYear: '/anno',
       perMonth: '/mese',
+      updatePaymentMethod: 'Cambia Metodo di Pagamento',
     },
 
     onboarding: {

@@ -30,7 +30,7 @@ export default function ImageUploader() {
 
     try {
       // Call backend directly instead of going through Next.js middleware
-      const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://51.44.133.83'
+      const backendUrl = process.env.NEXT_PUBLIC_API_URL || ''
       const response = await fetch(`${backendUrl}/api/v1/upload`, {
         method: 'POST',
         headers,

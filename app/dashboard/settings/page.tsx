@@ -2,11 +2,14 @@
 
 import { useState } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
+import { useTranslations } from '@/contexts/LanguageContext'
 import { User, Mail, Lock, Save } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 export default function SettingsPage() {
   const { user, refreshUser } = useAuth()
+  const t = useTranslations()
+  const s = t.settings
   const [isLoading, setIsLoading] = useState(false)
 
   // Form states
@@ -25,9 +28,9 @@ export default function SettingsPage() {
       // const response = await api.updateProfile({ username, email })
 
       await refreshUser()
-      toast.success('Profile updated successfully!')
+      toast.success(s.toastProfileSuccess)
     } catch (error) {
-      toast.error('Failed to update profile')
+      toast.error(s.toastProfileError)
     } finally {
       setIsLoading(false)
     }
@@ -37,12 +40,12 @@ export default function SettingsPage() {
     e.preventDefault()
 
     if (newPassword !== confirmPassword) {
-      toast.error('Passwords do not match')
+      toast.error(s.toastPasswordMismatch)
       return
     }
 
     if (newPassword.length < 8) {
-      toast.error('Password must be at least 8 characters')
+      toast.error(s.toastPasswordTooShort)
       return
     }
 
@@ -52,12 +55,12 @@ export default function SettingsPage() {
       // TODO: Implementare API call per cambiare password Cognito
       // const response = await api.changePassword(currentPassword, newPassword)
 
-      toast.success('Password changed successfully!')
+      toast.success(s.toastPasswordSuccess)
       setCurrentPassword('')
       setNewPassword('')
       setConfirmPassword('')
     } catch (error) {
-      toast.error('Failed to change password')
+      toast.error(s.toastPasswordError)
     } finally {
       setIsLoading(false)
     }
@@ -78,14 +81,12 @@ export default function SettingsPage() {
         <div className="mb-8">
           <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm mb-4 border border-purple-100">
             <User className="w-4 h-4 text-purple-600" />
-            <span className="text-sm font-semibold text-gray-700">Account Management</span>
+            <span className="text-sm font-semibold text-gray-700">{s.badge}</span>
           </div>
           <h1 className="text-3xl md:text-5xl font-bold mb-3">
-            <span className="text-gradient">Account Settings</span>
+            <span className="text-gradient">{s.title}</span>
           </h1>
-          <p className="text-lg text-gray-600">
-            Manage your account details and preferences
-          </p>
+          <p className="text-lg text-gray-600">{s.subtitle}</p>
         </div>
 
         <div className="space-y-6">
@@ -95,26 +96,26 @@ export default function SettingsPage() {
               <div className="w-12 h-12 gradient-purple-fuchsia rounded-xl flex items-center justify-center shadow-md">
                 <User className="w-6 h-6 text-white" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900">Profile Information</h2>
+              <h2 className="text-2xl font-bold text-gray-900">{s.profileSection}</h2>
             </div>
 
             <form onSubmit={handleUpdateProfile} className="space-y-4">
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Username
+                  {s.usernameLabel}
                 </label>
                 <input
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-600 focus:ring-2 focus:ring-purple-100 outline-none transition-all"
-                  placeholder="Enter your username"
+                  placeholder={s.usernamePlaceholder}
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Email Address
+                  {s.emailLabel}
                 </label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -129,10 +130,10 @@ export default function SettingsPage() {
                 {user.email_verified ? (
                   <p className="text-sm text-green-600 mt-2 flex items-center gap-1">
                     <span className="w-2 h-2 bg-green-600 rounded-full"></span>
-                    Email verified
+                    {s.emailVerified}
                   </p>
                 ) : (
-                  <p className="text-sm text-orange-600 mt-2">Email not verified</p>
+                  <p className="text-sm text-orange-600 mt-2">{s.emailNotVerified}</p>
                 )}
               </div>
 
@@ -142,7 +143,7 @@ export default function SettingsPage() {
                 className="flex items-center gap-2 px-6 py-3 gradient-purple-fuchsia text-white rounded-xl font-bold hover:scale-105 transition-all duration-300 shadow-lg glow-purple disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Save size={18} />
-                {isLoading ? 'Saving...' : 'Save Changes'}
+                {isLoading ? s.savingButton : s.saveButton}
               </button>
             </form>
           </div>
@@ -153,34 +154,34 @@ export default function SettingsPage() {
               <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl flex items-center justify-center shadow-md">
                 <Lock className="w-6 h-6 text-white" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900">Change Password</h2>
+              <h2 className="text-2xl font-bold text-gray-900">{s.passwordSection}</h2>
             </div>
 
             <form onSubmit={handleChangePassword} className="space-y-4">
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Current Password
+                  {s.currentPassword}
                 </label>
                 <input
                   type="password"
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-600 focus:ring-2 focus:ring-purple-100 outline-none transition-all"
-                  placeholder="Enter current password"
+                  placeholder={s.currentPasswordPlaceholder}
                   required
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  New Password
+                  {s.newPassword}
                 </label>
                 <input
                   type="password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-600 focus:ring-2 focus:ring-purple-100 outline-none transition-all"
-                  placeholder="Enter new password (min 8 characters)"
+                  placeholder={s.newPasswordPlaceholder}
                   required
                   minLength={8}
                 />
@@ -188,14 +189,14 @@ export default function SettingsPage() {
 
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Confirm New Password
+                  {s.confirmPassword}
                 </label>
                 <input
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-600 focus:ring-2 focus:ring-purple-100 outline-none transition-all"
-                  placeholder="Confirm new password"
+                  placeholder={s.confirmPasswordPlaceholder}
                   required
                 />
               </div>
@@ -206,7 +207,7 @@ export default function SettingsPage() {
                 className="flex items-center gap-2 px-6 py-3 gradient-purple-fuchsia text-white rounded-xl font-bold hover:scale-105 transition-all duration-300 shadow-lg glow-purple disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Lock size={18} />
-                {isLoading ? 'Changing...' : 'Change Password'}
+                {isLoading ? s.changingButton : s.changePasswordButton}
               </button>
             </form>
           </div>
@@ -217,22 +218,22 @@ export default function SettingsPage() {
               <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-md">
                 <User className="w-6 h-6 text-white" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900">Account Information</h2>
+              <h2 className="text-2xl font-bold text-gray-900">{s.accountSection}</h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-gradient-to-br from-purple-50 to-fuchsia-50 rounded-xl p-4 border border-purple-100">
-                <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">User ID</p>
+                <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">{s.userId}</p>
                 <p className="font-mono text-sm text-gray-900 break-all">{user.user_id}</p>
               </div>
               <div className="bg-gradient-to-br from-purple-50 to-fuchsia-50 rounded-xl p-4 border border-purple-100">
-                <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">Account Status</p>
+                <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">{s.accountStatus}</p>
                 <span className="inline-flex px-3 py-1 bg-green-500 text-white text-xs font-bold rounded-full shadow-sm">
                   {user.subscription.status}
                 </span>
               </div>
               <div className="bg-gradient-to-br from-purple-50 to-fuchsia-50 rounded-xl p-4 border border-purple-100">
-                <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">Current Plan</p>
+                <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">{s.currentPlan}</p>
                 <p className="text-lg font-bold text-gradient">{user.subscription.plan_name.toUpperCase()}</p>
               </div>
             </div>
