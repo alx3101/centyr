@@ -156,6 +156,64 @@ export interface Translations {
     checklistExploreAction: string
   }
 
+  jobDetail: {
+    title: string
+    untitled: string
+    backToDashboard: string
+    jobId: string
+    created: string
+    updated: string
+    processing: string
+    totalTime: string
+    images: string
+    batchMode: string
+    single: string
+    batchJob: string
+    download: string
+    downloading: string
+    downloadImage: string
+    delete: string
+    retry: string
+    retrying: string
+    errorMessage: string
+    errorLoading: string
+    jobNotFound: string
+    backToDashboardBtn: string
+    loading: string
+    batchResults: string
+    imageComparison: string
+    original: string
+    input: string
+    processed: string
+    complete: string
+    format: string
+    size: string
+    time: string
+    status: string
+    processingYourImage: string
+    jobQueued: string
+    processingDesc: string
+    queuedDesc: string
+    autoUpdate: string
+    processingFailed: string
+    failedDesc: string
+    tryAnother: string
+    statusCompleted: string
+    statusProcessing: string
+    statusFailed: string
+    statusPending: string
+    statusUnknown: string
+    retryFailed: string
+    retryStarted: string
+    retryConfirmTitle: string
+    retryConfirmMsg: string
+    retryConfirmBtn: string
+    deleteConfirmTitle: string
+    deleteConfirmMsg: string
+    deleteConfirmBtn: string
+    downloadFailed: string
+  }
+
   settings: {
     title: string
     subtitle: string
@@ -752,6 +810,64 @@ export const translations: Record<Language, Translations> = {
       checklistExploreAction: 'Learn More',
     },
 
+    jobDetail: {
+      title: 'Job Details',
+      untitled: 'Untitled Job',
+      backToDashboard: 'Dashboard',
+      jobId: 'Job ID',
+      created: 'Created',
+      updated: 'Updated',
+      processing: 'Processing',
+      totalTime: 'Total time',
+      images: 'Images',
+      batchMode: 'Batch mode',
+      single: 'Single',
+      batchJob: 'Batch Job',
+      download: 'Download',
+      downloading: 'Downloading...',
+      downloadImage: 'Download Image',
+      delete: 'Delete',
+      retry: 'Retry',
+      retrying: 'Retrying...',
+      errorMessage: 'Error Message',
+      errorLoading: 'Error Loading Job',
+      jobNotFound: 'Job not found',
+      backToDashboardBtn: 'Back to Dashboard',
+      loading: 'Loading job details...',
+      batchResults: 'Batch Results',
+      imageComparison: 'Image Comparison',
+      original: 'Original',
+      input: 'Input',
+      processed: 'Processed',
+      complete: 'Complete',
+      format: 'Format',
+      size: 'Size',
+      time: 'Time',
+      status: 'Status',
+      processingYourImage: 'Processing Your Image',
+      jobQueued: 'Job Queued',
+      processingDesc: 'Your image is being processed by our AI. This usually takes a few seconds.',
+      queuedDesc: 'Your job is queued and will start processing shortly.',
+      autoUpdate: 'This page will update automatically',
+      processingFailed: 'Processing Failed',
+      failedDesc: 'An error occurred while processing your image.',
+      tryAnother: 'Try Another Image',
+      statusCompleted: 'Completed',
+      statusProcessing: 'Processing',
+      statusFailed: 'Failed',
+      statusPending: 'Pending',
+      statusUnknown: 'Unknown',
+      retryFailed: 'Retry failed',
+      retryStarted: 'Retry started for {count} images',
+      retryConfirmTitle: 'Retry failed images',
+      retryConfirmMsg: 'Do you want to retry processing the incomplete images?',
+      retryConfirmBtn: 'Retry',
+      deleteConfirmTitle: 'Delete job',
+      deleteConfirmMsg: 'Are you sure you want to delete this job? This action cannot be undone.',
+      deleteConfirmBtn: 'Yes, delete',
+      downloadFailed: 'Download failed',
+    },
+
     settings: {
       title: 'Account Settings',
       subtitle: 'Manage your account details and preferences',
@@ -1337,6 +1453,64 @@ export const translations: Record<Language, Translations> = {
       checklistExploreTitle: 'Esplora le funzionalità',
       checklistExploreDesc: 'Scopri il caricamento in blocco e altre funzioni pro',
       checklistExploreAction: 'Scopri di Più',
+    },
+
+    jobDetail: {
+      title: 'Dettagli Job',
+      untitled: 'Job senza nome',
+      backToDashboard: 'Dashboard',
+      jobId: 'ID Job',
+      created: 'Creato',
+      updated: 'Aggiornato',
+      processing: 'Elaborazione',
+      totalTime: 'Tempo totale',
+      images: 'Immagini',
+      batchMode: 'Modalità batch',
+      single: 'Singola',
+      batchJob: 'Job Batch',
+      download: 'Scarica',
+      downloading: 'Download...',
+      downloadImage: 'Scarica Immagine',
+      delete: 'Elimina',
+      retry: 'Riprova',
+      retrying: 'Riprovo...',
+      errorMessage: 'Messaggio di errore',
+      errorLoading: 'Errore caricamento job',
+      jobNotFound: 'Job non trovato',
+      backToDashboardBtn: 'Torna alla Dashboard',
+      loading: 'Caricamento dettagli job...',
+      batchResults: 'Risultati batch',
+      imageComparison: 'Confronto immagini',
+      original: 'Originale',
+      input: 'Input',
+      processed: 'Elaborata',
+      complete: 'Completata',
+      format: 'Formato',
+      size: 'Dimensione',
+      time: 'Tempo',
+      status: 'Stato',
+      processingYourImage: 'Elaborazione in corso',
+      jobQueued: 'Job in coda',
+      processingDesc: "L'immagine è in elaborazione dall'AI. Di solito richiede pochi secondi.",
+      queuedDesc: "Il job è in coda e inizierà l'elaborazione a breve.",
+      autoUpdate: 'Questa pagina si aggiornerà automaticamente',
+      processingFailed: 'Elaborazione fallita',
+      failedDesc: "Si è verificato un errore durante l'elaborazione dell'immagine.",
+      tryAnother: 'Prova con un'altra immagine',
+      statusCompleted: 'Completato',
+      statusProcessing: 'In elaborazione',
+      statusFailed: 'Fallito',
+      statusPending: 'In attesa',
+      statusUnknown: 'Sconosciuto',
+      retryFailed: 'Riprova fallito',
+      retryStarted: 'Riprova avviata per {count} immagini',
+      retryConfirmTitle: 'Riprova immagini fallite',
+      retryConfirmMsg: 'Vuoi riprovare a elaborare le immagini incomplete?',
+      retryConfirmBtn: 'Riprova',
+      deleteConfirmTitle: 'Elimina job',
+      deleteConfirmMsg: 'Sei sicuro di voler eliminare questo job? Azione irreversibile.',
+      deleteConfirmBtn: 'Sì, elimina',
+      downloadFailed: 'Download fallito',
     },
 
     settings: {

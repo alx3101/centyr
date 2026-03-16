@@ -491,8 +491,8 @@ export default function UploadPage() {
                         <input
                           type="range"
                           min="0"
-                          max="100"
-                          step="0.5"
+                          max="35"
+                          step="1"
                           value={marginPercent}
                           onChange={(e) => setMarginPercent(Number(e.target.value))}
                           className="flex-1 h-2 bg-purple-200 rounded-lg appearance-none cursor-pointer accent-fuchsia-500"

@@ -8,6 +8,7 @@ import { api, JobResponse, JobStatus } from '@/lib/api'
 import { AuthGuard } from '@/components/guards/AuthGuard'
 import { useConfirm } from '@/components/ui/ConfirmModal'
 import { ArrowLeft, Download, Trash2, Clock, CheckCircle, XCircle, Loader, Image as ImageIcon, Zap, Info, Upload, RotateCw } from 'lucide-react'
+import { useTranslations } from '@/contexts/LanguageContext'
 
 export default function JobDetailPage() {
   return (
@@ -48,6 +49,8 @@ function JobDetailContent() {
   const params = useParams()
   const router = useRouter()
   const confirm = useConfirm()
+  const t = useTranslations()
+  const jd = t.jobDetail
   const jobId = params.jobId as string
 
   const [job, setJob] = useState<JobResponse | null>(null)
@@ -91,29 +94,20 @@ function JobDetailContent() {
       setIsDownloading(true)
 
       const token = localStorage.getItem('auth_token')
-      if (!token) {
-        alert('Please log in to download')
-        return
-      }
+      if (!token) return
 
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/jobs/${job.job_id}/download`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+        headers: { 'Authorization': `Bearer ${token}` }
       })
 
-      if (!response.ok) {
-        throw new Error('Download failed')
-      }
+      if (!response.ok) throw new Error(jd.downloadFailed)
 
       const contentDisposition = response.headers.get('Content-Disposition')
       let filename = job.batch_mode ? `${job.job_name || 'batch'}.zip` : `processed-${job.job_id}.jpg`
 
       if (contentDisposition) {
         const matches = /filename="?([^"]+)"?/.exec(contentDisposition)
-        if (matches && matches[1]) {
-          filename = matches[1]
-        }
+        if (matches && matches[1]) filename = matches[1]
       }
 
       const blob = await response.blob()
@@ -127,7 +121,7 @@ function JobDetailContent() {
       window.URL.revokeObjectURL(url)
     } catch (err) {
       console.error('Download failed:', err)
-      alert('Failed to download')
+      alert(jd.downloadFailed)
     } finally {
       setIsDownloading(false)
     }
@@ -138,19 +132,14 @@ function JobDetailContent() {
       setDownloadingIndex(index)
 
       const token = localStorage.getItem('auth_token')
-      if (!token) {
-        alert('Please log in to download')
-        return
-      }
+      if (!token) return
 
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/v1/jobs/${job!.job_id}/download?index=${index}`,
         { headers: { 'Authorization': `Bearer ${token}` } }
       )
 
-      if (!response.ok) {
-        throw new Error('Download failed')
-      }
+      if (!response.ok) throw new Error(jd.downloadFailed)
 
       const blob = await response.blob()
       const url = window.URL.createObjectURL(blob)
@@ -163,7 +152,7 @@ function JobDetailContent() {
       window.URL.revokeObjectURL(url)
     } catch (err) {
       console.error('Download failed:', err)
-      alert('Failed to download image')
+      alert(jd.downloadFailed)
     } finally {
       setDownloadingIndex(null)
     }
@@ -171,10 +160,10 @@ function JobDetailContent() {
 
   const handleDelete = async () => {
     const confirmed = await confirm({
-      title: 'Delete job',
-      message: 'Are you sure you want to delete this job? This action cannot be undone.',
-      confirmText: 'Yes, delete',
-      cancelText: 'Cancel',
+      title: jd.deleteConfirmTitle,
+      message: jd.deleteConfirmMsg,
+      confirmText: jd.deleteConfirmBtn,
+      cancelText: t.common.cancel,
       variant: 'destructive'
     })
 
@@ -185,16 +174,15 @@ function JobDetailContent() {
       router.push('/dashboard')
     } catch (err) {
       console.error('Delete failed:', err)
-      alert('Failed to delete job')
     }
   }
 
   const handleRetry = async () => {
     const confirmed = await confirm({
-      title: 'Retry failed images',
-      message: 'Do you want to retry processing the incomplete images?',
-      confirmText: 'Retry',
-      cancelText: 'Cancel',
+      title: jd.retryConfirmTitle,
+      message: jd.retryConfirmMsg,
+      confirmText: jd.retryConfirmBtn,
+      cancelText: t.common.cancel,
       variant: 'default'
     })
 
@@ -203,13 +191,12 @@ function JobDetailContent() {
     try {
       setIsRetrying(true)
       const result = await api.retryJob(jobId)
-      alert(`Retry started for ${result.retry_count} images`)
-      // Refresh job data
+      alert(jd.retryStarted.replace('{count}', String(result.retry_count)))
       const jobData = await api.getJobDetails(jobId)
       setJob(jobData)
     } catch (err: any) {
       console.error('Retry failed:', err)
-      alert(err.message || 'Retry fallito')
+      alert(err.message || jd.retryFailed)
     } finally {
       setIsRetrying(false)
     }
@@ -229,35 +216,15 @@ function JobDetailContent() {
   const getStatusConfig = (status: JobStatus) => {
     switch (status) {
       case JobStatus.COMPLETED:
-        return {
-          color: 'bg-green-100 text-green-700 border-green-300',
-          icon: <CheckCircle className="w-5 h-5" />,
-          label: 'Completed'
-        }
+        return { color: 'bg-green-100 text-green-700 border-green-300', icon: <CheckCircle className="w-5 h-5" />, label: jd.statusCompleted }
       case JobStatus.PROCESSING:
-        return {
-          color: 'bg-blue-100 text-blue-700 border-blue-300',
-          icon: <Loader className="w-5 h-5 animate-spin" />,
-          label: 'Processing'
-        }
+        return { color: 'bg-blue-100 text-blue-700 border-blue-300', icon: <Loader className="w-5 h-5 animate-spin" />, label: jd.statusProcessing }
       case JobStatus.FAILED:
-        return {
-          color: 'bg-red-100 text-red-700 border-red-300',
-          icon: <XCircle className="w-5 h-5" />,
-          label: 'Failed'
-        }
+        return { color: 'bg-red-100 text-red-700 border-red-300', icon: <XCircle className="w-5 h-5" />, label: jd.statusFailed }
       case JobStatus.PENDING:
-        return {
-          color: 'bg-gray-100 text-gray-700 border-gray-300',
-          icon: <Clock className="w-5 h-5" />,
-          label: 'Pending'
-        }
+        return { color: 'bg-gray-100 text-gray-700 border-gray-300', icon: <Clock className="w-5 h-5" />, label: jd.statusPending }
       default:
-        return {
-          color: 'bg-gray-100 text-gray-700 border-gray-300',
-          icon: <Info className="w-5 h-5" />,
-          label: 'Unknown'
-        }
+        return { color: 'bg-gray-100 text-gray-700 border-gray-300', icon: <Info className="w-5 h-5" />, label: jd.statusUnknown }
     }
   }
 
@@ -272,7 +239,7 @@ function JobDetailContent() {
           <div className="flex items-center justify-center py-20">
             <div className="text-center">
               <Loader className="w-16 h-16 text-purple-600 animate-spin mx-auto mb-4" />
-              <p className="text-gray-600 font-medium">Loading job details...</p>
+              <p className="text-gray-600 font-medium">{jd.loading}</p>
             </div>
           </div>
         </div>
@@ -288,14 +255,14 @@ function JobDetailContent() {
             <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <XCircle className="w-8 h-8 text-red-600" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Error Loading Job</h2>
-            <p className="text-red-600 mb-6 font-medium">{error || 'Job not found'}</p>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">{jd.errorLoading}</h2>
+            <p className="text-red-600 mb-6 font-medium">{error || jd.jobNotFound}</p>
             <Link
               href="/dashboard"
               className="inline-flex items-center gap-2 px-6 py-3 gradient-purple-fuchsia text-white font-bold rounded-xl hover:scale-105 transition-all shadow-lg"
             >
               <ArrowLeft className="w-5 h-5" />
-              Back to Dashboard
+              {jd.backToDashboardBtn}
             </Link>
           </div>
         </div>
@@ -320,10 +287,10 @@ function JobDetailContent() {
         <nav className="mb-6 flex items-center gap-2 text-sm">
           <Link href="/dashboard" className="flex items-center gap-1 text-gray-600 hover:text-purple-600 transition-colors font-medium">
             <ArrowLeft className="w-4 h-4" />
-            Dashboard
+            {jd.backToDashboard}
           </Link>
           <span className="text-gray-400">/</span>
-          <span className="text-gray-900 font-semibold">Job Details</span>
+          <span className="text-gray-900 font-semibold">{jd.title}</span>
         </nav>
 
         {/* Header Card */}
@@ -332,18 +299,18 @@ function JobDetailContent() {
             <div className="flex-grow">
               <div className="flex flex-wrap items-center gap-3 mb-3">
                 <h1 className="text-xl md:text-3xl lg:text-4xl font-bold text-gradient">
-                  {job.job_name || 'Untitled Job'}
+                  {job.job_name || jd.untitled}
                 </h1>
                 <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full border-2 ${statusConfig.color} font-bold`}>
                   {statusConfig.icon}
                   <span className="text-sm">{statusConfig.label}</span>
                 </div>
               </div>
-              <p className="text-gray-600 font-mono text-sm mb-2">Job ID: {job.job_id}</p>
+              <p className="text-gray-600 font-mono text-sm mb-2">{jd.jobId}: {job.job_id}</p>
               {job.batch_mode && job.image_count && (
                 <div className="inline-flex items-center gap-2 bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-semibold">
                   <ImageIcon className="w-4 h-4" />
-                  Batch Job · {job.image_count} images
+                  {jd.batchJob} · {job.image_count} {jd.images}
                 </div>
               )}
             </div>
@@ -357,15 +324,9 @@ function JobDetailContent() {
                   className="flex items-center gap-2 px-6 py-3 gradient-purple-fuchsia text-white font-bold rounded-xl hover:scale-105 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isDownloading ? (
-                    <>
-                      <Loader className="w-5 h-5 animate-spin" />
-                      Downloading...
-                    </>
+                    <><Loader className="w-5 h-5 animate-spin" />{jd.downloading}</>
                   ) : (
-                    <>
-                      <Download className="w-5 h-5" />
-                      Download
-                    </>
+                    <><Download className="w-5 h-5" />{jd.download}</>
                   )}
                 </button>
               )}
@@ -376,15 +337,9 @@ function JobDetailContent() {
                   className="flex items-center gap-2 px-6 py-3 bg-amber-500 text-white font-bold rounded-xl hover:bg-amber-600 hover:scale-105 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isRetrying ? (
-                    <>
-                      <Loader className="w-5 h-5 animate-spin" />
-                      Retrying...
-                    </>
+                    <><Loader className="w-5 h-5 animate-spin" />{jd.retrying}</>
                   ) : (
-                    <>
-                      <RotateCw className="w-5 h-5" />
-                      Retry
-                    </>
+                    <><RotateCw className="w-5 h-5" />{jd.retry}</>
                   )}
                 </button>
               )}
@@ -406,7 +361,7 @@ function JobDetailContent() {
               <div className="h-10 w-10 rounded-lg gradient-purple-fuchsia flex items-center justify-center shadow-md">
                 <Clock className="w-5 h-5 text-white" />
               </div>
-              <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">Created</p>
+              <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">{jd.created}</p>
             </div>
             <p className="text-xl font-bold text-gray-900">{new Date(job.created_at).toLocaleDateString()}</p>
             <p className="text-xs text-gray-500 mt-1">{new Date(job.created_at).toLocaleTimeString()}</p>
@@ -417,7 +372,7 @@ function JobDetailContent() {
               <div className="h-10 w-10 rounded-lg gradient-purple-fuchsia flex items-center justify-center shadow-md">
                 <Clock className="w-5 h-5 text-white" />
               </div>
-              <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">Updated</p>
+              <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">{jd.updated}</p>
             </div>
             <p className="text-xl font-bold text-gray-900">{new Date(job.updated_at).toLocaleDateString()}</p>
             <p className="text-xs text-gray-500 mt-1">{new Date(job.updated_at).toLocaleTimeString()}</p>
@@ -429,12 +384,12 @@ function JobDetailContent() {
                 <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center shadow-md">
                   <Zap className="w-5 h-5 text-white" />
                 </div>
-                <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">Processing</p>
+                <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">{jd.processing}</p>
               </div>
               <p className="text-xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                 {job.processing_time.toFixed(2)}s
               </p>
-              <p className="text-xs text-gray-500 mt-1">Total time</p>
+              <p className="text-xs text-gray-500 mt-1">{jd.totalTime}</p>
             </div>
           )}
 
@@ -444,12 +399,12 @@ function JobDetailContent() {
                 <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center shadow-md">
                   <ImageIcon className="w-5 h-5 text-white" />
                 </div>
-                <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">Images</p>
+                <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">{jd.images}</p>
               </div>
               <p className="text-xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
                 {job.image_count}
               </p>
-              <p className="text-xs text-gray-500 mt-1">{job.batch_mode ? 'Batch mode' : 'Single'}</p>
+              <p className="text-xs text-gray-500 mt-1">{job.batch_mode ? jd.batchMode : jd.single}</p>
             </div>
           )}
         </div>
@@ -462,7 +417,7 @@ function JobDetailContent() {
                 <XCircle className="w-6 h-6 text-red-600" />
               </div>
               <div>
-                <p className="font-bold text-red-700 mb-1">Error Message</p>
+                <p className="font-bold text-red-700 mb-1">{jd.errorMessage}</p>
                 <p className="text-red-600">{job.error_message}</p>
               </div>
             </div>
@@ -474,8 +429,8 @@ function JobDetailContent() {
           <div className={`bg-white/80 backdrop-blur-sm border-2 border-purple-100 rounded-2xl p-6 shadow-lg ${animateClass}`}>
             <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
               <ImageIcon className="w-6 h-6 text-purple-600" />
-              Batch Results
-              <span className="text-sm font-normal text-gray-500">({job.outputs.length} images)</span>
+              {jd.batchResults}
+              <span className="text-sm font-normal text-gray-500">({job.outputs.length} {jd.images})</span>
             </h2>
             <div className="space-y-6">
               {job.outputs.filter(Boolean).map((output, index) => (
@@ -484,26 +439,26 @@ function JobDetailContent() {
                     <span className="bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white px-3 py-1 rounded-full text-sm">
                       #{index + 1}
                     </span>
-                    Image {index + 1}
+                  {jd.images} {index + 1}
                   </h3>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     {/* Original */}
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
-                        <h4 className="font-bold text-gray-700">Original</h4>
-                        <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">Input</span>
+                        <h4 className="font-bold text-gray-700">{jd.original}</h4>
+                        <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">{jd.input}</span>
                       </div>
                       <div className="relative aspect-square bg-gray-100 rounded-xl overflow-hidden border-2 border-gray-300 shadow-md">
                         {output.input_url && (
-                          <ImageWithLoader src={output.input_url} alt={`Original image ${index + 1}`} />
+                          <ImageWithLoader src={output.input_url} alt={`${jd.original} ${index + 1}`} />
                         )}
                       </div>
                       <div className="grid grid-cols-2 gap-2 text-xs">
                         <div className="bg-white rounded-lg px-3 py-2 border border-gray-200">
-                          <span className="font-semibold text-gray-600">Format:</span> <span className="text-gray-900">{output.input_format}</span>
+                          <span className="font-semibold text-gray-600">{jd.format}:</span> <span className="text-gray-900">{output.input_format}</span>
                         </div>
                         <div className="bg-white rounded-lg px-3 py-2 border border-gray-200">
-                          <span className="font-semibold text-gray-600">Size:</span> <span className="text-gray-900">{output.input_width}×{output.input_height}px</span>
+                          <span className="font-semibold text-gray-600">{jd.size}:</span> <span className="text-gray-900">{output.input_width}×{output.input_height}px</span>
                         </div>
                       </div>
                     </div>
@@ -511,27 +466,27 @@ function JobDetailContent() {
                     {/* Processed */}
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
-                        <h4 className="font-bold text-gradient">Processed</h4>
+                        <h4 className="font-bold text-gradient">{jd.processed}</h4>
                         <span className="text-xs text-green-600 bg-green-100 px-2 py-1 rounded-full font-semibold flex items-center gap-1">
                           <CheckCircle className="w-3 h-3" />
-                          Complete
+                          {jd.complete}
                         </span>
                       </div>
                       <div className="relative aspect-square bg-gradient-to-br from-purple-50 to-fuchsia-50 rounded-xl overflow-hidden border-2 border-purple-300 glow-purple shadow-md">
-                        <ImageWithLoader src={output.output_url} alt={`Processed image ${index + 1}`} />
+                        <ImageWithLoader src={output.output_url} alt={`${jd.processed} ${index + 1}`} />
                       </div>
                       <div className="grid grid-cols-2 gap-2 text-xs mb-3">
                         <div className="bg-white rounded-lg px-3 py-2 border border-purple-200">
-                          <span className="font-semibold text-gray-600">Format:</span> <span className="text-gray-900">{output.output_format}</span>
+                          <span className="font-semibold text-gray-600">{jd.format}:</span> <span className="text-gray-900">{output.output_format}</span>
                         </div>
                         <div className="bg-white rounded-lg px-3 py-2 border border-purple-200">
-                          <span className="font-semibold text-gray-600">Size:</span> <span className="text-gray-900">{output.output_width}×{output.output_height}px</span>
+                          <span className="font-semibold text-gray-600">{jd.size}:</span> <span className="text-gray-900">{output.output_width}×{output.output_height}px</span>
                         </div>
                         <div className="bg-white rounded-lg px-3 py-2 border border-purple-200">
-                          <span className="font-semibold text-gray-600">Time:</span> <span className="text-gray-900">{output.processing_time ? Number(output.processing_time).toFixed(2) : 'N/A'}s</span>
+                          <span className="font-semibold text-gray-600">{jd.time}:</span> <span className="text-gray-900">{output.processing_time ? Number(output.processing_time).toFixed(2) : 'N/A'}s</span>
                         </div>
                         <div className="bg-white rounded-lg px-3 py-2 border border-purple-200">
-                          <span className="font-semibold text-gray-600">Status:</span> <span className="text-green-600 capitalize">{output.status}</span>
+                          <span className="font-semibold text-gray-600">{jd.status}:</span> <span className="text-green-600 capitalize">{output.status}</span>
                         </div>
                       </div>
                       <button
@@ -540,15 +495,9 @@ function JobDetailContent() {
                         className="flex items-center justify-center gap-2 w-full px-4 py-3 gradient-purple-fuchsia text-white rounded-lg hover:scale-105 transition-all font-bold shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {downloadingIndex === index ? (
-                          <>
-                            <Loader className="w-4 h-4 animate-spin" />
-                            Downloading...
-                          </>
+                          <><Loader className="w-4 h-4 animate-spin" />{jd.downloading}</>
                         ) : (
-                          <>
-                            <Download className="w-4 h-4" />
-                            Download Image {index + 1}
-                          </>
+                          <><Download className="w-4 h-4" />{jd.downloadImage} {index + 1}</>
                         )}
                       </button>
                     </div>
@@ -564,31 +513,31 @@ function JobDetailContent() {
           <div className={`bg-white/80 backdrop-blur-sm border-2 border-purple-100 rounded-2xl p-6 shadow-lg ${animateClass}`}>
             <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
               <ImageIcon className="w-6 h-6 text-purple-600" />
-              Image Comparison
+              {jd.imageComparison}
             </h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Original */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-bold text-gray-700">Original</h3>
-                  <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">Input</span>
+                  <h3 className="text-lg font-bold text-gray-700">{jd.original}</h3>
+                  <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">{jd.input}</span>
                 </div>
                 <div className="relative aspect-square bg-gray-100 rounded-xl overflow-hidden border-2 border-gray-300 shadow-md">
-                  <ImageWithLoader src={job.input_image_url} alt="Original image" />
+                  <ImageWithLoader src={job.input_image_url} alt={jd.original} />
                 </div>
               </div>
 
               {/* Processed */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-bold text-gradient">Processed</h3>
+                  <h3 className="text-lg font-bold text-gradient">{jd.processed}</h3>
                   <span className="text-sm text-purple-600 bg-purple-100 px-3 py-1 rounded-full font-bold flex items-center gap-1">
                     <CheckCircle className="w-4 h-4" />
-                    Complete
+                    {jd.complete}
                   </span>
                 </div>
                 <div className="relative aspect-square bg-gradient-to-br from-purple-50 to-fuchsia-50 rounded-xl overflow-hidden border-2 border-purple-300 glow-purple shadow-md">
-                  <ImageWithLoader src={job.output_image_url} alt="Processed image" />
+                  <ImageWithLoader src={job.output_image_url} alt={jd.processed} />
                 </div>
               </div>
             </div>
@@ -600,16 +549,14 @@ function JobDetailContent() {
           <div className={`bg-white/80 backdrop-blur-sm border-2 border-blue-200 rounded-2xl p-6 md:p-12 text-center shadow-xl ${animateScaleClass}`}>
             <Loader className="w-16 h-16 text-blue-600 animate-spin mx-auto mb-6" />
             <h3 className="text-2xl font-bold text-gray-900 mb-3">
-              {job.status === JobStatus.PROCESSING ? 'Processing Your Image' : 'Job Queued'}
+              {job.status === JobStatus.PROCESSING ? jd.processingYourImage : jd.jobQueued}
             </h3>
             <p className="text-gray-600 text-lg">
-              {job.status === JobStatus.PROCESSING
-                ? 'Your image is being processed by our AI. This usually takes a few seconds.'
-                : 'Your job is queued and will start processing shortly.'}
+              {job.status === JobStatus.PROCESSING ? jd.processingDesc : jd.queuedDesc}
             </p>
             <div className="mt-6 inline-flex items-center gap-2 bg-blue-50 px-4 py-2 rounded-full border border-blue-200">
               <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
-              <span className="text-sm font-semibold text-blue-700">This page will update automatically</span>
+              <span className="text-sm font-semibold text-blue-700">{jd.autoUpdate}</span>
             </div>
           </div>
         )}
@@ -620,9 +567,9 @@ function JobDetailContent() {
             <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <XCircle className="w-10 h-10 text-red-600" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-3">Processing Failed</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-3">{jd.processingFailed}</h3>
             <p className="text-gray-600 text-lg mb-8 max-w-md mx-auto">
-              {job.error_message || 'An error occurred while processing your image.'}
+              {job.error_message || jd.failedDesc}
             </p>
             <div className="flex gap-4 justify-center">
               <Link
@@ -630,14 +577,14 @@ function JobDetailContent() {
                 className="inline-flex items-center gap-2 px-6 py-3 gradient-purple-fuchsia text-white font-bold rounded-xl hover:scale-105 transition-all shadow-lg"
               >
                 <Upload className="w-5 h-5" />
-                Try Another Image
+                {jd.tryAnother}
               </Link>
               <Link
                 href="/dashboard"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-gray-200 text-gray-700 font-bold rounded-xl hover:bg-gray-300 transition-all"
               >
                 <ArrowLeft className="w-5 h-5" />
-                Back to Dashboard
+                {jd.backToDashboardBtn}
               </Link>
             </div>
           </div>
