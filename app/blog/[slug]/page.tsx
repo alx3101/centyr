@@ -1,84 +1,70 @@
-'use client'
-
-import Link from 'next/link'
-import { notFound, useParams } from 'next/navigation'
-import { ArrowLeft, ArrowRight } from 'lucide-react'
-import { useLanguage } from '@/contexts/LanguageContext'
+import { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import { posts } from '../_data'
+import BlogPostClient from './BlogPostClient'
 
-export default function BlogPostPage() {
-  const params = useParams()
-  const slug = params?.slug as string
-  const { language } = useLanguage()
-  const it = language === 'it'
+interface Props {
+  params: { slug: string }
+}
 
-  const post = posts.find(p => p.slug === slug)
+export async function generateStaticParams() {
+  return posts.map((post) => ({ slug: post.slug }))
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const post = posts.find(p => p.slug === params.slug)
+  if (!post) return {}
+
+  const title = `${post.title.en} | Centyr Blog`
+  const description = post.excerpt.en
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title: post.title.en,
+      description,
+      type: 'article',
+      url: `https://centyr.tech/blog/${post.slug}`,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title.en,
+      description,
+    },
+    alternates: {
+      canonical: `https://centyr.tech/blog/${post.slug}`,
+    },
+  }
+}
+
+export default function BlogPostPage({ params }: Props) {
+  const post = posts.find(p => p.slug === params.slug)
   if (!post) notFound()
 
-  const title = it ? post.title.it : post.title.en
-  const body = it ? post.body.it : post.body.en
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title.en,
+    description: post.excerpt.en,
+    datePublished: post.isoDate ?? new Date().toISOString(),
+    author: { '@type': 'Organization', name: 'Centyr' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Centyr',
+      url: 'https://centyr.tech',
+    },
+    url: `https://centyr.tech/blog/${post.slug}`,
+    mainEntityOfPage: `https://centyr.tech/blog/${post.slug}`,
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-fuchsia-50 py-16 px-4">
-      <div className="max-w-2xl mx-auto">
-        <div className="mb-10">
-          <Link href="/blog" className="text-sm text-purple-600 hover:text-fuchsia-600 font-medium transition-colors">
-            <ArrowLeft className="w-4 h-4 inline mr-1" />{it ? 'Torna al Blog' : 'Back to Blog'}
-          </Link>
-        </div>
-
-        <div className="flex items-center gap-3 mb-4">
-          <span className="text-xs font-semibold bg-purple-100 text-purple-700 px-2.5 py-1 rounded-full">
-            {it ? post.tag.it : post.tag.en}
-          </span>
-          <span className="text-xs text-gray-400">{it ? post.date.it : post.date.en}</span>
-          <span className="text-xs text-gray-400">· {post.readTime}</span>
-        </div>
-
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 leading-tight">{title}</h1>
-
-        <div className="bg-white/80 backdrop-blur-sm border-2 border-purple-100 rounded-2xl shadow-xl p-6 md:p-10 space-y-6">
-          {body.map((paragraph, i) => (
-            <div key={i} className="text-gray-700 leading-relaxed text-[15px] whitespace-pre-line">
-              {paragraph.split('\n').map((line, j) => {
-                if (line.startsWith('**') && line.endsWith('**')) {
-                  return <p key={j} className="font-bold text-gray-900 mt-4 first:mt-0">{line.slice(2, -2)}</p>
-                }
-                if (line.startsWith('**')) {
-                  const match = line.match(/^\*\*(.+?)\*\*(.*)/)
-                  if (match) {
-                    return <p key={j}><strong>{match[1]}</strong>{match[2]}</p>
-                  }
-                }
-                if (line.startsWith('- ')) {
-                  return <p key={j} className="ml-4">• {line.slice(2)}</p>
-                }
-                return line ? <p key={j}>{line}</p> : null
-              })}
-            </div>
-          ))}
-        </div>
-
-        {/* CTA */}
-        <div className="mt-8 bg-white/80 backdrop-blur-sm border-2 border-purple-100 rounded-2xl shadow-xl p-6 text-center">
-          <p className="font-bold text-gray-900 mb-2">{it ? 'Prova Centyr gratuitamente' : 'Try Centyr for free'}</p>
-          <p className="text-sm text-gray-500 mb-4">
-            {it ? '3 jobs gratuiti al mese. Nessuna carta di credito.' : '3 free jobs per month. No credit card required.'}
-          </p>
-          <Link
-            href="/signup"
-            className="inline-block bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-semibold px-6 py-2.5 rounded-xl hover:opacity-90 transition text-sm"
-          >
-            <span className="inline-flex items-center gap-1">{it ? 'Inizia gratuitamente' : 'Start for free'} <ArrowRight className="w-4 h-4" /></span>
-          </Link>
-        </div>
-
-        <div className="mt-8 text-center">
-          <Link href="/blog" className="text-purple-600 hover:text-fuchsia-600 font-semibold text-sm transition-colors">
-            <ArrowLeft className="w-4 h-4 inline mr-1" />{it ? 'Tutti gli articoli' : 'All articles'}
-          </Link>
-        </div>
-      </div>
-    </div>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <BlogPostClient slug={params.slug} />
+    </>
   )
 }

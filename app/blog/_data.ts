@@ -1,6 +1,7 @@
 export const posts = [
   {
     slug: 'amazon-product-photos-2026',
+    isoDate: '2026-02-28T00:00:00Z',
     date: { en: 'February 28, 2026', it: '28 febbraio 2026' },
     tag: { en: 'Guide', it: 'Guida' },
     readTime: '5 min',
@@ -31,6 +32,7 @@ export const posts = [
   },
   {
     slug: 'fashion-brand-automation',
+    isoDate: '2026-02-15T00:00:00Z',
     date: { en: 'February 15, 2026', it: '15 febbraio 2026' },
     tag: { en: 'Case Study', it: 'Caso Studio' },
     readTime: '7 min',
@@ -61,6 +63,7 @@ export const posts = [
   },
   {
     slug: 'ecommerce-photography-mistakes',
+    isoDate: '2026-01-30T00:00:00Z',
     date: { en: 'January 30, 2026', it: '30 gennaio 2026' },
     tag: { en: 'Tips', it: 'Consigli' },
     readTime: '4 min',
