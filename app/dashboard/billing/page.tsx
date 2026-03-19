@@ -8,6 +8,7 @@ import { CreditCard, Calendar, ExternalLink, AlertCircle, Loader, Sparkles, Zap,
 import toast from 'react-hot-toast'
 import { api, Invoice } from '@/lib/api'
 import { useTranslations } from '@/contexts/LanguageContext'
+import PricingCard from '@/components/ui/PricingCard'
 
 type PendingPlan = {
   name: string
@@ -101,17 +102,7 @@ export default function BillingPage() {
     return plan.period === (billingPeriod === 'monthly' ? 'month' : 'year')
   })
 
-  const plans = filteredPlans.map(plan => ({
-    id: plan.id,
-    name: plan.name,
-    price: plan.price,
-    quota: plan.monthly_limit,
-    features: plan.features,
-    popular: plan.popular,
-    stripePriceId: plan.stripe_price_id,
-    period: plan.period
-  }))
-
+  const planInfoMap = t.marketing.pricing.planInfo as Record<string, { description: string; features: string[] }>
   const currentPlan = user.subscription
   const usagePercentage = (user.subscription.current_period_uploads / user.subscription.monthly_limit) * 100
 
@@ -189,7 +180,7 @@ export default function BillingPage() {
                 <p className="text-3xl font-bold text-gradient">
                   {user.subscription.monthly_limit - user.subscription.current_period_uploads}
                 </p>
-                <p className="text-sm text-gray-500 mt-1">{t.billing.jobsLeft}</p>
+                <p className="text-sm text-gray-500 mt-1 whitespace-nowrap">{t.billing.jobsLeft}</p>
               </div>
             </div>
 
@@ -281,86 +272,35 @@ export default function BillingPage() {
                 <Loader className="w-8 h-8 animate-spin text-purple-600" />
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {plans.map((plan) => {
-                  const isCurrent = plan.id.toLowerCase() === currentPlan.plan.toLowerCase()
-                  const isLoading = loadingPlanId === plan.id
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                {filteredPlans.map((plan, index) => {
+                  const isCurrent = plan.stripe_product_id === currentPlan.plan || plan.id.toLowerCase() === currentPlan.plan.toLowerCase()
+                  const period = billingPeriod === 'monthly' ? 'month' : 'year'
+                  const planInfoKey = plan.name.toLowerCase() as keyof typeof planInfoMap
+                  const translated = planInfoMap[planInfoKey]
+                  const description = translated?.description || plan.description
+                  const features = translated?.features?.length ? translated.features : plan.features
 
                   return (
-                    <div
-                      key={plan.id}
-                      className={`bg-white/80 backdrop-blur-sm rounded-2xl p-6 border-2 transition-all flex flex-col justify-between h-full ${plan.popular
-                        ? 'border-fuchsia-300 shadow-xl relative'
-                        : 'border-purple-100 shadow-lg'
-                        } ${isCurrent ? 'ring-2 ring-purple-600' : ''}`}
-                    >
-                      {plan.popular && (
-                        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                          <span className="px-4 py-1 bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white text-xs font-bold rounded-full shadow-lg">
-                            {t.billing.mostPopular}
-                          </span>
-                        </div>
-                      )}
-
-                      {isCurrent && (
-                        <div className="mb-3">
-                          <span className="px-3 py-1 bg-purple-100 text-purple-700 text-xs font-bold rounded-full">
-                            {t.billing.currentPlanBadge}
-                          </span>
-                        </div>
-                      )}
-
-                      <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
-
-                      <div className="mb-6">
-                        <span className="text-4xl font-bold text-gradient">
-                          {plan.price === 0 ? '€0' : `€${plan.price.toFixed(2)}`}
-                        </span>
-                        <span className="text-gray-600">
-                          {plan.period === 'year' ? t.billing.perYear : t.billing.perMonth}
-                        </span>
-                        {plan.period === 'year' && plan.price > 0 && (
-                          <div className="text-sm text-green-600 font-semibold mt-1">
-                            {t.billing.save20}
-                          </div>
-                        )}
-                      </div>
-
-                      <ul className="space-y-3 mb-6">
-                        {plan.features.map((feature, i) => (
-                          <li key={i} className="flex items-start gap-2">
-                            <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                              <svg className="w-3 h-3 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                              </svg>
-                            </div>
-                            <span className="text-sm text-gray-700">{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-
-                      <button
-                        onClick={() => handleUpgrade(plan.stripePriceId, plan.id, plan.name, plan.price)}
-                        disabled={isCurrent || loadingPlanId !== null || !plan.stripePriceId}
-                        className={`w-full py-3 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-2 ${isCurrent
-                          ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                          : plan.popular
-                            ? 'gradient-purple-fuchsia text-white hover:scale-105 shadow-lg glow-purple'
-                            : 'border-2 border-purple-300 text-purple-700 hover:bg-purple-50 hover:scale-105 shadow-md'
-                          } disabled:opacity-50 disabled:cursor-not-allowed`}
-                      >
-                        {isLoading ? (
-                          <>
-                            <Loader className="w-5 h-5 animate-spin" />
-                            {t.billing.processingBtn}
-                          </>
-                        ) : isCurrent ? (
-                          t.billing.currentPlanBtn
-                        ) : (
-                          `${t.billing.upgradeTo} ${plan.name}`
-                        )}
-                      </button>
-                    </div>
+                    <PricingCard
+                      key={plan.stripe_product_id}
+                      plan={plan}
+                      billingPeriod={period}
+                      isCurrent={isCurrent}
+                      isLoading={loadingPlanId === plan.stripe_product_id}
+                      anyLoading={loadingPlanId !== null}
+                      features={features}
+                      description={description}
+                      onSelect={() => handleUpgrade(plan.stripe_price_id, plan.stripe_product_id, plan.name, plan.price)}
+                      labels={{
+                        current: t.billing.currentPlanBtn,
+                        startFree: t.marketing.pricing.startFree,
+                        upgrade: `${t.billing.upgradeTo} ${plan.name}`,
+                        perMonth: t.billing.perMonth,
+                        billedYearly: t.marketing.pricing.billedYearly,
+                      }}
+                      animationDelay={index * 0.05}
+                    />
                   )
                 })}
               </div>

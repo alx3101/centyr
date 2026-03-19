@@ -60,7 +60,7 @@ export default function Hero() {
               {t.marketing.hero.ctaPrimary}
             </Link>
             <Link
-              href="/pricing"
+              href="#pricing"
               className="bg-white text-purple-600 px-8 py-4 rounded-xl text-lg font-bold hover:scale-105 transition-all duration-300 shadow-lg border-2 border-purple-200 inline-flex items-center justify-center gap-2"
             >
               {t.marketing.hero.ctaSecondary}

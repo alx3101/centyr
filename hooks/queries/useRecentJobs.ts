@@ -19,7 +19,7 @@ export function useRecentJobs(limit: number = 50, refetchInterval?: number | fal
       const response = await api.getJobs(limit)
       return response.jobs || []
     },
-    staleTime: 30 * 1000, // 30 seconds - jobs list can change frequently
+    staleTime: 0, // always refetch on mount so new jobs appear immediately
     gcTime: 5 * 60 * 1000, // 5 minutes
     retry: 1,
     refetchOnWindowFocus: false,

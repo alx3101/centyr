@@ -1,13 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { Check } from 'lucide-react'
 import { usePricingPlans } from '@/hooks/usePricingPlans'
 import { useAuth } from '@/contexts/AuthContext'
 import { useTranslations } from '@/contexts/LanguageContext'
 import { api } from '@/lib/api'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
+import PricingCard from '@/components/ui/PricingCard'
 
 export default function Pricing() {
   const t = useTranslations()
@@ -16,6 +16,8 @@ export default function Pricing() {
   const router = useRouter()
   const [billingPeriod, setBillingPeriod] = useState<'month' | 'year'>('month')
   const [loadingPlanId, setLoadingPlanId] = useState<string | null>(null)
+
+  const planInfo = t.marketing.pricing.planInfo as Record<string, { description: string; features: string[] }>
 
   const handlePlanClick = async (plan: typeof plans[0]) => {
     if (plan.price === 0) {
@@ -46,23 +48,19 @@ export default function Pricing() {
     }
   }
 
-  // Raggruppa i piani per stripe_product_id e filtra per periodo
   const filteredPlans = plans
-    .filter(plan => plan.period === billingPeriod)
+    .filter(plan => plan.price === 0 || plan.period === billingPeriod)
     .reduce((acc, plan) => {
-      // Evita duplicati: mantieni solo un piano per stripe_product_id
       const exists = acc.find(p => p.stripe_product_id === plan.stripe_product_id)
-      if (!exists) {
-        acc.push(plan)
-      }
+      if (!exists) acc.push(plan)
       return acc
     }, [] as typeof plans)
-    .sort((a, b) => a.price - b.price) // Ordina per prezzo crescente
+    .sort((a, b) => a.price - b.price)
 
   return (
     <section id="pricing" className="py-20 md:py-32 bg-gradient-to-br from-purple-50 via-white to-fuchsia-50">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             {t.marketing.pricing.title}
           </h2>
@@ -111,66 +109,37 @@ export default function Pricing() {
 
         {/* Plans Grid */}
         {!isLoading && filteredPlans.length > 0 && (
-          <div className="flex flex-wrap justify-center gap-6 mb-12">
-            {filteredPlans.map((plan) => {
-              const ctaLabel = plan.price === 0 ? t.marketing.pricing.startFree : 'Inizia Ora'
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-12">
+            {filteredPlans.map((plan, index) => {
+              const key = plan.name.toLowerCase() as keyof typeof planInfo
+              const translated = planInfo[key]
+              const description = translated?.description || plan.description
+              const features = translated?.features?.length ? translated.features : plan.features
 
               return (
-                <div
+                <PricingCard
                   key={plan.stripe_product_id}
-                  className={`rounded-2xl p-8 flex flex-col items-start shadow-lg hover:shadow-xl w-full sm:w-64 lg:w-72 transition-all duration-300 ${plan.popular
-                    ? 'bg-gradient-to-br from-purple-50 to-fuchsia-50 border-2 border-purple-200'
-                    : 'bg-white border border-gray-200'
-                    }`}
-                >
-                  {plan.popular && (
-                    <div className="mb-4">
-                      <span className="gradient-purple-fuchsia text-white px-4 py-1.5 rounded-full text-xs font-bold">
-                        {t.marketing.pricing.mostPopular}
-                      </span>
-                    </div>
-                  )}
-                  <h3 className="text-sm font-bold mb-3 text-gray-600">
-                    {plan.name.toUpperCase()}
-                  </h3>
-                  <div className="mb-6 min-h-[65px]">
-                    <span className="text-4xl font-bold text-gray-900">
-                      {plan.currency === 'EUR' ? '€' : '$'}
-                      {plan.period === 'year' ? (plan.price / 12).toFixed(2) : plan.price.toFixed(2)}
-                    </span>
-                    <span className="text-gray-600">
-                      {t.marketing.pricing.perMonth}
-                    </span>
-                    {plan.period === 'year' && (
-                      <div className="text-sm mt-1 text-gray-500">
-                        {plan.currency === 'EUR' ? '€' : '$'}{plan.price.toFixed(2)} {t.marketing.pricing.billedYearly}
-                      </div>
-                    )}
-                  </div>
-                  <ul className="space-y-3 mb-8 flex-grow">
-                    {plan.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start text-sm">
-                        <Check className="w-4 h-4 mr-2 flex-shrink-0 text-gray-900" />
-                        <span className="text-gray-600">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <button
-                    onClick={() => handlePlanClick(plan)}
-                    disabled={loadingPlanId === plan.stripe_product_id}
-                    className={`block w-full text-center px-6 py-4 rounded-xl font-bold transition-all shadow-md hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed ${plan.popular
-                      ? 'gradient-purple-fuchsia text-white'
-                      : 'bg-white border-2 border-purple-300 text-gray-900 hover:border-purple-400'
-                      }`}
-                  >
-                    {loadingPlanId === plan.stripe_product_id ? '...' : ctaLabel}
-                  </button>
-                </div>
+                  plan={plan}
+                  billingPeriod={billingPeriod}
+                  isCurrent={false}
+                  isLoading={loadingPlanId === plan.stripe_product_id}
+                  anyLoading={loadingPlanId !== null}
+                  features={features}
+                  description={description}
+                  onSelect={() => handlePlanClick(plan)}
+                  labels={{
+                    current: 'Piano attuale',
+                    startFree: t.marketing.pricing.startFree,
+                    upgrade: t.marketing.pricing.upgrade,
+                    perMonth: t.marketing.pricing.perMonth,
+                    billedYearly: t.marketing.pricing.billedYearly,
+                  }}
+                  animationDelay={index * 0.05}
+                />
               )
             })}
           </div>
         )}
-
       </div>
     </section>
   )

@@ -87,22 +87,30 @@ function JobThumbnail({ job }: { job: Job }) {
 }
 
 function DashboardContent() {
-  const { user } = useAuth()
+  const { user, refreshUser } = useAuth()
   const t = useTranslations()
 
   const [showOnboarding, setShowOnboarding] = useState(true)
   const [showPostDownloadModal, setShowPostDownloadModal] = useState(false)
   const [statusFilter, setStatusFilter] = useState<'all' | 'completed' | 'processing' | 'failed' | 'pending'>('all')
 
-  // React Query for jobs list - polls every 5s when there are processing jobs
-  const [pollingInterval, setPollingInterval] = useState<number | false>(false)
+  // React Query for jobs list - always polls every 10s, faster when processing
+  const [pollingInterval, setPollingInterval] = useState<number>(10000)
   const { data: recentJobs = [], isLoading } = useRecentJobs(50, pollingInterval) as { data: Job[], isLoading: boolean }
 
-  // Enable polling when there are processing/pending jobs
-  const hasProcessingJobs = recentJobs.some(j => j.status === 'processing' || j.status === 'pending')
+  // Speed up polling when jobs are active, slow down when idle
+  const hasActiveJobs = recentJobs.some(j => j.status === 'processing' || j.status === 'pending')
   useEffect(() => {
-    setPollingInterval(hasProcessingJobs ? 5000 : false)
-  }, [hasProcessingJobs])
+    setPollingInterval(hasActiveJobs ? 5000 : 10000)
+  }, [hasActiveJobs])
+
+  // Refresh subscription counters when jobs complete
+  const completedCount = recentJobs.filter(j => j.status === 'completed').length
+  useEffect(() => {
+    if (completedCount > 0) {
+      refreshUser()
+    }
+  }, [completedCount])
 
   // Filtered jobs based on status
   const filteredJobs = useMemo(() => {
