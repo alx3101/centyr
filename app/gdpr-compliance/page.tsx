@@ -20,9 +20,9 @@ export default function GdprPage() {
             {it ? 'Conformità GDPR & Cookie Policy' : 'GDPR Compliance & Cookie Policy'}
           </h1>
           <div className="flex items-center justify-center gap-4 text-sm text-gray-500">
-            <span>Version 1.0</span>
+            <span>Version 1.1</span>
             <span>·</span>
-            <span>{it ? 'Data di entrata in vigore: 22 febbraio 2026' : 'Effective date: February 22, 2026'}</span>
+            <span>{it ? 'Ultimo aggiornamento: 19 marzo 2026' : 'Last updated: March 19, 2026'}</span>
           </div>
         </div>
 
@@ -130,7 +130,14 @@ export default function GdprPage() {
                 </li>
               ))}
             </ul>
-            <p className="mt-4 text-sm">
+            <div className="mt-4 bg-green-50 border border-green-200 rounded-xl p-4 text-sm text-green-800">
+              {it ? (
+                <><strong>Esercizio automatico:</strong> Puoi esercitare il diritto alla cancellazione (Art. 17) e alla portabilità (Art. 20) direttamente da <strong>Dashboard → Impostazioni → Privacy &amp; Dati</strong> — senza inviare email. La cancellazione è immediata e permanente.</>
+              ) : (
+                <><strong>Self-service:</strong> You can exercise your right to erasure (Art. 17) and data portability (Art. 20) directly from <strong>Dashboard → Settings → Privacy &amp; Data</strong> — no email needed. Deletion is immediate and permanent.</>
+              )}
+            </div>
+            <p className="mt-3 text-sm">
               {it ? (
                 <>Se ritieni che i tuoi diritti siano stati violati, hai il diritto di presentare un reclamo al <strong>Garante per la Protezione dei Dati Personali</strong> all&apos;indirizzo{' '}
                 <a href="https://www.garanteprivacy.it" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline">garanteprivacy.it</a>, o all&apos;autorità di controllo del tuo paese di residenza.</>
@@ -229,8 +236,8 @@ export default function GdprPage() {
 
             <p className="mt-3 text-sm">
               {it
-                ? 'Poiché utilizziamo solo cookie strettamente necessari, non mostriamo un banner di consenso ai cookie — nessun consenso è richiesto ai sensi dell\'Art. 25 del Codice Privacy italiano (D.Lgs. 196/2003 come modificato) e della Direttiva ePrivacy per i cookie tecnicamente essenziali.'
-                : 'Because we only use strictly necessary cookies, we do not display a cookie consent banner — no consent is required under Art. 25 of the Italian Privacy Code (D.Lgs. 196/2003 as amended) and the ePrivacy Directive for technically essential cookies.'}
+                ? 'Poiché utilizziamo solo cookie strettamente necessari, il consenso non è tecnicamente richiesto ai sensi dell\'Art. 25 del Codice Privacy italiano (D.Lgs. 196/2003 come modificato) e della Direttiva ePrivacy. Mostriamo comunque un banner informativo alla prima visita per garantire massima trasparenza e rispettare il principio di privacy by design (Art. 25 GDPR).'
+                : 'Because we only use strictly necessary cookies, consent is not technically required under Art. 25 of the Italian Privacy Code (D.Lgs. 196/2003 as amended) and the ePrivacy Directive. We nonetheless display an informational banner on first visit to ensure maximum transparency and comply with the privacy by design principle (GDPR Art. 25).'}
             </p>
             <p className="mt-2 text-sm">
               {it

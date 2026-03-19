@@ -20,9 +20,9 @@ export default function PrivacyPage() {
             {it ? 'Informativa sulla Privacy' : 'Privacy Policy'}
           </h1>
           <div className="flex items-center justify-center gap-4 text-sm text-gray-500">
-            <span>Version 1.0</span>
+            <span>Version 1.1</span>
             <span>·</span>
-            <span>{it ? 'Data di entrata in vigore: 22 febbraio 2026' : 'Effective date: February 22, 2026'}</span>
+            <span>{it ? 'Ultimo aggiornamento: 19 marzo 2026' : 'Last updated: March 19, 2026'}</span>
           </div>
         </div>
 
@@ -269,13 +269,20 @@ export default function PrivacyPage() {
                 </div>
               ))}
             </div>
-            <p className="mt-4">
+            <div className="mt-4 bg-green-50 border border-green-200 rounded-xl p-4 text-sm text-green-800">
               {it ? (
-                <>Per esercitare uno qualsiasi di questi diritti, invia una richiesta a{' '}
+                <><strong>Esercizio automatico dei diritti:</strong> I diritti di cui all&apos;Art. 17 (cancellazione) e Art. 20 (portabilità) possono essere esercitati direttamente dalla tua area personale: <strong>Dashboard → Impostazioni → Privacy &amp; Dati</strong>. Il tuo account e tutti i dati vengono eliminati immediatamente, oppure puoi scaricare un export JSON completo dei tuoi dati.</>
+              ) : (
+                <><strong>Self-service rights:</strong> Rights under Art. 17 (erasure) and Art. 20 (portability) can be exercised directly from your account: <strong>Dashboard → Settings → Privacy &amp; Data</strong>. Your account and all data are deleted immediately, or you can download a complete JSON export of all your data.</>
+              )}
+            </div>
+            <p className="mt-3">
+              {it ? (
+                <>Per gli altri diritti, invia una richiesta a{' '}
                 <a href="mailto:privacy@centyr.tech" className="text-purple-600 hover:underline">privacy@centyr.tech</a>.
                 Potremmo chiederti di verificare la tua identità prima di elaborare la richiesta. Risponderemo entro 30 giorni e non addebiteremo alcun costo per richieste ragionevoli.</>
               ) : (
-                <>To exercise any of these rights, submit a request to{' '}
+                <>For other rights, submit a request to{' '}
                 <a href="mailto:privacy@centyr.tech" className="text-purple-600 hover:underline">privacy@centyr.tech</a>.
                 We may ask you to verify your identity before processing the request. We will respond within 30 days and will not charge a fee for reasonable requests.</>
               )}
