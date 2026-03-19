@@ -245,6 +245,32 @@ export interface Translations {
     toastPasswordError: string
     toastPasswordMismatch: string
     toastPasswordTooShort: string
+    // GDPR section
+    gdprSection: string
+    gdprDescription: string
+    exportDataButton: string
+    exportDataLoading: string
+    exportDataSuccess: string
+    exportDataError: string
+    deleteAccountButton: string
+    deleteAccountConfirmTitle: string
+    deleteAccountConfirmMsg: string
+    deleteAccountConfirmInput: string
+    deleteAccountConfirmBtn: string
+    deleteAccountSuccess: string
+    deleteAccountError: string
+  }
+
+  cookieBanner: {
+    title: string
+    description: string
+    privacyLink: string
+    gdprLink: string
+    and: string
+    sessionCookie: string
+    noTracking: string
+    accept: string
+    decline: string
   }
 
   // Upload
@@ -536,6 +562,13 @@ export interface Translations {
       startTrial: string
       loading: string
       errorTitle: string
+      planInfo: {
+        free: { description: string; features: string[] }
+        mini: { description: string; features: string[] }
+        starter: { description: string; features: string[] }
+        pro: { description: string; features: string[] }
+        business: { description: string; features: string[] }
+      }
     }
     security: {
       badge: string
@@ -899,6 +932,31 @@ export const translations: Record<Language, Translations> = {
       toastPasswordError: 'Failed to change password',
       toastPasswordMismatch: 'Passwords do not match',
       toastPasswordTooShort: 'Password must be at least 8 characters',
+      gdprSection: 'Privacy & Data',
+      gdprDescription: 'Under GDPR you have the right to export all your data or permanently delete your account. Account deletion is irreversible and all your images and jobs will be removed immediately.',
+      exportDataButton: 'Export My Data',
+      exportDataLoading: 'Exporting...',
+      exportDataSuccess: 'Data exported successfully',
+      exportDataError: 'Failed to export data',
+      deleteAccountButton: 'Delete My Account',
+      deleteAccountConfirmTitle: 'Delete Account Permanently',
+      deleteAccountConfirmMsg: 'This action cannot be undone. All your jobs, images, and account data will be permanently deleted. Your subscription will be cancelled immediately.',
+      deleteAccountConfirmInput: 'Type DELETE to confirm',
+      deleteAccountConfirmBtn: 'Yes, permanently delete my account',
+      deleteAccountSuccess: 'Your account has been deleted. Goodbye!',
+      deleteAccountError: 'Failed to delete account. Please contact privacy@centyr.tech',
+    },
+
+    cookieBanner: {
+      title: 'We use strictly necessary cookies',
+      description: 'We only use essential cookies to keep you logged in and remember your preferences. No tracking, no ads. Read our',
+      privacyLink: 'Privacy Policy',
+      gdprLink: 'Cookie Policy',
+      and: 'and',
+      sessionCookie: 'Session only',
+      noTracking: 'No tracking or advertising cookies',
+      accept: 'Got it',
+      decline: 'Decline',
     },
 
     upload: {
@@ -1182,6 +1240,28 @@ export const translations: Record<Language, Translations> = {
         startTrial: 'Start 14-Day Trial',
         loading: 'Loading...',
         errorTitle: 'Failed to load pricing plans',
+        planInfo: {
+          free: {
+            description: 'Perfect for trying Centry',
+            features: ['3 jobs/month', 'Up to 3 images per job', 'Background removal', 'Custom background & margin', '7-day storage', 'Email support'],
+          },
+          mini: {
+            description: 'Ideal for small e-commerce',
+            features: ['25 jobs/month', 'Up to 5 images per batch', 'Background removal', 'Custom background & margin', '14-day storage', 'Email support'],
+          },
+          starter: {
+            description: 'For growing businesses',
+            features: ['100 jobs/month', 'Up to 10 images per batch', 'Background removal', 'Custom background & margin', '30-day storage', 'Email support'],
+          },
+          pro: {
+            description: 'For professionals & agencies',
+            features: ['500 jobs/month', 'Up to 50 images per batch', 'Priority processing', 'Background removal', 'Custom background & margin', '90-day storage', 'Analytics dashboard', 'Webhooks', 'Priority support'],
+          },
+          business: {
+            description: 'For high-volume teams',
+            features: ['2500 jobs/month', 'Up to 100 images per batch', 'Priority processing', 'Background removal', 'Custom background & margin', '180-day storage', 'Analytics dashboard', 'Webhooks', '24/7 priority support'],
+          },
+        },
       },
       security: {
         badge: 'Enterprise-Grade Security',
@@ -1496,7 +1576,7 @@ export const translations: Record<Language, Translations> = {
       autoUpdate: 'Questa pagina si aggiornerà automaticamente',
       processingFailed: 'Elaborazione fallita',
       failedDesc: "Si è verificato un errore durante l'elaborazione dell'immagine.",
-      tryAnother: 'Prova con un'altra immagine',
+      tryAnother: "Prova con un'altra immagine",
       statusCompleted: 'Completato',
       statusProcessing: 'In elaborazione',
       statusFailed: 'Fallito',
@@ -1544,6 +1624,31 @@ export const translations: Record<Language, Translations> = {
       toastPasswordError: 'Cambio password fallito',
       toastPasswordMismatch: 'Le password non coincidono',
       toastPasswordTooShort: 'La password deve avere almeno 8 caratteri',
+      gdprSection: 'Privacy & Dati',
+      gdprDescription: 'Ai sensi del GDPR hai il diritto di esportare tutti i tuoi dati o eliminare definitivamente il tuo account. L\'eliminazione è irreversibile: tutte le immagini e i job verranno rimossi immediatamente.',
+      exportDataButton: 'Esporta i Miei Dati',
+      exportDataLoading: 'Esportazione...',
+      exportDataSuccess: 'Dati esportati con successo',
+      exportDataError: 'Esportazione dati fallita',
+      deleteAccountButton: 'Elimina il Mio Account',
+      deleteAccountConfirmTitle: 'Elimina Account Definitivamente',
+      deleteAccountConfirmMsg: 'Questa azione è irreversibile. Tutti i tuoi job, immagini e dati account verranno eliminati permanentemente. Il tuo abbonamento verrà cancellato immediatamente.',
+      deleteAccountConfirmInput: 'Scrivi ELIMINA per confermare',
+      deleteAccountConfirmBtn: 'Sì, elimina definitivamente il mio account',
+      deleteAccountSuccess: 'Il tuo account è stato eliminato. Arrivederci!',
+      deleteAccountError: 'Eliminazione fallita. Contatta privacy@centyr.tech',
+    },
+
+    cookieBanner: {
+      title: 'Usiamo solo cookie essenziali',
+      description: 'Utilizziamo esclusivamente cookie necessari per mantenerti connesso e ricordare le tue preferenze. Nessun tracciamento, nessuna pubblicità. Leggi la nostra',
+      privacyLink: 'Privacy Policy',
+      gdprLink: 'Cookie Policy',
+      and: 'e la',
+      sessionCookie: 'Solo sessione',
+      noTracking: 'Nessun cookie di tracciamento o pubblicità',
+      accept: 'Capito',
+      decline: 'Rifiuta',
     },
 
     upload: {
@@ -1827,6 +1932,28 @@ export const translations: Record<Language, Translations> = {
         startTrial: 'Inizia Trial 14 Giorni',
         loading: 'Caricamento...',
         errorTitle: 'Impossibile caricare i piani',
+        planInfo: {
+          free: {
+            description: 'Perfetto per provare Centry',
+            features: ['3 job/mese', 'Fino a 3 immagini per job', 'Rimozione sfondo', 'Sfondo e margine personalizzati', 'Storage 7 giorni', 'Supporto email'],
+          },
+          mini: {
+            description: 'Ideale per piccoli e-commerce',
+            features: ['25 job/mese', 'Fino a 5 immagini per batch', 'Rimozione sfondo', 'Sfondo e margine personalizzati', 'Storage 14 giorni', 'Supporto email'],
+          },
+          starter: {
+            description: 'Per business in crescita',
+            features: ['100 job/mese', 'Fino a 10 immagini per batch', 'Rimozione sfondo', 'Sfondo e margine personalizzati', 'Storage 30 giorni', 'Supporto email'],
+          },
+          pro: {
+            description: 'Per professionisti e agenzie',
+            features: ['500 job/mese', 'Fino a 50 immagini per batch', 'Elaborazione prioritaria', 'Rimozione sfondo', 'Sfondo e margine personalizzati', 'Storage 90 giorni', 'Dashboard analytics', 'Webhooks', 'Supporto prioritario'],
+          },
+          business: {
+            description: 'Per team ad alto volume',
+            features: ['2500 job/mese', 'Fino a 100 immagini per batch', 'Elaborazione prioritaria', 'Rimozione sfondo', 'Sfondo e margine personalizzati', 'Storage 180 giorni', 'Dashboard analytics', 'Webhooks', 'Supporto prioritario 24/7'],
+          },
+        },
       },
       security: {
         badge: 'Sicurezza di Livello Enterprise',

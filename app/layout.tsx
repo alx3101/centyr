@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
 import { AppProviders } from '@/components/providers/AppProviders'
 import { Analytics } from '@vercel/analytics/next'
+import CookieBanner from '@/components/CookieBanner'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -70,6 +71,7 @@ export default function RootLayout({
               },
             }}
           />
+          <CookieBanner />
         </AppProviders>
         <Analytics />
       </body>

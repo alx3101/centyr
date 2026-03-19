@@ -501,6 +501,16 @@ class ApiClient {
     return this.request<{ jobs: any[]; count: number }>(`/api/v1/jobs?limit=${limit}`)
   }
 
+  /** GDPR Art. 17 — Right to Erasure */
+  async deleteAccount(): Promise<{ success: boolean; message: string }> {
+    return this.request('/api/v1/users/me', { method: 'DELETE' })
+  }
+
+  /** GDPR Art. 20 — Right to Data Portability */
+  async exportUserData(): Promise<any> {
+    return this.request('/api/v1/users/me/export')
+  }
+
 }
 
 export const api = new ApiClient(API_BASE_URL)
