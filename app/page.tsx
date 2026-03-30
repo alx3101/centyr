@@ -1,14 +1,10 @@
 import Hero from '@/components/marketing/Hero'
-import TrustBadges from '@/components/marketing/TrustBadges'
 import TrustedBy from '@/components/marketing/TrustedBy'
-import ValueProposition from '@/components/marketing/ValueProposition'
 import HowItWorks from '@/components/marketing/HowItWorks'
 import Features from '@/components/marketing/Features'
-import Security from '@/components/marketing/Security'
 import Testimonials from '@/components/marketing/Testimonials'
 import Pricing from '@/components/marketing/Pricing'
 import FinalCTA from '@/components/marketing/FinalCTA'
-import MidCTA from '@/components/marketing/MidCTA'
 
 export const metadata = {
   title: 'Centyr - AI Product Photo Alignment',
@@ -20,12 +16,9 @@ export default function Home() {
     <>
       <Hero />
       <TrustedBy />
-      <ValueProposition />
       <HowItWorks />
       <Features />
-      <MidCTA />
       <Testimonials />
-      <Security />
       <Pricing />
       <FinalCTA />
     </>
