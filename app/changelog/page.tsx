@@ -8,7 +8,7 @@ const releases = [
   {
     version: '2.3.0',
     date: { en: 'March 31, 2026', it: '31 marzo 2026' },
-    type: 'major',
+    type: 'major' as const,
     changes: {
       en: [
         { type: 'new', text: 'Full homepage redesign — Onest font, white/purple theme, before/after slider' },
@@ -35,7 +35,7 @@ const releases = [
   {
     version: '2.2.0',
     date: { en: 'February 2026', it: 'Febbraio 2026' },
-    type: 'minor',
+    type: 'minor' as const,
     changes: {
       en: [
         { type: 'new', text: 'Billing dashboard with plan details and usage tracking' },
@@ -58,7 +58,7 @@ const releases = [
   {
     version: '2.1.0',
     date: { en: 'January 2026', it: 'Gennaio 2026' },
-    type: 'minor',
+    type: 'minor' as const,
     changes: {
       en: [
         { type: 'new', text: 'Blog section with guides, case studies and tips' },
@@ -79,7 +79,7 @@ const releases = [
   {
     version: '2.0.0',
     date: { en: 'December 2025', it: 'Dicembre 2025' },
-    type: 'major',
+    type: 'major' as const,
     changes: {
       en: [
         { type: 'new', text: 'AI-powered background removal (BRIA RMBG model)' },
