@@ -1,21 +1,13 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useTranslations } from '@/contexts/LanguageContext'
 
 export default function Hero() {
   const t = useTranslations()
   const [sliderPosition, setSliderPosition] = useState(50)
   const [isDragging, setIsDragging] = useState(false)
-  const [photoCount, setPhotoCount] = useState(48312)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setPhotoCount(prev => prev + Math.floor(Math.random() * 3))
-    }, 2800)
-    return () => clearInterval(interval)
-  }, [])
 
   const handleMouseDown = () => setIsDragging(true)
   const handleMouseUp = () => setIsDragging(false)
@@ -89,14 +81,6 @@ export default function Hero() {
                 ))}
               </div>
 
-              <div>
-                <div className="v3-counter">
-                  <svg width="7" height="7" viewBox="0 0 8 8" fill="#22c55e">
-                    <circle cx="4" cy="4" r="4" />
-                  </svg>
-                  <span><strong>{photoCount.toLocaleString('it-IT')}</strong> foto elaborate oggi</span>
-                </div>
-              </div>
             </div>
 
             {/* Slider */}
