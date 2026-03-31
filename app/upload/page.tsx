@@ -144,23 +144,19 @@ export default function UploadPage() {
   }, [files])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-fuchsia-50 py-8 px-4 overflow-hidden relative">
-      {/* Background decoration */}
-      <div className="absolute top-20 right-10 w-72 h-72 bg-fuchsia-200 rounded-full filter blur-3xl opacity-20 animate-pulse pointer-events-none"></div>
-      <div className="absolute bottom-20 left-10 w-72 h-72 bg-purple-200 rounded-full filter blur-3xl opacity-20 animate-pulse pointer-events-none" style={{ animationDelay: '1s' }}></div>
-
-      <div className="max-w-4xl mx-auto relative z-10">
+    <div className="min-h-screen bg-[#f8f9fb] py-8 px-4">
+      <div className="max-w-4xl mx-auto">
         {/* Header with Quota */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
+            <h1 className="text-3xl md:text-4xl font-extrabold text-[#0f0a1e]" style={{ fontFamily: 'Onest, sans-serif' }}>
               {t.upload.newJob}
             </h1>
-            <p className="text-gray-600 mt-1">{t.upload.newJobSubtitle}</p>
+            <p className="text-[#6b7280] mt-1">{t.upload.newJobSubtitle}</p>
           </div>
 
           {/* Quota Indicator */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border-2 border-purple-100 shadow-sm">
+          <div className="bg-white rounded-xl p-4 border border-[#f0f0f0]" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}>
             <div className="flex items-center gap-3">
               <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${usagePercentage > 90 ? 'bg-red-100' : usagePercentage > 70 ? 'bg-amber-100' : 'bg-green-100'
                 }`}>
@@ -169,10 +165,10 @@ export default function UploadPage() {
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="font-bold text-gray-900">{remainingCredits}</span>
-                  <span className="text-gray-500 text-sm">{t.upload.jobsRemaining}</span>
+                  <span className="font-bold text-[#0f0a1e]">{remainingCredits}</span>
+                  <span className="text-[#9ca3af] text-sm">{t.upload.jobsRemaining}</span>
                 </div>
-                <div className="w-32 bg-gray-200 rounded-full h-1.5 mt-1">
+                <div className="w-32 bg-[#f3f4f6] rounded-full h-1.5 mt-1">
                   <div
                     className={`h-1.5 rounded-full transition-all ${usagePercentage > 90 ? 'bg-red-500' : usagePercentage > 70 ? 'bg-amber-500' : 'bg-green-500'
                       }`}
@@ -193,7 +189,7 @@ export default function UploadPage() {
         </div>
 
         {/* Progress Stepper */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 mb-8 border-2 border-purple-100 shadow-lg">
+        <div className="bg-white rounded-2xl p-4 mb-8 border border-[#f0f0f0]" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}>
           <div className="flex items-center justify-between">
             {STEPS.map((step, index) => {
               const Icon = step.icon
@@ -206,13 +202,13 @@ export default function UploadPage() {
                     onClick={() => index < stepIndex && setCurrentStep(step.id)}
                     disabled={index > stepIndex}
                     className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all ${isActive
-                      ? 'bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-lg'
+                      ? 'bg-[#7c3aed] text-white'
                       : isCompleted
-                        ? 'bg-green-100 text-green-700 cursor-pointer hover:bg-green-200'
-                        : 'bg-gray-100 text-gray-400'
+                        ? 'bg-[#f0fdf4] text-[#16a34a] cursor-pointer hover:bg-green-100'
+                        : 'bg-[#f3f4f6] text-[#9ca3af]'
                       }`}
                   >
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${isActive ? 'bg-white/20' : isCompleted ? 'bg-green-500 text-white' : 'bg-gray-200'
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${isActive ? 'bg-white/20' : isCompleted ? 'bg-green-500 text-white' : 'bg-[#e5e7eb]'
                       }`}>
                       {isCompleted ? <Check className="w-4 h-4" /> : <Icon className="w-4 h-4" />}
                     </div>
@@ -220,7 +216,7 @@ export default function UploadPage() {
                   </button>
 
                   {index < STEPS.length - 1 && (
-                    <div className={`flex-1 h-1 mx-2 rounded ${index < stepIndex ? 'bg-green-400' : 'bg-gray-200'
+                    <div className={`flex-1 h-1 mx-2 rounded ${index < stepIndex ? 'bg-green-400' : 'bg-[#e5e7eb]'
                       }`} />
                   )}
                 </div>
@@ -230,12 +226,12 @@ export default function UploadPage() {
         </div>
 
         {/* Step Content */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-2xl border-2 border-purple-100 shadow-xl overflow-hidden">
+        <div className="bg-white rounded-2xl border border-[#f0f0f0] overflow-hidden" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}>
           {/* Step 1: Upload */}
           {currentStep === 'upload' && (
             <div className="p-4 md:p-8 animate-fade-in">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">{t.upload.uploadStepTitle}</h2>
-              <p className="text-gray-600 mb-6">{t.upload.uploadStepSubtitle}</p>
+              <h2 className="text-2xl font-bold text-[#0f0a1e] mb-2">{t.upload.uploadStepTitle}</h2>
+              <p className="text-[#6b7280] mb-6">{t.upload.uploadStepSubtitle}</p>
 
               {/* Drop Zone */}
               <div
@@ -244,27 +240,27 @@ export default function UploadPage() {
                   border-2 border-dashed rounded-2xl p-8 md:p-12 mb-6
                   transition-all duration-300 cursor-pointer
                   ${isDragActive
-                    ? 'border-fuchsia-500 bg-fuchsia-50 scale-[1.02]'
-                    : 'border-purple-300 hover:border-fuchsia-400 hover:bg-purple-50'
+                    ? 'border-[#7c3aed] bg-[#faf5ff] scale-[1.02]'
+                    : 'border-[#e9d5ff] hover:border-[#7c3aed] hover:bg-[#faf5ff]'
                   }
                 `}
               >
                 <input {...getInputProps()} />
                 <div className="flex flex-col items-center justify-center text-center">
-                  <div className={`w-20 h-20 rounded-full flex items-center justify-center mb-4 transition-all ${isDragActive ? 'bg-fuchsia-500 scale-110' : 'gradient-purple-fuchsia'
+                  <div className={`w-20 h-20 rounded-full flex items-center justify-center mb-4 transition-all ${isDragActive ? 'bg-[#7c3aed] scale-110' : 'bg-[#7c3aed]'
                     }`}>
                     <Upload className="w-10 h-10 text-white" />
                   </div>
-                  <p className="text-xl font-bold text-gray-900 mb-2">
+                  <p className="text-xl font-bold text-[#0f0a1e] mb-2">
                     {isDragActive ? t.upload.dropHere : t.upload.dragHere}
                   </p>
-                  <p className="text-gray-600 mb-4">{t.upload.orBrowse}</p>
+                  <p className="text-[#6b7280] mb-4">{t.upload.orBrowse}</p>
 
                   <div className="flex flex-wrap gap-2 justify-center">
-                    <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">JPG</span>
-                    <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">PNG</span>
-                    <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">WebP</span>
-                    <span className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm">Max 50MB</span>
+                    <span className="px-3 py-1 bg-[#faf5ff] text-[#7c3aed] rounded-full text-sm">JPG</span>
+                    <span className="px-3 py-1 bg-[#faf5ff] text-[#7c3aed] rounded-full text-sm">PNG</span>
+                    <span className="px-3 py-1 bg-[#faf5ff] text-[#7c3aed] rounded-full text-sm">WebP</span>
+                    <span className="px-3 py-1 bg-[#f3f4f6] text-[#6b7280] rounded-full text-sm">Max 50MB</span>
                   </div>
                 </div>
               </div>
@@ -292,9 +288,9 @@ export default function UploadPage() {
               {files.length > 0 && (
                 <div className="animate-fade-in">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-bold text-gray-900">
+                    <h3 className="font-bold text-[#0f0a1e]">
                       {files.length} {files.length === 1 ? t.upload.imageAdded : t.upload.imagesAdded}
-                      <span className="text-gray-500 font-normal ml-2">({totalFileSize.toFixed(1)} MB)</span>
+                      <span className="text-[#9ca3af] font-normal ml-2">({totalFileSize.toFixed(1)} MB)</span>
                     </h3>
                     <button
                       onClick={clearFiles}
@@ -311,7 +307,7 @@ export default function UploadPage() {
                         className="relative group animate-scale-in"
                         style={{ animationDelay: `${index * 0.03}s` }}
                       >
-                        <div className="aspect-square bg-gray-100 rounded-xl overflow-hidden border-2 border-purple-100 group-hover:border-fuchsia-400 transition-all shadow-sm">
+                        <div className="aspect-square bg-[#f3f4f6] rounded-xl overflow-hidden border border-[#f0f0f0] group-hover:border-[#7c3aed] transition-all">
                           <img
                             src={uploadedFile.preview}
                             alt={uploadedFile.file.name}
@@ -324,7 +320,7 @@ export default function UploadPage() {
                         >
                           <X className="w-3 h-3 text-white" />
                         </button>
-                        <p className="text-xs text-gray-500 mt-1 truncate px-1">{uploadedFile.file.name}</p>
+                        <p className="text-xs text-[#9ca3af] mt-1 truncate px-1">{uploadedFile.file.name}</p>
                       </div>
                     ))}
                   </div>
@@ -336,12 +332,12 @@ export default function UploadPage() {
           {/* Step 2: Configure */}
           {currentStep === 'configure' && (
             <div className="p-4 md:p-8 animate-fade-in">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">{t.upload.configureTitle}</h2>
-              <p className="text-gray-600 mb-6">{t.upload.configureSubtitle}</p>
+              <h2 className="text-2xl font-bold text-[#0f0a1e] mb-2">{t.upload.configureTitle}</h2>
+              <p className="text-[#6b7280] mb-6">{t.upload.configureSubtitle}</p>
 
               {/* Job Name */}
               <div className="mb-8">
-                <label htmlFor="jobName" className="block text-sm font-semibold text-gray-700 mb-2">
+                <label htmlFor="jobName" className="block text-sm font-semibold text-[#374151] mb-2">
                   {t.upload.jobNameLabel} <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -350,22 +346,22 @@ export default function UploadPage() {
                   value={jobName}
                   onChange={(e) => setJobName(e.target.value)}
                   placeholder={t.upload.jobNamePlaceholder}
-                  className="w-full px-4 py-3 border-2 border-purple-200 rounded-xl focus:outline-none focus:border-fuchsia-400 transition-colors text-lg"
+                  className="w-full px-4 py-3 border border-[#e5e7eb] rounded-xl focus:outline-none focus:border-[#7c3aed] transition-colors text-lg"
                   maxLength={100}
                   autoFocus
                 />
-                <p className="text-xs text-gray-500 mt-2">{t.upload.jobNameHelper}</p>
+                <p className="text-xs text-[#9ca3af] mt-2">{t.upload.jobNameHelper}</p>
               </div>
 
               {/* Processing Options */}
               <div className="space-y-6">
-                <h3 className="font-bold text-gray-900 flex items-center gap-2">
-                  <Sparkles className="w-5 h-5 text-fuchsia-500" />
+                <h3 className="font-bold text-[#0f0a1e] flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-[#7c3aed]" />
                   {t.upload.processingOptions}
                 </h3>
 
                 {/* Background Removal */}
-                <div className={`relative p-4 rounded-xl border-2 transition-all ${removeBackground ? 'border-fuchsia-400 bg-fuchsia-50' : 'border-gray-200 bg-white'
+                <div className={`relative p-4 rounded-xl border transition-all ${removeBackground ? 'border-[#7c3aed] bg-[#faf5ff]' : 'border-[#f0f0f0] bg-white'
                   } ${!isPremium ? 'opacity-60' : ''}`}>
                   <label className="flex items-start gap-4 cursor-pointer">
                     <input
@@ -386,19 +382,19 @@ export default function UploadPage() {
                         }
                       }}
                       disabled={!isPremium}
-                      className="w-5 h-5 mt-1 rounded border-2 border-purple-300 text-fuchsia-500 focus:ring-fuchsia-400"
+                      className="w-5 h-5 mt-1 rounded border-2 border-[#e5e7eb] text-[#7c3aed] focus:ring-[#7c3aed]"
                     />
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="font-semibold text-gray-900">{t.upload.removeBackground}</span>
+                        <span className="font-semibold text-[#0f0a1e]">{t.upload.removeBackground}</span>
                         {!isPremium && (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-fuchsia-100 text-fuchsia-700 text-xs font-semibold rounded-full">
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-[#faf5ff] text-[#7c3aed] text-xs font-semibold rounded-full">
                             <Lock className="w-3 h-3" />
                             {t.upload.premium}
                           </span>
                         )}
                       </div>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-[#6b7280]">
                         {t.upload.removeBackgroundDesc}
                       </p>
                     </div>
@@ -406,10 +402,10 @@ export default function UploadPage() {
 
                   {/* Custom Background */}
                   {removeBackground && isPremium && (
-                    <div className="mt-4 pt-4 border-t border-fuchsia-200 animate-fade-in">
-                      <p className="text-sm font-medium text-gray-700 mb-3">{t.upload.customBackground}</p>
+                    <div className="mt-4 pt-4 border-t border-[#e9d5ff] animate-fade-in">
+                      <p className="text-sm font-medium text-[#374151] mb-3">{t.upload.customBackground}</p>
                       {!customBackground ? (
-                        <label className="flex items-center justify-center h-24 border-2 border-dashed border-purple-300 rounded-xl cursor-pointer hover:border-fuchsia-400 hover:bg-white transition-all">
+                        <label className="flex items-center justify-center h-24 border-2 border-dashed border-[#e9d5ff] rounded-xl cursor-pointer hover:border-[#7c3aed] hover:bg-white transition-all">
                           <input
                             type="file"
                             accept="image/jpeg,image/png,image/webp"
@@ -423,8 +419,8 @@ export default function UploadPage() {
                             className="hidden"
                           />
                           <div className="text-center">
-                            <ImageIcon className="w-6 h-6 text-purple-400 mx-auto mb-1" />
-                            <span className="text-sm text-gray-600">{t.upload.uploadBackgroundImage}</span>
+                            <ImageIcon className="w-6 h-6 text-[#9ca3af] mx-auto mb-1" />
+                            <span className="text-sm text-[#6b7280]">{t.upload.uploadBackgroundImage}</span>
                           </div>
                         </label>
                       ) : (
@@ -432,7 +428,7 @@ export default function UploadPage() {
                           <img
                             src={customBackgroundPreview!}
                             alt="Custom background"
-                            className="h-24 rounded-xl object-cover border-2 border-purple-200"
+                            className="h-24 rounded-xl object-cover border border-[#f0f0f0]"
                           />
                           <button
                             onClick={() => {
@@ -453,17 +449,17 @@ export default function UploadPage() {
                 </div>
 
                 {/* Output Settings */}
-                <div className="p-4 rounded-xl border-2 border-gray-200 bg-white">
+                <div className="p-4 rounded-xl border border-[#f0f0f0] bg-white">
                   <div className="flex items-center gap-2 mb-4">
-                    <Settings className="w-5 h-5 text-purple-600" />
-                    <span className="font-semibold text-gray-900">{t.upload.outputSettings}</span>
+                    <Settings className="w-5 h-5 text-[#7c3aed]" />
+                    <span className="font-semibold text-[#0f0a1e]">{t.upload.outputSettings}</span>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                     {/* Output Size */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-[#374151] mb-2">
                         {t.upload.outputSize}
                       </label>
                       <div className="flex items-center gap-3">
@@ -474,9 +470,9 @@ export default function UploadPage() {
                           step="100"
                           value={outputSize}
                           onChange={(e) => setOutputSize(Number(e.target.value))}
-                          className="flex-1 h-2 bg-purple-200 rounded-lg appearance-none cursor-pointer accent-fuchsia-500"
+                          className="flex-1 h-2 bg-[#e5e7eb] rounded-lg appearance-none cursor-pointer accent-[#7c3aed]"
                         />
-                        <span className="w-24 text-center px-3 py-1 bg-purple-100 text-purple-700 rounded-lg font-mono text-sm">
+                        <span className="w-24 text-center px-3 py-1 bg-[#faf5ff] text-[#7c3aed] rounded-lg font-mono text-sm">
                           {outputSize}×{outputSize}
                         </span>
                       </div>
@@ -484,7 +480,7 @@ export default function UploadPage() {
 
                     {/* Margin Percent */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-[#374151] mb-2">
                         {t.upload.margin}
                       </label>
                       <div className="flex items-center gap-3">
@@ -495,16 +491,16 @@ export default function UploadPage() {
                           step="1"
                           value={marginPercent}
                           onChange={(e) => setMarginPercent(Number(e.target.value))}
-                          className="flex-1 h-2 bg-purple-200 rounded-lg appearance-none cursor-pointer accent-fuchsia-500"
+                          className="flex-1 h-2 bg-[#e5e7eb] rounded-lg appearance-none cursor-pointer accent-[#7c3aed]"
                         />
-                        <div className="w-28 text-center px-3 py-1 bg-purple-100 text-purple-700 rounded-lg font-mono text-sm">
+                        <div className="w-28 text-center px-3 py-1 bg-[#faf5ff] text-[#7c3aed] rounded-lg font-mono text-sm">
                           {marginPercent}%
-                          <div className="text-xs text-purple-500">
+                          <div className="text-xs text-[#9ca3af]">
                             {marginPixels}px
                           </div>
                         </div>
                       </div>
-                      <p className="text-xs text-gray-500 mt-2">
+                      <p className="text-xs text-[#9ca3af] mt-2">
                         {t.upload.marginHelper}
                       </p>
                     </div>
@@ -518,43 +514,43 @@ export default function UploadPage() {
           {/* Step 3: Review */}
           {currentStep === 'review' && (
             <div className="p-4 md:p-8 animate-fade-in">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">{t.upload.reviewTitle}</h2>
-              <p className="text-gray-600 mb-6">{t.upload.reviewSubtitle}</p>
+              <h2 className="text-2xl font-bold text-[#0f0a1e] mb-2">{t.upload.reviewTitle}</h2>
+              <p className="text-[#6b7280] mb-6">{t.upload.reviewSubtitle}</p>
 
               {/* Summary Card */}
-              <div className="bg-gradient-to-br from-purple-50 to-fuchsia-50 rounded-2xl p-6 border-2 border-purple-200 mb-6">
+              <div className="bg-[#faf5ff] rounded-2xl p-6 border border-[#e9d5ff] mb-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-2">{t.upload.summaryJob}</h4>
-                    <p className="text-xl font-bold text-gray-900">{jobName}</p>
+                    <h4 className="text-sm font-medium text-[#9ca3af] uppercase tracking-wide mb-2">{t.upload.summaryJob}</h4>
+                    <p className="text-xl font-bold text-[#0f0a1e]">{jobName}</p>
                   </div>
                   <div>
-                    <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-2">{t.upload.summaryImages}</h4>
-                    <p className="text-xl font-bold text-gray-900">{files.length} file ({totalFileSize.toFixed(1)} MB)</p>
+                    <h4 className="text-sm font-medium text-[#9ca3af] uppercase tracking-wide mb-2">{t.upload.summaryImages}</h4>
+                    <p className="text-xl font-bold text-[#0f0a1e]">{files.length} file ({totalFileSize.toFixed(1)} MB)</p>
                   </div>
                 </div>
 
                 {/* Options Summary */}
-                <div className="mt-6 pt-6 border-t border-purple-200">
-                  <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-3">{t.upload.summaryOptions}</h4>
+                <div className="mt-6 pt-6 border-t border-[#e9d5ff]">
+                  <h4 className="text-sm font-medium text-[#9ca3af] uppercase tracking-wide mb-3">{t.upload.summaryOptions}</h4>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-white text-purple-700 rounded-full text-sm font-medium border border-purple-200">
+                    <span className="px-3 py-1 bg-white text-[#7c3aed] rounded-full text-sm font-medium border border-[#e9d5ff]">
                       {t.upload.aiAlignment}
                     </span>
                     {removeBackground && (
-                      <span className="px-3 py-1 bg-fuchsia-100 text-fuchsia-700 rounded-full text-sm font-medium">
+                      <span className="px-3 py-1 bg-[#faf5ff] text-[#7c3aed] rounded-full text-sm font-medium border border-[#e9d5ff]">
                         {t.upload.backgroundRemoval}
                       </span>
                     )}
                     {customBackground && (
-                      <span className="px-3 py-1 bg-fuchsia-100 text-fuchsia-700 rounded-full text-sm font-medium">
+                      <span className="px-3 py-1 bg-[#faf5ff] text-[#7c3aed] rounded-full text-sm font-medium border border-[#e9d5ff]">
                         {t.upload.customBackgroundLabel}
                       </span>
                     )}
-                    <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
+                    <span className="px-3 py-1 bg-[#f3f4f6] text-[#6b7280] rounded-full text-sm font-medium">
                       {outputSize}×{outputSize}px
                     </span>
-                    <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
+                    <span className="px-3 py-1 bg-[#f3f4f6] text-[#6b7280] rounded-full text-sm font-medium">
                       {t.upload.margin} {marginPercent}% ({marginPixels}px)
                     </span>
                   </div>
@@ -563,16 +559,16 @@ export default function UploadPage() {
 
               {/* Image Preview Grid */}
               <div className="mb-6">
-                <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-3">{t.upload.summaryPreview}</h4>
+                <h4 className="text-sm font-medium text-[#9ca3af] uppercase tracking-wide mb-3">{t.upload.summaryPreview}</h4>
                 <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
                   {files.slice(0, 16).map((file) => (
-                    <div key={file.id} className="aspect-square rounded-lg overflow-hidden border border-purple-200">
+                    <div key={file.id} className="aspect-square rounded-lg overflow-hidden border border-[#f0f0f0]">
                       <img src={file.preview} alt="" className="w-full h-full object-cover" />
                     </div>
                   ))}
                   {files.length > 16 && (
-                    <div className="aspect-square rounded-lg bg-purple-100 flex items-center justify-center border border-purple-200">
-                      <span className="text-purple-700 font-bold text-sm">+{files.length - 16}</span>
+                    <div className="aspect-square rounded-lg bg-[#faf5ff] flex items-center justify-center border border-[#e9d5ff]">
+                      <span className="text-[#7c3aed] font-bold text-sm">+{files.length - 16}</span>
                     </div>
                   )}
                 </div>
@@ -608,12 +604,12 @@ export default function UploadPage() {
           )}
 
           {/* Navigation Footer */}
-          <div className="px-4 md:px-8 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
+          <div className="px-4 md:px-8 py-4 bg-[#f9fafb] border-t border-[#f0f0f0] flex items-center justify-between">
             <div>
               {stepIndex > 0 && (
                 <button
                   onClick={handleBack}
-                  className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-900 font-semibold transition-colors"
+                  className="flex items-center gap-2 px-4 py-2 text-[#6b7280] hover:text-[#111827] font-semibold transition-colors"
                 >
                   <ChevronLeft className="w-5 h-5" />
                   {t.common.back}
@@ -626,7 +622,7 @@ export default function UploadPage() {
                 <button
                   onClick={handleNext}
                   disabled={!canProceed}
-                  className="flex items-center gap-2 px-6 py-3 gradient-purple-fuchsia text-white font-bold rounded-xl hover:scale-105 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="flex items-center gap-2 px-6 py-3 bg-[#7c3aed] text-white font-bold rounded-xl hover:bg-[#6d28d9] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {t.upload.continueBtn}
                   <ChevronRight className="w-5 h-5" />
@@ -635,7 +631,7 @@ export default function UploadPage() {
                 <button
                   onClick={handleProcess}
                   disabled={isUploading || files.length > remainingCredits}
-                  className="flex items-center gap-2 px-8 py-3 gradient-purple-fuchsia text-white font-bold rounded-xl hover:scale-105 transition-all shadow-lg glow-purple disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="flex items-center gap-2 px-8 py-3 bg-[#7c3aed] text-white font-bold rounded-xl hover:bg-[#6d28d9] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isUploading ? (
                     <>
@@ -656,31 +652,31 @@ export default function UploadPage() {
 
         {/* Help Tips */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-purple-100 flex items-start gap-3">
+          <div className="bg-white rounded-xl p-4 border border-[#f0f0f0] flex items-start gap-3" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}>
             <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0">
               <Zap className="w-5 h-5 text-amber-600" />
             </div>
             <div>
-              <h4 className="font-semibold text-gray-900 text-sm">{t.upload.fast}</h4>
-              <p className="text-xs text-gray-600">{t.upload.fastDesc}</p>
+              <h4 className="font-semibold text-[#0f0a1e] text-sm">{t.upload.fast}</h4>
+              <p className="text-xs text-[#6b7280]">{t.upload.fastDesc}</p>
             </div>
           </div>
-          <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-purple-100 flex items-start gap-3">
-            <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
-              <Sparkles className="w-5 h-5 text-purple-600" />
+          <div className="bg-white rounded-xl p-4 border border-[#f0f0f0] flex items-start gap-3" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}>
+            <div className="w-10 h-10 bg-[#faf5ff] rounded-lg flex items-center justify-center flex-shrink-0">
+              <Sparkles className="w-5 h-5 text-[#7c3aed]" />
             </div>
             <div>
-              <h4 className="font-semibold text-gray-900 text-sm">{t.upload.aiPrecision}</h4>
-              <p className="text-xs text-gray-600">{t.upload.aiPrecisionDesc}</p>
+              <h4 className="font-semibold text-[#0f0a1e] text-sm">{t.upload.aiPrecision}</h4>
+              <p className="text-xs text-[#6b7280]">{t.upload.aiPrecisionDesc}</p>
             </div>
           </div>
-          <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-purple-100 flex items-start gap-3">
+          <div className="bg-white rounded-xl p-4 border border-[#f0f0f0] flex items-start gap-3" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}>
             <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
               <Shield className="w-5 h-5 text-green-600" />
             </div>
             <div>
-              <h4 className="font-semibold text-gray-900 text-sm">{t.upload.secure}</h4>
-              <p className="text-xs text-gray-600">{t.upload.secureDesc}</p>
+              <h4 className="font-semibold text-[#0f0a1e] text-sm">{t.upload.secure}</h4>
+              <p className="text-xs text-[#6b7280]">{t.upload.secureDesc}</p>
             </div>
           </div>
         </div>

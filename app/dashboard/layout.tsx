@@ -10,7 +10,7 @@ export default function DashboardLayout({
 }) {
   return (
     <AuthGuard>
-      <div className="flex min-h-screen bg-gradient-to-br from-purple-50 via-white to-fuchsia-50">
+      <div className="flex min-h-screen bg-[#f8f9fb]">
         <DashboardSidebar />
         <main className="flex-1 min-w-0 overflow-hidden">
           {children}

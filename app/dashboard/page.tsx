@@ -39,16 +39,16 @@ function JobThumbnail({ job }: { job: Job }) {
 
   if (!src) {
     return (
-      <div className="w-16 h-16 md:w-20 md:h-20 rounded-lg bg-gradient-to-br from-purple-100 to-fuchsia-100 flex items-center justify-center shadow-md">
+      <div className="w-16 h-16 md:w-20 md:h-20 rounded-lg bg-[#f3f4f6] flex items-center justify-center">
         <ImageIcon className="w-8 h-8 text-gray-400" />
       </div>
     )
   }
 
   return (
-    <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden bg-gray-100 shadow-md group-hover:shadow-lg transition-shadow">
+    <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden bg-gray-100 group-hover:shadow-sm transition-shadow">
       {imgLoading && (
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-100 to-fuchsia-100 animate-pulse" />
+        <div className="absolute inset-0 bg-[#f3f4f6] animate-pulse" />
       )}
       <img
         src={src}
@@ -62,7 +62,7 @@ function JobThumbnail({ job }: { job: Job }) {
           target.nextElementSibling?.classList.remove('hidden')
         }}
       />
-      <div className="hidden absolute inset-0 bg-gradient-to-br from-purple-100 to-fuchsia-100 flex items-center justify-center">
+      <div className="hidden absolute inset-0 bg-[#f3f4f6] flex items-center justify-center">
         <ImageIcon className="w-8 h-8 text-gray-400" />
       </div>
       <div className="absolute top-1 right-1">
@@ -216,114 +216,90 @@ function DashboardContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-fuchsia-50 py-8 px-4 md:px-8 overflow-hidden relative">
-      {/* Background decoration matching home */}
-      <div className="absolute top-20 right-10 w-72 h-72 bg-fuchsia-200 rounded-full filter blur-3xl opacity-20 animate-pulse pointer-events-none"></div>
-      <div className="absolute bottom-20 left-10 w-72 h-72 bg-purple-200 rounded-full filter blur-3xl opacity-20 animate-pulse pointer-events-none" style={{ animationDelay: '1s' }}></div>
-
-      <div className="max-w-7xl mx-auto relative z-10">
-        {/* Header with Welcome Message */}
-        <div className="mb-8 text-center">
-          <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm mb-4 border border-purple-100">
-            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-            <span className="text-sm font-semibold text-gray-700">
-              {stats && stats.total > 0 ? `${stats.total} ${t.dashboard.jobsProcessed}` : t.dashboard.readyToProcess}
-            </span>
-          </div>
-          <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-2 leading-tight">
-            Welcome back, <span className="text-gradient">{user.name || user.email.split('@')[0]}</span>!
+    <div className="min-h-screen bg-[#f8f9fb] py-8 px-4 md:px-8">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-[#0f0a1e] leading-tight" style={{ fontFamily: 'Onest, sans-serif' }}>
+            Bentornato, {user.name || user.email.split('@')[0]}
           </h1>
-          <p className="text-base md:text-xl text-gray-600">
+          <p className="text-[#6b7280] mt-1 text-base">
             {t.dashboard.aiPoweredHub}
           </p>
         </div>
 
         {/* Stats Cards Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 mb-8">
           {/* Plan Card */}
-          <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border-2 border-purple-100 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-purple-100 rounded-full -mr-16 -mt-16 opacity-50"></div>
-            <div className="relative">
-              <div className="flex items-center justify-between mb-3 sm:mb-4">
-                <div className="h-9 w-9 sm:h-12 sm:w-12 rounded-xl gradient-purple-fuchsia flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
-                  <Award className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
-                </div>
-                <span className="px-2 py-1 sm:px-3 gradient-purple-fuchsia text-white text-xs font-bold rounded-full shadow-md">
-                  {user.subscription.plan_name.toUpperCase()}
-                </span>
+          <div className="bg-white rounded-2xl p-4 sm:p-6 border border-[#f0f0f0]" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}>
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
+              <div className="h-9 w-9 sm:h-11 sm:w-11 rounded-xl bg-[#7c3aed] flex items-center justify-center">
+                <Award className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
-              <p className="text-2xl sm:text-4xl font-bold text-gradient mb-1">{user.subscription.monthly_limit}</p>
-              <p className="text-xs sm:text-sm text-gray-600 font-semibold">{t.dashboard.jobsPerMonth}</p>
+              <span className="px-2 py-1 sm:px-3 bg-[#faf5ff] text-[#7c3aed] text-xs font-bold rounded-full">
+                {user.subscription.plan_name.toUpperCase()}
+              </span>
             </div>
+            <p className="text-2xl sm:text-4xl font-extrabold text-[#0f0a1e] mb-1" style={{ fontFamily: 'Onest, sans-serif' }}>{user.subscription.monthly_limit}</p>
+            <p className="text-xs sm:text-sm text-[#9ca3af]">{t.dashboard.jobsPerMonth}</p>
           </div>
 
           {/* Usage Card */}
-          <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border-2 border-purple-100 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-fuchsia-100 rounded-full -mr-16 -mt-16 opacity-50"></div>
-            <div className="relative">
-              <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                <div className="h-9 w-9 sm:h-12 sm:w-12 rounded-xl gradient-purple-fuchsia flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
-                  <TrendingUp className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
-                </div>
-                <h3 className="text-xs sm:text-sm font-bold text-gray-700 uppercase tracking-wider">{t.dashboard.usageLabel}</h3>
+          <div className="bg-white rounded-2xl p-4 sm:p-6 border border-[#f0f0f0]" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}>
+            <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+              <div className="h-9 w-9 sm:h-11 sm:w-11 rounded-xl bg-[#7c3aed] flex items-center justify-center">
+                <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
-              <div className="flex items-baseline gap-1 sm:gap-2 mb-3">
-                <p className="text-2xl sm:text-4xl font-bold text-gray-900">{user.subscription.current_period_uploads}</p>
-                <p className="text-base sm:text-xl text-gray-400 font-bold">/ {user.subscription.monthly_limit}</p>
-              </div>
-              <div className="relative w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                <div
-                  className="gradient-purple-fuchsia h-2 rounded-full transition-all duration-700 ease-out relative"
-                  style={{ width: `${Math.min(usagePercentage, 100)}%` }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent shimmer"></div>
-                </div>
-              </div>
-              <p className="text-xs text-gray-500 mt-2 font-medium">{Math.round(usagePercentage)}% used</p>
+              <h3 className="text-xs sm:text-sm font-semibold text-[#9ca3af] uppercase tracking-wider">{t.dashboard.usageLabel}</h3>
             </div>
+            <div className="flex items-baseline gap-1 sm:gap-2 mb-3">
+              <p className="text-2xl sm:text-4xl font-extrabold text-[#0f0a1e]" style={{ fontFamily: 'Onest, sans-serif' }}>{user.subscription.current_period_uploads}</p>
+              <p className="text-base sm:text-xl text-[#9ca3af] font-medium">/ {user.subscription.monthly_limit}</p>
+            </div>
+            <div className="relative w-full bg-[#f3f4f6] rounded-full h-2 overflow-hidden">
+              <div
+                className="h-2 rounded-full transition-all duration-700 ease-out bg-[#7c3aed]"
+                style={{ width: `${Math.min(usagePercentage, 100)}%` }}
+              />
+            </div>
+            <p className="text-xs text-[#9ca3af] mt-2">{Math.round(usagePercentage)}% used</p>
           </div>
 
           {/* Remaining Card */}
-          <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border-2 border-purple-100 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-green-100 rounded-full -mr-16 -mt-16 opacity-50"></div>
-            <div className="relative">
-              <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                <div className="h-9 w-9 sm:h-12 sm:w-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
-                  <Zap className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
-                </div>
-                <h3 className="text-xs sm:text-sm font-bold text-gray-700 uppercase tracking-wider">{t.dashboard.available}</h3>
+          <div className="bg-white rounded-2xl p-4 sm:p-6 border border-[#f0f0f0]" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}>
+            <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+              <div className="h-9 w-9 sm:h-11 sm:w-11 rounded-xl bg-green-500 flex items-center justify-center">
+                <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
-              <p className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-1">
-                {user.subscription.monthly_limit - user.subscription.current_period_uploads}
-              </p>
-              <p className="text-xs sm:text-sm text-gray-600 font-semibold">{t.dashboard.jobsLeft}</p>
-              {user.subscription.monthly_limit - user.subscription.current_period_uploads < user.subscription.monthly_limit / 2 && (
-                <Link
-                  href="/pricing"
-                  className="inline-flex items-center gap-1 text-xs sm:text-sm text-green-600 hover:text-emerald-600 font-bold mt-2 sm:mt-3 transition-all group-hover:gap-2"
-                >
-                  {t.dashboard.upgrade} <ArrowRight className="w-4 h-4" />
-                </Link>
-              )}
+              <h3 className="text-xs sm:text-sm font-semibold text-[#9ca3af] uppercase tracking-wider">{t.dashboard.available}</h3>
             </div>
+            <p className="text-2xl sm:text-4xl font-extrabold text-[#0f0a1e] mb-1" style={{ fontFamily: 'Onest, sans-serif' }}>
+              {user.subscription.monthly_limit - user.subscription.current_period_uploads}
+            </p>
+            <p className="text-xs sm:text-sm text-[#9ca3af]">{t.dashboard.jobsLeft}</p>
+            {user.subscription.monthly_limit - user.subscription.current_period_uploads < user.subscription.monthly_limit / 2 && (
+              <Link
+                href="/pricing"
+                className="inline-flex items-center gap-1 text-xs sm:text-sm text-[#7c3aed] hover:text-[#6d28d9] font-semibold mt-2 sm:mt-3 transition-colors"
+              >
+                {t.dashboard.upgrade} <ArrowRight className="w-4 h-4" />
+              </Link>
+            )}
           </div>
 
           {/* Success Rate Card */}
           {stats && stats.total > 0 && (
-            <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border-2 border-purple-100 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-amber-100 rounded-full -mr-16 -mt-16 opacity-50"></div>
-              <div className="relative">
-                <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                  <div className="h-9 w-9 sm:h-12 sm:w-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
-                    <Activity className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
-                  </div>
-                  <h3 className="text-xs sm:text-sm font-bold text-gray-700 uppercase tracking-wider">{t.dashboard.success}</h3>
+            <div className="bg-white rounded-2xl p-4 sm:p-6 border border-[#f0f0f0]" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}>
+              <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                <div className="h-9 w-9 sm:h-11 sm:w-11 rounded-xl bg-amber-500 flex items-center justify-center">
+                  <Activity className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </div>
-                <p className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent mb-1">
-                  {stats.successRate}%
-                </p>
-                <p className="text-xs sm:text-sm text-gray-600 font-semibold">{stats.completed} {t.onboarding.ofCompleted} {stats.total}</p>
+                <h3 className="text-xs sm:text-sm font-semibold text-[#9ca3af] uppercase tracking-wider">{t.dashboard.success}</h3>
               </div>
+              <p className="text-2xl sm:text-4xl font-extrabold text-[#0f0a1e] mb-1" style={{ fontFamily: 'Onest, sans-serif' }}>
+                {stats.successRate}%
+              </p>
+              <p className="text-xs sm:text-sm text-[#9ca3af]">{stats.completed} {t.onboarding.ofCompleted} {stats.total}</p>
             </div>
           )}
         </div>
@@ -347,7 +323,7 @@ function DashboardContent() {
         <div className="mb-8">
           <Link
             href="/upload"
-            className="inline-flex items-center gap-3 gradient-purple-fuchsia text-white px-8 py-4 rounded-xl font-bold hover:scale-105 transition-all duration-300 shadow-lg glow-purple"
+            className="inline-flex items-center gap-3 bg-[#7c3aed] text-white px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-[#6d28d9] transition-colors"
           >
             <Upload className="w-5 h-5" />
             {t.dashboard.uploadNewImages}
@@ -355,13 +331,13 @@ function DashboardContent() {
         </div>
 
         {/* Recent Jobs */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 md:p-6 border-2 border-purple-100 shadow-lg" id="recent-jobs">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-              <Clock className="w-6 h-6 text-purple-600" />
+        <div className="bg-white rounded-2xl border border-[#f0f0f0] overflow-hidden" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }} id="recent-jobs">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-4 md:p-6 border-b border-[#f0f0f0]">
+            <h2 className="text-lg font-bold text-[#0f0a1e] flex items-center gap-2" style={{ fontFamily: 'Onest, sans-serif' }}>
+              <Clock className="w-5 h-5 text-[#7c3aed]" />
               {t.dashboard.recentJobs}
               {filteredJobs.length !== recentJobs.length && (
-                <span className="text-sm font-normal text-gray-500">
+                <span className="text-sm font-normal text-[#9ca3af]">
                   ({filteredJobs.length} of {recentJobs.length})
                 </span>
               )}
@@ -388,12 +364,12 @@ function DashboardContent() {
                     <button
                       key={filter}
                       onClick={() => setStatusFilter(filter)}
-                      className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${statusFilter === filter
-                        ? 'gradient-purple-fuchsia text-white shadow-md'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      className={`px-3 py-1.5 rounded-lg font-semibold text-sm transition-all ${statusFilter === filter
+                        ? 'bg-[#7c3aed] text-white'
+                        : 'bg-[#f3f4f6] text-[#6b7280] hover:bg-[#e9ecef]'
                         }`}
                     >
-                      <span className="flex items-center gap-2">
+                      <span className="flex items-center gap-1.5">
                         {filter === 'all' && <Filter className="w-4 h-4" />}
                         {filter === 'completed' && <CheckCircle className="w-4 h-4" />}
                         {filter === 'processing' && <Loader className="w-4 h-4" />}
@@ -409,125 +385,127 @@ function DashboardContent() {
             )}
           </div>
 
-          {isLoading ? (
-            <div className="text-center py-12">
-              <Loader className="w-8 h-8 text-primary-600 animate-spin mx-auto" />
-            </div>
-          ) : recentJobs.length === 0 ? (
-            <EmptyState
-              icon={Upload}
-              title={t.dashboard.noJobsTitle}
-              description={t.dashboard.noJobsDesc}
-              actionLabel={t.dashboard.uploadNow}
-              actionHref="/upload"
-              secondaryLabel={t.dashboard.watchDemo}
-              onSecondaryAction={() => window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank')}
-              tips={[
-                t.dashboard.tipJpgPng,
-                t.dashboard.tipBackground,
-                t.dashboard.tipBulk,
-              ]}
-            />
-          ) : filteredJobs.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-gray-500 font-medium">{t.dashboard.noJobsStatus} {statusFilter}</p>
-              <button
-                onClick={() => setStatusFilter('all')}
-                className="mt-4 px-4 py-2 gradient-purple-fuchsia text-white rounded-lg font-semibold hover:scale-105 transition-all"
-              >
-                {t.dashboard.showAllJobs}
-              </button>
-            </div>
-          ) : (
-            <div className="space-y-3">
-              {filteredJobs.map((job, index) => (
-                <Link
-                  key={job.job_id}
-                  href={`/dashboard/jobs/${job.job_id}`}
-                  className="flex items-center gap-2 md:gap-4 p-3 md:p-4 border-2 border-gray-200 rounded-xl hover:border-fuchsia-300 hover:bg-purple-50/50 transition-all cursor-pointer group animate-fade-in-up overflow-hidden"
-                  style={{ animationDelay: `${index * 0.05}s` }}
+          <div className="p-4 md:p-6">
+            {isLoading ? (
+              <div className="text-center py-12">
+                <Loader className="w-8 h-8 text-[#7c3aed] animate-spin mx-auto" />
+              </div>
+            ) : recentJobs.length === 0 ? (
+              <EmptyState
+                icon={Upload}
+                title={t.dashboard.noJobsTitle}
+                description={t.dashboard.noJobsDesc}
+                actionLabel={t.dashboard.uploadNow}
+                actionHref="/upload"
+                secondaryLabel={t.dashboard.watchDemo}
+                onSecondaryAction={() => window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank')}
+                tips={[
+                  t.dashboard.tipJpgPng,
+                  t.dashboard.tipBackground,
+                  t.dashboard.tipBulk,
+                ]}
+              />
+            ) : filteredJobs.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-[#6b7280] font-medium">{t.dashboard.noJobsStatus} {statusFilter}</p>
+                <button
+                  onClick={() => setStatusFilter('all')}
+                  className="mt-4 px-4 py-2 bg-[#7c3aed] text-white rounded-lg font-semibold hover:bg-[#6d28d9] transition-colors"
                 >
-                  {/* Thumbnail */}
-                  <div className="flex-shrink-0">
-                    <JobThumbnail job={job} />
-                  </div>
-
-                  {/* Job Info */}
-                  <div className="flex-grow min-w-0">
-                    <p className="font-bold text-gray-900 group-hover:text-gradient transition-colors truncate">
-                      {job.job_name || job.metadata?.original_filename || 'Untitled'}
-                    </p>
-                    <div className="flex items-center gap-3 mt-1 flex-wrap">
-                      <p className="text-sm text-gray-500 font-medium">
-                        {new Date(job.created_at).toLocaleDateString()} at{' '}
-                        {new Date(job.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                      </p>
-                      {job.metadata?.image_count && job.metadata.image_count > 1 && (
-                        <span className="flex items-center gap-1 text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded-full font-semibold">
-                          <ImageIcon className="w-3 h-3" />
-                          {job.metadata.image_count} images
-                        </span>
-                      )}
-                      {job.metadata?.batch_mode && (
-                        <span className="text-xs bg-fuchsia-100 text-fuchsia-700 px-2 py-1 rounded-full font-semibold">
-                          {t.dashboard.batch}
-                        </span>
-                      )}
+                  {t.dashboard.showAllJobs}
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                {filteredJobs.map((job, index) => (
+                  <Link
+                    key={job.job_id}
+                    href={`/dashboard/jobs/${job.job_id}`}
+                    className="flex items-center gap-2 md:gap-4 p-3 md:p-4 border border-[#f0f0f0] rounded-xl hover:border-[#e9d5ff] hover:bg-[#faf5ff] transition-all cursor-pointer group animate-fade-in-up overflow-hidden"
+                    style={{ animationDelay: `${index * 0.05}s` }}
+                  >
+                    {/* Thumbnail */}
+                    <div className="flex-shrink-0">
+                      <JobThumbnail job={job} />
                     </div>
-                  </div>
 
-                  {/* Progress for processing/batch jobs */}
-                  {(job.status === 'processing' || job.status === 'pending') && (job.batch_mode || job.metadata?.batch_mode) && (
-                    <div className="hidden md:flex items-center gap-3 flex-shrink-0 min-w-[140px]">
-                      <div className="w-full">
-                        <div className="flex justify-between text-xs font-semibold text-gray-600 mb-1">
-                          <span>{job.processed_count ?? 0}/{job.image_count ?? job.metadata?.image_count ?? 0}</span>
-                          <span>{job.image_count ? Math.round(((job.processed_count ?? 0) / job.image_count) * 100) : 0}%</span>
-                        </div>
-                        <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                          <div
-                            className="gradient-purple-fuchsia h-2 rounded-full transition-all duration-500"
-                            style={{ width: `${job.image_count ? Math.round(((job.processed_count ?? 0) / job.image_count) * 100) : 0}%` }}
-                          />
-                        </div>
+                    {/* Job Info */}
+                    <div className="flex-grow min-w-0">
+                      <p className="font-semibold text-[#0f0a1e] group-hover:text-[#7c3aed] transition-colors truncate">
+                        {job.job_name || job.metadata?.original_filename || 'Untitled'}
+                      </p>
+                      <div className="flex items-center gap-3 mt-1 flex-wrap">
+                        <p className="text-sm text-[#9ca3af]">
+                          {new Date(job.created_at).toLocaleDateString()} at{' '}
+                          {new Date(job.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </p>
+                        {job.metadata?.image_count && job.metadata.image_count > 1 && (
+                          <span className="flex items-center gap-1 text-xs bg-[#faf5ff] text-[#7c3aed] px-2 py-1 rounded-full font-semibold">
+                            <ImageIcon className="w-3 h-3" />
+                            {job.metadata.image_count} images
+                          </span>
+                        )}
+                        {job.metadata?.batch_mode && (
+                          <span className="text-xs bg-[#faf5ff] text-[#7c3aed] px-2 py-1 rounded-full font-semibold">
+                            {t.dashboard.batch}
+                          </span>
+                        )}
                       </div>
                     </div>
-                  )}
 
-                  {/* Status and Actions */}
-                  <div className="flex items-center gap-2 flex-shrink-0">
-                    <span
-                      className={`hidden sm:inline-block px-3 py-1 text-xs font-bold rounded-full ${job.status === 'completed'
-                        ? 'bg-green-100 text-green-700'
-                        : job.status === 'processing'
-                          ? 'bg-blue-100 text-blue-700'
-                          : job.status === 'failed'
-                            ? 'bg-red-100 text-red-700'
-                            : 'bg-gray-100 text-gray-700'
-                        }`}
-                    >
-                      {job.status === 'processing' && (job.batch_mode || job.metadata?.batch_mode)
-                        ? `${job.processed_count ?? 0}/${job.image_count ?? job.metadata?.image_count ?? '?'}`
-                        : job.status}
-                    </span>
-
-                    {job.status === 'completed' && (
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault()
-                          handleDownload(job.job_id)
-                        }}
-                        className="flex items-center gap-1 md:gap-2 px-2 md:px-4 py-2 gradient-purple-fuchsia text-white rounded-lg font-bold hover:scale-105 transition-all shadow-md text-sm"
-                      >
-                        <Download className="w-4 h-4" />
-                        <span className="hidden md:inline">{t.dashboard.download}</span>
-                      </button>
+                    {/* Progress for processing/batch jobs */}
+                    {(job.status === 'processing' || job.status === 'pending') && (job.batch_mode || job.metadata?.batch_mode) && (
+                      <div className="hidden md:flex items-center gap-3 flex-shrink-0 min-w-[140px]">
+                        <div className="w-full">
+                          <div className="flex justify-between text-xs font-semibold text-[#6b7280] mb-1">
+                            <span>{job.processed_count ?? 0}/{job.image_count ?? job.metadata?.image_count ?? 0}</span>
+                            <span>{job.image_count ? Math.round(((job.processed_count ?? 0) / job.image_count) * 100) : 0}%</span>
+                          </div>
+                          <div className="w-full bg-[#f3f4f6] rounded-full h-2 overflow-hidden">
+                            <div
+                              className="bg-[#7c3aed] h-2 rounded-full transition-all duration-500"
+                              style={{ width: `${job.image_count ? Math.round(((job.processed_count ?? 0) / job.image_count) * 100) : 0}%` }}
+                            />
+                          </div>
+                        </div>
+                      </div>
                     )}
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
+
+                    {/* Status and Actions */}
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      <span
+                        className={`hidden sm:inline-block px-3 py-1 text-xs font-bold rounded-full ${job.status === 'completed'
+                          ? 'bg-green-100 text-green-700'
+                          : job.status === 'processing'
+                            ? 'bg-blue-100 text-blue-700'
+                            : job.status === 'failed'
+                              ? 'bg-red-100 text-red-700'
+                              : 'bg-[#f3f4f6] text-[#6b7280]'
+                          }`}
+                      >
+                        {job.status === 'processing' && (job.batch_mode || job.metadata?.batch_mode)
+                          ? `${job.processed_count ?? 0}/${job.image_count ?? job.metadata?.image_count ?? '?'}`
+                          : job.status}
+                      </span>
+
+                      {job.status === 'completed' && (
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault()
+                            handleDownload(job.job_id)
+                          }}
+                          className="flex items-center gap-1 md:gap-2 px-2 md:px-4 py-2 bg-[#7c3aed] text-white rounded-lg font-semibold hover:bg-[#6d28d9] transition-colors text-sm"
+                        >
+                          <Download className="w-4 h-4" />
+                          <span className="hidden md:inline">{t.dashboard.download}</span>
+                        </button>
+                      )}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Post-Download Modal */}

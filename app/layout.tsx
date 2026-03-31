@@ -1,12 +1,9 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
 import { AppProviders } from '@/components/providers/AppProviders'
 import { Analytics } from '@vercel/analytics/next'
 import CookieBanner from '@/components/CookieBanner'
 import './globals.css'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Centyr - Align Product Photos Automatically | AI Image Alignment for E-commerce',
@@ -41,7 +38,7 @@ export default function RootLayout({
         </head>
 
       </head>
-      <body className={inter.className}>
+      <body>
         <AppProviders>
           {children}
           <Toaster

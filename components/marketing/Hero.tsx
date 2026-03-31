@@ -1,147 +1,154 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslations } from '@/contexts/LanguageContext'
 
 export default function Hero() {
   const t = useTranslations()
   const [sliderPosition, setSliderPosition] = useState(50)
   const [isDragging, setIsDragging] = useState(false)
+  const [photoCount, setPhotoCount] = useState(48312)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPhotoCount(prev => prev + Math.floor(Math.random() * 3))
+    }, 2800)
+    return () => clearInterval(interval)
+  }, [])
 
   const handleMouseDown = () => setIsDragging(true)
   const handleMouseUp = () => setIsDragging(false)
-
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!isDragging) return
     const rect = e.currentTarget.getBoundingClientRect()
     const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width))
-    const percent = Math.max(0, Math.min((x / rect.width) * 100, 100))
-    setSliderPosition(percent)
+    setSliderPosition(Math.max(0, Math.min((x / rect.width) * 100, 100)))
   }
-
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
     if (!isDragging) return
     const rect = e.currentTarget.getBoundingClientRect()
     const x = Math.max(0, Math.min(e.touches[0].clientX - rect.left, rect.width))
-    const percent = Math.max(0, Math.min((x / rect.width) * 100, 100))
-    setSliderPosition(percent)
+    setSliderPosition(Math.max(0, Math.min((x / rect.width) * 100, 100)))
   }
 
   return (
-    <section className="relative bg-gradient-to-br from-purple-50 via-white to-fuchsia-50 py-20 md:py-32 overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute top-20 right-10 w-72 h-72 bg-fuchsia-200 rounded-full filter blur-3xl opacity-20 animate-pulse"></div>
-      <div className="absolute bottom-20 left-10 w-72 h-72 bg-purple-200 rounded-full filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: '1s' }}></div>
+    <section className="hero-v3">
+        <div className="hero-v3-bg" />
+        <div className="hero-v3-glow" />
+        <div className="hero-v3-glow2" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm mb-6 border border-purple-100">
-            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-            <span className="text-sm font-semibold text-gray-700">{t.marketing.hero.badge}</span>
-          </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
 
-          <h1 className="text-4xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
-            {t.marketing.hero.title}<br />
-            <span className="text-gradient">{t.marketing.hero.titleHighlight}</span>
-          </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            {t.marketing.hero.subtitle}
-          </p>
+            {/* Copy */}
+            <div className="v3-content">
+              <div>
+                <div className="hero-v3-badge">
+                  <span className="hero-v3-badge-dot" />
+                  {t.marketing.hero.badge}
+                </div>
+              </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/signup"
-              className="gradient-purple-fuchsia text-white px-8 py-4 rounded-xl text-lg font-bold hover:scale-105 transition-all duration-300 shadow-lg inline-flex items-center justify-center gap-2"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-              {t.marketing.hero.ctaPrimary}
-            </Link>
-            <Link
-              href="#pricing"
-              className="bg-white text-purple-600 px-8 py-4 rounded-xl text-lg font-bold hover:scale-105 transition-all duration-300 shadow-lg border-2 border-purple-200 inline-flex items-center justify-center gap-2"
-            >
-              {t.marketing.hero.ctaSecondary}
-            </Link>
-          </div>
+              <h1 className="hero-v3-title">
+                {t.marketing.hero.title}<br />
+                <span className="highlight">{t.marketing.hero.titleHighlight}</span>
+              </h1>
 
-          {/* Trust indicators */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6 text-sm text-gray-500">
-            <div className="flex items-center gap-2">
-              <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              <span>{t.marketing.hero.trustNoCreditCard}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              <span>{t.marketing.hero.trustFreeJobs}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
-              <span>{t.marketing.hero.trustMoneyBack}</span>
-            </div>
-          </div>
-        </div>
+              <p className="hero-v3-sub">{t.marketing.hero.subtitle}</p>
 
-        {/* Before/After Slider */}
-        <div className="max-w-4xl mx-auto">
-          <div
-            className="relative aspect-square bg-gray-100 rounded-2xl overflow-hidden shadow-2xl cursor-ew-resize select-none"
-            onMouseMove={handleMouseMove}
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseUp}
-            onTouchStart={handleMouseDown}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleMouseUp}
-          >
-            {/* AFTER Image (Bottom Layer) */}
-            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-purple-50 via-fuchsia-50 to-white">
-              <img src="before.png" alt="" />
-            </div>
+              <div className="hero-v3-ctas">
+                <Link href="/signup" className="v3-cta-main">
+                  <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                  {t.marketing.hero.ctaPrimary}
+                </Link>
+                <Link href="#pricing" className="v3-cta-ghost">
+                  {t.marketing.hero.ctaSecondary}
+                  <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              </div>
 
-            {/* BEFORE Image (Top Layer with Clip) */}
-            <div
-              className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200"
-              style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
-            >
-              <img src="after.png" alt="" />
+              <div className="hero-v3-trust">
+                {[
+                  t.marketing.hero.trustNoCreditCard,
+                  t.marketing.hero.trustFreeJobs,
+                  t.marketing.hero.trustMoneyBack,
+                ].map((item) => (
+                  <div key={item} className="v3-trust-item">
+                    <div className="v3-trust-icon">
+                      <svg width="8" height="8" fill="none" stroke="#16a34a" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    {item}
+                  </div>
+                ))}
+              </div>
 
-            </div>
-
-            {/* Slider Line */}
-            <div
-              className="absolute top-0 bottom-0 w-1 bg-purple-500 shadow-lg"
-              style={{ left: `${sliderPosition}%` }}
-            >
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
-                </svg>
+              <div>
+                <div className="v3-counter">
+                  <svg width="7" height="7" viewBox="0 0 8 8" fill="#22c55e">
+                    <circle cx="4" cy="4" r="4" />
+                  </svg>
+                  <span><strong>{photoCount.toLocaleString('it-IT')}</strong> foto elaborate oggi</span>
+                </div>
               </div>
             </div>
 
-            {/* Labels */}
-            <div className="absolute top-4 left-4 bg-black/50 text-white px-3 py-1 rounded text-sm font-semibold">
-              {t.marketing.hero.before}
-            </div>
-            <div className="absolute top-4 right-4 bg-black/50 text-white px-3 py-1 rounded text-sm font-semibold">
-              {t.marketing.hero.after}
-            </div>
-          </div>
+            {/* Slider */}
+            <div className="v3-visual">
+              <div
+                className="v3-slider-wrap"
+                onMouseMove={handleMouseMove}
+                onMouseDown={handleMouseDown}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseUp}
+                onTouchStart={handleMouseDown}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleMouseUp}
+              >
+                <div className="absolute inset-0 bg-gray-100">
+                  <img src="/before.png" alt="Prima" className="w-full h-full object-cover" />
+                </div>
+                <div
+                  className="absolute inset-0 bg-white"
+                  style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+                >
+                  <img src="/after.png" alt="Dopo" className="w-full h-full object-cover" />
+                </div>
 
-          <p className="text-center text-sm text-gray-500 mt-4">
-            {t.marketing.hero.dragToCompare}
-          </p>
+                <div className="v3-slider-label" style={{ left: 14 }}>{t.marketing.hero.before}</div>
+                <div className="v3-slider-label" style={{ right: 14 }}>{t.marketing.hero.after}</div>
+
+                <div className="v3-slider-line" style={{ left: `${sliderPosition}%` }}>
+                  <div className="v3-slider-handle">
+                    <svg width="18" height="18" fill="none" stroke="#7c3aed" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                    </svg>
+                  </div>
+                </div>
+
+                {/* Floating chip */}
+                <div className="v3-result-chip">
+                  <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e', boxShadow: '0 0 6px rgba(34,197,94,0.8)', flexShrink: 0 }} />
+                  <div>
+                    <div className="v3-result-chip-text">Elaborato in 18 sec</div>
+                    <div className="v3-result-chip-sub">2000 × 2000px · WEBP</div>
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-center text-xs mt-3 text-gray-400" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                {t.marketing.hero.dragToCompare}
+              </p>
+            </div>
+
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
   )
 }
