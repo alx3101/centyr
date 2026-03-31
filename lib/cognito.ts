@@ -138,44 +138,48 @@ export function cognitoResendCode(email: string): Promise<CognitoAuthResult> {
 }
 
 /**
- * Sign in a user
+ * Sign in a user via USER_PASSWORD_AUTH (avoids SRP username/alias mismatch)
  */
-export function cognitoSignIn(
+export async function cognitoSignIn(
   email: string,
   password: string
 ): Promise<CognitoAuthResult> {
-  return new Promise((resolve) => {
-    const authenticationData = {
-      Username: email,
-      Password: password,
-    }
+  const region = process.env.NEXT_PUBLIC_COGNITO_REGION || 'eu-west-3'
+  const clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID || ''
 
-    const authenticationDetails = new AuthenticationDetails(authenticationData)
-
-    const userData = {
-      Username: email,
-      Pool: userPool,
-    }
-
-    const cognitoUser = new CognitoUser(userData)
-
-    cognitoUser.authenticateUser(authenticationDetails, {
-      onSuccess: (session: CognitoUserSession) => {
-        resolve({
-          success: true,
-          idToken: session.getIdToken().getJwtToken(),
-          accessToken: session.getAccessToken().getJwtToken(),
-          refreshToken: session.getRefreshToken().getToken(),
-        })
+  try {
+    const res = await fetch(`https://cognito-idp.${region}.amazonaws.com/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-amz-json-1.1',
+        'X-Amz-Target': 'AWSCognitoIdentityProviderService.InitiateAuth',
       },
-      onFailure: (err) => {
-        resolve({
-          success: false,
-          error: err.message || 'Sign in failed',
-        })
-      },
+      body: JSON.stringify({
+        AuthFlow: 'USER_PASSWORD_AUTH',
+        ClientId: clientId,
+        AuthParameters: {
+          USERNAME: email,
+          PASSWORD: password,
+        },
+      }),
     })
-  })
+
+    const data = await res.json()
+
+    if (!res.ok) {
+      return { success: false, error: data.message || 'Sign in failed' }
+    }
+
+    const result = data.AuthenticationResult
+    return {
+      success: true,
+      idToken: result.IdToken,
+      accessToken: result.AccessToken,
+      refreshToken: result.RefreshToken,
+    }
+  } catch (err: any) {
+    return { success: false, error: err.message || 'Sign in failed' }
+  }
 }
 
 /**

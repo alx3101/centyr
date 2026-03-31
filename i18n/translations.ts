@@ -783,7 +783,7 @@ export const translations: Record<Language, Translations> = {
       freeJobsBadge: '3 free jobs/month',
       noCreditCard: 'No credit card required',
       setupIn60: 'Setup in 60 seconds',
-      startFreeJobsBadge: '🎉 Start with 3 free jobs/month',
+      startFreeJobsBadge: 'Start with 3 free jobs/month',
     },
 
     dashboard: {
@@ -973,7 +973,7 @@ export const translations: Record<Language, Translations> = {
       processing: 'Processing...',
       monthlyUsage: 'Monthly Usage',
       remainingImages: 'Remaining',
-      warningLow: "⚠️ You're running low on images!",
+      warningLow: "You're running low on images!",
       upgradeNow: 'Upgrade now',
       quotaExceeded: 'Monthly limit exceeded. Please upgrade your plan.',
       maxFiles: 'Maximum files per upload',
@@ -1084,18 +1084,18 @@ export const translations: Record<Language, Translations> = {
     },
 
     onboarding: {
-      title: '🚀 Get Started with Centyr',
+      title: 'Get Started with Centyr',
       subtitle: 'Complete these steps to unlock the full potential',
       ofCompleted: 'of',
       completed: 'completed',
-      congratulations: '🎉 Congratulations!',
+      congratulations: 'Congratulations!',
       congratulationsDesc: "You've completed the onboarding. You're all set to create amazing aligned images!",
     },
 
     postDownload: {
-      title: 'Download Complete! ✨',
+      title: 'Download Complete!',
       subtitle: 'Your perfectly aligned image is ready',
-      runningLow: '⚠️ Running Low on Credits',
+      runningLow: 'Running Low on Credits',
       runningLowDesc: 'You have {remaining}/{total} uploads remaining this month',
       upgradePro: 'Upgrade to Pro',
       upgradeProDesc: 'Get unlimited uploads, bulk processing, and priority support for just $19/month',
@@ -1149,8 +1149,8 @@ export const translations: Record<Language, Translations> = {
       upgradeMessage: 'Upgrade your plan for more images',
       dailyLimit: 'Daily limit reached',
       monthlyLimit: 'Monthly limit reached',
-      limitReached: '🚨 Monthly Limit Reached',
-      runningLow: '⚠️ Running Low on Credits',
+      limitReached: 'Monthly Limit Reached',
+      runningLow: 'Running Low on Credits',
       usedAll: "You've used all {limit} images this month. Upgrade to Pro for unlimited uploads!",
       usedPartial: "You've used {current}/{limit} images this month. Only {remaining} left!",
       upgradeTitle: 'Upgrade to Pro and get:',
@@ -1475,7 +1475,7 @@ export const translations: Record<Language, Translations> = {
       freeJobsBadge: '3 jobs gratuiti/mese',
       noCreditCard: 'Nessuna carta di credito richiesta',
       setupIn60: 'Configurazione in 60 secondi',
-      startFreeJobsBadge: '🎉 Inizia con 3 jobs gratuiti/mese',
+      startFreeJobsBadge: 'Inizia con 3 jobs gratuiti/mese',
     },
 
     dashboard: {
@@ -1665,7 +1665,7 @@ export const translations: Record<Language, Translations> = {
       processing: 'Elaborazione...',
       monthlyUsage: 'Utilizzo Mensile',
       remainingImages: 'Rimanenti',
-      warningLow: '⚠️ Stai esaurendo le immagini!',
+      warningLow: 'Stai esaurendo le immagini!',
       upgradeNow: 'Aggiorna ora',
       quotaExceeded: 'Limite mensile superato. Aggiorna il tuo piano.',
       maxFiles: 'Massimo file per caricamento',
@@ -1776,18 +1776,18 @@ export const translations: Record<Language, Translations> = {
     },
 
     onboarding: {
-      title: '🚀 Inizia con Centyr',
+      title: 'Inizia con Centyr',
       subtitle: 'Completa questi passaggi per sbloccare tutto il potenziale',
       ofCompleted: 'di',
       completed: 'completati',
-      congratulations: '🎉 Congratulazioni!',
+      congratulations: 'Congratulazioni!',
       congratulationsDesc: "Hai completato l'onboarding. Sei pronto per creare immagini allineate perfettamente!",
     },
 
     postDownload: {
-      title: 'Download Completato! ✨',
+      title: 'Download Completato!',
       subtitle: 'La tua immagine perfettamente allineata è pronta',
-      runningLow: '⚠️ Crediti in Esaurimento',
+      runningLow: 'Crediti in Esaurimento',
       runningLowDesc: 'Hai {remaining}/{total} caricamenti rimanenti questo mese',
       upgradePro: 'Passa a Pro',
       upgradeProDesc: 'Ottieni caricamenti illimitati, elaborazione in blocco e supporto prioritario a soli $19/mese',
@@ -1841,8 +1841,8 @@ export const translations: Record<Language, Translations> = {
       upgradeMessage: 'Aggiorna il tuo piano per più immagini',
       dailyLimit: 'Limite giornaliero raggiunto',
       monthlyLimit: 'Limite mensile raggiunto',
-      limitReached: '🚨 Limite Mensile Raggiunto',
-      runningLow: '⚠️ Crediti in Esaurimento',
+      limitReached: 'Limite Mensile Raggiunto',
+      runningLow: 'Crediti in Esaurimento',
       usedAll: "Hai usato tutte le {limit} immagini di questo mese. Passa a Pro per caricamenti illimitati!",
       usedPartial: "Hai usato {current}/{limit} immagini questo mese. Ne restano solo {remaining}!",
       upgradeTitle: 'Passa a Pro e ottieni:',
