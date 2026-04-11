@@ -168,7 +168,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
    */
   const refreshUser = useCallback(async () => {
     try {
-      const idToken = await cognitoGetIdToken()
+      // Try SDK session first, fallback to localStorage (covers OAuth + direct API login)
+      let idToken = await cognitoGetIdToken()
+      if (!idToken) {
+        idToken = localStorage.getItem('auth_token')
+      }
 
       if (!idToken) {
         logout()
