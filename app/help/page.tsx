@@ -19,11 +19,11 @@ const faqs = [
   {
     en: {
       q: 'What image formats are supported?',
-      a: 'We accept JPG, PNG, and WEBP. Output is always generated as PNG (lossless) or JPG. Maximum file size per image is 25 MB.',
+      a: 'We accept JPG, PNG, WEBP, and AVIF. Output is always generated as PNG (lossless) or JPG. Maximum file size per image is 25 MB.',
     },
     it: {
       q: 'Quali formati immagine sono supportati?',
-      a: 'Accettiamo JPG, PNG e WEBP. L\'output viene sempre generato come PNG (lossless) o JPG. La dimensione massima per immagine è 25 MB.',
+      a: 'Accettiamo JPG, PNG, WEBP e AVIF. L\'output viene sempre generato come PNG (lossless) o JPG. La dimensione massima per immagine è 25 MB.',
     },
   },
   {

@@ -90,6 +90,7 @@ export default function UploadPage() {
       'image/jpeg': ['.jpg', '.jpeg'],
       'image/png': ['.png'],
       'image/webp': ['.webp'],
+      'image/avif': ['.avif'],
     },
     maxSize: 50 * 1024 * 1024,
     maxFiles: maxBatchSize,
@@ -260,6 +261,7 @@ export default function UploadPage() {
                     <span className="px-3 py-1 bg-[#faf5ff] text-[#7c3aed] rounded-full text-sm">JPG</span>
                     <span className="px-3 py-1 bg-[#faf5ff] text-[#7c3aed] rounded-full text-sm">PNG</span>
                     <span className="px-3 py-1 bg-[#faf5ff] text-[#7c3aed] rounded-full text-sm">WebP</span>
+                    <span className="px-3 py-1 bg-[#faf5ff] text-[#7c3aed] rounded-full text-sm">AVIF</span>
                     <span className="px-3 py-1 bg-[#f3f4f6] text-[#6b7280] rounded-full text-sm">Max 50MB</span>
                   </div>
                 </div>
@@ -408,7 +410,7 @@ export default function UploadPage() {
                         <label className="flex items-center justify-center h-24 border-2 border-dashed border-[#e9d5ff] rounded-xl cursor-pointer hover:border-[#7c3aed] hover:bg-white transition-all">
                           <input
                             type="file"
-                            accept="image/jpeg,image/png,image/webp"
+                            accept="image/jpeg,image/png,image/webp,image/avif"
                             onChange={(e) => {
                               const file = e.target.files?.[0]
                               if (file) {
