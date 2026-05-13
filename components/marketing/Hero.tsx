@@ -96,13 +96,13 @@ export default function Hero() {
                 onTouchEnd={handleMouseUp}
               >
                 <div className="absolute inset-0 bg-gray-100">
-                  <img src="/before.png" alt="Prima" className="w-full h-full object-cover" />
+                  <img src="/before.webp" alt="Prima" className="w-full h-full object-cover" width={1200} height={1200} fetchPriority="high" />
                 </div>
                 <div
                   className="absolute inset-0 bg-white"
                   style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
                 >
-                  <img src="/after.png" alt="Dopo" className="w-full h-full object-cover" />
+                  <img src="/after.webp" alt="Dopo" className="w-full h-full object-cover" width={1200} height={1200} />
                 </div>
 
                 <div className="v3-slider-label" style={{ left: 14 }}>{t.marketing.hero.before}</div>

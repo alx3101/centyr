@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800;900&display=swap');
+/* Font loaded via <link> in layout.tsx head — removed @import to avoid render-blocking */
 
 @tailwind base;
 @tailwind components;

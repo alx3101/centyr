@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { cookies } from 'next/headers'
 import { Toaster } from 'react-hot-toast'
 import { AppProviders } from '@/components/providers/AppProviders'
 import { Analytics } from '@vercel/analytics/next'
@@ -16,30 +17,33 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const cookieStore = await cookies()
+  const langCookie = cookieStore.get('centyr_language')?.value
+  const initialLanguage = langCookie === 'it' ? 'it' : 'en'
+
   return (
-    <html lang="en">
+    <html lang={initialLanguage}>
       <head>
+        <link rel="preload" as="image" href="/before.webp" />
         <script
           async
           src="https://js.stripe.com/v3/pricing-table.js">
         </script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <head>
-          <link rel="icon" href="/favicon.ico" />
-          <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-          <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-          <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        </head>
-
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800;900&display=swap" />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
       </head>
       <body>
-        <AppProviders>
+        <AppProviders initialLanguage={initialLanguage}>
           {children}
           <Toaster
             position="top-right"

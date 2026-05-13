@@ -9,13 +9,10 @@ import { AppShell } from '@/components/layout/AppShell'
 
 interface AppProvidersProps {
   children: React.ReactNode
+  initialLanguage?: 'en' | 'it'
 }
 
-/**
- * AppProviders - Wrapper per tutti i context providers dell'app
- * Include anche AppShell per gestire layout globale (Navbar + Footer)
- */
-export function AppProviders({ children }: AppProvidersProps) {
+export function AppProviders({ children, initialLanguage = 'en' }: AppProvidersProps) {
   // Create QueryClient inside component to avoid SSR issues
   const [queryClient] = useState(
     () =>
@@ -35,7 +32,7 @@ export function AppProviders({ children }: AppProvidersProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <LanguageProvider>
+      <LanguageProvider initialLanguage={initialLanguage}>
         <AuthProvider>
           <ConfirmProvider>
             <AppShell>

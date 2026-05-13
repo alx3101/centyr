@@ -109,7 +109,7 @@ export default function Pricing() {
 
         {/* Plans Grid */}
         {!isLoading && filteredPlans.length > 0 && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-12">
+          <div className="flex flex-wrap justify-center gap-4 mb-12">
             {filteredPlans.map((plan, index) => {
               const key = plan.name.toLowerCase() as keyof typeof planInfo
               const translated = planInfo[key]
@@ -117,25 +117,26 @@ export default function Pricing() {
               const features = translated?.features?.length ? translated.features : plan.features
 
               return (
-                <PricingCard
-                  key={plan.stripe_product_id}
-                  plan={plan}
-                  billingPeriod={billingPeriod}
-                  isCurrent={false}
-                  isLoading={loadingPlanId === plan.stripe_product_id}
-                  anyLoading={loadingPlanId !== null}
-                  features={features}
-                  description={description}
-                  onSelect={() => handlePlanClick(plan)}
-                  labels={{
-                    current: 'Piano attuale',
-                    startFree: t.marketing.pricing.startFree,
-                    upgrade: t.marketing.pricing.upgrade,
-                    perMonth: t.marketing.pricing.perMonth,
-                    billedYearly: t.marketing.pricing.billedYearly,
-                  }}
-                  animationDelay={index * 0.05}
-                />
+                <div key={plan.stripe_product_id} className="w-full sm:w-[calc(50%-8px)] lg:w-[220px] flex-shrink-0">
+                  <PricingCard
+                    plan={plan}
+                    billingPeriod={billingPeriod}
+                    isCurrent={false}
+                    isLoading={loadingPlanId === plan.stripe_product_id}
+                    anyLoading={loadingPlanId !== null}
+                    features={features}
+                    description={description}
+                    onSelect={() => handlePlanClick(plan)}
+                    labels={{
+                      current: 'Piano attuale',
+                      startFree: t.marketing.pricing.startFree,
+                      upgrade: t.marketing.pricing.upgrade,
+                      perMonth: t.marketing.pricing.perMonth,
+                      billedYearly: t.marketing.pricing.billedYearly,
+                    }}
+                    animationDelay={index * 0.05}
+                  />
+                </div>
               )
             })}
           </div>
