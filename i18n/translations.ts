@@ -1351,7 +1351,7 @@ export const translations: Record<Language, Translations> = {
         stat4Label: 'Uptime SLA',
       },
       trustedBy: {
-        tagline: 'Trusted by 12,000+ e-commerce stores',
+        tagline: 'Built for e-commerce stores',
         title: 'Brands that trust us',
         quote: "\"Centyr revolutionized our workflow. We used to spend 2 hours a day aligning photos — now it's 5 minutes. The ROI was immediate.\"",
         quoteAuthor: 'Marco Rossi',
@@ -2043,7 +2043,7 @@ export const translations: Record<Language, Translations> = {
         stat4Label: 'SLA Uptime',
       },
       trustedBy: {
-        tagline: 'Scelto da 12.000+ negozi e-commerce',
+        tagline: 'Fatto per i negozi e-commerce',
         title: 'Brand che si fidano di noi',
         quote: '"Centyr ha rivoluzionato il nostro flusso di lavoro. Passavamo 2 ore al giorno ad allineare le foto — ora sono 5 minuti. Il ROI è stato immediato."',
         quoteAuthor: 'Marco Rossi',
