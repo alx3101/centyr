@@ -73,8 +73,8 @@ function FeatureCard({ icon, title, description, large = false, comingSoon = fal
       }}
     >
       {comingSoon && (
-        <div className="absolute inset-0 z-10 flex items-center justify-center rounded-2xl" style={{ backdropFilter: 'blur(3px)', backgroundColor: 'rgba(255,255,255,0.7)' }}>
-          <span className="inline-flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-full shadow-sm" style={{ backgroundColor: '#0f0a1e', color: '#fff', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+        <div className="absolute top-4 right-4 z-10">
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full shadow-sm" style={{ backgroundColor: '#0f0a1e', color: '#fff', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
             Coming soon
           </span>
         </div>
