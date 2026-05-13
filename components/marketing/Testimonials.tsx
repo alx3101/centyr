@@ -7,7 +7,7 @@ const rows = [
   {
     topic: { en: 'Time per SKU', it: 'Tempo per SKU' },
     before: { en: 'Hours in Photoshop or Lightroom', it: 'Ore in Photoshop o Lightroom' },
-    after: { en: 'Seconds — fully automatic', it: 'Secondi — completamente automatico' },
+    after: { en: 'Seconds, fully automatic', it: 'Secondi, completamente automatico' },
   },
   {
     topic: { en: 'Marketplace compliance', it: 'Conformità marketplace' },
@@ -27,7 +27,7 @@ const rows = [
   {
     topic: { en: 'Setup', it: 'Setup' },
     before: { en: 'Software, presets, training', it: 'Software, preset, formazione' },
-    after: { en: 'Upload and go — no learning curve', it: 'Carica e vai — zero curva di apprendimento' },
+    after: { en: 'Upload and go, no learning curve', it: 'Carica e vai, zero curva di apprendimento' },
   },
 ]
 
@@ -46,8 +46,8 @@ export default function Testimonials() {
           </h2>
           <p style={{ fontFamily: 'Onest, sans-serif', fontSize: '0.95rem', color: '#6b7280', fontWeight: 300, maxWidth: 420, margin: '0 auto', lineHeight: 1.7 }}>
             {it
-              ? 'Il flusso di lavoro cambia. I risultati no — anzi, migliorano.'
-              : 'The workflow changes. The results don\'t — they get better.'}
+              ? 'Il flusso di lavoro cambia. I risultati migliorano.'
+              : 'The workflow changes. The results get better.'}
           </p>
         </div>
 
@@ -96,7 +96,7 @@ export default function Testimonials() {
             className="inline-block gradient-purple-fuchsia text-white font-semibold px-8 py-3 rounded-full hover:opacity-90 transition-opacity"
             style={{ fontFamily: 'Onest, sans-serif' }}
           >
-            {it ? 'Prova gratis — nessuna carta' : 'Try free — no card required'}
+            {it ? 'Prova gratis, nessuna carta' : 'Try free, no card required'}
           </Link>
           <p className="text-xs text-gray-400 mt-3" style={{ fontFamily: 'Onest, sans-serif' }}>
             {it ? '3 job inclusi nel piano gratuito' : '3 jobs included in the free plan'}

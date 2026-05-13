@@ -237,7 +237,7 @@ export default function Features() {
                 99.9%
               </p>
               <p className="text-sm font-medium" style={{ color: '#6b7280' }}>
-                Uptime SLA — always available
+                Uptime SLA, always available
               </p>
             </div>
           </div>

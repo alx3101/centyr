@@ -24,7 +24,7 @@ export default function MidCTA() {
               className="text-lg font-bold mb-0.5"
               style={{ color: '#0f0a1e', letterSpacing: '-0.01em' }}
             >
-              {it ? 'Prova gratis — nessuna carta di credito' : 'Try for free — no credit card required'}
+              {it ? 'Prova gratis, nessuna carta di credito' : 'Try for free, no credit card required'}
             </p>
             <p className="text-sm" style={{ color: '#6b7280' }}>
               {it
