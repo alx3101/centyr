@@ -17,8 +17,8 @@ const partnerTypes = [
   },
   {
     Icon: Plug,
-    en: { title: 'Technology & API Integrations', desc: 'SaaS platforms and tools that need AI image processing capabilities. Integrate Centyr\'s API to enrich your product with automated photo standardization.' },
-    it: { title: 'Tecnologia & Integrazioni API', desc: 'Piattaforme SaaS e strumenti che necessitano di capacità di elaborazione AI delle immagini. Integra le API di Centyr per arricchire il tuo prodotto con la standardizzazione automatica delle foto.' },
+    en: { title: 'Technology & API Integrations', desc: 'SaaS platforms and tools that need automated image processing capabilities. Integrate Centyr\'s API to enrich your product with automated photo standardization.' },
+    it: { title: 'Tecnologia & Integrazioni API', desc: 'Piattaforme SaaS e strumenti che necessitano di capacità di elaborazione automatica delle immagini. Integra le API di Centyr per arricchire il tuo prodotto con la standardizzazione automatica delle foto.' },
   },
   {
     Icon: BookOpen,
@@ -39,8 +39,8 @@ export default function PartnersPage() {
           <h1 className="text-4xl font-bold text-gray-900 mb-3">Partner</h1>
           <p className="text-gray-500 text-sm max-w-md mx-auto">
             {it
-              ? 'Costruiamo insieme il futuro della fotografia prodotto AI.'
-              : 'Let\'s build the future of AI product photography together.'}
+              ? 'Costruiamo insieme il futuro della fotografia prodotto automatica.'
+              : 'Let\'s build the future of automated product photography together.'}
           </p>
         </div>
 

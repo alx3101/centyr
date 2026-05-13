@@ -28,8 +28,8 @@ export default function PressPage() {
             <h2 className="text-xl font-bold text-gray-900 mb-3">{it ? 'Chi è Centyr' : 'About Centyr'}</h2>
             <p className="text-sm text-gray-600 leading-relaxed">
               {it
-                ? 'Centyr è una piattaforma AI-powered per l\'elaborazione automatica di foto prodotto e-commerce. La pipeline identifica il soggetto, lo centra con precisione pixel-perfect, rimuove lo sfondo e genera output pronti per qualsiasi marketplace — in secondi, non ore. Fondata nel 2025, Centyr opera su infrastruttura AWS nella regione EU ed è pienamente conforme al GDPR.'
-                : 'Centyr is an AI-powered platform for automatic e-commerce product photo processing. The pipeline identifies the subject, centers it with pixel-perfect precision, removes the background, and generates marketplace-ready outputs — in seconds, not hours. Founded in 2025, Centyr operates on AWS infrastructure in the EU region and is fully GDPR compliant.'}
+                ? 'Centyr è una piattaforma per l\'elaborazione automatica di foto prodotto e-commerce. La pipeline identifica il soggetto, lo centra con precisione pixel-perfect, rimuove lo sfondo e genera output pronti per qualsiasi marketplace — in secondi, non ore. Fondata nel 2025, Centyr opera su infrastruttura AWS nella regione EU ed è pienamente conforme al GDPR.'
+                : 'Centyr is an automated platform for e-commerce product photo processing. The pipeline identifies the subject, centers it with pixel-perfect precision, removes the background, and generates marketplace-ready outputs — in seconds, not hours. Founded in 2025, Centyr operates on AWS infrastructure in the EU region and is fully GDPR compliant.'}
             </p>
           </section>
 
@@ -94,7 +94,7 @@ export default function PressPage() {
             <div className="space-y-2 text-sm text-gray-600">
               <p className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-green-600 shrink-0 mt-0.5" /><span>{it ? '"Centyr" — maiuscola solo la prima lettera.' : '"Centyr" — only capitalize the first letter.'}</span></p>
               <p className="flex items-start gap-2"><XCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" /><span>{it ? 'Non usare "CENTYR" o "centyr".' : 'Do not use "CENTYR" or "centyr".'}</span></p>
-              <p className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-green-600 shrink-0 mt-0.5" /><span>{it ? 'Puoi descrivere Centyr come "piattaforma AI per foto prodotto e-commerce".' : 'You may describe Centyr as "AI platform for e-commerce product photos".'}</span></p>
+              <p className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-green-600 shrink-0 mt-0.5" /><span>{it ? 'Puoi descrivere Centyr come piattaforma per l'elaborazione automatica delle foto prodotto e-commerce.' : 'You may describe Centyr as a platform for automated e-commerce product photo processing.'}</span></p>
               <p className="flex items-start gap-2"><XCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" /><span>{it ? 'Non modificare i colori o le proporzioni del logo.' : 'Do not alter logo colors or proportions.'}</span></p>
             </div>
           </section>

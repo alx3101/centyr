@@ -11,12 +11,12 @@ const roadmapData = {
     color: 'green',
     items: [
       {
-        en: 'AI product centering & alignment',
-        it: 'Centraggio e allineamento AI del prodotto',
+        en: 'Automatic product centering & alignment',
+        it: 'Centraggio e allineamento automatico del prodotto',
       },
       {
-        en: 'Background removal (AI-powered)',
-        it: 'Rimozione sfondo (AI)',
+        en: 'Background removal (automatic)',
+        it: 'Rimozione sfondo (automatica)',
       },
       {
         en: 'Batch upload up to 50 images',
@@ -93,8 +93,8 @@ const roadmapData = {
         it: 'Generazione ombre e riflessi',
       },
       {
-        en: 'AI lifestyle background generation',
-        it: 'Generazione sfondo lifestyle con AI',
+        en: 'Lifestyle background generation',
+        it: 'Generazione sfondo lifestyle',
       },
       {
         en: 'Video product clips (auto-generated)',

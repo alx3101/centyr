@@ -14,8 +14,8 @@ const tutorials = [
   {
     Icon: Palette,
     duration: '4 min',
-    en: { title: 'Background removal: best practices', desc: 'When to use AI background removal, how to get clean edges on complex products, and when to provide a custom background image.' },
-    it: { title: 'Rimozione sfondo: best practice', desc: 'Quando usare la rimozione sfondo AI, come ottenere bordi puliti su prodotti complessi e quando fornire un\'immagine di sfondo personalizzata.' },
+    en: { title: 'Background removal: best practices', desc: 'When to use automatic background removal, how to get clean edges on complex products, and when to provide a custom background image.' },
+    it: { title: 'Rimozione sfondo: best practice', desc: 'Quando usare la rimozione sfondo automatica, come ottenere bordi puliti su prodotti complessi e quando fornire un\'immagine di sfondo personalizzata.' },
   },
   {
     Icon: Ruler,

@@ -17,7 +17,7 @@ export default function AboutPage() {
           <p className="text-gray-500 text-sm max-w-xl mx-auto">
             {it
               ? 'Centyr automatizza la preparazione delle foto prodotto per l\'e-commerce tramite intelligenza artificiale.'
-              : 'Centyr automates e-commerce product photo preparation using artificial intelligence.'}
+              : 'Centyr automates e-commerce product photo preparation.'}
           </p>
         </div>
 
@@ -49,8 +49,8 @@ export default function AboutPage() {
               </p>
               <p>
                 {it
-                  ? 'Centyr risolve questo con una pipeline AI che analizza ogni immagine, individua il soggetto, lo centra con precisione pixel-perfect, rimuove lo sfondo se richiesto e genera output nelle dimensioni esatte per Amazon, Shopify, WooCommerce o qualsiasi altro marketplace.'
-                  : 'Centyr solves this with an AI pipeline that analyzes each image, identifies the subject, centers it with pixel-perfect precision, removes the background if needed, and generates output in the exact dimensions for Amazon, Shopify, WooCommerce, or any other marketplace.'}
+                  ? 'Centyr risolve questo con una pipeline di elaborazione che analizza ogni immagine, individua il soggetto, lo centra con precisione pixel-perfect, rimuove lo sfondo se richiesto e genera output nelle dimensioni esatte per Amazon, Shopify, WooCommerce o qualsiasi altro marketplace.'
+                  : 'Centyr solves this with an automated pipeline that analyzes each image, identifies the subject, centers it with pixel-perfect precision, removes the background if needed, and generates output in the exact dimensions for Amazon, Shopify, WooCommerce, or any other marketplace.'}
               </p>
             </div>
           </section>

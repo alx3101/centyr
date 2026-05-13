@@ -7,12 +7,12 @@ import CookieBanner from '@/components/CookieBanner'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Centyr - Align Product Photos Automatically | AI Image Alignment for E-commerce',
-  description: 'Automatically align and center your product photos in seconds. AI-powered tool removes shadows and creates perfectly aligned images for your online store. Start free.',
+  title: 'Centyr - Product Photo Standardization for E-commerce',
+  description: 'Automatically center and align your product photos in seconds. No manual editing, no design skills. Ready for Amazon, Shopify, Zalando. Start free.',
   keywords: 'product image alignment, align product photos, center product images, automatic product photo alignment tool, e-commerce image processing',
   openGraph: {
-    title: 'Centyr - Align All Your Product Photos in Seconds',
-    description: 'Stop wasting hours on manual editing. Centyr\'s AI automatically centers your products, removes shadows, and creates perfectly aligned photos.',
+    title: 'Centyr - Perfect Product Photos, Automatically',
+    description: 'Stop wasting hours on manual editing. Centyr automatically centers your products, removes backgrounds, and creates perfectly consistent photos.',
     type: 'website',
   },
 }

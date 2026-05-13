@@ -7,8 +7,8 @@ import Pricing from '@/components/marketing/Pricing'
 import FinalCTA from '@/components/marketing/FinalCTA'
 
 export const metadata = {
-  title: 'Centyr - AI Product Photo Alignment',
-  description: 'Align product photos in seconds with AI. No design skills needed.',
+  title: 'Centyr - Product Photo Standardization for E-commerce',
+  description: 'Align and center product photos in seconds. No design skills needed. Ready for any marketplace.',
 }
 
 export default function Home() {

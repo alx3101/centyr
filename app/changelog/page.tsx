@@ -82,14 +82,14 @@ const releases = [
     type: 'major' as const,
     changes: {
       en: [
-        { type: 'new', text: 'AI-powered background removal (BRIA RMBG model)' },
+        { type: 'new', text: 'Automatic background removal (BRIA RMBG model)' },
         { type: 'new', text: 'Custom background upload (image or solid color)' },
         { type: 'new', text: 'Premium subscription plans via Stripe' },
         { type: 'new', text: 'Output size selector (500px to 4000px)' },
         { type: 'new', text: 'Margin/padding control for subject framing' },
       ],
       it: [
-        { type: 'new', text: 'Rimozione sfondo AI (modello BRIA RMBG)' },
+        { type: 'new', text: 'Rimozione sfondo automatica (modello BRIA RMBG)' },
         { type: 'new', text: 'Caricamento sfondo personalizzato (immagine o colore solido)' },
         { type: 'new', text: 'Piani di abbonamento Premium tramite Stripe' },
         { type: 'new', text: 'Selettore dimensione output (da 500px a 4000px)' },

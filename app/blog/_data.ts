@@ -72,14 +72,14 @@ export const posts = [
       it: '5 errori comuni nella fotografia prodotto e-commerce (e come correggerli automaticamente)',
     },
     excerpt: {
-      en: "Inconsistent backgrounds, poor centering, wrong aspect ratios — these small errors cost conversions. Learn how AI processing eliminates them at scale.",
-      it: "Sfondi inconsistenti, centraggio impreciso, rapporti d'aspetto errati — questi piccoli errori costano conversioni. Scopri come il processing AI li elimina su larga scala.",
+      en: "Inconsistent backgrounds, poor centering, wrong aspect ratios — these small errors cost conversions. Learn how automated processing eliminates them at scale.",
+      it: "Sfondi inconsistenti, centraggio impreciso, rapporti d'aspetto errati — questi piccoli errori costano conversioni. Scopri come il processing automatico li elimina su larga scala.",
     },
     body: {
       en: [
         "Product photography mistakes are often subtle — but they compound. A shopper scrolling through a category page notices inconsistency before they consciously register it. Here are the five most common errors and how to fix them.",
         "**1. Inconsistent backgrounds**\nSome images have a warm white background, others are cool white or light grey. On a marketplace, this makes your catalog look unprofessional. Fix: always define a single exact background color (e.g., #FFFFFF) and apply it uniformly with Centyr.",
-        "**2. Off-center subjects**\nManual cropping introduces subtle misalignment — the product leans left, sits too low, or doesn't fill the frame. Fix: Centyr's AI detects the subject bounding box and centers it precisely, with configurable padding.",
+        "**2. Off-center subjects**\nManual cropping introduces subtle misalignment — the product leans left, sits too low, or doesn't fill the frame. Fix: Centyr detects the subject bounding box and centers it precisely, with configurable padding.",
         "**3. Wrong aspect ratios per channel**\nAmazon prefers square (1:1), Shopify collections look best at 4:5, Instagram requires 1:1 or 4:5. Exporting one format for all channels degrades quality. Fix: create one preset per channel in Centyr and process each batch multiple times.",
         "**4. Shadows and reflections**\nHard floor shadows or surface reflections are often overlooked in manual editing. Fix: background removal eliminates the surface the product is resting on, including shadows, giving you a clean floating product image.",
         "**5. Inconsistent scale between products**\nA small accessory photographed to fill the frame looks the same size as a large bag — misleading customers. Fix: use Centyr's fill percentage setting consistently (e.g., 80% for all products) so relative size feels proportional.",
@@ -87,7 +87,7 @@ export const posts = [
       it: [
         "Gli errori nella fotografia prodotto sono spesso sottili — ma si accumulano. Un acquirente che scorre una pagina categoria nota l'inconsistenza prima di registrarla consapevolmente. Ecco i cinque errori più comuni e come correggerli.",
         "**1. Sfondi inconsistenti**\nAlcune immagini hanno uno sfondo bianco caldo, altre bianco freddo o grigio chiaro. Su un marketplace, questo rende il tuo catalogo poco professionale. Soluzione: definisci sempre un singolo colore di sfondo esatto (es. #FFFFFF) e applicalo uniformemente con Centyr.",
-        "**2. Soggetti non centrati**\nIl ritaglio manuale introduce disallineamenti sottili — il prodotto è spostato a sinistra, troppo in basso, o non riempie il frame. Soluzione: l'AI di Centyr rileva il bounding box del soggetto e lo centra con precisione, con padding configurabile.",
+        "**2. Soggetti non centrati**\nIl ritaglio manuale introduce disallineamenti sottili — il prodotto è spostato a sinistra, troppo in basso, o non riempie il frame. Soluzione: Centyr rileva il bounding box del soggetto e lo centra con precisione, con padding configurabile.",
         "**3. Rapporti d'aspetto errati per canale**\nAmazon preferisce il quadrato (1:1), le collezioni Shopify stanno meglio a 4:5, Instagram richiede 1:1 o 4:5. Esportare un solo formato per tutti i canali degrada la qualità. Soluzione: crea un preset per canale in Centyr ed elabora ogni batch più volte.",
         "**4. Ombre e riflessi**\nLe ombre dure sul pavimento o i riflessi sulla superficie vengono spesso trascurati nel editing manuale. Soluzione: la rimozione dello sfondo elimina la superficie su cui poggia il prodotto, incluse le ombre, restituendo un'immagine del prodotto pulita e flottante.",
         "**5. Scala inconsistente tra prodotti**\nUn piccolo accessorio fotografato a riempire il frame sembra della stessa dimensione di una borsa grande — ingannando i clienti. Soluzione: usa la percentuale di riempimento di Centyr in modo coerente (es. 80% per tutti i prodotti) così la dimensione relativa risulta proporzionale.",

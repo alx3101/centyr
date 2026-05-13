@@ -37,8 +37,8 @@ export default function CareersPage() {
           </h1>
           <p className="text-gray-500 text-sm max-w-md mx-auto">
             {it
-              ? 'Stiamo costruendo il futuro della fotografia prodotto AI. Unisciti a noi.'
-              : 'We\'re building the future of AI product photography. Join us.'}
+              ? 'Stiamo costruendo il futuro della fotografia prodotto automatica. Unisciti a noi.'
+              : 'We\'re building the future of automated product photography. Join us.'}
           </p>
         </div>
 
@@ -51,7 +51,7 @@ export default function CareersPage() {
               {([
                 { Icon: Rocket, text: it ? 'Prodotto reale, utenti reali, impatto immediato' : 'Real product, real users, immediate impact' },
                 { Icon: Globe, text: it ? 'Team remoto, infrastruttura EU' : 'Remote team, EU infrastructure' },
-                { Icon: Zap, text: it ? 'Stack moderno: Next.js, Python, AWS, AI/ML' : 'Modern stack: Next.js, Python, AWS, AI/ML' },
+                { Icon: Zap, text: it ? 'Stack moderno: Next.js, Python, AWS, computer vision' : 'Modern stack: Next.js, Python, AWS, computer vision' },
                 { Icon: TrendingUp, text: it ? 'Equity disponibile per early hires' : 'Equity available for early hires' },
                 { Icon: Lock, text: it ? 'Focus su privacy e qualità del codice' : 'Focus on privacy and code quality' },
                 { Icon: Brain, text: it ? 'Problemi tecnici interessanti (CV, scaling, UX)' : 'Interesting technical problems (CV, scaling, UX)' },
