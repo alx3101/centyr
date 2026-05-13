@@ -6,7 +6,7 @@ import { useAuth } from '@/hooks/useAuth'
 import { toast } from 'react-hot-toast'
 import { cognitoOAuthSignIn } from '@/lib/cognito'
 import { GuestGuard } from '@/components/guards/GuestGuard'
-import { Check, Zap, Shield, Clock, Star } from 'lucide-react'
+import { Check, Zap, Clock } from 'lucide-react'
 import { useTranslations } from '@/contexts/LanguageContext'
 
 export default function SignupPage() {
@@ -79,44 +79,10 @@ export default function SignupPage() {
                     <p className="text-purple-100 text-sm">{t.auth.saveHoursDesc}</p>
                   </div>
                 </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Shield className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold mb-1">{t.auth.guarantee}</h3>
-                    <p className="text-purple-100 text-sm">{t.auth.guaranteeDesc}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Social proof */}
-              <div className="mt-8 pt-6 border-t border-white/20">
-                <div className="flex items-center gap-1 mb-2">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  ))}
-                  <span className="ml-2 text-sm font-semibold">4.9/5</span>
-                </div>
-                <p className="text-purple-100 text-sm mb-4">{t.auth.avgRating}</p>
-
-                <div className="flex items-center gap-3">
-                  <div className="flex -space-x-2">
-                    {['MB', 'ET', 'AR', 'SM'].map((initials, i) => (
-                      <div key={i} className="w-8 h-8 rounded-full bg-white/30 border-2 border-white flex items-center justify-center text-xs font-bold">
-                        {initials}
-                      </div>
-                    ))}
-                  </div>
-                  <p className="text-sm text-purple-100">
-                    <span className="font-bold text-white">12,000+</span> {t.auth.activeStores}
-                  </p>
-                </div>
               </div>
 
               {/* Features list */}
-              <div className="mt-6 space-y-2">
+              <div className="mt-8 pt-6 border-t border-white/20 space-y-2">
                 {[t.auth.freeJobsBadge, t.auth.noCreditCard, t.auth.setupIn60].map((feature, i) => (
                   <div key={i} className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-green-300" />
