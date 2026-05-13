@@ -49,12 +49,13 @@ interface FeatureCardProps {
   title: string
   description: string
   large?: boolean
+  comingSoon?: boolean
 }
 
-function FeatureCard({ icon, title, description, large = false }: FeatureCardProps) {
+function FeatureCard({ icon, title, description, large = false, comingSoon = false }: FeatureCardProps) {
   return (
     <div
-      className="bg-white rounded-2xl p-8 flex flex-col transition-all duration-200 cursor-default"
+      className="bg-white rounded-2xl p-8 flex flex-col transition-all duration-200 cursor-default relative overflow-hidden"
       style={{
         border: '1.5px solid #f3f4f6',
         borderRadius: '16px',
@@ -71,6 +72,13 @@ function FeatureCard({ icon, title, description, large = false }: FeatureCardPro
         el.style.boxShadow = '0 1px 4px rgba(0,0,0,0.04)'
       }}
     >
+      {comingSoon && (
+        <div className="absolute inset-0 z-10 flex items-center justify-center rounded-2xl" style={{ backdropFilter: 'blur(3px)', backgroundColor: 'rgba(255,255,255,0.7)' }}>
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-full shadow-sm" style={{ backgroundColor: '#0f0a1e', color: '#fff', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+            Coming soon
+          </span>
+        </div>
+      )}
       <div
         className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 flex-shrink-0"
         style={{ backgroundColor: '#faf5ff', color: '#7c3aed' }}
@@ -163,6 +171,7 @@ export default function Features() {
             icon={<IntegrationIcon />}
             title={t.marketing.features.f4Title}
             description={t.marketing.features.f4Desc}
+            comingSoon
           />
         </div>
 
