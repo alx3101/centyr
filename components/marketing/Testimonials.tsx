@@ -60,10 +60,12 @@ export default function Testimonials() {
               {it ? 'Aspetto' : 'Aspect'}
             </div>
             <div className="px-6 py-4 bg-red-50 text-red-400 uppercase tracking-wider text-xs flex items-center gap-2" style={{ fontFamily: 'Onest, sans-serif' }}>
-              <span className="text-base">😓</span> {it ? 'Senza Centyr' : 'Without Centyr'}
+              <svg width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path strokeLinecap="round" d="M15 9l-6 6M9 9l6 6"/></svg>
+              {it ? 'Senza Centyr' : 'Without Centyr'}
             </div>
             <div className="px-6 py-4 uppercase tracking-wider text-xs flex items-center gap-2" style={{ fontFamily: 'Onest, sans-serif', background: '#faf5ff', color: '#7c3aed' }}>
-              <span className="text-base">⚡</span> {it ? 'Con Centyr' : 'With Centyr'}
+              <svg width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path strokeLinecap="round" strokeLinejoin="round" d="M8 12l3 3 5-5"/></svg>
+              {it ? 'Con Centyr' : 'With Centyr'}
             </div>
           </div>
 
@@ -78,11 +80,11 @@ export default function Testimonials() {
                 {it ? row.topic.it : row.topic.en}
               </div>
               <div className="px-6 py-5 bg-red-50/40 text-gray-500 flex items-start gap-2" style={{ fontFamily: 'Onest, sans-serif', fontSize: 13, lineHeight: 1.5 }}>
-                <span className="text-red-400 mt-0.5 flex-shrink-0">✕</span>
+                <svg className="flex-shrink-0 mt-0.5" width="14" height="14" fill="none" stroke="#f87171" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" d="M18 6L6 18M6 6l12 12"/></svg>
                 {it ? row.before.it : row.before.en}
               </div>
               <div className="px-6 py-5 flex items-start gap-2" style={{ fontFamily: 'Onest, sans-serif', fontSize: 13, lineHeight: 1.5, background: '#fdf8ff', color: '#374151' }}>
-                <span className="flex-shrink-0 mt-0.5" style={{ color: '#7c3aed' }}>✓</span>
+                <svg className="flex-shrink-0 mt-0.5" width="14" height="14" fill="none" stroke="#7c3aed" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
                 {it ? row.after.it : row.after.en}
               </div>
             </div>
