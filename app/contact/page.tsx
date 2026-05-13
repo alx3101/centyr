@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { Mail, ArrowLeft } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 
-const CONTACT_EMAIL = 'enterprise@centyr.tech'
+const CONTACT_EMAIL = 'hello@centyr.tech'
 
 export default function ContactPage() {
   const { language } = useLanguage()
