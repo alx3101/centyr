@@ -30,10 +30,6 @@ export default async function RootLayout({
     <html lang={initialLanguage}>
       <head>
         <link rel="preload" as="image" href="/before.webp" />
-        <script
-          async
-          src="https://js.stripe.com/v3/pricing-table.js">
-        </script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800;900&display=swap" />

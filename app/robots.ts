@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/dashboard/', '/api/', '/(auth)/'],
+        disallow: ['/dashboard/', '/api/', '/billing/', '/upload/', '/signup', '/login'],
       },
     ],
     sitemap: 'https://centyr.tech/sitemap.xml',

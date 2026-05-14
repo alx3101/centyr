@@ -1,10 +1,12 @@
+import dynamic from 'next/dynamic'
 import Hero from '@/components/marketing/Hero'
-import TrustedBy from '@/components/marketing/TrustedBy'
-import HowItWorks from '@/components/marketing/HowItWorks'
-import Features from '@/components/marketing/Features'
-import Testimonials from '@/components/marketing/Testimonials'
-import Pricing from '@/components/marketing/Pricing'
-import FinalCTA from '@/components/marketing/FinalCTA'
+
+const TrustedBy   = dynamic(() => import('@/components/marketing/TrustedBy'))
+const HowItWorks  = dynamic(() => import('@/components/marketing/HowItWorks'))
+const Features    = dynamic(() => import('@/components/marketing/Features'))
+const Testimonials = dynamic(() => import('@/components/marketing/Testimonials'))
+const Pricing     = dynamic(() => import('@/components/marketing/Pricing'))
+const FinalCTA    = dynamic(() => import('@/components/marketing/FinalCTA'))
 
 export const metadata = {
   title: 'Centyr - Product Photo Standardization for E-commerce',
