@@ -20,8 +20,8 @@ export default function SecurityPage() {
           <p className="text-gray-500 text-sm">{it ? 'Ultimo aggiornamento: 22 febbraio 2026' : 'Last updated: February 22, 2026'}</p>
           <p className="mt-3 text-gray-600 max-w-xl mx-auto">
             {it
-              ? 'La sicurezza è integrata in ogni livello della piattaforma Centyr — dall\'infrastruttura su cui operiamo al modo in cui le tue immagini vengono archiviate ed eliminate.'
-              : 'Security is built into every layer of the Centyr platform — from the infrastructure we run on to the way your images are stored and deleted.'}
+              ? 'La sicurezza è integrata in ogni livello della piattaforma Centyr, dall\'infrastruttura su cui operiamo al modo in cui le tue immagini vengono archiviate ed eliminate.'
+              : 'Security is built into every layer of the Centyr platform, from the infrastructure we run on to the way your images are stored and deleted.'}
           </p>
         </div>
 
@@ -114,20 +114,20 @@ export default function SecurityPage() {
             <ul className="list-disc ml-6 mt-2 space-y-1 text-sm">
               {it ? (
                 <>
-                  <li>Autenticazione utente gestita da <strong>AWS Cognito</strong> — non archiviamo mai le password direttamente</li>
+                  <li>Autenticazione utente gestita da <strong>AWS Cognito</strong>, non archiviamo mai le password direttamente</li>
                   <li>JWT firmati con RS256; chiavi pubbliche verificate dall&apos;endpoint JWKS di Cognito (aggiornate ogni ora)</li>
                   <li>OAuth 2.0 supportato (Google, Apple) per accesso senza password</li>
                   <li>Tutti gli endpoint API richiedono un token Bearer valido; nessun endpoint sensibile è accessibile pubblicamente</li>
-                  <li>I ruoli AWS IAM seguono il principio del privilegio minimo — ogni servizio ha solo le autorizzazioni di cui ha bisogno</li>
+                  <li>I ruoli AWS IAM seguono il principio del privilegio minimo, ogni servizio ha solo le autorizzazioni di cui ha bisogno</li>
                   <li>Le credenziali AWS interne utilizzano ruoli IAM delle istanze; nessuna chiave di accesso a lunga durata nel codice dell&apos;applicazione</li>
                 </>
               ) : (
                 <>
-                  <li>User authentication managed by <strong>AWS Cognito</strong> — we never store passwords directly</li>
+                  <li>User authentication managed by <strong>AWS Cognito</strong>, we never store passwords directly</li>
                   <li>JWTs signed with RS256; public keys verified from Cognito&apos;s JWKS endpoint (refreshed hourly)</li>
                   <li>OAuth 2.0 supported (Google, Apple) for passwordless sign-in</li>
                   <li>All API endpoints require a valid Bearer token; no sensitive endpoint is publicly accessible</li>
-                  <li>AWS IAM roles follow least-privilege principle — each service has only the permissions it needs</li>
+                  <li>AWS IAM roles follow least-privilege principle, each service has only the permissions it needs</li>
                   <li>Internal AWS credentials use IAM instance roles; no long-lived access keys in application code</li>
                 </>
               )}
@@ -142,14 +142,14 @@ export default function SecurityPage() {
                   <li>Ogni oggetto S3 è archiviato in un percorso limitato al tuo ID utente</li>
                   <li>Tutti gli endpoint API verificano che l&apos;utente richiedente sia proprietario della risorsa prima di servirla</li>
                   <li>Gli ID dei job sono UUID; l&apos;enumerazione sequenziale non è possibile</li>
-                  <li>I container di elaborazione (ECS Fargate) sono effimeri e isolati — non condividono memoria o storage tra job</li>
+                  <li>I container di elaborazione (ECS Fargate) sono effimeri e isolati, non condividono memoria o storage tra job</li>
                 </>
               ) : (
                 <>
                   <li>Every S3 object is stored under a path scoped to your user ID</li>
                   <li>All API endpoints validate that the requesting user owns the resource before serving it</li>
                   <li>Job IDs are UUIDs; sequential enumeration is not possible</li>
-                  <li>Processing containers (ECS Fargate) are ephemeral and isolated — they do not share memory or storage across jobs</li>
+                  <li>Processing containers (ECS Fargate) are ephemeral and isolated, they do not share memory or storage across jobs</li>
                 </>
               )}
             </ul>
@@ -186,7 +186,7 @@ export default function SecurityPage() {
                   <li>Dimensione massima di caricamento applicata sia a livello API che Nginx</li>
                   <li>Tutti i parametri di percorso forniti dall&apos;utente (ID job) vengono validati come UUID per prevenire injection</li>
                   <li>I dettagli degli errori interni non vengono mai esposti nelle risposte API</li>
-                  <li>Elaborazione pagamenti gestita esclusivamente da <strong>Stripe</strong> — i dati della carta non toccano mai i nostri server</li>
+                  <li>Elaborazione pagamenti gestita esclusivamente da <strong>Stripe</strong>, i dati della carta non toccano mai i nostri server</li>
                 </>
               ) : (
                 <>
@@ -195,7 +195,7 @@ export default function SecurityPage() {
                   <li>Maximum upload size enforced at both the API and Nginx levels</li>
                   <li>All user-supplied path parameters (job IDs) validated as UUIDs to prevent injection</li>
                   <li>Internal error details never exposed in API responses</li>
-                  <li>Payment processing handled exclusively by <strong>Stripe</strong> — card data never touches our servers</li>
+                  <li>Payment processing handled exclusively by <strong>Stripe</strong>, card data never touches our servers</li>
                 </>
               )}
             </ul>

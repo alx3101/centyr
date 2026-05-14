@@ -74,11 +74,11 @@ export default function CookieBanner() {
                 <div className="mt-3 flex flex-wrap gap-2">
                   <span className="inline-flex items-center gap-1.5 text-xs bg-gray-50 border border-gray-200 text-gray-600 px-2.5 py-1 rounded-full">
                     <span className="w-1.5 h-1.5 bg-green-500 rounded-full" />
-                    auth_token — {c.sessionCookie}
+                    auth_token, {c.sessionCookie}
                   </span>
                   <span className="inline-flex items-center gap-1.5 text-xs bg-gray-50 border border-gray-200 text-gray-600 px-2.5 py-1 rounded-full">
                     <span className="w-1.5 h-1.5 bg-green-500 rounded-full" />
-                    user — {c.sessionCookie}
+                    user, {c.sessionCookie}
                   </span>
                   <span className="inline-flex items-center gap-1.5 text-xs bg-purple-50 border border-purple-200 text-purple-700 px-2.5 py-1 rounded-full font-medium">
                     {c.noTracking}

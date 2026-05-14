@@ -95,8 +95,8 @@ export default function CareersPage() {
             </h3>
             <p className="text-sm text-gray-600 mb-3">
               {it
-                ? 'Non vedi un ruolo adatto? Scrivici lo stesso — siamo sempre interessati a persone con talento.'
-                : 'Don\'t see a fitting role? Write to us anyway — we\'re always interested in talented people.'}
+                ? 'Non vedi un ruolo adatto? Scrivici lo stesso, siamo sempre interessati a persone con talento.'
+                : 'Don\'t see a fitting role? Write to us anyway, we\'re always interested in talented people.'}
             </p>
             <a
               href="mailto:support@centyr.tech?subject=Candidatura spontanea"

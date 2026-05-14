@@ -11,7 +11,7 @@ const industryCategories = [
   { key: 'catFood', icon: '🍽️' },
 ]
 
-// Extra labels not in translations — hardcoded but neutral
+// Extra labels not in translations, hardcoded but neutral
 const extraCategories = [
   { label: 'Jewelry', icon: '💎' },
   { label: 'Furniture', icon: '🪑' },

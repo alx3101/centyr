@@ -145,7 +145,7 @@ export default function Features() {
           </p>
         </div>
 
-        {/* Feature 1 — full width hero card */}
+        {/* Feature 1, full width hero card */}
         <div className="mb-6">
           <FeatureCard
             icon={<AiIcon />}
@@ -155,7 +155,7 @@ export default function Features() {
           />
         </div>
 
-        {/* Features 2, 3, 4 — three columns */}
+        {/* Features 2, 3, 4, three columns */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           <FeatureCard
             icon={<BulkIcon />}

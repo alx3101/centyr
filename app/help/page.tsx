@@ -79,11 +79,11 @@ const faqs = [
   {
     en: {
       q: 'Where is my data stored?',
-      a: 'All data is stored in the EU — specifically on Amazon Web Services in the eu-west-3 (Paris) region. We are fully GDPR compliant.',
+      a: 'All data is stored in the EU, specifically on Amazon Web Services in the eu-west-3 (Paris) region. We are fully GDPR compliant.',
     },
     it: {
       q: 'Dove vengono archiviati i miei dati?',
-      a: 'Tutti i dati sono archiviati nell\'UE — specificatamente su Amazon Web Services nella regione eu-west-3 (Parigi). Siamo pienamente conformi al GDPR.',
+      a: 'Tutti i dati sono archiviati nell\'UE, specificatamente su Amazon Web Services nella regione eu-west-3 (Parigi). Siamo pienamente conformi al GDPR.',
     },
   },
 ]

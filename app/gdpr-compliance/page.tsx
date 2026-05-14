@@ -60,7 +60,7 @@ export default function GdprPage() {
                   <li><strong>Dati account:</strong> indirizzo email, nome (da provider OAuth come Google o Apple)</li>
                   <li><strong>Dati di autenticazione:</strong> token di sessione crittografati gestiti tramite AWS Cognito</li>
                   <li><strong>Contenuto utente:</strong> immagini di prodotti caricate per l&apos;elaborazione (archiviate temporaneamente, eliminate dopo 30 giorni)</li>
-                  <li><strong>Dati di fatturazione:</strong> dettagli del metodo di pagamento gestiti esclusivamente da Stripe — non archiviamo mai i numeri di carta</li>
+                  <li><strong>Dati di fatturazione:</strong> dettagli del metodo di pagamento gestiti esclusivamente da Stripe, non archiviamo mai i numeri di carta</li>
                   <li><strong>Dati di utilizzo:</strong> storico jobs, conteggi caricamenti, stato abbonamento</li>
                   <li><strong>Dati tecnici:</strong> indirizzo IP, tipo di browser, timestamp delle richieste (per sicurezza e prevenzione delle frodi)</li>
                 </>
@@ -69,7 +69,7 @@ export default function GdprPage() {
                   <li><strong>Account data:</strong> email address, name (from OAuth providers such as Google or Apple)</li>
                   <li><strong>Authentication data:</strong> encrypted session tokens managed via AWS Cognito</li>
                   <li><strong>User content:</strong> product images you upload for processing (stored temporarily, deleted after 30 days)</li>
-                  <li><strong>Billing data:</strong> payment method details managed exclusively by Stripe — we never store card numbers</li>
+                  <li><strong>Billing data:</strong> payment method details managed exclusively by Stripe, we never store card numbers</li>
                   <li><strong>Usage data:</strong> job history, upload counts, subscription status</li>
                   <li><strong>Technical data:</strong> IP address, browser type, request timestamps (for security and fraud prevention)</li>
                 </>
@@ -132,9 +132,9 @@ export default function GdprPage() {
             </ul>
             <div className="mt-4 bg-green-50 border border-green-200 rounded-xl p-4 text-sm text-green-800">
               {it ? (
-                <><strong>Esercizio automatico:</strong> Puoi esercitare il diritto alla cancellazione (Art. 17) e alla portabilità (Art. 20) direttamente da <strong>Dashboard → Impostazioni → Privacy &amp; Dati</strong> — senza inviare email. La cancellazione è immediata e permanente.</>
+                <><strong>Esercizio automatico:</strong> Puoi esercitare il diritto alla cancellazione (Art. 17) e alla portabilità (Art. 20) direttamente da <strong>Dashboard → Impostazioni → Privacy &amp; Dati</strong>, senza inviare email. La cancellazione è immediata e permanente.</>
               ) : (
-                <><strong>Self-service:</strong> You can exercise your right to erasure (Art. 17) and data portability (Art. 20) directly from <strong>Dashboard → Settings → Privacy &amp; Data</strong> — no email needed. Deletion is immediate and permanent.</>
+                <><strong>Self-service:</strong> You can exercise your right to erasure (Art. 17) and data portability (Art. 20) directly from <strong>Dashboard → Settings → Privacy &amp; Data</strong>, no email needed. Deletion is immediate and permanent.</>
               )}
             </div>
             <p className="mt-3 text-sm">
@@ -179,15 +179,15 @@ export default function GdprPage() {
             <ul className="list-disc ml-6 mt-2 space-y-1 text-sm">
               {it ? (
                 <>
-                  <li><strong>Stripe (USA):</strong> elaborazione pagamenti — coperta dall&apos;EU-US Data Privacy Framework (DPF) e dalle Clausole Contrattuali Standard (SCCs)</li>
-                  <li><strong>Vercel (USA):</strong> hosting frontend — coperta dalle SCCs</li>
-                  <li><strong>AWS (UE):</strong> infrastruttura — dati archiviati in eu-west-3 (Parigi)</li>
+                  <li><strong>Stripe (USA):</strong> elaborazione pagamenti, coperta dall&apos;EU-US Data Privacy Framework (DPF) e dalle Clausole Contrattuali Standard (SCCs)</li>
+                  <li><strong>Vercel (USA):</strong> hosting frontend, coperta dalle SCCs</li>
+                  <li><strong>AWS (UE):</strong> infrastruttura, dati archiviati in eu-west-3 (Parigi)</li>
                 </>
               ) : (
                 <>
-                  <li><strong>Stripe (USA):</strong> payment processing — covered by EU-US Data Privacy Framework (DPF) and Standard Contractual Clauses (SCCs)</li>
-                  <li><strong>Vercel (USA):</strong> frontend hosting — covered by SCCs</li>
-                  <li><strong>AWS (EU):</strong> infrastructure — data stored in eu-west-3 (Paris)</li>
+                  <li><strong>Stripe (USA):</strong> payment processing, covered by EU-US Data Privacy Framework (DPF) and Standard Contractual Clauses (SCCs)</li>
+                  <li><strong>Vercel (USA):</strong> frontend hosting, covered by SCCs</li>
+                  <li><strong>AWS (EU):</strong> infrastructure, data stored in eu-west-3 (Paris)</li>
                 </>
               )}
             </ul>

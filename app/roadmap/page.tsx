@@ -172,8 +172,8 @@ export default function RoadmapPage() {
           </p>
           <p className="text-sm text-gray-500 mb-4">
             {it
-              ? 'Scrivici — le richieste degli utenti guidano direttamente la priorità della roadmap.'
-              : 'Write to us — user requests directly guide roadmap priority.'}
+              ? 'Scrivici, le richieste degli utenti guidano direttamente la priorità della roadmap.'
+              : 'Write to us, user requests directly guide roadmap priority.'}
           </p>
           <a
             href="mailto:support@centyr.tech?subject=Feature request"

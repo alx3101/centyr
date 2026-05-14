@@ -31,8 +31,8 @@ export default function AboutPage() {
             <h2 className="text-2xl font-bold text-gray-900 mb-4">{it ? 'La Nostra Missione' : 'Our Mission'}</h2>
             <p className="text-base text-gray-600 max-w-xl mx-auto">
               {it
-                ? 'Eliminare il lavoro manuale ripetitivo nella produzione di immagini e-commerce. Ogni foto deve essere centrata, pulita e pronta alla pubblicazione — senza toccare Photoshop.'
-                : 'Eliminate repetitive manual work in e-commerce image production. Every photo should be centered, clean, and publication-ready — without touching Photoshop.'}
+                ? 'Eliminare il lavoro manuale ripetitivo nella produzione di immagini e-commerce. Ogni foto deve essere centrata, pulita e pronta alla pubblicazione, senza toccare Photoshop.'
+                : 'Eliminate repetitive manual work in e-commerce image production. Every photo should be centered, clean, and publication-ready, without touching Photoshop.'}
             </p>
           </section>
 
@@ -44,8 +44,8 @@ export default function AboutPage() {
             <div className="space-y-3 text-sm text-gray-600">
               <p>
                 {it
-                  ? 'Chi gestisce un catalogo e-commerce sa quanto tempo si spende a ritagliare, centrare e uniformare le foto prodotto. Un\'ora al giorno di editing manuale significa settimane perse ogni anno — tempo che potrebbe andare alle vendite, al marketing, al business.'
-                  : 'Anyone managing an e-commerce catalog knows how much time is spent cropping, centering, and standardizing product photos. One hour per day of manual editing means weeks lost every year — time that could go toward sales, marketing, and business growth.'}
+                  ? 'Chi gestisce un catalogo e-commerce sa quanto tempo si spende a ritagliare, centrare e uniformare le foto prodotto. Un\'ora al giorno di editing manuale significa settimane perse ogni anno, tempo che potrebbe andare alle vendite, al marketing, al business.'
+                  : 'Anyone managing an e-commerce catalog knows how much time is spent cropping, centering, and standardizing product photos. One hour per day of manual editing means weeks lost every year, time that could go toward sales, marketing, and business growth.'}
               </p>
               <p>
                 {it
@@ -60,7 +60,7 @@ export default function AboutPage() {
             <h2 className="text-xl font-bold text-gray-900 mb-6">{it ? 'Come Lavoriamo' : 'How We Work'}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {([
-                { Icon: Zap, title: 'Batch-first', desc: it ? 'Progettato per volumi. Carica 1 immagine o 500 — la pipeline scala automaticamente senza perdere velocità.' : 'Designed for volume. Upload 1 image or 500 — the pipeline scales automatically without losing speed.' },
+                { Icon: Zap, title: 'Batch-first', desc: it ? 'Progettato per volumi. Carica 1 immagine o 500, la pipeline scala automaticamente senza perdere velocità.' : 'Designed for volume. Upload 1 image or 500, the pipeline scales automatically without losing speed.' },
                 { Icon: Lock, title: 'Privacy by design', desc: it ? 'Nessun training sui tuoi dati. Immagini eliminate automaticamente dopo 30 giorni. Infrastruttura EU (Paris).' : 'No training on your data. Images automatically deleted after 30 days. EU infrastructure (Paris).' },
                 { Icon: Palette, title: it ? 'Output pronti' : 'Ready-to-publish output', desc: it ? 'Risultati subito pubblicabili: sfondi bianchi, proporzioni corrette, centramento preciso al pixel.' : 'Immediately publishable results: white backgrounds, correct proportions, pixel-perfect centering.' },
               ] as { Icon: (p: { className?: string }) => JSX.Element; title: string; desc: string }[]).map(({ Icon, title, desc }) => (

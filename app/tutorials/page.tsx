@@ -26,8 +26,8 @@ const tutorials = [
   {
     Icon: Plug,
     duration: '8 min',
-    en: { title: 'API integration: quickstart guide', desc: 'Authenticate, upload images, poll for results, and download outputs — all via the REST API in under 50 lines of code.' },
-    it: { title: 'Integrazione API: guida rapida', desc: 'Autenticazione, caricamento immagini, polling dei risultati e download degli output — tutto via REST API in meno di 50 righe di codice.' },
+    en: { title: 'API integration: quickstart guide', desc: 'Authenticate, upload images, poll for results, and download outputs, all via the REST API in under 50 lines of code.' },
+    it: { title: 'Integrazione API: guida rapida', desc: 'Autenticazione, caricamento immagini, polling dei risultati e download degli output, tutto via REST API in meno di 50 righe di codice.' },
   },
   {
     Icon: Package,

@@ -143,7 +143,7 @@ export default function PricingPage() {
           </div>
         )}
 
-        {/* Pricing Cards — 5 columns at lg */}
+        {/* Pricing Cards, 5 columns at lg */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-12">
           {filteredPlans.map((plan, index) => {
             const key = plan.name.toLowerCase() as keyof typeof planInfo

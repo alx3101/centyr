@@ -46,9 +46,9 @@ export default function PrivacyPage() {
           <section>
             <p className="text-sm">
               {it ? (
-                <>Centyr (&quot;<strong>noi</strong>&quot;, &quot;<strong>nostro</strong>&quot; o &quot;<strong>ci</strong>&quot;) si impegna a proteggere i tuoi dati personali e a rispettare la tua privacy. La presente Informativa sulla Privacy descrive quali dati raccogliamo, perché li raccogliamo, come li utilizziamo e proteggiamo, e quali diritti hai sui tuoi dati — in conformità al Regolamento Generale sulla Protezione dei Dati dell&apos;UE (GDPR).</>
+                <>Centyr (&quot;<strong>noi</strong>&quot;, &quot;<strong>nostro</strong>&quot; o &quot;<strong>ci</strong>&quot;) si impegna a proteggere i tuoi dati personali e a rispettare la tua privacy. La presente Informativa sulla Privacy descrive quali dati raccogliamo, perché li raccogliamo, come li utilizziamo e proteggiamo, e quali diritti hai sui tuoi dati, in conformità al Regolamento Generale sulla Protezione dei Dati dell&apos;UE (GDPR).</>
               ) : (
-                <>Centyr (&quot;<strong>we</strong>&quot;, &quot;<strong>our</strong>&quot;, or &quot;<strong>us</strong>&quot;) is committed to protecting your personal data and respecting your privacy. This Privacy Policy describes what data we collect, why we collect it, how we use and protect it, and what rights you have over your data — in accordance with the EU General Data Protection Regulation (GDPR).</>
+                <>Centyr (&quot;<strong>we</strong>&quot;, &quot;<strong>our</strong>&quot;, or &quot;<strong>us</strong>&quot;) is committed to protecting your personal data and respecting your privacy. This Privacy Policy describes what data we collect, why we collect it, how we use and protect it, and what rights you have over your data, in accordance with the EU General Data Protection Regulation (GDPR).</>
               )}
             </p>
             <p className="text-sm mt-2">
@@ -134,8 +134,8 @@ export default function PrivacyPage() {
               </LegalBasis>
               <LegalBasis basis={it ? 'Consenso (Art. 6(1)(a))' : 'Consent (Art. 6(1)(a))'}>
                 {it
-                  ? 'Comunicazioni di marketing, aggiornamenti di prodotto e newsletter — solo se hai esplicitamente acconsentito. Puoi revocare il consenso in qualsiasi momento.'
-                  : 'Marketing communications, product updates, and newsletters — only if you have explicitly opted in. You may withdraw consent at any time.'}
+                  ? 'Comunicazioni di marketing, aggiornamenti di prodotto e newsletter, solo se hai esplicitamente acconsentito. Puoi revocare il consenso in qualsiasi momento.'
+                  : 'Marketing communications, product updates, and newsletters, only if you have explicitly opted in. You may withdraw consent at any time.'}
               </LegalBasis>
             </div>
           </Section>
@@ -192,7 +192,7 @@ export default function PrivacyPage() {
                     <td className="p-3 border border-purple-100">Amazon Web Services</td>
                     <td className="p-3 border border-purple-100">{it ? 'Archiviazione (S3), database (DynamoDB), calcolo (ECS), autenticazione (Cognito)' : 'Storage (S3), database (DynamoDB), compute (ECS), auth (Cognito)'}</td>
                     <td className="p-3 border border-purple-100">EU (Paris, eu-west-3)</td>
-                    <td className="p-3 border border-purple-100">{it ? 'SEE — nessun trasferimento' : 'EEA — no transfer'}</td>
+                    <td className="p-3 border border-purple-100">{it ? 'SEE, nessun trasferimento' : 'EEA, no transfer'}</td>
                   </tr>
                   <tr className="bg-gray-50">
                     <td className="p-3 border border-purple-100">Stripe, Inc.</td>
