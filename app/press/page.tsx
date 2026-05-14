@@ -94,7 +94,7 @@ export default function PressPage() {
             <div className="space-y-2 text-sm text-gray-600">
               <p className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-green-600 shrink-0 mt-0.5" /><span>{it ? '"Centyr" — maiuscola solo la prima lettera.' : '"Centyr" — only capitalize the first letter.'}</span></p>
               <p className="flex items-start gap-2"><XCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" /><span>{it ? 'Non usare "CENTYR" o "centyr".' : 'Do not use "CENTYR" or "centyr".'}</span></p>
-              <p className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-green-600 shrink-0 mt-0.5" /><span>{it ? 'Puoi descrivere Centyr come piattaforma per l'elaborazione automatica delle foto prodotto e-commerce.' : 'You may describe Centyr as a platform for automated e-commerce product photo processing.'}</span></p>
+              <p className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-green-600 shrink-0 mt-0.5" /><span>{it ? 'Puoi descrivere Centyr come piattaforma per l\'elaborazione automatica delle foto prodotto e-commerce.' : 'You may describe Centyr as a platform for automated e-commerce product photo processing.'}</span></p>
               <p className="flex items-start gap-2"><XCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" /><span>{it ? 'Non modificare i colori o le proporzioni del logo.' : 'Do not alter logo colors or proportions.'}</span></p>
             </div>
           </section>
