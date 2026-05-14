@@ -24,7 +24,7 @@ export function UnifiedNavbar() {
   // Durante il loading iniziale, mostra una navbar placeholder per evitare flash
   if (isLoading) {
     return (
-      <nav className="bg-white/80 backdrop-blur-md py-4 border-b border-purple-100 sticky top-0 z-50 shadow-sm">
+      <nav className="bg-white/80 backdrop-blur-md py-3 border-b border-purple-100 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             <Image
