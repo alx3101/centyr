@@ -1,10 +1,18 @@
 import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
+import { Onest } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
 import { AppProviders } from '@/components/providers/AppProviders'
 import { Analytics } from '@vercel/analytics/next'
 import CookieBanner from '@/components/CookieBanner'
 import './globals.css'
+
+const onest = Onest({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  display: 'optional',
+  variable: '--font-onest',
+})
 
 export const metadata: Metadata = {
   title: 'Centyr - Product Photo Standardization for E-commerce',
@@ -27,12 +35,9 @@ export default async function RootLayout({
   const initialLanguage = langCookie === 'it' ? 'it' : 'en'
 
   return (
-    <html lang={initialLanguage}>
+    <html lang={initialLanguage} className={onest.variable}>
       <head>
         <link rel="preload" as="image" href="/before.webp" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800;900&display=optional" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
