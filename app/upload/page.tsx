@@ -7,6 +7,7 @@ import { toast } from 'react-hot-toast'
 import { Upload, X, Check, Loader, Sparkles, Zap, Shield, ImageIcon, Lock, ChevronRight, ChevronLeft, Settings, Eye, AlertCircle, Info } from 'lucide-react'
 import { useDropzone } from 'react-dropzone'
 import { useUpload } from '@/hooks/useUpload'
+import { compressImageFiles } from '@/lib/imageCompression'
 import { useAuth } from '@/contexts/AuthContext'
 import { useTranslations } from '@/contexts/LanguageContext'
 
@@ -64,13 +65,14 @@ export default function UploadPage() {
     }
   }, [currentStep, files.length, jobName, isUploading])
 
-  const onDrop = (acceptedFiles: File[]) => {
+  const onDrop = async (acceptedFiles: File[]) => {
     const totalFiles = files.length + acceptedFiles.length
     if (totalFiles > maxBatchSize) {
       toast.error(`${t.upload.maxBatchExceeded.replace('{count}', String(maxBatchSize))} ${!isPremium ? t.upload.upgradeToProcess : ''}`)
       const remainingSlots = maxBatchSize - files.length
       if (remainingSlots > 0) {
-        addFiles(acceptedFiles.slice(0, remainingSlots))
+        const compressed = await compressImageFiles(acceptedFiles.slice(0, remainingSlots))
+        addFiles(compressed)
       }
       return
     }
@@ -81,7 +83,10 @@ export default function UploadPage() {
       return
     }
 
-    addFiles(acceptedFiles)
+    const toastId = toast.loading(t.upload.compressingImages)
+    const compressed = await compressImageFiles(acceptedFiles)
+    toast.dismiss(toastId)
+    addFiles(compressed)
   }
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

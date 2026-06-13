@@ -348,6 +348,7 @@ export interface Translations {
     secure: string
     secureDesc: string
     jobStarted: string
+    compressingImages: string
     uploadAtLeastOne: string
     enterJobName: string
     maxBatchExceeded: string
@@ -1061,6 +1062,7 @@ export const translations: Record<Language, Translations> = {
       secure: 'Secure',
       secureDesc: 'End-to-end encryption',
       jobStarted: 'Job started! Redirecting to dashboard...',
+      compressingImages: 'Optimizing images...',
       uploadAtLeastOne: 'Upload at least one image',
       enterJobName: 'Enter a job name',
       maxBatchExceeded: 'Maximum {count} images per batch.',
@@ -1781,6 +1783,7 @@ export const translations: Record<Language, Translations> = {
       secure: 'Sicuro',
       secureDesc: 'Crittografia end-to-end',
       jobStarted: 'Job avviato! Reindirizzamento alla dashboard...',
+      compressingImages: 'Ottimizzazione immagini...',
       uploadAtLeastOne: 'Carica almeno una immagine',
       enterJobName: 'Inserisci un nome per il job',
       maxBatchExceeded: 'Massimo {count} immagini per batch.',
