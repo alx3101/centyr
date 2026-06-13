@@ -2,7 +2,7 @@
 // Bails out (returns original file) on any unsupported format / error.
 
 const MAX_DIMENSION = 2400
-const JPEG_QUALITY = 0.8
+const QUALITY = 0.8
 const MIN_SIZE_TO_COMPRESS = 400 * 1024 // skip files already small
 
 export async function compressImageFile(file: File): Promise<File> {
@@ -36,17 +36,29 @@ export async function compressImageFile(file: File): Promise<File> {
     ctx.drawImage(bitmap, 0, 0, targetWidth, targetHeight)
     bitmap.close()
 
-    const blob = await new Promise<Blob | null>((resolve) =>
-      canvas.toBlob(resolve, 'image/jpeg', JPEG_QUALITY)
+    // Prefer WebP (smaller than JPEG at equal quality), fall back to JPEG
+    // if the browser can't encode WebP via canvas.
+    let blob = await new Promise<Blob | null>((resolve) =>
+      canvas.toBlob(resolve, 'image/webp', QUALITY)
     )
+    let ext = 'webp'
+    let mime = 'image/webp'
+
+    if (!blob) {
+      blob = await new Promise<Blob | null>((resolve) =>
+        canvas.toBlob(resolve, 'image/jpeg', QUALITY)
+      )
+      ext = 'jpg'
+      mime = 'image/jpeg'
+    }
 
     if (!blob || blob.size >= file.size) {
       return file
     }
 
-    const newName = file.name.replace(/\.[^.]+$/, '.jpg')
+    const newName = file.name.replace(/\.[^.]+$/, `.${ext}`)
 
-    return new File([blob], newName, { type: 'image/jpeg', lastModified: file.lastModified })
+    return new File([blob], newName, { type: mime, lastModified: file.lastModified })
   } catch {
     return file
   }
