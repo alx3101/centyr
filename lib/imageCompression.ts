@@ -1,9 +1,9 @@
 // Downscale + recompress images client-side before upload to cut bandwidth.
 // Bails out (returns original file) on any unsupported format / error.
 
-const MAX_DIMENSION = 3000
-const JPEG_QUALITY = 0.85
-const MIN_SIZE_TO_COMPRESS = 800 * 1024 // skip files already small
+const MAX_DIMENSION = 2400
+const JPEG_QUALITY = 0.8
+const MIN_SIZE_TO_COMPRESS = 400 * 1024 // skip files already small
 
 export async function compressImageFile(file: File): Promise<File> {
   if (!file.type.startsWith('image/') || file.size < MIN_SIZE_TO_COMPRESS) {
@@ -28,25 +28,25 @@ export async function compressImageFile(file: File): Promise<File> {
       return file
     }
 
+    // Flatten onto white first: job images don't need transparency (background
+    // gets replaced server-side), and forcing JPEG output is what actually
+    // shrinks PNG screenshots/graphics.
+    ctx.fillStyle = '#ffffff'
+    ctx.fillRect(0, 0, targetWidth, targetHeight)
     ctx.drawImage(bitmap, 0, 0, targetWidth, targetHeight)
     bitmap.close()
 
-    // Preserve PNG (possible transparency), re-encode everything else as JPEG.
-    const outputType = file.type === 'image/png' ? 'image/png' : 'image/jpeg'
-
     const blob = await new Promise<Blob | null>((resolve) =>
-      canvas.toBlob(resolve, outputType, JPEG_QUALITY)
+      canvas.toBlob(resolve, 'image/jpeg', JPEG_QUALITY)
     )
 
     if (!blob || blob.size >= file.size) {
       return file
     }
 
-    const newName = outputType === 'image/jpeg'
-      ? file.name.replace(/\.[^.]+$/, '.jpg')
-      : file.name
+    const newName = file.name.replace(/\.[^.]+$/, '.jpg')
 
-    return new File([blob], newName, { type: outputType, lastModified: file.lastModified })
+    return new File([blob], newName, { type: 'image/jpeg', lastModified: file.lastModified })
   } catch {
     return file
   }
