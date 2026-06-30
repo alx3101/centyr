@@ -1162,9 +1162,9 @@ export const translations: Record<Language, Translations> = {
     marketing: {
       hero: {
         badge: 'Processing 1M+ images monthly',
-        title: 'Perfect Product Photos,',
-        titleHighlight: 'Automatically',
-        subtitle: 'Upload once, get the exact size and padding every marketplace requires. No manual resizing.',
+        title: 'One Photo,',
+        titleHighlight: 'Every Marketplace Size',
+        subtitle: 'Stop manually resizing photos for Amazon, eBay, Etsy, Zalando. Upload once, get every size and padding automatically.',
         ctaPrimary: 'Try for Free',
         ctaSecondary: 'See Pricing',
         trustNoCreditCard: 'No credit card required',
@@ -1841,9 +1841,9 @@ export const translations: Record<Language, Translations> = {
     marketing: {
       hero: {
         badge: 'Elaborazione di 1M+ immagini al mese',
-        title: 'Foto Prodotto Perfette,',
-        titleHighlight: 'Automaticamente',
-        subtitle: "Carica una volta, ottieni la dimensione e il margine esatti richiesti da ogni marketplace. Niente ridimensionamenti manuali.",
+        title: 'Una Sola Foto,',
+        titleHighlight: 'Ogni Dimensione Marketplace',
+        subtitle: "Basta ridimensionare manualmente le foto per Amazon, eBay, Etsy, Zalando. Carica una volta, ottieni ogni dimensione e margine automaticamente.",
         ctaPrimary: 'Prova Gratis',
         ctaSecondary: 'Vedi Prezzi',
         trustNoCreditCard: 'Nessuna carta di credito richiesta',
