@@ -1,12 +1,15 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { STORE_LOGOS } from './StoreLogos'
+import { useTranslations } from '@/contexts/LanguageContext'
+import { buildDemoFrames } from './StoreLogos'
 
 const CYCLE_MS = 2400
 const CANVAS_FIT_PCT = 86
 
 export default function MarketplaceFrame() {
+  const t = useTranslations()
+  const frames = buildDemoFrames(t.marketing.hero.yourStoreLabel)
   const [index, setIndex] = useState(0)
 
   useEffect(() => {
@@ -14,12 +17,12 @@ export default function MarketplaceFrame() {
     if (reduceMotion) return
 
     const id = setInterval(() => {
-      setIndex((i) => (i + 1) % STORE_LOGOS.length)
+      setIndex((i) => (i + 1) % frames.length)
     }, CYCLE_MS)
     return () => clearInterval(id)
-  }, [])
+  }, [frames.length])
 
-  const store = STORE_LOGOS[index]
+  const store = frames[index]
   const ratio = store.width / store.height
   const canvasHeightPct = CANVAS_FIT_PCT
   const canvasWidthPct = canvasHeightPct * ratio

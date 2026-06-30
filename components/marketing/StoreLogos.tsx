@@ -37,6 +37,15 @@ export function ZalandoLogo({ size = 24, className }: LogoProps) {
   )
 }
 
+// Generic storefront icon (not a brand mark) representing "your own store"
+export function StorefrontIcon({ size = 24, className }: LogoProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} className={className}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3 9.5L4.5 4h15L21 9.5M3 9.5a2.5 2.5 0 005 0M3 9.5V19a1 1 0 001 1h4a1 1 0 001-1v-4a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 001 1h4a1 1 0 001-1V9.5M8 9.5a2.5 2.5 0 005 0M13 9.5a2.5 2.5 0 005 0" />
+    </svg>
+  )
+}
+
 export interface StoreSpec {
   key: string
   name: string
@@ -53,3 +62,12 @@ export const STORE_LOGOS: StoreSpec[] = [
   { key: 'etsy', name: 'Etsy', brandColor: '#F1641E', Logo: EtsyLogo, width: 2000, height: 2000, marginPct: 8 },
   { key: 'zalando', name: 'Zalando', brandColor: '#FF6900', Logo: ZalandoLogo, width: 1500, height: 2250, marginPct: 12 },
 ]
+
+// Adds a generic "your own store" frame to the real marketplace specs, for
+// the hero demo only (TrustedBy keeps STORE_LOGOS as-is — real brands only).
+export function buildDemoFrames(yourStoreLabel: string): StoreSpec[] {
+  return [
+    ...STORE_LOGOS,
+    { key: 'custom', name: yourStoreLabel, brandColor: '#7c3aed', Logo: StorefrontIcon, width: 1600, height: 1600, marginPct: 10 },
+  ]
+}

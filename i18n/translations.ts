@@ -505,6 +505,7 @@ export interface Translations {
       trustNoCreditCard: string
       trustFreeJobs: string
       trustMoneyBack: string
+      yourStoreLabel: string
     }
     features: {
       title: string
@@ -1162,14 +1163,15 @@ export const translations: Record<Language, Translations> = {
     marketing: {
       hero: {
         badge: 'Processing 1M+ images monthly',
-        title: 'One Photo,',
-        titleHighlight: 'Every Marketplace Size',
-        subtitle: 'Stop manually resizing photos for Amazon, eBay, Etsy, Zalando. Upload once, get every size and padding automatically.',
+        title: 'Sell-Ready Product Photos,',
+        titleHighlight: 'Wherever You Sell',
+        subtitle: 'Selling on Amazon, eBay, Etsy, Zalando? Get their exact specs automatically. Launching your own store? Get polished, consistent photos from day one.',
         ctaPrimary: 'Try for Free',
         ctaSecondary: 'See Pricing',
         trustNoCreditCard: 'No credit card required',
         trustFreeJobs: '3 free jobs/month',
         trustMoneyBack: '30-day money-back guarantee',
+        yourStoreLabel: 'Your Store',
       },
       features: {
         title: 'Everything You Need',
@@ -1336,7 +1338,7 @@ export const translations: Record<Language, Translations> = {
       },
       trustedBy: {
         tagline: 'Built for e-commerce stores',
-        subtitle: 'Ready for every marketplace, zero manual resizing',
+        subtitle: 'Marketplace-ready specs, or perfect photos for your own store',
       },
       liveStats: {
         badge: 'Real-time Stats',
@@ -1841,14 +1843,15 @@ export const translations: Record<Language, Translations> = {
     marketing: {
       hero: {
         badge: 'Elaborazione di 1M+ immagini al mese',
-        title: 'Una Sola Foto,',
-        titleHighlight: 'Ogni Dimensione Marketplace',
-        subtitle: "Basta ridimensionare manualmente le foto per Amazon, eBay, Etsy, Zalando. Carica una volta, ottieni ogni dimensione e margine automaticamente.",
+        title: 'Foto Prodotto Pronte alla Vendita,',
+        titleHighlight: 'Ovunque Tu Venda',
+        subtitle: "Vendi su Amazon, eBay, Etsy, Zalando? Ottieni le loro specifiche esatte automaticamente. Stai avviando il tuo store? Ottieni foto curate e coerenti fin dal primo giorno.",
         ctaPrimary: 'Prova Gratis',
         ctaSecondary: 'Vedi Prezzi',
         trustNoCreditCard: 'Nessuna carta di credito richiesta',
         trustFreeJobs: '3 jobs gratuiti/mese',
         trustMoneyBack: 'Garanzia soddisfatti o rimborsati 30 giorni',
+        yourStoreLabel: 'Il Tuo Store',
       },
       features: {
         title: 'Tutto Quello che Ti Serve',
@@ -2015,7 +2018,7 @@ export const translations: Record<Language, Translations> = {
       },
       trustedBy: {
         tagline: 'Fatto per i negozi e-commerce',
-        subtitle: 'Pronto per ogni marketplace, zero ridimensionamenti manuali',
+        subtitle: 'Specifiche pronte per i marketplace, o foto perfette per il tuo store',
       },
       liveStats: {
         badge: 'Stats in tempo reale',
