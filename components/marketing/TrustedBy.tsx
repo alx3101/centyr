@@ -1,37 +1,13 @@
 'use client'
 
 import { useTranslations } from '@/contexts/LanguageContext'
-
-const industryCategories = [
-  { key: 'catFashion', icon: '👗' },
-  { key: 'catElectronics', icon: '📱' },
-  { key: 'catHome', icon: '🏡' },
-  { key: 'catSports', icon: '⚽' },
-  { key: 'catCosmetics', icon: '💄' },
-  { key: 'catFood', icon: '🍽️' },
-]
-
-// Extra labels not in translations, hardcoded but neutral
-const extraCategories = [
-  { label: 'Jewelry', icon: '💎' },
-  { label: 'Furniture', icon: '🪑' },
-]
+import { STORE_LOGOS } from './StoreLogos'
 
 export default function TrustedBy() {
   const t = useTranslations()
 
-  const categories = industryCategories.map((c) => ({
-    label: t.marketing.trustedBy[c.key as keyof typeof t.marketing.trustedBy] as string,
-    icon: c.icon,
-  }))
-
   // Build the full list doubled for seamless marquee loop
-  const allCategories = [
-    ...categories,
-    ...extraCategories,
-    ...categories,
-    ...extraCategories,
-  ]
+  const allStores = [...STORE_LOGOS, ...STORE_LOGOS]
 
   return (
     <section className="py-14 bg-white border-y border-gray-100 overflow-hidden">
@@ -46,7 +22,7 @@ export default function TrustedBy() {
           className="text-base font-medium"
           style={{ color: '#6b7280' }}
         >
-          Usato da e-commerce in ogni settore
+          {t.marketing.trustedBy.subtitle}
         </p>
       </div>
 
@@ -64,18 +40,18 @@ export default function TrustedBy() {
         />
 
         <div className="flex gap-3 marquee-track">
-          {allCategories.map((cat, idx) => (
+          {allStores.map((store, idx) => (
             <span
               key={idx}
-              className="inline-flex items-center gap-1.5 whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium border transition-colors duration-200 flex-shrink-0"
+              className="inline-flex items-center gap-2 whitespace-nowrap px-4 py-2 rounded-full text-sm font-semibold border transition-colors duration-200 flex-shrink-0"
               style={{
                 backgroundColor: '#faf5ff',
                 borderColor: '#e9d5ff',
                 color: '#0f0a1e',
               }}
             >
-              <span className="text-base leading-none">{cat.icon}</span>
-              {cat.label}
+              <store.Logo size={16} className="flex-shrink-0" />
+              {store.name}
             </span>
           ))}
         </div>
