@@ -1,28 +1,11 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
 import { useTranslations } from '@/contexts/LanguageContext'
+import MarketplaceFrame from './MarketplaceFrame'
 
 export default function Hero() {
   const t = useTranslations()
-  const [sliderPosition, setSliderPosition] = useState(50)
-  const [isDragging, setIsDragging] = useState(false)
-
-  const handleMouseDown = () => setIsDragging(true)
-  const handleMouseUp = () => setIsDragging(false)
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDragging) return
-    const rect = e.currentTarget.getBoundingClientRect()
-    const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width))
-    setSliderPosition(Math.max(0, Math.min((x / rect.width) * 100, 100)))
-  }
-  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (!isDragging) return
-    const rect = e.currentTarget.getBoundingClientRect()
-    const x = Math.max(0, Math.min(e.touches[0].clientX - rect.left, rect.width))
-    setSliderPosition(Math.max(0, Math.min((x / rect.width) * 100, 100)))
-  }
 
   return (
     <section className="hero-v3">
@@ -83,52 +66,9 @@ export default function Hero() {
 
             </div>
 
-            {/* Slider */}
+            {/* Marketplace frame demo */}
             <div className="v3-visual">
-              <div
-                className="v3-slider-wrap"
-                onMouseMove={handleMouseMove}
-                onMouseDown={handleMouseDown}
-                onMouseUp={handleMouseUp}
-                onMouseLeave={handleMouseUp}
-                onTouchStart={handleMouseDown}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={handleMouseUp}
-              >
-                <div className="absolute inset-0 bg-gray-100">
-                  <img src="/before.webp" alt="Prima" className="w-full h-full object-cover" width={1200} height={1200} fetchPriority="high" />
-                </div>
-                <div
-                  className="absolute inset-0 bg-white"
-                  style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
-                >
-                  <img src="/after.webp" alt="Dopo" className="w-full h-full object-cover" width={1200} height={1200} />
-                </div>
-
-                <div className="v3-slider-label" style={{ left: 14 }}>{t.marketing.hero.before}</div>
-                <div className="v3-slider-label" style={{ right: 14 }}>{t.marketing.hero.after}</div>
-
-                <div className="v3-slider-line" style={{ left: `${sliderPosition}%` }}>
-                  <div className="v3-slider-handle">
-                    <svg width="18" height="18" fill="none" stroke="#7c3aed" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
-                    </svg>
-                  </div>
-                </div>
-
-                {/* Floating chip */}
-                <div className="v3-result-chip">
-                  <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e', boxShadow: '0 0 6px rgba(34,197,94,0.8)', flexShrink: 0 }} />
-                  <div>
-                    <div className="v3-result-chip-text">Elaborato in 18 sec</div>
-                    <div className="v3-result-chip-sub">2000 × 2000px · WEBP</div>
-                  </div>
-                </div>
-              </div>
-
-              <p className="text-center text-xs mt-3 text-gray-400" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                {t.marketing.hero.dragToCompare}
-              </p>
+              <MarketplaceFrame />
             </div>
 
           </div>
