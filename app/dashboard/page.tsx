@@ -6,6 +6,8 @@ import { toast } from 'react-hot-toast'
 import { Upload, Download, Loader, CheckCircle, XCircle, Clock, TrendingUp, Zap, Award, Activity, Filter, Image as ImageIcon, ArrowRight } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useRecentJobs } from '@/hooks/queries'
+import { STORE_LOGOS } from '@/components/marketing/StoreLogos'
+import { getJobMeta } from '@/lib/jobMeta'
 import { SkeletonDashboard } from '@/components/ui/Skeleton'
 import EmptyState from '@/components/EmptyState'
 import OnboardingChecklist from '@/components/OnboardingChecklist'
@@ -439,6 +441,19 @@ function DashboardContent() {
                           {new Date(job.created_at).toLocaleDateString()} at{' '}
                           {new Date(job.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </p>
+                        {(() => {
+                          const meta = getJobMeta(job.job_id)
+                          if (!meta) return null
+                          const store = STORE_LOGOS.find(s => s.key === meta.preset)
+                          const L = store?.Logo
+                          return (
+                            <span className="flex items-center gap-1 text-xs px-2 py-1 rounded-full font-semibold"
+                              style={{ background: store ? `${store.brandColor}18` : '#faf5ff', color: store?.brandColor ?? '#7c3aed' }}>
+                              {L ? <L size={10} /> : null}
+                              {store ? store.name : 'Custom'} · {meta.width}×{meta.height}px
+                            </span>
+                          )
+                        })()}
                         {job.metadata?.image_count && job.metadata.image_count > 1 && (
                           <span className="flex items-center gap-1 text-xs bg-[#faf5ff] text-[#7c3aed] px-2 py-1 rounded-full font-semibold">
                             <ImageIcon className="w-3 h-3" />

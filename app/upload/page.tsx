@@ -8,6 +8,7 @@ import { Upload, X, Check, Loader, Sparkles, Zap, Shield, ImageIcon, Lock, Chevr
 import { useDropzone } from 'react-dropzone'
 import { useUpload } from '@/hooks/useUpload'
 import { compressImageFiles } from '@/lib/imageCompression'
+import { saveJobMeta } from '@/lib/jobMeta'
 import { useAuth } from '@/contexts/AuthContext'
 import { useTranslations } from '@/contexts/LanguageContext'
 
@@ -152,6 +153,7 @@ export default function UploadPage() {
     const jobId = await uploadAndProcess(jobName.trim(), options)
 
     if (jobId) {
+      saveJobMeta(jobId, { preset, width: outputWidth, height: outputHeight })
       toast.success(t.upload.jobStarted)
       setTimeout(() => {
         router.push(`/dashboard?job=${jobId}`)

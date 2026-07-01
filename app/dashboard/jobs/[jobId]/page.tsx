@@ -7,8 +7,11 @@ import Image from 'next/image' // used inside ImageWithLoader
 import { api, JobResponse, JobStatus } from '@/lib/api'
 import { AuthGuard } from '@/components/guards/AuthGuard'
 import { useConfirm } from '@/components/ui/ConfirmModal'
-import { ArrowLeft, Download, Trash2, Clock, CheckCircle, XCircle, Loader, Image as ImageIcon, Zap, Info, Upload, RotateCw } from 'lucide-react'
+import { ArrowLeft, Download, Trash2, Clock, CheckCircle, XCircle, Loader, Image as ImageIcon, Zap, Info, Upload, RotateCw, RefreshCw, X, Lock } from 'lucide-react'
 import { useTranslations } from '@/contexts/LanguageContext'
+import { STORE_LOGOS, StorefrontIcon } from '@/components/marketing/StoreLogos'
+import { saveJobMeta, getJobMeta } from '@/lib/jobMeta'
+import { toast } from 'react-hot-toast'
 
 export default function JobDetailPage() {
   return (
@@ -59,6 +62,77 @@ function JobDetailContent() {
   const [isDownloading, setIsDownloading] = useState(false)
   const [isRetrying, setIsRetrying] = useState(false)
   const [hasAnimated, setHasAnimated] = useState(false)
+
+  // Reprocess state
+  const [showReprocess, setShowReprocess] = useState(false)
+  const [rpPreset, setRpPreset] = useState('custom')
+  const [rpWidth, setRpWidth] = useState(1000)
+  const [rpHeight, setRpHeight] = useState(1000)
+  const [rpMarginPct, setRpMarginPct] = useState(5)
+  const [isReprocessing, setIsReprocessing] = useState(false)
+
+  const handleRpPresetChange = (key: string) => {
+    setRpPreset(key)
+    const store = STORE_LOGOS.find(s => s.key === key)
+    if (store) {
+      setRpWidth(store.width)
+      setRpHeight(store.height)
+      setRpMarginPct(store.marginPct)
+    }
+  }
+
+  const handleReprocess = async () => {
+    if (!job) return
+    setIsReprocessing(true)
+    try {
+      const inputUrls: string[] = []
+      if (job.batch_mode && job.outputs?.length) {
+        job.outputs.filter(Boolean).forEach(o => { if (o.input_url) inputUrls.push(o.input_url) })
+      } else if (job.input_image_url) {
+        inputUrls.push(job.input_image_url)
+      }
+      if (inputUrls.length === 0) throw new Error('No input images found')
+
+      const fetchedFiles = await Promise.all(
+        inputUrls.map(async (url, i) => {
+          const res = await fetch(url)
+          if (!res.ok) throw new Error(`Failed to fetch image ${i + 1}`)
+          const blob = await res.blob()
+          const ext = blob.type.includes('png') ? 'png' : blob.type.includes('webp') ? 'webp' : 'jpg'
+          return new File([blob], `image-${i + 1}.${ext}`, { type: blob.type })
+        })
+      )
+
+      const marginPx = Math.round((Math.min(rpWidth, rpHeight) * rpMarginPct) / 100)
+      const matchedStore = STORE_LOGOS.find(s => s.key === rpPreset)
+      const newJobName = `${job.job_name || 'Job'} [${matchedStore?.name ?? jd.customFormat}]`
+
+      const result = await api.uploadBatch(fetchedFiles, newJobName, {
+        outputWidth: rpWidth,
+        outputHeight: rpHeight,
+        margin: marginPx,
+      })
+
+      saveJobMeta(result.job_id, { preset: rpPreset, width: rpWidth, height: rpHeight })
+      toast.success(jd.reprocessSuccess)
+      router.push(`/dashboard/jobs/${result.job_id}`)
+    } catch (err: any) {
+      toast.error(err.message || jd.reprocessFailed)
+    } finally {
+      setIsReprocessing(false)
+    }
+  }
+
+  const rpMarginPx = Math.round((Math.min(rpWidth, rpHeight) * rpMarginPct) / 100)
+
+  // Detect current job format
+  const jobMeta = typeof window !== 'undefined' ? getJobMeta(jobId) : null
+  const currentStore = jobMeta ? STORE_LOGOS.find(s => s.key === jobMeta.preset) : null
+  const outputDims = job?.outputs?.[0]
+    ? { w: job.outputs[0].output_width, h: job.outputs[0].output_height }
+    : jobMeta
+      ? { w: jobMeta.width, h: jobMeta.height }
+      : null
 
   useEffect(() => {
     const fetchJobDetails = async () => {
@@ -344,6 +418,13 @@ function JobDetailContent() {
                 </button>
               )}
               <button
+                onClick={() => setShowReprocess(v => !v)}
+                className={`flex items-center gap-2 px-6 py-3 font-bold rounded-xl hover:scale-105 transition-all shadow-md ${showReprocess ? 'bg-purple-700 text-white' : 'bg-purple-100 text-purple-700 hover:bg-purple-200'}`}
+              >
+                <RefreshCw className="w-5 h-5" />
+                {jd.reprocess}
+              </button>
+              <button
                 onClick={handleDelete}
                 className="flex items-center gap-2 px-6 py-3 bg-red-500 text-white font-bold rounded-xl hover:bg-red-600 hover:scale-105 transition-all shadow-md"
               >
@@ -353,6 +434,116 @@ function JobDetailContent() {
             </div>
           </div>
         </div>
+
+        {/* Reprocess Panel */}
+        {showReprocess && (
+          <div className="bg-white/90 backdrop-blur-sm border-2 border-purple-200 rounded-2xl p-6 mb-6 shadow-lg animate-fade-in">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h3 className="text-lg font-bold text-gray-900">{jd.reprocessTitle}</h3>
+                <p className="text-sm text-gray-500 mt-0.5">{jd.reprocessDesc}</p>
+              </div>
+              <button onClick={() => setShowReprocess(false)} className="text-gray-400 hover:text-gray-600 ml-4">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Preset pills */}
+            <div className="flex flex-wrap gap-2 mb-5">
+              {STORE_LOGOS.map(store => {
+                const L = store.Logo
+                return (
+                  <button
+                    key={store.key}
+                    type="button"
+                    onClick={() => handleRpPresetChange(store.key)}
+                    className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold border transition-all"
+                    style={rpPreset === store.key ? {
+                      background: store.brandColor,
+                      color: '#fff',
+                      borderColor: store.brandColor,
+                    } : {
+                      background: '#faf5ff',
+                      color: '#374151',
+                      borderColor: '#e9d5ff',
+                    }}
+                  >
+                    <L size={14} />
+                    {store.name} · {store.width}×{store.height}px
+                  </button>
+                )
+              })}
+              <button
+                type="button"
+                onClick={() => setRpPreset('custom')}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold border transition-all"
+                style={rpPreset === 'custom' ? {
+                  background: '#7c3aed',
+                  color: '#fff',
+                  borderColor: '#7c3aed',
+                } : {
+                  background: '#faf5ff',
+                  color: '#374151',
+                  borderColor: '#e9d5ff',
+                }}
+              >
+                <StorefrontIcon size={14} />
+                {jd.customFormat}
+              </button>
+            </div>
+
+            {/* Custom sliders — only visible in custom mode */}
+            <div className={`grid grid-cols-1 md:grid-cols-3 gap-5 mb-5 transition-opacity duration-200 ${rpPreset !== 'custom' ? 'opacity-40 pointer-events-none' : ''}`}>
+              {[
+                { label: 'Width', value: rpWidth, set: setRpWidth },
+                { label: 'Height', value: rpHeight, set: setRpHeight },
+              ].map(({ label, value, set }) => (
+                <div key={label}>
+                  <label className="block text-xs font-semibold text-gray-600 mb-2">{label}</label>
+                  <div className="flex items-center gap-2">
+                    <input type="range" min="500" max="4000" step="100" value={value} disabled={rpPreset !== 'custom'}
+                      onChange={e => set(Number(e.target.value))}
+                      className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-purple-600 disabled:cursor-not-allowed"
+                    />
+                    <span className="w-20 text-center px-2 py-1 bg-purple-50 text-purple-700 rounded-lg font-mono text-xs">{value}px</span>
+                  </div>
+                </div>
+              ))}
+              <div>
+                <label className="block text-xs font-semibold text-gray-600 mb-2">Margin</label>
+                <div className="flex items-center gap-2">
+                  <input type="range" min="0" max="35" step="1" value={rpMarginPct} disabled={rpPreset !== 'custom'}
+                    onChange={e => setRpMarginPct(Number(e.target.value))}
+                    className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-purple-600 disabled:cursor-not-allowed"
+                  />
+                  <div className="w-20 text-center px-2 py-1 bg-purple-50 text-purple-700 rounded-lg font-mono text-xs">
+                    {rpMarginPct}%
+                    <div className="text-gray-400">{rpMarginPx}px</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {rpPreset !== 'custom' && (
+              <p className="text-xs text-gray-400 flex items-center gap-1 mb-4">
+                <Lock className="w-3 h-3" />
+                Dimensions set automatically by the preset
+              </p>
+            )}
+
+            <button
+              onClick={handleReprocess}
+              disabled={isReprocessing}
+              className="flex items-center gap-2 px-6 py-3 gradient-purple-fuchsia text-white font-bold rounded-xl hover:scale-105 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isReprocessing ? (
+                <><Loader className="w-5 h-5 animate-spin" />{jd.reprocessing}</>
+              ) : (
+                <><RefreshCw className="w-5 h-5" />{jd.reprocessStart}</>
+              )}
+            </button>
+          </div>
+        )}
 
         {/* Status Info Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
@@ -405,6 +596,28 @@ function JobDetailContent() {
                 {job.image_count}
               </p>
               <p className="text-xs text-gray-500 mt-1">{job.batch_mode ? jd.batchMode : jd.single}</p>
+            </div>
+          )}
+
+          {(outputDims || currentStore) && (
+            <div className={`bg-white/80 backdrop-blur-sm border-2 rounded-2xl p-5 shadow-lg hover:shadow-xl transition-all ${animateClass}`}
+              style={{ animationDelay: '0.3s', borderColor: currentStore ? `${currentStore.brandColor}44` : '#e9d5ff' }}>
+              <div className="flex items-center gap-3 mb-2">
+                <div className="h-10 w-10 rounded-lg flex items-center justify-center shadow-md"
+                  style={{ background: currentStore ? `${currentStore.brandColor}22` : '#f3e8ff', color: currentStore?.brandColor ?? '#7c3aed' }}>
+                  {currentStore
+                    ? (() => { const L = currentStore.Logo; return <L size={20} /> })()
+                    : <StorefrontIcon size={20} />
+                  }
+                </div>
+                <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">{jd.outputFormat}</p>
+              </div>
+              <p className="text-xl font-bold" style={{ color: currentStore?.brandColor ?? '#374151' }}>
+                {currentStore ? currentStore.name : jd.customFormat}
+              </p>
+              {outputDims && (
+                <p className="text-xs text-gray-500 mt-1">{outputDims.w} × {outputDims.h}px</p>
+              )}
             </div>
           )}
         </div>
