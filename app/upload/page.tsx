@@ -4,9 +4,9 @@ import { useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { toast } from 'react-hot-toast'
-import { Upload, X, Check, Loader, Sparkles, Zap, Shield, ImageIcon, Lock, ChevronRight, ChevronLeft, Settings, Eye, AlertCircle, Info } from 'lucide-react'
+import { Upload, X, Check, Loader, Sparkles, Zap, Shield, ImageIcon, Lock, ChevronRight, ChevronLeft, Settings, Eye, AlertCircle, Info, Sun } from 'lucide-react'
 import { useDropzone } from 'react-dropzone'
-import { useUpload } from '@/hooks/useUpload'
+import { useUpload, type MarketplacePreset } from '@/hooks/useUpload'
 import { useAuth } from '@/contexts/AuthContext'
 import { useTranslations } from '@/contexts/LanguageContext'
 
@@ -28,6 +28,26 @@ export default function UploadPage() {
   const [customBackgroundPreview, setCustomBackgroundPreview] = useState<string | null>(null)
   const [outputSize, setOutputSize] = useState<number>(1000)
   const [marginPercent, setMarginPercent] = useState<number>(5)
+  // Shadow
+  const [shadowEnabled, setShadowEnabled] = useState(false)
+  const [shadowBlur, setShadowBlur] = useState(20)
+  const [shadowOpacity, setShadowOpacity] = useState(0.35)
+  const [shadowOffsetY, setShadowOffsetY] = useState(12)
+  // Marketplace presets
+  const [outputPresets, setOutputPresets] = useState<MarketplacePreset[]>([])
+
+  const MARKETPLACE_PRESETS: { key: MarketplacePreset; name: string; dims: string; color: string }[] = [
+    { key: 'amazon', name: 'Amazon', dims: '2000×2000', color: '#FF9900' },
+    { key: 'ebay', name: 'eBay', dims: '1600×1600', color: '#E53238' },
+    { key: 'etsy', name: 'Etsy', dims: '2000×2000', color: '#F1641E' },
+    { key: 'zalando', name: 'Zalando', dims: '1500×2250', color: '#FF6900' },
+  ]
+
+  const togglePreset = (key: MarketplacePreset) => {
+    setOutputPresets(prev =>
+      prev.includes(key) ? prev.filter(p => p !== key) : [...prev, key]
+    )
+  }
 
 
   const STEPS: { id: Step; label: string; icon: typeof Upload }[] = [
@@ -127,6 +147,11 @@ export default function UploadPage() {
       customBackground: customBackground || undefined,
       outputSize,
       margin: marginPixels,
+      shadowEnabled: removeBackground && shadowEnabled,
+      shadowBlur,
+      shadowOpacity,
+      shadowOffsetY,
+      outputPresets: outputPresets.length > 0 ? outputPresets : undefined,
     }
 
     const jobId = await uploadAndProcess(jobName.trim(), options)
@@ -450,6 +475,102 @@ export default function UploadPage() {
                   )}
                 </div>
 
+                {/* Shadow */}
+                <div className={`relative p-4 rounded-xl border transition-all ${shadowEnabled && removeBackground ? 'border-[#7c3aed] bg-[#faf5ff]' : 'border-[#f0f0f0] bg-white'} ${!removeBackground ? 'opacity-50' : ''}`}>
+                  <label className="flex items-start gap-4 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={shadowEnabled}
+                      onChange={(e) => {
+                        if (!removeBackground) return
+                        setShadowEnabled(e.target.checked)
+                      }}
+                      disabled={!removeBackground}
+                      className="w-5 h-5 mt-1 rounded border-2 border-[#e5e7eb] text-[#7c3aed] focus:ring-[#7c3aed]"
+                    />
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Sun className="w-4 h-4 text-[#7c3aed]" />
+                        <span className="font-semibold text-[#0f0a1e]">Drop shadow</span>
+                        {!removeBackground && (
+                          <span className="text-xs text-[#9ca3af]">(richiede rimozione sfondo)</span>
+                        )}
+                      </div>
+                      <p className="text-sm text-[#6b7280]">Aggiunge un'ombra morbida sotto il prodotto su sfondo bianco.</p>
+                    </div>
+                  </label>
+
+                  {shadowEnabled && removeBackground && (
+                    <div className="mt-4 pt-4 border-t border-[#e9d5ff] grid grid-cols-1 md:grid-cols-3 gap-4 animate-fade-in">
+                      <div>
+                        <label className="block text-xs font-medium text-[#374151] mb-1">Intensità</label>
+                        <div className="flex items-center gap-2">
+                          <input type="range" min="0.05" max="0.8" step="0.05" value={shadowOpacity}
+                            onChange={e => setShadowOpacity(Number(e.target.value))}
+                            className="flex-1 h-2 bg-[#e5e7eb] rounded-lg appearance-none cursor-pointer accent-[#7c3aed]" />
+                          <span className="text-xs font-mono text-[#7c3aed] w-8">{Math.round(shadowOpacity * 100)}%</span>
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-[#374151] mb-1">Sfumatura</label>
+                        <div className="flex items-center gap-2">
+                          <input type="range" min="1" max="80" step="1" value={shadowBlur}
+                            onChange={e => setShadowBlur(Number(e.target.value))}
+                            className="flex-1 h-2 bg-[#e5e7eb] rounded-lg appearance-none cursor-pointer accent-[#7c3aed]" />
+                          <span className="text-xs font-mono text-[#7c3aed] w-8">{shadowBlur}px</span>
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-[#374151] mb-1">Offset verticale</label>
+                        <div className="flex items-center gap-2">
+                          <input type="range" min="0" max="40" step="1" value={shadowOffsetY}
+                            onChange={e => setShadowOffsetY(Number(e.target.value))}
+                            className="flex-1 h-2 bg-[#e5e7eb] rounded-lg appearance-none cursor-pointer accent-[#7c3aed]" />
+                          <span className="text-xs font-mono text-[#7c3aed] w-8">{shadowOffsetY}px</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Marketplace Presets */}
+                <div className="p-4 rounded-xl border border-[#f0f0f0] bg-white">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Sparkles className="w-4 h-4 text-[#7c3aed]" />
+                    <span className="font-semibold text-[#0f0a1e]">Output per marketplace</span>
+                    <span className="text-xs text-[#9ca3af]">(opzionale)</span>
+                  </div>
+                  <p className="text-sm text-[#6b7280] mb-4">Genera un file per ogni marketplace selezionato con le specifiche esatte.</p>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    {MARKETPLACE_PRESETS.map(p => (
+                      <button
+                        key={p.key}
+                        type="button"
+                        onClick={() => togglePreset(p.key)}
+                        className={`flex flex-col items-center gap-1 p-3 rounded-xl border-2 transition-all ${
+                          outputPresets.includes(p.key)
+                            ? 'border-[#7c3aed] bg-[#faf5ff]'
+                            : 'border-[#f0f0f0] hover:border-[#d8b4fe]'
+                        }`}
+                      >
+                        <div className="w-5 h-5 rounded-full flex items-center justify-center" style={{ background: `${p.color}22` }}>
+                          {outputPresets.includes(p.key)
+                            ? <Check className="w-3 h-3" style={{ color: p.color }} />
+                            : <span className="w-2 h-2 rounded-full" style={{ background: p.color }} />
+                          }
+                        </div>
+                        <span className="font-semibold text-sm text-[#0f0a1e]">{p.name}</span>
+                        <span className="text-xs text-[#9ca3af] font-mono">{p.dims}</span>
+                      </button>
+                    ))}
+                  </div>
+                  {outputPresets.length > 0 && (
+                    <p className="text-xs text-[#7c3aed] mt-3">
+                      Genererà {outputPresets.length} file separati nel download ZIP.
+                    </p>
+                  )}
+                </div>
+
                 {/* Output Settings */}
                 <div className="p-4 rounded-xl border border-[#f0f0f0] bg-white">
                   <div className="flex items-center gap-2 mb-4">
@@ -549,9 +670,21 @@ export default function UploadPage() {
                         {t.upload.customBackgroundLabel}
                       </span>
                     )}
-                    <span className="px-3 py-1 bg-[#f3f4f6] text-[#6b7280] rounded-full text-sm font-medium">
-                      {outputSize}×{outputSize}px
-                    </span>
+                    {removeBackground && shadowEnabled && (
+                      <span className="px-3 py-1 bg-[#faf5ff] text-[#7c3aed] rounded-full text-sm font-medium border border-[#e9d5ff]">
+                        Drop shadow
+                      </span>
+                    )}
+                    {outputPresets.length > 0 && outputPresets.map(p => (
+                      <span key={p} className="px-3 py-1 bg-[#faf5ff] text-[#7c3aed] rounded-full text-sm font-medium border border-[#e9d5ff] capitalize">
+                        {p}
+                      </span>
+                    ))}
+                    {outputPresets.length === 0 && (
+                      <span className="px-3 py-1 bg-[#f3f4f6] text-[#6b7280] rounded-full text-sm font-medium">
+                        {outputSize}×{outputSize}px
+                      </span>
+                    )}
                     <span className="px-3 py-1 bg-[#f3f4f6] text-[#6b7280] rounded-full text-sm font-medium">
                       {t.upload.margin} {marginPercent}% ({marginPixels}px)
                     </span>

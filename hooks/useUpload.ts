@@ -19,13 +19,20 @@ export interface ProcessingJob {
   completed_at?: string
 }
 
+export type MarketplacePreset = 'amazon' | 'ebay' | 'etsy' | 'zalando'
+
 export interface ProcessingOptions {
   removeBackground?: boolean
   customBackground?: File
-  // Premium: custom output size (square, 500-4000px)
   outputSize?: number
-  // Premium: custom margin (10-200px)
   margin?: number
+  // Shadow (requires removeBackground=true)
+  shadowEnabled?: boolean
+  shadowBlur?: number
+  shadowOpacity?: number
+  shadowOffsetY?: number
+  // Multi-format marketplace presets
+  outputPresets?: MarketplacePreset[]
 }
 
 export function useUpload() {

@@ -115,13 +115,18 @@ export interface UploadResponse {
   job_id: string
 }
 
+export type MarketplacePreset = 'amazon' | 'ebay' | 'etsy' | 'zalando'
+
 export interface ProcessingOptions {
   removeBackground?: boolean
   customBackground?: File
-  // Premium: custom output size (square, 500-4000px)
   outputSize?: number
-  // Premium: custom margin (10-200px)
   margin?: number
+  shadowEnabled?: boolean
+  shadowBlur?: number
+  shadowOpacity?: number
+  shadowOffsetY?: number
+  outputPresets?: MarketplacePreset[]
 }
 
 export interface PricingPlan {
@@ -310,6 +315,20 @@ class ApiClient {
     // Premium: custom margin
     if (options?.margin) {
       formData.append('margin', options.margin.toString())
+    }
+
+    // Shadow (requires remove_background=true)
+    if (options?.shadowEnabled) {
+      formData.append('shadow_enabled', 'true')
+      formData.append('shadow_blur', String(options.shadowBlur ?? 20))
+      formData.append('shadow_opacity', String(options.shadowOpacity ?? 0.35))
+      formData.append('shadow_offset_x', '0')
+      formData.append('shadow_offset_y', String(options.shadowOffsetY ?? 12))
+    }
+
+    // Marketplace presets
+    if (options?.outputPresets && options.outputPresets.length > 0) {
+      formData.append('output_presets', JSON.stringify(options.outputPresets))
     }
 
     const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null
