@@ -41,7 +41,7 @@ export default function MarketplaceFrame() {
           padding: `${store.marginPct}%`,
         }}
       >
-        <img src="/after.webp" alt="Prodotto" className="frame-demo-img" />
+        <img src="/landing.webp" alt="Prodotto" className="frame-demo-img" />
       </div>
 
       <div className="frame-demo-chip-logo">
