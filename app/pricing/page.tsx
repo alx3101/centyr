@@ -122,9 +122,11 @@ export default function PricingPage() {
           <div className="bg-gradient-to-r from-purple-100 to-fuchsia-100 border-2 border-purple-200 rounded-xl p-6 mb-10 animate-fade-in-up">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <div>
-                <h3 className="text-lg font-bold text-gray-900">Piano attuale: {user.subscription.plan_name?.toUpperCase()}</h3>
+                <h3 className="text-lg font-bold text-gray-900">{t.marketing.pricing.currentPlanLabel}: {user.subscription.plan_name?.toUpperCase()}</h3>
                 <p className="text-gray-600">
-                  {user.subscription.current_period_uploads} / {user.subscription.monthly_limit} job usati questo mese
+                  {t.marketing.pricing.jobsUsedThisMonth
+                    .replace('{current}', String(user.subscription.current_period_uploads))
+                    .replace('{limit}', String(user.subscription.monthly_limit))}
                 </p>
               </div>
               <div className="w-full md:w-64 bg-gray-200 rounded-full h-3">
@@ -137,7 +139,7 @@ export default function PricingPage() {
                 href="/billing"
                 className="px-6 py-2 border-2 border-purple-600 text-purple-600 rounded-lg hover:bg-purple-50 transition-colors font-semibold whitespace-nowrap"
               >
-                Gestisci abbonamento
+                {t.marketing.pricing.managePlan}
               </Link>
             </div>
           </div>
@@ -174,7 +176,7 @@ export default function PricingPage() {
                 {isCurrent && (
                   <div className="absolute top-3 right-3">
                     <div className="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-xs font-bold">
-                      ATTUALE
+                      {t.marketing.pricing.currentBadge}
                     </div>
                   </div>
                 )}
@@ -215,7 +217,7 @@ export default function PricingPage() {
                 >
                   {loadingPlanId === plan.stripe_product_id ? (
                     <><Loader className="w-4 h-4 animate-spin" /> ...</>
-                  ) : isCurrent ? 'Piano attuale' : plan.price === 0 ? t.marketing.pricing.startFree : t.marketing.pricing.upgrade}
+                  ) : isCurrent ? t.marketing.pricing.currentPlanButton : plan.price === 0 ? t.marketing.pricing.startFree : t.marketing.pricing.upgrade}
                 </button>
               </div>
             )
@@ -234,16 +236,16 @@ export default function PricingPage() {
                   <Building2 className="w-4 h-4" />
                   ENTERPRISE
                 </div>
-                <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">Enterprise Solution</h3>
+                <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">{t.marketing.pricing.enterpriseTitle}</h3>
                 <p className="text-gray-300 text-lg mb-6">
-                  Per aziende con esigenze avanzate. Volume illimitato, integrazioni custom, SLA garantito e supporto dedicato.
+                  {t.marketing.pricing.enterpriseDesc}
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
                   {[
-                    { icon: Zap, title: 'Volume illimitato', desc: 'Nessun limite mensile' },
-                    { icon: Shield, title: 'SLA 99.99%', desc: 'Uptime garantito' },
-                    { icon: Users, title: 'Team dedicato', desc: 'Account manager' },
-                    { icon: Headphones, title: 'Supporto 24/7', desc: 'Priorità massima' },
+                    { icon: Zap, title: t.marketing.pricing.enterpriseFeature1Title, desc: t.marketing.pricing.enterpriseFeature1Desc },
+                    { icon: Shield, title: t.marketing.pricing.enterpriseFeature2Title, desc: t.marketing.pricing.enterpriseFeature2Desc },
+                    { icon: Users, title: t.marketing.pricing.enterpriseFeature3Title, desc: t.marketing.pricing.enterpriseFeature3Desc },
+                    { icon: Headphones, title: t.marketing.pricing.enterpriseFeature4Title, desc: t.marketing.pricing.enterpriseFeature4Desc },
                   ].map(({ icon: Icon, title, desc }) => (
                     <div key={title} className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -259,17 +261,17 @@ export default function PricingPage() {
               </div>
               <div className="flex-shrink-0 text-center">
                 <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-                  <p className="text-gray-400 text-sm mb-2">A partire da</p>
-                  <div className="text-4xl font-bold text-white mb-1">Custom</div>
-                  <p className="text-gray-400 text-sm mb-6">Pricing su misura</p>
+                  <p className="text-gray-400 text-sm mb-2">{t.marketing.pricing.enterpriseFrom}</p>
+                  <div className="text-4xl font-bold text-white mb-1">{t.marketing.pricing.enterpriseCustomPrice}</div>
+                  <p className="text-gray-400 text-sm mb-6">{t.marketing.pricing.enterpriseCustomDesc}</p>
                   <a
-                    href="mailto:enterprise@centyr.io?subject=Enterprise%20Plan%20Request"
+                    href="mailto:hello@centyr.tech?subject=Enterprise%20Plan%20Request"
                     className="inline-flex items-center gap-2 bg-white text-gray-900 px-8 py-4 rounded-xl font-bold hover:scale-105 transition-all shadow-lg"
                   >
                     <Building2 className="w-5 h-5" />
-                    Contatta Sales
+                    {t.marketing.pricing.enterpriseCta}
                   </a>
-                  <p className="text-gray-500 text-xs mt-4">Risposta entro 24h</p>
+                  <p className="text-gray-500 text-xs mt-4">{t.marketing.pricing.enterpriseResponse}</p>
                 </div>
               </div>
             </div>
@@ -278,12 +280,12 @@ export default function PricingPage() {
 
         {/* FAQ Section */}
         <div className="max-w-3xl mx-auto mb-12">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">Domande Frequenti</h2>
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">{t.marketing.pricing.faqTitle}</h2>
           <div className="space-y-6">
             {[
-              { q: 'Posso cancellare quando voglio?', a: "Sì! Puoi cancellare l'abbonamento in qualsiasi momento. Continuerai ad avere accesso fino alla fine del periodo di fatturazione." },
-              { q: 'Cosa succede se supero la quota?', a: "Dovrai aspettare il mese successivo o fare upgrade a un piano superiore. Ti notificheremo quando sei vicino al limite." },
-              { q: 'Offrite rimborsi?', a: "Sì, offriamo una garanzia soddisfatti o rimborsati di 30 giorni. Contatta il supporto per un rimborso completo." },
+              { q: t.marketing.pricing.faq1q, a: t.marketing.pricing.faq1a },
+              { q: t.marketing.pricing.faq2q, a: t.marketing.pricing.faq2a },
+              { q: t.marketing.pricing.faq3q, a: t.marketing.pricing.faq3a },
             ].map(({ q, a }) => (
               <div key={q} className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border-2 border-purple-100">
                 <h3 className="text-lg font-bold text-gray-900 mb-2">{q}</h3>
@@ -296,7 +298,7 @@ export default function PricingPage() {
         {/* Back to Home */}
         <div className="text-center">
           <Link href="/" className="text-purple-600 hover:text-fuchsia-600 font-semibold">
-            <ArrowLeft className="w-4 h-4 inline mr-1" />Torna alla Home
+            <ArrowLeft className="w-4 h-4 inline mr-1" />{t.marketing.pricing.backToHome}
           </Link>
         </div>
       </div>

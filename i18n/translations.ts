@@ -348,6 +348,7 @@ export interface Translations {
     secure: string
     secureDesc: string
     jobStarted: string
+    compressingImages: string
     uploadAtLeastOne: string
     enterJobName: string
     maxBatchExceeded: string
@@ -560,6 +561,34 @@ export interface Translations {
       startTrial: string
       loading: string
       errorTitle: string
+      currentPlanLabel: string
+      jobsUsedThisMonth: string
+      managePlan: string
+      currentBadge: string
+      currentPlanButton: string
+      enterpriseTitle: string
+      enterpriseDesc: string
+      enterpriseFeature1Title: string
+      enterpriseFeature1Desc: string
+      enterpriseFeature2Title: string
+      enterpriseFeature2Desc: string
+      enterpriseFeature3Title: string
+      enterpriseFeature3Desc: string
+      enterpriseFeature4Title: string
+      enterpriseFeature4Desc: string
+      enterpriseFrom: string
+      enterpriseCustomPrice: string
+      enterpriseCustomDesc: string
+      enterpriseCta: string
+      enterpriseResponse: string
+      faqTitle: string
+      faq1q: string
+      faq1a: string
+      faq2q: string
+      faq2a: string
+      faq3q: string
+      faq3a: string
+      backToHome: string
       planInfo: {
         free: { description: string; features: string[] }
         mini: { description: string; features: string[] }
@@ -1021,6 +1050,7 @@ export const translations: Record<Language, Translations> = {
       secure: 'Secure',
       secureDesc: 'End-to-end encryption',
       jobStarted: 'Job started! Redirecting to dashboard...',
+      compressingImages: 'Optimizing images...',
       uploadAtLeastOne: 'Upload at least one image',
       enterJobName: 'Enter a job name',
       maxBatchExceeded: 'Maximum {count} images per batch.',
@@ -1226,6 +1256,34 @@ export const translations: Record<Language, Translations> = {
         startTrial: 'Start 14-Day Trial',
         loading: 'Loading...',
         errorTitle: 'Failed to load pricing plans',
+        currentPlanLabel: 'Current plan',
+        jobsUsedThisMonth: '{current} / {limit} jobs used this month',
+        managePlan: 'Manage subscription',
+        currentBadge: 'CURRENT',
+        currentPlanButton: 'Current plan',
+        enterpriseTitle: 'Enterprise Solution',
+        enterpriseDesc: 'For companies with advanced needs. Unlimited volume, custom integrations, guaranteed SLA and dedicated support.',
+        enterpriseFeature1Title: 'Unlimited volume',
+        enterpriseFeature1Desc: 'No monthly limit',
+        enterpriseFeature2Title: 'SLA 99.99%',
+        enterpriseFeature2Desc: 'Guaranteed uptime',
+        enterpriseFeature3Title: 'Dedicated team',
+        enterpriseFeature3Desc: 'Account manager',
+        enterpriseFeature4Title: '24/7 support',
+        enterpriseFeature4Desc: 'Maximum priority',
+        enterpriseFrom: 'Starting from',
+        enterpriseCustomPrice: 'Custom',
+        enterpriseCustomDesc: 'Tailored pricing',
+        enterpriseCta: 'Contact Sales',
+        enterpriseResponse: 'Response within 24h',
+        faqTitle: 'Frequently Asked Questions',
+        faq1q: 'Can I cancel anytime?',
+        faq1a: "Yes! You can cancel your subscription at any time. You'll continue to have access until the end of the billing period.",
+        faq2q: 'What happens if I exceed my quota?',
+        faq2a: "You'll need to wait for the next month or upgrade to a higher plan. We'll notify you when you're close to the limit.",
+        faq3q: 'Do you offer refunds?',
+        faq3a: 'Yes, we offer a 30-day money-back guarantee. Contact support for a full refund.',
+        backToHome: 'Back to Home',
         planInfo: {
           free: {
             description: 'Perfect for trying Centry',
@@ -1701,6 +1759,7 @@ export const translations: Record<Language, Translations> = {
       secure: 'Sicuro',
       secureDesc: 'Crittografia end-to-end',
       jobStarted: 'Job avviato! Reindirizzamento alla dashboard...',
+      compressingImages: 'Ottimizzazione immagini...',
       uploadAtLeastOne: 'Carica almeno una immagine',
       enterJobName: 'Inserisci un nome per il job',
       maxBatchExceeded: 'Massimo {count} immagini per batch.',
@@ -1906,6 +1965,34 @@ export const translations: Record<Language, Translations> = {
         startTrial: 'Inizia Trial 14 Giorni',
         loading: 'Caricamento...',
         errorTitle: 'Impossibile caricare i piani',
+        currentPlanLabel: 'Piano attuale',
+        jobsUsedThisMonth: '{current} / {limit} job usati questo mese',
+        managePlan: 'Gestisci abbonamento',
+        currentBadge: 'ATTUALE',
+        currentPlanButton: 'Piano attuale',
+        enterpriseTitle: 'Soluzione Enterprise',
+        enterpriseDesc: 'Per aziende con esigenze avanzate. Volume illimitato, integrazioni custom, SLA garantito e supporto dedicato.',
+        enterpriseFeature1Title: 'Volume illimitato',
+        enterpriseFeature1Desc: 'Nessun limite mensile',
+        enterpriseFeature2Title: 'SLA 99.99%',
+        enterpriseFeature2Desc: 'Uptime garantito',
+        enterpriseFeature3Title: 'Team dedicato',
+        enterpriseFeature3Desc: 'Account manager',
+        enterpriseFeature4Title: 'Supporto 24/7',
+        enterpriseFeature4Desc: 'Priorità massima',
+        enterpriseFrom: 'A partire da',
+        enterpriseCustomPrice: 'Custom',
+        enterpriseCustomDesc: 'Pricing su misura',
+        enterpriseCta: 'Contatta Sales',
+        enterpriseResponse: 'Risposta entro 24h',
+        faqTitle: 'Domande Frequenti',
+        faq1q: 'Posso cancellare quando voglio?',
+        faq1a: "Sì! Puoi cancellare l'abbonamento in qualsiasi momento. Continuerai ad avere accesso fino alla fine del periodo di fatturazione.",
+        faq2q: 'Cosa succede se supero la quota?',
+        faq2a: "Dovrai aspettare il mese successivo o fare upgrade a un piano superiore. Ti notificheremo quando sei vicino al limite.",
+        faq3q: 'Offrite rimborsi?',
+        faq3a: "Sì, offriamo una garanzia soddisfatti o rimborsati di 30 giorni. Contatta il supporto per un rimborso completo.",
+        backToHome: 'Torna alla Home',
         planInfo: {
           free: {
             description: 'Perfetto per provare Centry',
