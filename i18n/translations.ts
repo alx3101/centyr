@@ -219,6 +219,9 @@ export interface Translations {
     reprocessing: string
     reprocessSuccess: string
     reprocessFailed: string
+    reprocessExpiredTitle: string
+    reprocessExpiredDesc: string
+    reprocessUploadNew: string
     outputFormat: string
     customFormat: string
   }
@@ -936,6 +939,9 @@ export const translations: Record<Language, Translations> = {
       reprocessing: 'Reprocessing...',
       reprocessSuccess: 'New job started',
       reprocessFailed: 'Reprocess failed',
+      reprocessExpiredTitle: 'Original images no longer accessible',
+      reprocessExpiredDesc: 'The original files have expired. Upload them again to reprocess with a different format.',
+      reprocessUploadNew: 'New Upload',
       outputFormat: 'Output Format',
       customFormat: 'Custom',
     },
@@ -1658,6 +1664,9 @@ export const translations: Record<Language, Translations> = {
       reprocessing: 'Rielaborazione...',
       reprocessSuccess: 'Nuovo job avviato',
       reprocessFailed: 'Rielaborazione fallita',
+      reprocessExpiredTitle: 'Immagini originali non più accessibili',
+      reprocessExpiredDesc: 'I file originali sono scaduti. Ricaricali per rielaborare con un formato diverso.',
+      reprocessUploadNew: 'Nuovo upload',
       outputFormat: 'Formato output',
       customFormat: 'Personalizzato',
     },

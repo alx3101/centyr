@@ -66,17 +66,16 @@ function JobDetailContent() {
   // Reprocess state
   const [showReprocess, setShowReprocess] = useState(false)
   const [rpPreset, setRpPreset] = useState('custom')
-  const [rpWidth, setRpWidth] = useState(1000)
-  const [rpHeight, setRpHeight] = useState(1000)
+  const [rpSize, setRpSize] = useState(1000)
   const [rpMarginPct, setRpMarginPct] = useState(5)
   const [isReprocessing, setIsReprocessing] = useState(false)
+  const [rpError, setRpError] = useState<'expired' | 'other' | null>(null)
 
   const handleRpPresetChange = (key: string) => {
     setRpPreset(key)
     const store = STORE_LOGOS.find(s => s.key === key)
     if (store) {
-      setRpWidth(store.width)
-      setRpHeight(store.height)
+      setRpSize(Math.max(store.width, store.height))
       setRpMarginPct(store.marginPct)
     }
   }
@@ -84,6 +83,7 @@ function JobDetailContent() {
   const handleReprocess = async () => {
     if (!job) return
     setIsReprocessing(true)
+    setRpError(null)
     try {
       const inputUrls: string[] = []
       if (job.batch_mode && job.outputs?.length) {
@@ -91,38 +91,49 @@ function JobDetailContent() {
       } else if (job.input_image_url) {
         inputUrls.push(job.input_image_url)
       }
-      if (inputUrls.length === 0) throw new Error('No input images found')
+      if (inputUrls.length === 0) throw new Error('expired')
 
       const fetchedFiles = await Promise.all(
         inputUrls.map(async (url, i) => {
-          const res = await fetch(url)
-          if (!res.ok) throw new Error(`Failed to fetch image ${i + 1}`)
+          let res: Response
+          try {
+            res = await fetch(url)
+          } catch {
+            throw new Error('expired')
+          }
+          if (!res.ok) throw new Error('expired')
           const blob = await res.blob()
+          if (!blob.size) throw new Error('expired')
           const ext = blob.type.includes('png') ? 'png' : blob.type.includes('webp') ? 'webp' : 'jpg'
           return new File([blob], `image-${i + 1}.${ext}`, { type: blob.type })
         })
       )
 
-      const marginPx = Math.round((Math.min(rpWidth, rpHeight) * rpMarginPct) / 100)
+      const marginPx = Math.round((rpSize * rpMarginPct) / 100)
       const matchedStore = STORE_LOGOS.find(s => s.key === rpPreset)
       const newJobName = `${job.job_name || 'Job'} [${matchedStore?.name ?? jd.customFormat}]`
 
       const result = await api.uploadBatch(fetchedFiles, newJobName, {
-        outputSize: Math.max(rpWidth, rpHeight),
+        outputSize: rpSize,
         margin: marginPx,
       })
 
-      saveJobMeta(result.job_id, { preset: rpPreset, width: rpWidth, height: rpHeight })
+      saveJobMeta(result.job_id, { preset: rpPreset, width: rpSize, height: rpSize })
       toast.success(jd.reprocessSuccess)
       router.push(`/dashboard/jobs/${result.job_id}`)
     } catch (err: any) {
-      toast.error(err.message || jd.reprocessFailed)
+      if (err.message === 'expired') {
+        setRpError('expired')
+      } else {
+        setRpError('other')
+        toast.error(err.message || jd.reprocessFailed)
+      }
     } finally {
       setIsReprocessing(false)
     }
   }
 
-  const rpMarginPx = Math.round((Math.min(rpWidth, rpHeight) * rpMarginPct) / 100)
+  const rpMarginPx = Math.round((rpSize * rpMarginPct) / 100)
 
   // Detect current job format
   const jobMeta = typeof window !== 'undefined' ? getJobMeta(jobId) : null
@@ -492,22 +503,17 @@ function JobDetailContent() {
             </div>
 
             {/* Custom sliders — only visible in custom mode */}
-            <div className={`grid grid-cols-1 md:grid-cols-3 gap-5 mb-5 transition-opacity duration-200 ${rpPreset !== 'custom' ? 'opacity-40 pointer-events-none' : ''}`}>
-              {[
-                { label: 'Width', value: rpWidth, set: setRpWidth },
-                { label: 'Height', value: rpHeight, set: setRpHeight },
-              ].map(({ label, value, set }) => (
-                <div key={label}>
-                  <label className="block text-xs font-semibold text-gray-600 mb-2">{label}</label>
-                  <div className="flex items-center gap-2">
-                    <input type="range" min="500" max="4000" step="100" value={value} disabled={rpPreset !== 'custom'}
-                      onChange={e => set(Number(e.target.value))}
-                      className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-purple-600 disabled:cursor-not-allowed"
-                    />
-                    <span className="w-20 text-center px-2 py-1 bg-purple-50 text-purple-700 rounded-lg font-mono text-xs">{value}px</span>
-                  </div>
+            <div className={`grid grid-cols-1 md:grid-cols-2 gap-5 mb-5 transition-opacity duration-200 ${rpPreset !== 'custom' ? 'opacity-40 pointer-events-none' : ''}`}>
+              <div>
+                <label className="block text-xs font-semibold text-gray-600 mb-2">Output Size</label>
+                <div className="flex items-center gap-2">
+                  <input type="range" min="500" max="4000" step="100" value={rpSize} disabled={rpPreset !== 'custom'}
+                    onChange={e => setRpSize(Number(e.target.value))}
+                    className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-purple-600 disabled:cursor-not-allowed"
+                  />
+                  <span className="w-20 text-center px-2 py-1 bg-purple-50 text-purple-700 rounded-lg font-mono text-xs">{rpSize}px</span>
                 </div>
-              ))}
+              </div>
               <div>
                 <label className="block text-xs font-semibold text-gray-600 mb-2">Margin</label>
                 <div className="flex items-center gap-2">
@@ -530,17 +536,36 @@ function JobDetailContent() {
               </p>
             )}
 
-            <button
-              onClick={handleReprocess}
-              disabled={isReprocessing}
-              className="flex items-center gap-2 px-6 py-3 gradient-purple-fuchsia text-white font-bold rounded-xl hover:scale-105 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isReprocessing ? (
-                <><Loader className="w-5 h-5 animate-spin" />{jd.reprocessing}</>
-              ) : (
-                <><RefreshCw className="w-5 h-5" />{jd.reprocessStart}</>
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                onClick={handleReprocess}
+                disabled={isReprocessing}
+                className="flex items-center gap-2 px-6 py-3 gradient-purple-fuchsia text-white font-bold rounded-xl hover:scale-105 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isReprocessing ? (
+                  <><Loader className="w-5 h-5 animate-spin" />{jd.reprocessing}</>
+                ) : (
+                  <><RefreshCw className="w-5 h-5" />{jd.reprocessStart}</>
+                )}
+              </button>
+
+              {rpError === 'expired' && (
+                <div className="flex items-center gap-3 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">
+                  <Info className="w-5 h-5 text-amber-600 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-semibold text-amber-800">{jd.reprocessExpiredTitle}</p>
+                    <p className="text-xs text-amber-700 mt-0.5">{jd.reprocessExpiredDesc}</p>
+                  </div>
+                  <Link
+                    href="/upload"
+                    className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 bg-amber-500 text-white text-sm font-bold rounded-lg hover:bg-amber-600 transition-colors"
+                  >
+                    <Upload className="w-4 h-4" />
+                    {jd.reprocessUploadNew}
+                  </Link>
+                </div>
               )}
-            </button>
+            </div>
           </div>
         )}
 
