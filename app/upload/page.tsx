@@ -29,6 +29,21 @@ export default function UploadPage() {
   const [customBackgroundPreview, setCustomBackgroundPreview] = useState<string | null>(null)
   const [outputSize, setOutputSize] = useState<number>(1000)
   const [marginPercent, setMarginPercent] = useState<number>(5)
+  const [preset, setPreset] = useState<string>('custom')
+
+  const UPLOAD_PRESETS: Record<string, { label: string; size: number | null; margin: number | null }> = {
+    amazon: { label: 'Amazon', size: 2000, margin: 5 },
+    ebay:   { label: 'eBay',   size: 1600, margin: 10 },
+    etsy:   { label: 'Etsy',   size: 2000, margin: 8 },
+    custom: { label: t.upload.presetCustom, size: null, margin: null },
+  }
+
+  const handlePresetChange = (key: string) => {
+    setPreset(key)
+    const p = UPLOAD_PRESETS[key]
+    if (p.size !== null) setOutputSize(p.size)
+    if (p.margin !== null) setMarginPercent(p.margin)
+  }
 
 
   const STEPS: { id: Step; label: string; icon: typeof Upload }[] = [
@@ -462,7 +477,41 @@ export default function UploadPage() {
                     <span className="font-semibold text-[#0f0a1e]">{t.upload.outputSettings}</span>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Format preset selector */}
+                  <div className="mb-5">
+                    <label className="block text-sm font-medium text-[#374151] mb-2">
+                      {t.upload.formatPreset}
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      {Object.entries(UPLOAD_PRESETS).map(([key, p]) => (
+                        <button
+                          key={key}
+                          type="button"
+                          onClick={() => handlePresetChange(key)}
+                          className="px-4 py-2 rounded-xl text-sm font-semibold border transition-all duration-150"
+                          style={preset === key ? {
+                            background: '#7c3aed',
+                            color: '#fff',
+                            borderColor: '#7c3aed',
+                          } : {
+                            background: '#faf5ff',
+                            color: '#374151',
+                            borderColor: '#e9d5ff',
+                          }}
+                        >
+                          {p.size ? `${p.label} · ${p.size}×${p.size}px` : p.label}
+                        </button>
+                      ))}
+                    </div>
+                    {preset !== 'custom' && (
+                      <p className="text-xs text-[#9ca3af] mt-2 flex items-center gap-1">
+                        <Lock className="w-3 h-3" />
+                        {t.upload.presetLocked}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 transition-opacity duration-200 ${preset !== 'custom' ? 'opacity-40 pointer-events-none' : ''}`}>
 
                     {/* Output Size */}
                     <div>
@@ -476,8 +525,9 @@ export default function UploadPage() {
                           max="4000"
                           step="100"
                           value={outputSize}
+                          disabled={preset !== 'custom'}
                           onChange={(e) => setOutputSize(Number(e.target.value))}
-                          className="flex-1 h-2 bg-[#e5e7eb] rounded-lg appearance-none cursor-pointer accent-[#7c3aed]"
+                          className="flex-1 h-2 bg-[#e5e7eb] rounded-lg appearance-none cursor-pointer accent-[#7c3aed] disabled:cursor-not-allowed"
                         />
                         <span className="w-24 text-center px-3 py-1 bg-[#faf5ff] text-[#7c3aed] rounded-lg font-mono text-sm">
                           {outputSize}×{outputSize}
@@ -497,8 +547,9 @@ export default function UploadPage() {
                           max="35"
                           step="1"
                           value={marginPercent}
+                          disabled={preset !== 'custom'}
                           onChange={(e) => setMarginPercent(Number(e.target.value))}
-                          className="flex-1 h-2 bg-[#e5e7eb] rounded-lg appearance-none cursor-pointer accent-[#7c3aed]"
+                          className="flex-1 h-2 bg-[#e5e7eb] rounded-lg appearance-none cursor-pointer accent-[#7c3aed] disabled:cursor-not-allowed"
                         />
                         <div className="w-28 text-center px-3 py-1 bg-[#faf5ff] text-[#7c3aed] rounded-lg font-mono text-sm">
                           {marginPercent}%
@@ -552,6 +603,11 @@ export default function UploadPage() {
                     {customBackground && (
                       <span className="px-3 py-1 bg-[#faf5ff] text-[#7c3aed] rounded-full text-sm font-medium border border-[#e9d5ff]">
                         {t.upload.customBackgroundLabel}
+                      </span>
+                    )}
+                    {preset !== 'custom' && (
+                      <span className="px-3 py-1 bg-[#faf5ff] text-[#7c3aed] rounded-full text-sm font-semibold border border-[#e9d5ff]">
+                        {UPLOAD_PRESETS[preset]?.label}
                       </span>
                     )}
                     <span className="px-3 py-1 bg-[#f3f4f6] text-[#6b7280] rounded-full text-sm font-medium">

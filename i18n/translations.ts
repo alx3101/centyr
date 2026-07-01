@@ -321,6 +321,9 @@ export interface Translations {
     premium: string
     customBackground: string
     uploadBackgroundImage: string
+    formatPreset: string
+    presetCustom: string
+    presetLocked: string
     outputSettings: string
     outputSize: string
     margin: string
@@ -1024,6 +1027,9 @@ export const translations: Record<Language, Translations> = {
       premium: 'Premium',
       customBackground: 'Custom background (optional)',
       uploadBackgroundImage: 'Upload background image',
+      formatPreset: 'Format Preset',
+      presetCustom: 'Custom',
+      presetLocked: 'Dimensions and padding are set automatically by the preset.',
       outputSettings: 'Output Settings',
       outputSize: 'Output Size',
       margin: 'Margin',
@@ -1734,6 +1740,9 @@ export const translations: Record<Language, Translations> = {
       premium: 'Premium',
       customBackground: 'Sfondo personalizzato (opzionale)',
       uploadBackgroundImage: 'Carica immagine di sfondo',
+      formatPreset: 'Formato Preset',
+      presetCustom: 'Personalizzato',
+      presetLocked: 'Dimensioni e padding vengono impostati automaticamente dal preset.',
       outputSettings: 'Impostazioni Output',
       outputSize: 'Dimensione Output',
       margin: 'Margine',
