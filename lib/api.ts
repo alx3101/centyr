@@ -118,9 +118,10 @@ export interface UploadResponse {
 export interface ProcessingOptions {
   removeBackground?: boolean
   customBackground?: File
-  // Premium: custom output size (square, 500-4000px)
-  outputSize?: number
-  // Premium: custom margin (10-200px)
+  // Premium: custom output dimensions
+  outputWidth?: number
+  outputHeight?: number
+  // Premium: custom margin (pixels)
   margin?: number
 }
 
@@ -302,9 +303,17 @@ class ApiClient {
       formData.append('background_image', options.customBackground)
     }
 
-    // Premium: custom output size
-    if (options?.outputSize) {
-      formData.append('output_size', options.outputSize.toString())
+    // Premium: custom output dimensions
+    if (options?.outputWidth) {
+      formData.append('output_width', options.outputWidth.toString())
+      // send output_size as the larger dimension for backward-compat with older backend versions
+      formData.append('output_size', options.outputWidth.toString())
+    }
+    if (options?.outputHeight) {
+      formData.append('output_height', options.outputHeight.toString())
+      if (options.outputHeight > (options.outputWidth ?? 0)) {
+        formData.append('output_size', options.outputHeight.toString())
+      }
     }
 
     // Premium: custom margin

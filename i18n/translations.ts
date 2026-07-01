@@ -326,6 +326,8 @@ export interface Translations {
     presetLocked: string
     outputSettings: string
     outputSize: string
+    outputWidth: string
+    outputHeight: string
     margin: string
     marginHelper: string
     reviewTitle: string
@@ -1032,6 +1034,8 @@ export const translations: Record<Language, Translations> = {
       presetLocked: 'Dimensions and padding are set automatically by the preset.',
       outputSettings: 'Output Settings',
       outputSize: 'Output Size',
+      outputWidth: 'Width',
+      outputHeight: 'Height',
       margin: 'Margin',
       marginHelper: 'Percentage relative to the output size.',
       reviewTitle: 'Review & start',
@@ -1745,6 +1749,8 @@ export const translations: Record<Language, Translations> = {
       presetLocked: 'Dimensioni e padding vengono impostati automaticamente dal preset.',
       outputSettings: 'Impostazioni Output',
       outputSize: 'Dimensione Output',
+      outputWidth: 'Larghezza',
+      outputHeight: 'Altezza',
       margin: 'Margine',
       marginHelper: 'Percentuale relativa alla dimensione output.',
       reviewTitle: 'Revisione & avvio',

@@ -27,21 +27,24 @@ export default function UploadPage() {
   const [removeBackground, setRemoveBackground] = useState(false)
   const [customBackground, setCustomBackground] = useState<File | null>(null)
   const [customBackgroundPreview, setCustomBackgroundPreview] = useState<string | null>(null)
-  const [outputSize, setOutputSize] = useState<number>(1000)
+  const [outputWidth, setOutputWidth] = useState<number>(1000)
+  const [outputHeight, setOutputHeight] = useState<number>(1000)
   const [marginPercent, setMarginPercent] = useState<number>(5)
   const [preset, setPreset] = useState<string>('custom')
 
-  const UPLOAD_PRESETS: Record<string, { label: string; size: number | null; margin: number | null }> = {
-    amazon: { label: 'Amazon', size: 2000, margin: 5 },
-    ebay:   { label: 'eBay',   size: 1600, margin: 10 },
-    etsy:   { label: 'Etsy',   size: 2000, margin: 8 },
-    custom: { label: t.upload.presetCustom, size: null, margin: null },
+  const UPLOAD_PRESETS: Record<string, { label: string; width: number | null; height: number | null; margin: number | null }> = {
+    amazon:  { label: 'Amazon',  width: 2000, height: 2000, margin: 5 },
+    ebay:    { label: 'eBay',    width: 1600, height: 1600, margin: 10 },
+    etsy:    { label: 'Etsy',    width: 2000, height: 2000, margin: 8 },
+    zalando: { label: 'Zalando', width: 1500, height: 2250, margin: 12 },
+    custom:  { label: t.upload.presetCustom, width: null, height: null, margin: null },
   }
 
   const handlePresetChange = (key: string) => {
     setPreset(key)
     const p = UPLOAD_PRESETS[key]
-    if (p.size !== null) setOutputSize(p.size)
+    if (p.width !== null) setOutputWidth(p.width)
+    if (p.height !== null) setOutputHeight(p.height)
     if (p.margin !== null) setMarginPercent(p.margin)
   }
 
@@ -63,8 +66,8 @@ export default function UploadPage() {
   const stepIndex = STEPS.findIndex(s => s.id === currentStep)
 
   const marginPixels = useMemo(() => {
-    return Math.round((outputSize * marginPercent) / 100)
-  }, [outputSize, marginPercent])
+    return Math.round((Math.min(outputWidth, outputHeight) * marginPercent) / 100)
+  }, [outputWidth, outputHeight, marginPercent])
 
 
   const canProceed = useMemo(() => {
@@ -145,7 +148,8 @@ export default function UploadPage() {
     const options = {
       removeBackground,
       customBackground: customBackground || undefined,
-      outputSize,
+      outputWidth,
+      outputHeight,
       margin: marginPixels,
     }
 
@@ -499,7 +503,7 @@ export default function UploadPage() {
                             borderColor: '#e9d5ff',
                           }}
                         >
-                          {p.size ? `${p.label} · ${p.size}×${p.size}px` : p.label}
+                          {p.width ? `${p.label} · ${p.width}×${p.height}px` : p.label}
                         </button>
                       ))}
                     </div>
@@ -511,12 +515,12 @@ export default function UploadPage() {
                     )}
                   </div>
 
-                  <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 transition-opacity duration-200 ${preset !== 'custom' ? 'opacity-40 pointer-events-none' : ''}`}>
+                  <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 transition-opacity duration-200 ${preset !== 'custom' ? 'opacity-40 pointer-events-none' : ''}`}>
 
-                    {/* Output Size */}
+                    {/* Width */}
                     <div>
                       <label className="block text-sm font-medium text-[#374151] mb-2">
-                        {t.upload.outputSize}
+                        {t.upload.outputWidth}
                       </label>
                       <div className="flex items-center gap-3">
                         <input
@@ -524,13 +528,35 @@ export default function UploadPage() {
                           min="500"
                           max="4000"
                           step="100"
-                          value={outputSize}
+                          value={outputWidth}
                           disabled={preset !== 'custom'}
-                          onChange={(e) => setOutputSize(Number(e.target.value))}
+                          onChange={(e) => setOutputWidth(Number(e.target.value))}
                           className="flex-1 h-2 bg-[#e5e7eb] rounded-lg appearance-none cursor-pointer accent-[#7c3aed] disabled:cursor-not-allowed"
                         />
-                        <span className="w-24 text-center px-3 py-1 bg-[#faf5ff] text-[#7c3aed] rounded-lg font-mono text-sm">
-                          {outputSize}×{outputSize}
+                        <span className="w-20 text-center px-2 py-1 bg-[#faf5ff] text-[#7c3aed] rounded-lg font-mono text-sm">
+                          {outputWidth}px
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Height */}
+                    <div>
+                      <label className="block text-sm font-medium text-[#374151] mb-2">
+                        {t.upload.outputHeight}
+                      </label>
+                      <div className="flex items-center gap-3">
+                        <input
+                          type="range"
+                          min="500"
+                          max="4000"
+                          step="100"
+                          value={outputHeight}
+                          disabled={preset !== 'custom'}
+                          onChange={(e) => setOutputHeight(Number(e.target.value))}
+                          className="flex-1 h-2 bg-[#e5e7eb] rounded-lg appearance-none cursor-pointer accent-[#7c3aed] disabled:cursor-not-allowed"
+                        />
+                        <span className="w-20 text-center px-2 py-1 bg-[#faf5ff] text-[#7c3aed] rounded-lg font-mono text-sm">
+                          {outputHeight}px
                         </span>
                       </div>
                     </div>
@@ -551,16 +577,12 @@ export default function UploadPage() {
                           onChange={(e) => setMarginPercent(Number(e.target.value))}
                           className="flex-1 h-2 bg-[#e5e7eb] rounded-lg appearance-none cursor-pointer accent-[#7c3aed] disabled:cursor-not-allowed"
                         />
-                        <div className="w-28 text-center px-3 py-1 bg-[#faf5ff] text-[#7c3aed] rounded-lg font-mono text-sm">
+                        <div className="w-24 text-center px-2 py-1 bg-[#faf5ff] text-[#7c3aed] rounded-lg font-mono text-sm">
                           {marginPercent}%
-                          <div className="text-xs text-[#9ca3af]">
-                            {marginPixels}px
-                          </div>
+                          <div className="text-xs text-[#9ca3af]">{marginPixels}px</div>
                         </div>
                       </div>
-                      <p className="text-xs text-[#9ca3af] mt-2">
-                        {t.upload.marginHelper}
-                      </p>
+                      <p className="text-xs text-[#9ca3af] mt-2">{t.upload.marginHelper}</p>
                     </div>
                   </div>
                 </div>
@@ -611,7 +633,7 @@ export default function UploadPage() {
                       </span>
                     )}
                     <span className="px-3 py-1 bg-[#f3f4f6] text-[#6b7280] rounded-full text-sm font-medium">
-                      {outputSize}×{outputSize}px
+                      {outputWidth}×{outputHeight}px
                     </span>
                     <span className="px-3 py-1 bg-[#f3f4f6] text-[#6b7280] rounded-full text-sm font-medium">
                       {t.upload.margin} {marginPercent}% ({marginPixels}px)
