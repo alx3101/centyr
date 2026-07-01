@@ -108,8 +108,7 @@ function JobDetailContent() {
       const newJobName = `${job.job_name || 'Job'} [${matchedStore?.name ?? jd.customFormat}]`
 
       const result = await api.uploadBatch(fetchedFiles, newJobName, {
-        outputWidth: rpWidth,
-        outputHeight: rpHeight,
+        outputSize: Math.max(rpWidth, rpHeight),
         margin: marginPx,
       })
 

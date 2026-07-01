@@ -153,7 +153,7 @@ export default function UploadPage() {
     const jobId = await uploadAndProcess(jobName.trim(), options)
 
     if (jobId) {
-      saveJobMeta(jobId, { preset, width: outputWidth, height: outputHeight })
+      saveJobMeta(jobId, { preset, width: outputSize, height: outputSize })
       toast.success(t.upload.jobStarted)
       setTimeout(() => {
         router.push(`/dashboard?job=${jobId}`)
