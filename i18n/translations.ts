@@ -687,6 +687,7 @@ export interface Translations {
     trustedBy: {
       tagline: string
       subtitle: string
+      description: string
     }
     liveStats: {
       badge: string
@@ -1397,6 +1398,7 @@ export const translations: Record<Language, Translations> = {
       trustedBy: {
         tagline: 'Built for e-commerce stores',
         subtitle: 'Marketplace-ready specs, or perfect photos for your own store',
+        description: 'Each platform has different size and padding requirements. Centyr handles them all automatically.',
       },
       liveStats: {
         badge: 'Real-time Stats',
@@ -2106,6 +2108,7 @@ export const translations: Record<Language, Translations> = {
       trustedBy: {
         tagline: 'Fatto per i negozi e-commerce',
         subtitle: 'Specifiche pronte per i marketplace, o foto perfette per il tuo store',
+        description: 'Ogni piattaforma ha requisiti diversi di dimensioni e margini. Centyr li gestisce tutti automaticamente.',
       },
       liveStats: {
         badge: 'Stats in tempo reale',

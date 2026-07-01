@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import { useTranslations } from '@/contexts/LanguageContext'
 import { buildDemoFrames } from './StoreLogos'
 
@@ -41,7 +42,9 @@ export default function MarketplaceFrame() {
           padding: `${store.marginPct}%`,
         }}
       >
-        <img src="/landing.webp" alt="Prodotto" className="frame-demo-img" />
+        <div style={{ position: 'relative', width: '100%', height: '100%', minHeight: 60 }}>
+          <Image src="/landing.webp" alt="Prodotto" fill sizes="(max-width: 768px) 80vw, 40vw" style={{ objectFit: 'contain' }} priority />
+        </div>
       </div>
 
       <div className="frame-demo-chip-logo">
