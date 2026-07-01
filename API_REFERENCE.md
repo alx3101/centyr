@@ -88,17 +88,28 @@ const user = await api.getCurrentUser()
 
 ## Upload & Processing
 
-### POST /api/v1/upload/batch
+### POST /api/v1/upload
 
 Upload 1-100 images as a batch job.
 
 ```typescript
 const { job_id } = await api.uploadBatch(files, 'Job Name', {
   removeBackground: true,   // premium feature
-  outputSize: 1000,         // 500-4000px (premium)
-  margin: 50,               // 10-200px (premium)
+  outputSize: 1000,         // 500-4000px square (premium)
+  margin: 50,               // px padding (premium)
 })
 ```
+
+The `outputSize` maps to the marketplace presets defined in `components/marketing/StoreLogos.tsx`:
+
+| Preset   | outputSize | Notes            |
+|----------|------------|------------------|
+| Amazon   | 2000       | square, ~5% margin |
+| eBay     | 1600       | square, ~10% margin |
+| Etsy     | 2000       | square, ~8% margin |
+| Zalando  | 2250       | portrait 2:3, ~12% margin |
+
+The preset selection and dimensions are persisted per-job via `lib/jobMeta.ts` (`localStorage` key: `centyr_jm_{jobId}`).
 
 **Errors**: `400` invalid file · `413` too large · `429` quota exceeded
 
@@ -163,6 +174,33 @@ await api.deleteJob(jobId)
 ### POST /api/v1/jobs/{job_id}/retry
 
 Retry failed images in a batch.
+
+### POST /api/v1/jobs/{job_id}/reprocess
+
+Reprocess a job with different options (marketplace preset, output size, margin) without re-uploading the original files.
+
+```typescript
+const { job_id } = await api.reprocessJob(jobId, {
+  output_size: 2000,   // 500-4000px (optional, defaults to original)
+  margin: 100,         // px (optional, defaults to original)
+})
+```
+
+```json
+{
+  "job_id": "new-uuid",
+  "source_job_id": "original-uuid",
+  "image_count": 5,
+  "status": "processing"
+}
+```
+
+- Reuses original S3 input keys — no re-upload needed, no pre-signed URL expiry
+- Creates a new job in DynamoDB with `reprocessed_from` linking back to source
+- Increments quota once for the new job
+- Routes to the correct premium/free SQS queue
+
+**Errors**: `400` invalid options · `403` not your job · `404` job not found · `429` quota exceeded
 
 ### GET /api/v1/jobs/{job_id}/download
 
@@ -244,6 +282,25 @@ import {
 
 ---
 
+## Job Metadata (localStorage)
+
+`lib/jobMeta.ts` persists the marketplace preset and dimensions per job client-side.
+
+```typescript
+import { saveJobMeta, getJobMeta } from '@/lib/jobMeta'
+
+// Save after job creation
+saveJobMeta(jobId, { preset: 'amazon', width: 2000, height: 2000 })
+
+// Read on dashboard / job detail
+const meta = getJobMeta(jobId)
+// { preset: 'amazon', width: 2000, height: 2000 } | null
+```
+
+Storage key: `centyr_jm_{jobId}`. Only available for jobs created/reprocessed after this feature was introduced (old jobs return `null`).
+
+---
+
 ## Error Handling
 
 ```typescript
@@ -271,4 +328,4 @@ Hitting limits returns `429 Too Many Requests`.
 
 ---
 
-**Last Updated**: April 11, 2026
+**Last Updated**: 2026-07-01

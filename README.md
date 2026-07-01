@@ -63,7 +63,8 @@ centyr-web/
 ├── lib/
 │   ├── api.ts                   # Typed API client (all endpoints)
 │   ├── cognito.ts               # Cognito SDK: signIn, signUp, signOut, OAuthSignIn
-│   └── auth.ts                  # localStorage token helpers
+│   ├── auth.ts                  # localStorage token helpers
+│   └── jobMeta.ts               # Per-job preset/dims persistence (localStorage)
 │
 └── i18n/
     └── translations.ts          # All EN/IT strings (dashboard, upload, marketing, etc.)
@@ -90,7 +91,7 @@ centyr-web/
 
 ### Dashboard (requires auth)
 - `/dashboard` — Overview, stats, recent jobs
-- `/dashboard/jobs/[jobId]` — Job detail, image preview, download
+- `/dashboard/jobs/[jobId]` — Job detail, image preview, download, reprocess with different preset
 - `/dashboard/billing` — Subscription status, Stripe portal
 - `/dashboard/settings` — Account settings
 
