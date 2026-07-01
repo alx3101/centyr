@@ -505,9 +505,7 @@ export interface Translations {
       trustNoCreditCard: string
       trustFreeJobs: string
       trustMoneyBack: string
-      before: string
-      after: string
-      dragToCompare: string
+      yourStoreLabel: string
     }
     features: {
       title: string
@@ -659,17 +657,7 @@ export interface Translations {
     }
     trustedBy: {
       tagline: string
-      title: string
-      quote: string
-      quoteAuthor: string
-      quoteRole: string
-      verified: string
-      catFashion: string
-      catElectronics: string
-      catHome: string
-      catSports: string
-      catCosmetics: string
-      catFood: string
+      subtitle: string
     }
     liveStats: {
       badge: string
@@ -1175,23 +1163,21 @@ export const translations: Record<Language, Translations> = {
     marketing: {
       hero: {
         badge: 'Processing 1M+ images monthly',
-        title: 'Perfect Product Photos,',
-        titleHighlight: 'Automatically',
-        subtitle: 'Upload hundreds of images, get pixel-perfect results in seconds.',
+        title: 'Sell-Ready Product Photos,',
+        titleHighlight: 'Wherever You Sell',
+        subtitle: 'Selling on Amazon, eBay, Etsy, Zalando? Get their exact specs automatically. Launching your own store? Get polished, consistent photos from day one.',
         ctaPrimary: 'Try for Free',
         ctaSecondary: 'See Pricing',
         trustNoCreditCard: 'No credit card required',
         trustFreeJobs: '3 free jobs/month',
         trustMoneyBack: '30-day money-back guarantee',
-        before: 'BEFORE',
-        after: 'AFTER',
-        dragToCompare: 'Drag to compare',
+        yourStoreLabel: 'Your Store',
       },
       features: {
         title: 'Everything You Need',
         subtitle: 'Powerful features that make product photo editing effortless',
         f1Title: 'Smart Detection',
-        f1Desc: 'Automatically centers your products perfectly. Just upload, done automatically.',
+        f1Desc: 'Automatically centers and resizes your products to match each marketplace\'s exact requirements.',
         f2Title: 'Bulk Processing',
         f2Desc: 'Upload hundreds of images at once. Get them all back perfectly centered in minutes, not hours.',
         f3Title: 'Secure Storage',
@@ -1210,7 +1196,7 @@ export const translations: Record<Language, Translations> = {
         step2Sub: "Grab a coffee. Actually, don't. It'll be done before you finish pouring.",
         step3Title: 'Download & Ship',
         step3Desc: "Get perfectly centered images ready for your store. That's it. Really.",
-        bottomText: 'No Photoshop. No design skills. No waiting around.',
+        bottomText: 'No Photoshop. No manual resizing per store. No waiting around.',
         ctaButton: 'See It In Action',
       },
       valueProp: {
@@ -1352,17 +1338,7 @@ export const translations: Record<Language, Translations> = {
       },
       trustedBy: {
         tagline: 'Built for e-commerce stores',
-        title: 'Brands that trust us',
-        quote: "\"Centyr revolutionized our workflow. We used to spend 2 hours a day aligning photos, now it's 5 minutes. The ROI was immediate.\"",
-        quoteAuthor: 'Marco Rossi',
-        quoteRole: 'CEO, ModaStyle - Milano',
-        verified: 'Verified',
-        catFashion: 'Fashion',
-        catElectronics: 'Electronics',
-        catHome: 'Home & Living',
-        catSports: 'Sports',
-        catCosmetics: 'Cosmetics',
-        catFood: 'Food',
+        subtitle: 'Marketplace-ready specs, or perfect photos for your own store',
       },
       liveStats: {
         badge: 'Real-time Stats',
@@ -1867,23 +1843,21 @@ export const translations: Record<Language, Translations> = {
     marketing: {
       hero: {
         badge: 'Elaborazione di 1M+ immagini al mese',
-        title: 'Foto Prodotto Perfette,',
-        titleHighlight: 'Automaticamente',
-        subtitle: "Carica centinaia di immagini, ottieni risultati pixel-perfect in pochi secondi.",
+        title: 'Foto Prodotto Pronte alla Vendita,',
+        titleHighlight: 'Ovunque Tu Venda',
+        subtitle: "Vendi su Amazon, eBay, Etsy, Zalando? Ottieni le loro specifiche esatte automaticamente. Stai avviando il tuo store? Ottieni foto curate e coerenti fin dal primo giorno.",
         ctaPrimary: 'Prova Gratis',
         ctaSecondary: 'Vedi Prezzi',
         trustNoCreditCard: 'Nessuna carta di credito richiesta',
         trustFreeJobs: '3 jobs gratuiti/mese',
         trustMoneyBack: 'Garanzia soddisfatti o rimborsati 30 giorni',
-        before: 'PRIMA',
-        after: 'DOPO',
-        dragToCompare: 'Trascina per confrontare',
+        yourStoreLabel: 'Il Tuo Store',
       },
       features: {
         title: 'Tutto Quello che Ti Serve',
         subtitle: 'Funzionalità potenti che rendono il fotoritocco dei prodotti senza sforzo',
         f1Title: 'Rilevamento Intelligente',
-        f1Desc: 'Centra i tuoi prodotti automaticamente e perfettamente. Carica, tutto il resto è automatico.',
+        f1Desc: 'Centra e ridimensiona automaticamente i tuoi prodotti secondo i requisiti esatti di ogni marketplace.',
         f2Title: 'Elaborazione in Blocco',
         f2Desc: 'Carica centinaia di immagini contemporaneamente. Ricevile tutte perfettamente centrate in minuti, non ore.',
         f3Title: 'Archiviazione Sicura',
@@ -1902,7 +1876,7 @@ export const translations: Record<Language, Translations> = {
         step2Sub: "Prenditi un caffè. Anzi no. Finirà prima che tu finisca di versarlo.",
         step3Title: 'Scarica e Pubblica',
         step3Desc: "Ottieni immagini perfettamente centrate pronte per il tuo negozio. Tutto qui. Davvero.",
-        bottomText: 'Niente Photoshop. Niente competenze grafiche. Niente attese.',
+        bottomText: 'Niente Photoshop. Niente ridimensionamenti manuali per store. Niente attese.',
         ctaButton: 'Guarda Come Funziona',
       },
       valueProp: {
@@ -2044,17 +2018,7 @@ export const translations: Record<Language, Translations> = {
       },
       trustedBy: {
         tagline: 'Fatto per i negozi e-commerce',
-        title: 'Brand che si fidano di noi',
-        quote: '"Centyr ha rivoluzionato il nostro flusso di lavoro. Passavamo 2 ore al giorno ad allineare le foto, ora sono 5 minuti. Il ROI è stato immediato."',
-        quoteAuthor: 'Marco Rossi',
-        quoteRole: 'CEO, ModaStyle - Milano',
-        verified: 'Verificato',
-        catFashion: 'Moda',
-        catElectronics: 'Elettronica',
-        catHome: 'Casa & Arredamento',
-        catSports: 'Sport',
-        catCosmetics: 'Cosmetici',
-        catFood: 'Alimentare',
+        subtitle: 'Specifiche pronte per i marketplace, o foto perfette per il tuo store',
       },
       liveStats: {
         badge: 'Stats in tempo reale',

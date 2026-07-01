@@ -12,7 +12,7 @@ const rows = [
   {
     topic: { en: 'Marketplace compliance', it: 'Conformità marketplace' },
     before: { en: 'Manual checks, frequent rejections', it: 'Controlli manuali, rifiuti frequenti' },
-    after: { en: 'Amazon, Shopify, Zalando ready out of the box', it: 'Pronto per Amazon, Shopify, Zalando' },
+    after: { en: 'Amazon, eBay, Etsy, Zalando ready out of the box', it: 'Pronto per Amazon, eBay, Etsy, Zalando' },
   },
   {
     topic: { en: 'Visual consistency', it: 'Coerenza visiva' },
