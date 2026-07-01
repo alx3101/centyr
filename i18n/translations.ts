@@ -1200,9 +1200,9 @@ export const translations: Record<Language, Translations> = {
     marketing: {
       hero: {
         badge: 'Processing 1M+ images monthly',
-        title: 'Sell-Ready Product Photos,',
-        titleHighlight: 'Wherever You Sell',
-        subtitle: 'Selling on Amazon, eBay, Etsy, Zalando? Get their exact specs automatically. Launching your own store? Get polished, consistent photos from day one.',
+        title: 'The Right Format for Amazon, eBay, Etsy and Zalando',
+        titleHighlight: 'Automatically',
+        subtitle: 'Every marketplace has its own rules. You upload the photo — we handle the rest. Perfect alignment, centering and dimensions for every platform, in one click.',
         ctaPrimary: 'Try for Free',
         ctaSecondary: 'See Pricing',
         trustNoCreditCard: 'No credit card required',
@@ -1913,9 +1913,9 @@ export const translations: Record<Language, Translations> = {
     marketing: {
       hero: {
         badge: 'Elaborazione di 1M+ immagini al mese',
-        title: 'Foto Prodotto Pronte alla Vendita,',
-        titleHighlight: 'Ovunque Tu Venda',
-        subtitle: "Vendi su Amazon, eBay, Etsy, Zalando? Ottieni le loro specifiche esatte automaticamente. Stai avviando il tuo store? Ottieni foto curate e coerenti fin dal primo giorno.",
+        title: 'Il Formato Giusto per Amazon, eBay, Etsy e Zalando',
+        titleHighlight: 'in Automatico',
+        subtitle: 'Ogni marketplace ha le sue regole. Tu carica la foto: ci pensiamo noi. Allineamento, centratura e dimensioni perfette per ogni piattaforma, in un click.',
         ctaPrimary: 'Prova Gratis',
         ctaSecondary: 'Vedi Prezzi',
         trustNoCreditCard: 'Nessuna carta di credito richiesta',
