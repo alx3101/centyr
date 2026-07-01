@@ -542,11 +542,30 @@ export default function UploadPage() {
                 <div className="p-4 rounded-xl border border-[#f0f0f0] bg-white">
                   <div className="flex items-center gap-2 mb-1">
                     <Sparkles className="w-4 h-4 text-[#7c3aed]" />
-                    <span className="font-semibold text-[#0f0a1e]">Output per marketplace</span>
-                    <span className="text-xs text-[#9ca3af]">(opzionale)</span>
+                    <span className="font-semibold text-[#0f0a1e]">Formato output</span>
                   </div>
-                  <p className="text-sm text-[#6b7280] mb-4">Genera un file per ogni marketplace selezionato con le specifiche esatte.</p>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <p className="text-sm text-[#6b7280] mb-4">Scegli uno o più marketplace per generare file con le specifiche esatte, oppure imposta dimensioni custom.</p>
+                  <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+                    {/* Custom card */}
+                    <button
+                      type="button"
+                      onClick={() => setOutputPresets([])}
+                      className={`flex flex-col items-center gap-1 p-3 rounded-xl border-2 transition-all ${
+                        outputPresets.length === 0
+                          ? 'border-[#7c3aed] bg-[#faf5ff]'
+                          : 'border-[#f0f0f0] hover:border-[#d8b4fe]'
+                      }`}
+                    >
+                      <div className="w-5 h-5 rounded-full flex items-center justify-center bg-[#f3f4f6]">
+                        {outputPresets.length === 0
+                          ? <Check className="w-3 h-3 text-[#7c3aed]" />
+                          : <Settings className="w-3 h-3 text-[#9ca3af]" />
+                        }
+                      </div>
+                      <span className="font-semibold text-sm text-[#0f0a1e]">Custom</span>
+                      <span className="text-xs text-[#9ca3af] font-mono">{outputSize}×{outputSize}</span>
+                    </button>
+
                     {MARKETPLACE_PRESETS.map(p => (
                       <button
                         key={p.key}
@@ -576,8 +595,8 @@ export default function UploadPage() {
                   )}
                 </div>
 
-                {/* Output Settings */}
-                <div className="p-4 rounded-xl border border-[#f0f0f0] bg-white">
+                {/* Output Settings — visible only in Custom mode */}
+                {outputPresets.length === 0 && <div className="p-4 rounded-xl border border-[#f0f0f0] bg-white">
                   <div className="flex items-center gap-2 mb-4">
                     <Settings className="w-5 h-5 text-[#7c3aed]" />
                     <span className="font-semibold text-[#0f0a1e]">{t.upload.outputSettings}</span>
@@ -633,7 +652,7 @@ export default function UploadPage() {
                       </p>
                     </div>
                   </div>
-                </div>
+                </div>}
 
               </div>
             </div>
