@@ -394,6 +394,26 @@ class ApiClient {
     })
   }
 
+  /**
+   * Reprocess Job - POST /api/v1/jobs/{job_id}/reprocess
+   *
+   * Re-process the original input images with different output settings.
+   * The backend uses the stored input_s3_key so no file transfer is needed.
+   *
+   * @param jobId - Original job ID
+   * @param options - New processing parameters
+   * @returns New job_id
+   */
+  async reprocessJob(
+    jobId: string,
+    options: { output_size?: number; margin?: number }
+  ): Promise<UploadResponse> {
+    return this.request<UploadResponse>(`/api/v1/jobs/${jobId}/reprocess`, {
+      method: 'POST',
+      body: JSON.stringify(options),
+    })
+  }
+
   // ===========================
   // Pricing Endpoints
   // ===========================

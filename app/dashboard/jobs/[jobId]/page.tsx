@@ -84,49 +84,64 @@ function JobDetailContent() {
     if (!job) return
     setIsReprocessing(true)
     setRpError(null)
+
+    const marginPx = Math.round((rpSize * rpMarginPct) / 100)
+    const matchedStore = STORE_LOGOS.find(s => s.key === rpPreset)
+    const newJobName = `${job.job_name || 'Job'} [${matchedStore?.name ?? jd.customFormat}]`
+
     try {
-      const inputUrls: string[] = []
-      if (job.batch_mode && job.outputs?.length) {
-        job.outputs.filter(Boolean).forEach(o => { if (o.input_url) inputUrls.push(o.input_url) })
-      } else if (job.input_image_url) {
-        inputUrls.push(job.input_image_url)
-      }
-      if (inputUrls.length === 0) throw new Error('expired')
-
-      const fetchedFiles = await Promise.all(
-        inputUrls.map(async (url, i) => {
-          let res: Response
-          try {
-            res = await fetch(url)
-          } catch {
-            throw new Error('expired')
-          }
-          if (!res.ok) throw new Error('expired')
-          const blob = await res.blob()
-          if (!blob.size) throw new Error('expired')
-          const ext = blob.type.includes('png') ? 'png' : blob.type.includes('webp') ? 'webp' : 'jpg'
-          return new File([blob], `image-${i + 1}.${ext}`, { type: blob.type })
-        })
-      )
-
-      const marginPx = Math.round((rpSize * rpMarginPct) / 100)
-      const matchedStore = STORE_LOGOS.find(s => s.key === rpPreset)
-      const newJobName = `${job.job_name || 'Job'} [${matchedStore?.name ?? jd.customFormat}]`
-
-      const result = await api.uploadBatch(fetchedFiles, newJobName, {
-        outputSize: rpSize,
+      // Primary path: backend reprocess endpoint (no file transfer, no URL expiry issues)
+      const result = await api.reprocessJob(jobId, {
+        output_size: rpSize,
         margin: marginPx,
       })
-
       saveJobMeta(result.job_id, { preset: rpPreset, width: rpSize, height: rpSize })
       toast.success(jd.reprocessSuccess)
       router.push(`/dashboard/jobs/${result.job_id}`)
-    } catch (err: any) {
-      if (err.message === 'expired') {
-        setRpError('expired')
-      } else {
-        setRpError('other')
-        toast.error(err.message || jd.reprocessFailed)
+    } catch (backendErr: any) {
+      const is404 = backendErr.message?.includes('404') || backendErr.message?.includes('not found') || backendErr.message?.includes('Not Found')
+      if (!is404) {
+        // Real backend error (auth, quota, etc.)
+        toast.error(backendErr.message || jd.reprocessFailed)
+        setIsReprocessing(false)
+        return
+      }
+
+      // Fallback: endpoint not yet deployed — fetch originals from S3 URLs and re-upload
+      try {
+        const inputUrls: string[] = []
+        if (job.batch_mode && job.outputs?.length) {
+          job.outputs.filter(Boolean).forEach(o => { if (o.input_url) inputUrls.push(o.input_url) })
+        } else if (job.input_image_url) {
+          inputUrls.push(job.input_image_url)
+        }
+        if (inputUrls.length === 0) throw new Error('expired')
+
+        const fetchedFiles = await Promise.all(
+          inputUrls.map(async (url, i) => {
+            let res: Response
+            try { res = await fetch(url) } catch { throw new Error('expired') }
+            if (!res.ok) throw new Error('expired')
+            const blob = await res.blob()
+            if (!blob.size) throw new Error('expired')
+            const ext = blob.type.includes('png') ? 'png' : blob.type.includes('webp') ? 'webp' : 'jpg'
+            return new File([blob], `image-${i + 1}.${ext}`, { type: blob.type })
+          })
+        )
+
+        const result = await api.uploadBatch(fetchedFiles, newJobName, {
+          outputSize: rpSize,
+          margin: marginPx,
+        })
+        saveJobMeta(result.job_id, { preset: rpPreset, width: rpSize, height: rpSize })
+        toast.success(jd.reprocessSuccess)
+        router.push(`/dashboard/jobs/${result.job_id}`)
+      } catch (fallbackErr: any) {
+        if (fallbackErr.message === 'expired') {
+          setRpError('expired')
+        } else {
+          toast.error(fallbackErr.message || jd.reprocessFailed)
+        }
       }
     } finally {
       setIsReprocessing(false)
