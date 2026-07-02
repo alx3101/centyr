@@ -502,6 +502,15 @@ function DashboardContent() {
                         {(() => {
                           const meta = getJobMeta(job.job_id)
                           if (!meta) return null
+                          // Multi-format: show count + names, not a single wrong preset/size
+                          if (meta.presets && meta.presets.length > 1) {
+                            const names = meta.presets.map(k => STORE_LOGOS.find(s => s.key === k)?.name ?? k).join(', ')
+                            return (
+                              <span className="flex items-center gap-1 text-xs px-2 py-1 rounded-full font-semibold bg-[#faf5ff] text-[#7c3aed]">
+                                {meta.presets.length} formati · {names}
+                              </span>
+                            )
+                          }
                           const store = STORE_LOGOS.find(s => s.key === meta.preset)
                           const L = store?.Logo
                           return (

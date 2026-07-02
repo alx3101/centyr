@@ -2,6 +2,7 @@ interface JobMeta {
   preset: string
   width: number
   height: number
+  presets?: string[]
 }
 
 export function saveJobMeta(jobId: string, meta: JobMeta): void {
