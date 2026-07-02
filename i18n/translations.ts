@@ -579,6 +579,7 @@ export interface Translations {
       contactSales: string
       upgrade: string
       startTrial: string
+      subscribe: string
       loading: string
       errorTitle: string
       currentPlanLabel: string
@@ -1295,6 +1296,7 @@ export const translations: Record<Language, Translations> = {
         contactSales: 'Contact Sales',
         upgrade: 'Upgrade',
         startTrial: 'Start 14-Day Trial',
+        subscribe: 'Subscribe',
         loading: 'Loading...',
         errorTitle: 'Failed to load pricing plans',
         currentPlanLabel: 'Current plan',
@@ -2025,6 +2027,7 @@ export const translations: Record<Language, Translations> = {
         contactSales: 'Contatta Vendite',
         upgrade: 'Aggiorna',
         startTrial: 'Inizia Trial 14 Giorni',
+        subscribe: 'Abbonati',
         loading: 'Caricamento...',
         errorTitle: 'Impossibile caricare i piani',
         currentPlanLabel: 'Piano attuale',

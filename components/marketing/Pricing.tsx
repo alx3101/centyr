@@ -12,7 +12,8 @@ import PricingCard from '@/components/ui/PricingCard'
 export default function Pricing() {
   const t = useTranslations()
   const { plans, isLoading, error } = usePricingPlans()
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, user } = useAuth()
+  const currentPlanId = user?.subscription?.plan
   const router = useRouter()
   const [billingPeriod, setBillingPeriod] = useState<'month' | 'year'>('month')
   const [loadingPlanId, setLoadingPlanId] = useState<string | null>(null)
@@ -117,21 +118,26 @@ export default function Pricing() {
               const description = translated?.description || plan.description
               const features = translated?.features?.length ? translated.features : plan.features
 
+              const isCurrent = isAuthenticated && !!currentPlanId && (
+                currentPlanId === plan.id ||
+                currentPlanId.toLowerCase() === plan.name.toLowerCase()
+              )
+
               return (
-                <div key={plan.stripe_product_id} className="w-full sm:w-[calc(50%-8px)] lg:w-[220px] flex-shrink-0">
+                <div key={plan.stripe_product_id} className="w-full sm:w-[calc(50%-8px)] lg:w-[260px] flex-shrink-0">
                   <PricingCard
                     plan={plan}
                     billingPeriod={billingPeriod}
-                    isCurrent={false}
+                    isCurrent={isCurrent}
                     isLoading={loadingPlanId === plan.stripe_product_id}
                     anyLoading={loadingPlanId !== null}
                     features={features}
                     description={description}
                     onSelect={() => handlePlanClick(plan)}
                     labels={{
-                      current: 'Piano attuale',
+                      current: t.marketing.pricing.currentPlanButton,
                       startFree: t.marketing.pricing.startFree,
-                      upgrade: t.marketing.pricing.upgrade,
+                      upgrade: isAuthenticated ? t.marketing.pricing.upgrade : t.marketing.pricing.subscribe,
                       perMonth: t.marketing.pricing.perMonth,
                       billedYearly: t.marketing.pricing.billedYearly,
                     }}

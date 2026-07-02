@@ -9,6 +9,7 @@ import { AuthGuard } from '@/components/guards/AuthGuard'
 import { useConfirm } from '@/components/ui/ConfirmModal'
 import { ArrowLeft, Download, Trash2, Clock, CheckCircle, XCircle, Loader, Image as ImageIcon, Zap, Info, Upload, RotateCw, RefreshCw, X, Lock } from 'lucide-react'
 import { useTranslations } from '@/contexts/LanguageContext'
+import { useAuth } from '@/contexts/AuthContext'
 import { STORE_LOGOS, StorefrontIcon } from '@/components/marketing/StoreLogos'
 import { saveJobMeta, getJobMeta } from '@/lib/jobMeta'
 import { toast } from 'react-hot-toast'
@@ -55,6 +56,8 @@ function JobDetailContent() {
   const t = useTranslations()
   const jd = t.jobDetail
   const jobId = params.jobId as string
+  const { user } = useAuth()
+  const isPremium = user?.subscription?.plan !== 'free'
 
   const [job, setJob] = useState<JobResponse | null>(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -453,13 +456,15 @@ function JobDetailContent() {
                   )}
                 </button>
               )}
-              <button
-                onClick={() => setShowReprocess(v => !v)}
-                className={`flex items-center gap-2 px-6 py-3 font-bold rounded-xl hover:scale-105 transition-all shadow-md ${showReprocess ? 'bg-purple-700 text-white' : 'bg-purple-100 text-purple-700 hover:bg-purple-200'}`}
-              >
-                <RefreshCw className="w-5 h-5" />
-                {jd.reprocess}
-              </button>
+              {isPremium && (
+                <button
+                  onClick={() => setShowReprocess(v => !v)}
+                  className={`flex items-center gap-2 px-6 py-3 font-bold rounded-xl hover:scale-105 transition-all shadow-md ${showReprocess ? 'bg-purple-700 text-white' : 'bg-purple-100 text-purple-700 hover:bg-purple-200'}`}
+                >
+                  <RefreshCw className="w-5 h-5" />
+                  {jd.reprocess}
+                </button>
+              )}
               <button
                 onClick={handleDelete}
                 className="flex items-center gap-2 px-6 py-3 bg-red-500 text-white font-bold rounded-xl hover:bg-red-600 hover:scale-105 transition-all shadow-md"
@@ -472,7 +477,7 @@ function JobDetailContent() {
         </div>
 
         {/* Reprocess Panel */}
-        {showReprocess && (
+        {showReprocess && isPremium && (
           <div className="bg-white/90 backdrop-blur-sm border-2 border-purple-200 rounded-2xl p-6 mb-6 shadow-lg animate-fade-in">
             <div className="flex items-start justify-between mb-4">
               <div>
