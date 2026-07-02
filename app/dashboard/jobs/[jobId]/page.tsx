@@ -91,9 +91,12 @@ function JobDetailContent() {
 
     try {
       // Primary path: backend reprocess endpoint (no file transfer, no URL expiry issues)
+      // If a marketplace preset is chosen, pass it so the new job outputs that format
+      const isMarketplacePreset = !!matchedStore
       const result = await api.reprocessJob(jobId, {
         output_size: rpSize,
         margin: marginPx,
+        output_presets: isMarketplacePreset ? [rpPreset] : undefined,
       })
       saveJobMeta(result.job_id, { preset: rpPreset, width: rpSize, height: rpSize })
       toast.success(jd.reprocessSuccess)

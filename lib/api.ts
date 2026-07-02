@@ -437,14 +437,18 @@ class ApiClient {
    */
   async reprocessJob(
     jobId: string,
-    options: { output_size?: number; margin?: number; normalize_exposure?: boolean }
+    options: { output_size?: number; margin?: number; output_presets?: string[]; normalize_exposure?: boolean }
   ): Promise<UploadResponse> {
     const params = new URLSearchParams()
     if (options.normalize_exposure) params.set('normalize_exposure', 'true')
     const qs = params.toString() ? `?${params}` : ''
     return this.request<UploadResponse>(`/api/v1/jobs/${jobId}/reprocess${qs}`, {
       method: 'POST',
-      body: JSON.stringify({ output_size: options.output_size, margin: options.margin }),
+      body: JSON.stringify({
+        output_size: options.output_size,
+        margin: options.margin,
+        output_presets: options.output_presets,
+      }),
     })
   }
 
