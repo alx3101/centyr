@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { toast } from 'react-hot-toast'
-import { Upload, X, Check, Loader, Sparkles, Zap, Shield, ImageIcon, Lock, ChevronRight, ChevronLeft, Settings, Eye, AlertCircle, Info, Sun } from 'lucide-react'
+import { Upload, X, Check, Loader, Sparkles, Zap, Shield, ImageIcon, ChevronRight, ChevronLeft, Settings, Eye, AlertCircle, Info, Sun } from 'lucide-react'
 import { useDropzone } from 'react-dropzone'
 import { useUpload, type MarketplacePreset } from '@/hooks/useUpload'
 import { compressImageFiles } from '@/lib/imageCompression'
@@ -35,6 +35,8 @@ export default function UploadPage() {
   const [shadowBlur, setShadowBlur] = useState(20)
   const [shadowOpacity, setShadowOpacity] = useState(0.35)
   const [shadowOffsetY, setShadowOffsetY] = useState(12)
+  // Exposure normalization
+  const [normalizeExposure, setNormalizeExposure] = useState(false)
   // Marketplace presets
   const [outputPresets, setOutputPresets] = useState<MarketplacePreset[]>([])
 
@@ -46,9 +48,15 @@ export default function UploadPage() {
   ]
 
   const togglePreset = (key: MarketplacePreset) => {
-    setOutputPresets(prev =>
-      prev.includes(key) ? prev.filter(p => p !== key) : [...prev, key]
-    )
+    setOutputPresets(prev => {
+      if (prev.includes(key)) return prev.filter(p => p !== key)
+      // Enforce plan preset limit (99 = unlimited)
+      if (presetsLimit < 99 && prev.length >= presetsLimit) {
+        toast.error(`Il tuo piano consente ${presetsLimit} preset marketplace. Passa a Pro per tutti.`)
+        return prev
+      }
+      return [...prev, key]
+    })
   }
 
 
@@ -60,6 +68,10 @@ export default function UploadPage() {
 
   // Derived state
   const isPremium = user?.subscription?.plan !== 'free'
+  const planFeatures = user?.subscription?.features
+  const canShadow = !!planFeatures?.shadow_enabled
+  const canNormalize = !!planFeatures?.normalize_enabled
+  const presetsLimit = planFeatures?.presets_limit ?? 0
   const maxBatchSize = user?.subscription?.features?.max_batch_size || 1
   const currentUploads = user?.subscription?.current_period_uploads || 0
   const monthlyLimit = user?.subscription?.monthly_limit || 10
@@ -153,7 +165,8 @@ export default function UploadPage() {
       customBackground: customBackground || undefined,
       outputSize,
       margin: marginPixels,
-      shadowEnabled: removeBackground && shadowEnabled,
+      shadowEnabled: canShadow && removeBackground && shadowEnabled,
+      normalizeExposure: canNormalize && files.length > 1 && normalizeExposure,
       shadowBlur,
       shadowOpacity,
       shadowOffsetY,
@@ -394,18 +407,13 @@ export default function UploadPage() {
                   {t.upload.processingOptions}
                 </h3>
 
-                {/* Background Removal */}
-                <div className={`relative p-4 rounded-xl border transition-all ${removeBackground ? 'border-[#7c3aed] bg-[#faf5ff]' : 'border-[#f0f0f0] bg-white'
-                  } ${!isPremium ? 'opacity-60' : ''}`}>
+                {/* Background Removal — available on all plans */}
+                <div className={`relative p-4 rounded-xl border transition-all ${removeBackground ? 'border-[#7c3aed] bg-[#faf5ff]' : 'border-[#f0f0f0] bg-white'}`}>
                   <label className="flex items-start gap-4 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={removeBackground}
                       onChange={(e) => {
-                        if (!isPremium) {
-                          toast.error(t.upload.upgradePremium)
-                          return
-                        }
                         setRemoveBackground(e.target.checked)
                         if (!e.target.checked) {
                           setCustomBackground(null)
@@ -415,18 +423,11 @@ export default function UploadPage() {
                           }
                         }
                       }}
-                      disabled={!isPremium}
                       className="w-5 h-5 mt-1 rounded border-2 border-[#e5e7eb] text-[#7c3aed] focus:ring-[#7c3aed]"
                     />
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
                         <span className="font-semibold text-[#0f0a1e]">{t.upload.removeBackground}</span>
-                        {!isPremium && (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-[#faf5ff] text-[#7c3aed] text-xs font-semibold rounded-full">
-                            <Lock className="w-3 h-3" />
-                            {t.upload.premium}
-                          </span>
-                        )}
                       </div>
                       <p className="text-sm text-[#6b7280]">
                         {t.upload.removeBackgroundDesc}
@@ -482,7 +483,8 @@ export default function UploadPage() {
                   )}
                 </div>
 
-                {/* Shadow */}
+                {/* Shadow (plan-gated: Starter+) */}
+                {canShadow && (
                 <div className={`relative p-4 rounded-xl border transition-all ${shadowEnabled && removeBackground ? 'border-[#7c3aed] bg-[#faf5ff]' : 'border-[#f0f0f0] bg-white'} ${!removeBackground ? 'opacity-50' : ''}`}>
                   <label className="flex items-start gap-4 cursor-pointer">
                     <input
@@ -539,6 +541,34 @@ export default function UploadPage() {
                     </div>
                   )}
                 </div>
+                )}
+
+                {/* Exposure Normalization (plan-gated: Pro+) */}
+                {canNormalize && (
+                <div className={`relative p-4 rounded-xl border transition-all ${normalizeExposure && files.length > 1 ? 'border-[#7c3aed] bg-[#faf5ff]' : 'border-[#f0f0f0] bg-white'} ${files.length < 2 ? 'opacity-50' : ''}`}>
+                  <label className="flex items-start gap-4 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={normalizeExposure}
+                      onChange={e => {
+                        if (files.length < 2) return
+                        setNormalizeExposure(e.target.checked)
+                      }}
+                      disabled={files.length < 2}
+                      className="w-5 h-5 mt-1 rounded border-2 border-[#e5e7eb] text-[#7c3aed] focus:ring-[#7c3aed]"
+                    />
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="font-semibold text-[#0f0a1e]">Normalizza esposizione</span>
+                        {files.length < 2 && (
+                          <span className="text-xs text-[#9ca3af]">(richiede 2+ immagini)</span>
+                        )}
+                      </div>
+                      <p className="text-sm text-[#6b7280]">Uniforma luminosità e bilanciamento colore tra tutte le foto del batch.</p>
+                    </div>
+                  </label>
+                </div>
+                )}
 
                 {/* Marketplace Presets */}
                 <div className="p-4 rounded-xl border border-[#f0f0f0] bg-white">
@@ -546,7 +576,9 @@ export default function UploadPage() {
                     <Sparkles className="w-4 h-4 text-[#7c3aed]" />
                     <span className="font-semibold text-[#0f0a1e]">Formato output</span>
                   </div>
-                  <p className="text-sm text-[#6b7280] mb-4">Scegli uno o più marketplace per generare file con le specifiche esatte, oppure imposta dimensioni custom.</p>
+                  <p className="text-sm text-[#6b7280] mb-4">{presetsLimit > 0
+                    ? 'Scegli uno o più marketplace per generare file con le specifiche esatte, oppure imposta dimensioni custom.'
+                    : 'Imposta le dimensioni di output. I preset marketplace (Amazon, eBay, Etsy, Zalando) sono disponibili dal piano Starter.'}</p>
                   <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
                     {/* Custom card */}
                     <button
@@ -568,7 +600,7 @@ export default function UploadPage() {
                       <span className="text-xs text-[#9ca3af] font-mono">{outputSize}×{outputSize}</span>
                     </button>
 
-                    {MARKETPLACE_PRESETS.map(p => (
+                    {presetsLimit > 0 && MARKETPLACE_PRESETS.map(p => (
                       <button
                         key={p.key}
                         type="button"

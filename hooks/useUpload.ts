@@ -33,6 +33,8 @@ export interface ProcessingOptions {
   shadowOffsetY?: number
   // Multi-format marketplace presets
   outputPresets?: MarketplacePreset[]
+  // Batch exposure normalization (premium, 2+ images)
+  normalizeExposure?: boolean
 }
 
 export function useUpload() {

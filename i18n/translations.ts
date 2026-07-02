@@ -1224,13 +1224,13 @@ export const translations: Record<Language, Translations> = {
     marketing: {
       hero: {
         badge: 'Processing 1M+ images monthly',
-        title: 'The Right Format for Amazon, eBay, Etsy and Zalando',
+        title: 'Your Whole Catalog, Uniform and Aligned',
         titleHighlight: 'Automatically',
-        subtitle: 'Every marketplace has its own rules. You upload the photo — we handle the rest. Perfect alignment, centering and dimensions for every platform, in one click.',
+        subtitle: 'Upload the entire catalog: identical alignment, centering, exposure and dimensions on every photo, ready for Amazon, eBay, Etsy and Zalando. What used to take hours by hand, in one click.',
         ctaPrimary: 'Try for Free',
         ctaSecondary: 'See Pricing',
         trustNoCreditCard: 'No credit card required',
-        trustFreeJobs: '3 free jobs/month',
+        trustFreeJobs: '10 free jobs/month',
         trustMoneyBack: '30-day money-back guarantee',
         yourStoreLabel: 'Your Store',
       },
@@ -1275,7 +1275,7 @@ export const translations: Record<Language, Translations> = {
       },
       pricing: {
         title: 'Simple, Transparent Pricing',
-        subtitle: 'Start free, scale as you grow. No hidden fees.',
+        subtitle: 'A uniform catalog in minutes instead of hours. Start free, scale as you grow.',
         monthly: 'Monthly',
         yearly: 'Yearly',
         billedYearly: 'billed yearly',
@@ -1318,23 +1318,23 @@ export const translations: Record<Language, Translations> = {
         planInfo: {
           free: {
             description: 'Perfect for trying Centry',
-            features: ['3 jobs/month', 'Up to 3 images per job', 'Background removal', 'Custom background & margin', '7-day storage', 'Email support'],
+            features: ['10 jobs/month', 'Up to 5 images per batch', 'Uniform alignment & centering', 'Background removal', 'Custom margin & dimensions', '7-day storage', 'Email support', '✗ Custom background', '✗ Product shadows', '✗ Marketplace presets', '✗ Exposure normalization'],
           },
           mini: {
             description: 'Ideal for small e-commerce',
-            features: ['25 jobs/month', 'Up to 5 images per batch', 'Background removal', 'Custom background & margin', '14-day storage', 'Email support'],
+            features: ['25 jobs/month', 'Up to 5 images per batch', 'Uniform alignment & centering', 'Background removal', 'Custom background & margin', '14-day storage', 'Email support'],
           },
           starter: {
-            description: 'For growing businesses',
-            features: ['100 jobs/month', 'Up to 10 images per batch', 'Background removal', 'Custom background & margin', '30-day storage', 'Email support'],
+            description: 'For catalogs that need consistency',
+            features: ['60 jobs/month', 'Up to 25 images per batch', 'Uniform alignment & centering', 'Background removal', 'Product shadows', '1 marketplace preset', 'Custom background & margin', '30-day storage', 'Email support', '✗ Exposure normalization'],
           },
           pro: {
             description: 'For professionals & agencies',
-            features: ['500 jobs/month', 'Up to 50 images per batch', 'Priority processing', 'Background removal', 'Custom background & margin', '90-day storage', 'Analytics dashboard', 'Webhooks', 'Priority support'],
+            features: ['200 jobs/month', 'Up to 100 images per batch', 'Uniform alignment & centering', 'Background removal', 'Product shadows', 'All marketplace presets (4)', 'Batch exposure normalization', 'Priority processing', 'Custom background & margin', '90-day storage', 'Priority support'],
           },
           business: {
             description: 'For high-volume teams',
-            features: ['2500 jobs/month', 'Up to 100 images per batch', 'Priority processing', 'Background removal', 'Custom background & margin', '180-day storage', 'Analytics dashboard', 'Webhooks', '24/7 priority support'],
+            features: ['500 jobs/month', 'Up to 100 images per batch', 'Uniform alignment & centering', 'Background removal', 'Product shadows', 'All marketplace presets (4)', 'Batch exposure normalization', 'Priority processing', 'Custom background & margin', '180-day storage', '24/7 priority support'],
           },
         },
       },
@@ -1949,13 +1949,13 @@ export const translations: Record<Language, Translations> = {
     marketing: {
       hero: {
         badge: 'Elaborazione di 1M+ immagini al mese',
-        title: 'Il Formato Giusto per Amazon, eBay, Etsy e Zalando',
+        title: 'Il Tuo Catalogo Uniforme e Allineato',
         titleHighlight: 'in Automatico',
-        subtitle: 'Ogni marketplace ha le sue regole. Tu carica la foto: ci pensiamo noi. Allineamento, centratura e dimensioni perfette per ogni piattaforma, in un click.',
+        subtitle: 'Carica l\'intero catalogo: allineamento, centratura, esposizione e dimensioni identiche su ogni foto, pronte per Amazon, eBay, Etsy e Zalando. Quello che facevi a mano in ore, in un click.',
         ctaPrimary: 'Prova Gratis',
         ctaSecondary: 'Vedi Prezzi',
         trustNoCreditCard: 'Nessuna carta di credito richiesta',
-        trustFreeJobs: '3 jobs gratuiti/mese',
+        trustFreeJobs: '10 jobs gratuiti/mese',
         trustMoneyBack: 'Garanzia soddisfatti o rimborsati 30 giorni',
         yourStoreLabel: 'Il Tuo Store',
       },
@@ -2000,7 +2000,7 @@ export const translations: Record<Language, Translations> = {
       },
       pricing: {
         title: 'Prezzi Semplici e Trasparenti',
-        subtitle: 'Inizia gratis, scala con la tua crescita. Nessun costo nascosto.',
+        subtitle: 'Un catalogo uniforme in minuti invece di ore. Inizia gratis, scala con la tua crescita.',
         monthly: 'Mensile',
         yearly: 'Annuale',
         billedYearly: 'fatturato annualmente',
@@ -2043,23 +2043,23 @@ export const translations: Record<Language, Translations> = {
         planInfo: {
           free: {
             description: 'Perfetto per provare Centry',
-            features: ['3 job/mese', 'Fino a 3 immagini per job', 'Rimozione sfondo', 'Sfondo e margine personalizzati', 'Storage 7 giorni', 'Supporto email'],
+            features: ['10 job/mese', 'Fino a 5 immagini per batch', 'Allineamento e centraggio uniforme', 'Rimozione sfondo', 'Margine e dimensioni personalizzati', 'Storage 7 giorni', 'Supporto email', '✗ Sfondo personalizzato', '✗ Ombre prodotto', '✗ Preset marketplace', '✗ Normalizza esposizione'],
           },
           mini: {
             description: 'Ideale per piccoli e-commerce',
-            features: ['25 job/mese', 'Fino a 5 immagini per batch', 'Rimozione sfondo', 'Sfondo e margine personalizzati', 'Storage 14 giorni', 'Supporto email'],
+            features: ['25 job/mese', 'Fino a 5 immagini per batch', 'Allineamento e centraggio uniforme', 'Rimozione sfondo', 'Sfondo e margine personalizzati', 'Storage 14 giorni', 'Supporto email'],
           },
           starter: {
-            description: 'Per business in crescita',
-            features: ['100 job/mese', 'Fino a 10 immagini per batch', 'Rimozione sfondo', 'Sfondo e margine personalizzati', 'Storage 30 giorni', 'Supporto email'],
+            description: 'Per chi ha un catalogo da uniformare',
+            features: ['60 job/mese', 'Fino a 25 immagini per batch', 'Allineamento e centraggio uniforme', 'Rimozione sfondo', 'Ombre prodotto', '1 preset marketplace', 'Sfondo e margine personalizzati', 'Storage 30 giorni', 'Supporto email', '✗ Normalizza esposizione'],
           },
           pro: {
             description: 'Per professionisti e agenzie',
-            features: ['500 job/mese', 'Fino a 50 immagini per batch', 'Elaborazione prioritaria', 'Rimozione sfondo', 'Sfondo e margine personalizzati', 'Storage 90 giorni', 'Dashboard analytics', 'Webhooks', 'Supporto prioritario'],
+            features: ['200 job/mese', 'Fino a 100 immagini per batch', 'Allineamento e centraggio uniforme', 'Rimozione sfondo', 'Ombre prodotto', 'Tutti i preset marketplace (4)', 'Normalizza esposizione batch', 'Elaborazione prioritaria', 'Sfondo e margine personalizzati', 'Storage 90 giorni', 'Supporto prioritario'],
           },
           business: {
             description: 'Per team ad alto volume',
-            features: ['2500 job/mese', 'Fino a 100 immagini per batch', 'Elaborazione prioritaria', 'Rimozione sfondo', 'Sfondo e margine personalizzati', 'Storage 180 giorni', 'Dashboard analytics', 'Webhooks', 'Supporto prioritario 24/7'],
+            features: ['500 job/mese', 'Fino a 100 immagini per batch', 'Allineamento e centraggio uniforme', 'Rimozione sfondo', 'Ombre prodotto', 'Tutti i preset marketplace (4)', 'Normalizza esposizione batch', 'Elaborazione prioritaria', 'Sfondo e margine personalizzati', 'Storage 180 giorni', 'Supporto prioritario 24/7'],
           },
         },
       },

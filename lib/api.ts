@@ -51,6 +51,9 @@ export interface Features {
   rate_limit_per_minute: number;
   storage_retention_days: number;
   webhooks_enabled: boolean;
+  shadow_enabled: boolean;
+  normalize_enabled: boolean;
+  presets_limit: number;
 }
 
 
@@ -127,6 +130,7 @@ export interface ProcessingOptions {
   shadowOpacity?: number
   shadowOffsetY?: number
   outputPresets?: MarketplacePreset[]
+  normalizeExposure?: boolean
 }
 
 export interface PricingPlan {
@@ -330,6 +334,11 @@ class ApiClient {
       formData.append('output_presets', JSON.stringify(options.outputPresets))
     }
 
+    // Batch exposure normalization
+    if (options?.normalizeExposure) {
+      formData.append('normalize_exposure', 'true')
+    }
+
     const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null
 
     const headers: Record<string, string> = {}
@@ -427,11 +436,14 @@ class ApiClient {
    */
   async reprocessJob(
     jobId: string,
-    options: { output_size?: number; margin?: number }
+    options: { output_size?: number; margin?: number; normalize_exposure?: boolean }
   ): Promise<UploadResponse> {
-    return this.request<UploadResponse>(`/api/v1/jobs/${jobId}/reprocess`, {
+    const params = new URLSearchParams()
+    if (options.normalize_exposure) params.set('normalize_exposure', 'true')
+    const qs = params.toString() ? `?${params}` : ''
+    return this.request<UploadResponse>(`/api/v1/jobs/${jobId}/reprocess${qs}`, {
       method: 'POST',
-      body: JSON.stringify(options),
+      body: JSON.stringify({ output_size: options.output_size, margin: options.margin }),
     })
   }
 

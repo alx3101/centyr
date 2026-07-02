@@ -54,7 +54,10 @@ export function getStoredUser(): User | null {
             rate_limit_per_hour: parsed.rate_limit_per_hour ?? 100,
             rate_limit_per_minute: parsed.rate_limit_per_minute ?? 20,
             storage_retention_days: parsed.storage_retention_days ?? 7,
-            webhooks_enabled: parsed.webhooks_enabled ?? false
+            webhooks_enabled: parsed.webhooks_enabled ?? false,
+            shadow_enabled: parsed.shadow_enabled ?? false,
+            normalize_enabled: parsed.normalize_enabled ?? false,
+            presets_limit: parsed.presets_limit ?? 0
           }
         }
       };

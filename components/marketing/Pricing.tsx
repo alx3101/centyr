@@ -49,6 +49,7 @@ export default function Pricing() {
   }
 
   const filteredPlans = plans
+    .filter(plan => plan.id !== 'mini' && plan.name.toLowerCase() !== 'mini')
     .filter(plan => plan.price === 0 || plan.period === billingPeriod)
     .reduce((acc, plan) => {
       const exists = acc.find(p => p.stripe_product_id === plan.stripe_product_id)

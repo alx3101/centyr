@@ -1,6 +1,6 @@
 'use client'
 
-import { Check, Crown, Loader } from 'lucide-react'
+import { Check, Crown, Loader, X } from 'lucide-react'
 import type { PricingPlan } from '@/lib/api'
 
 interface PricingCardProps {
@@ -87,14 +87,20 @@ export default function PricingCard({
       </div>
 
       <ul className="space-y-2 mb-6 flex-grow">
-        {features.map((feature, i) => (
-          <li key={i} className="flex items-start gap-1.5 text-xs">
-            <div className="w-4 h-4 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-              <Check className="w-2.5 h-2.5 text-green-600" />
-            </div>
-            <span className="text-gray-700">{feature}</span>
-          </li>
-        ))}
+        {features.map((feature, i) => {
+          const locked = feature.startsWith('✗ ')
+          const label = locked ? feature.slice(2) : feature
+          return (
+            <li key={i} className="flex items-start gap-1.5 text-xs">
+              <div className={`w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${locked ? 'bg-gray-100' : 'bg-green-100'}`}>
+                {locked
+                  ? <X className="w-2.5 h-2.5 text-gray-400" />
+                  : <Check className="w-2.5 h-2.5 text-green-600" />}
+              </div>
+              <span className={locked ? 'text-gray-400' : 'text-gray-700'}>{label}</span>
+            </li>
+          )
+        })}
       </ul>
 
       <button
