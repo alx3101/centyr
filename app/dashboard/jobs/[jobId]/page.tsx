@@ -163,7 +163,7 @@ function JobDetailContent() {
     ? STORE_LOGOS.find(s => s.key === singlePresetKey)
     : (presetKeys.length === 0 && jobMeta ? STORE_LOGOS.find(s => s.key === jobMeta.preset) : null)
   const outputDims = singlePresetKey
-    ? { w: presetOutputs[singlePresetKey].width, h: presetOutputs[singlePresetKey].height }
+    ? { w: presetOutputs[singlePresetKey].w, h: presetOutputs[singlePresetKey].h }
     : job?.outputs?.[0]
       ? { w: job.outputs[0].output_width, h: job.outputs[0].output_height }
       : jobMeta
@@ -754,7 +754,14 @@ function JobDetailContent() {
                           <span className="font-semibold text-gray-600">{jd.format}:</span> <span className="text-gray-900">{output.output_format}</span>
                         </div>
                         <div className="bg-white rounded-lg px-3 py-2 border border-purple-200">
-                          <span className="font-semibold text-gray-600">{jd.size}:</span> <span className="text-gray-900">{output.output_width}×{output.output_height}px</span>
+                          <span className="font-semibold text-gray-600">{jd.size}:</span> <span className="text-gray-900">{(() => {
+                            const pk = Object.keys(output.outputs_by_preset || {})
+                            if (pk.length > 0) {
+                              const first = output.outputs_by_preset![pk[0]]
+                              if (first?.w && first?.h) return `${first.w}×${first.h}px`
+                            }
+                            return `${output.output_width}×${output.output_height}px`
+                          })()}</span>
                         </div>
                         <div className="bg-white rounded-lg px-3 py-2 border border-purple-200">
                           <span className="font-semibold text-gray-600">{jd.time}:</span> <span className="text-gray-900">{output.processing_time ? Number(output.processing_time).toFixed(2) : 'N/A'}s</span>
@@ -791,7 +798,7 @@ function JobDetailContent() {
                               >
                                 <span className="capitalize">{pk}</span>
                                 <span className="flex items-center gap-1 text-purple-600">
-                                  {pv.width && pv.height ? `${pv.width}×${pv.height}` : ''}
+                                  {pv.w && pv.h ? `${pv.w}×${pv.h}` : ''}
                                   <Download className="w-3.5 h-3.5" />
                                 </span>
                               </a>

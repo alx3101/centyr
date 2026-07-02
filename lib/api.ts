@@ -70,7 +70,7 @@ export interface JobOutput {
   output_format: string
   status: string
   processing_time: number
-  outputs_by_preset?: Record<string, { url?: string; s3_key?: string; width?: number; height?: number }>
+  outputs_by_preset?: Record<string, { url?: string; s3_key?: string; w?: number; h?: number }>
 }
 
 export interface JobResponse {
