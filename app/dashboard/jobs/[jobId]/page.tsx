@@ -153,14 +153,22 @@ function JobDetailContent() {
 
   const rpMarginPx = Math.round((rpSize * rpMarginPct) / 100)
 
-  // Detect current job format
+  // Detect current job format — prefer real preset data from the job over localStorage
   const jobMeta = typeof window !== 'undefined' ? getJobMeta(jobId) : null
-  const currentStore = jobMeta ? STORE_LOGOS.find(s => s.key === jobMeta.preset) : null
-  const outputDims = job?.outputs?.[0]
-    ? { w: job.outputs[0].output_width, h: job.outputs[0].output_height }
-    : jobMeta
-      ? { w: jobMeta.width, h: jobMeta.height }
-      : null
+  const presetOutputs = job?.outputs?.find(Boolean)?.outputs_by_preset || {}
+  const presetKeys = Object.keys(presetOutputs)
+  const isMultiFormat = presetKeys.length > 1
+  const singlePresetKey = presetKeys.length === 1 ? presetKeys[0] : null
+  const currentStore = singlePresetKey
+    ? STORE_LOGOS.find(s => s.key === singlePresetKey)
+    : (presetKeys.length === 0 && jobMeta ? STORE_LOGOS.find(s => s.key === jobMeta.preset) : null)
+  const outputDims = singlePresetKey
+    ? { w: presetOutputs[singlePresetKey].width, h: presetOutputs[singlePresetKey].height }
+    : job?.outputs?.[0]
+      ? { w: job.outputs[0].output_width, h: job.outputs[0].output_height }
+      : jobMeta
+        ? { w: jobMeta.width, h: jobMeta.height }
+        : null
 
   useEffect(() => {
     const fetchJobDetails = async () => {
@@ -641,7 +649,7 @@ function JobDetailContent() {
             </div>
           )}
 
-          {(outputDims || currentStore) && (
+          {(outputDims || currentStore || isMultiFormat) && (
             <div className={`bg-white/80 backdrop-blur-sm border-2 rounded-2xl p-5 shadow-lg hover:shadow-xl transition-all ${animateClass}`}
               style={{ animationDelay: '0.3s', borderColor: currentStore ? `${currentStore.brandColor}44` : '#e9d5ff' }}>
               <div className="flex items-center gap-3 mb-2">
@@ -654,11 +662,22 @@ function JobDetailContent() {
                 </div>
                 <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">{jd.outputFormat}</p>
               </div>
-              <p className="text-xl font-bold" style={{ color: currentStore?.brandColor ?? '#374151' }}>
-                {currentStore ? currentStore.name : jd.customFormat}
-              </p>
-              {outputDims && (
-                <p className="text-xs text-gray-500 mt-1">{outputDims.w} × {outputDims.h}px</p>
+              {isMultiFormat ? (
+                <>
+                  <p className="text-xl font-bold text-[#7c3aed]">{jd.marketplaceFormats} · {presetKeys.length}</p>
+                  <p className="text-xs text-gray-500 mt-1 capitalize">
+                    {presetKeys.map(k => STORE_LOGOS.find(s => s.key === k)?.name ?? k).join(', ')}
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="text-xl font-bold" style={{ color: currentStore?.brandColor ?? '#374151' }}>
+                    {currentStore ? currentStore.name : jd.customFormat}
+                  </p>
+                  {outputDims && outputDims.w && outputDims.h && (
+                    <p className="text-xs text-gray-500 mt-1">{outputDims.w} × {outputDims.h}px</p>
+                  )}
+                </>
               )}
             </div>
           )}
