@@ -136,6 +136,10 @@ export interface Translations {
     filterProcessing: string
     filterFailed: string
     filterPending: string
+    searchPlaceholder: string
+    sortNewest: string
+    sortOldest: string
+    sortName: string
     noJobsStatus: string
     showAllJobs: string
     uploadNewImages: string
@@ -857,6 +861,10 @@ export const translations: Record<Language, Translations> = {
       filterProcessing: 'processing',
       filterFailed: 'failed',
       filterPending: 'pending',
+      searchPlaceholder: 'Search by name…',
+      sortNewest: 'Newest first',
+      sortOldest: 'Oldest first',
+      sortName: 'Name (A-Z)',
       noJobsStatus: 'No jobs found with status:',
       showAllJobs: 'Show All Jobs',
       uploadNewImages: 'Upload New Images',
@@ -1583,6 +1591,10 @@ export const translations: Record<Language, Translations> = {
       filterProcessing: 'in elaborazione',
       filterFailed: 'falliti',
       filterPending: 'in attesa',
+      searchPlaceholder: 'Cerca per nome…',
+      sortNewest: 'Più recenti',
+      sortOldest: 'Meno recenti',
+      sortName: 'Nome (A-Z)',
       noJobsStatus: 'Nessun job trovato con stato:',
       showAllJobs: 'Mostra Tutti i Jobs',
       uploadNewImages: 'Carica Nuove Immagini',

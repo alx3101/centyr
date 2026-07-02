@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense, useMemo } from 'react'
 import Link from 'next/link'
 import { toast } from 'react-hot-toast'
-import { Upload, Download, Loader, CheckCircle, XCircle, Clock, TrendingUp, Zap, Award, Activity, Filter, Image as ImageIcon, ArrowRight } from 'lucide-react'
+import { Upload, Download, Loader, CheckCircle, XCircle, Clock, TrendingUp, Zap, Award, Activity, Filter, Image as ImageIcon, ArrowRight, Search, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useRecentJobs } from '@/hooks/queries'
 import { STORE_LOGOS } from '@/components/marketing/StoreLogos'
@@ -95,6 +95,10 @@ function DashboardContent() {
   const [showOnboarding, setShowOnboarding] = useState(true)
   const [showPostDownloadModal, setShowPostDownloadModal] = useState(false)
   const [statusFilter, setStatusFilter] = useState<'all' | 'completed' | 'processing' | 'failed' | 'pending'>('all')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'name'>('newest')
+  const [currentPage, setCurrentPage] = useState(1)
+  const PAGE_SIZE = 9
 
   // React Query for jobs list - always polls every 10s, faster when processing
   const [pollingInterval, setPollingInterval] = useState<number>(10000)
@@ -114,11 +118,40 @@ function DashboardContent() {
     }
   }, [completedCount])
 
-  // Filtered jobs based on status
+  // Filtered + searched + sorted jobs
   const filteredJobs = useMemo(() => {
-    if (statusFilter === 'all') return recentJobs
-    return recentJobs.filter(job => job.status === statusFilter)
-  }, [recentJobs, statusFilter])
+    let list = statusFilter === 'all'
+      ? recentJobs
+      : recentJobs.filter(job => job.status === statusFilter)
+
+    const q = searchQuery.trim().toLowerCase()
+    if (q) {
+      list = list.filter(job => (job.job_name || '').toLowerCase().includes(q))
+    }
+
+    const sorted = [...list]
+    if (sortBy === 'name') {
+      sorted.sort((a, b) => (a.job_name || '').localeCompare(b.job_name || ''))
+    } else {
+      sorted.sort((a, b) => {
+        const ta = new Date(a.created_at || 0).getTime()
+        const tb = new Date(b.created_at || 0).getTime()
+        return sortBy === 'newest' ? tb - ta : ta - tb
+      })
+    }
+    return sorted
+  }, [recentJobs, statusFilter, searchQuery, sortBy])
+
+  // Pagination
+  const totalPages = Math.max(1, Math.ceil(filteredJobs.length / PAGE_SIZE))
+  const paginatedJobs = useMemo(
+    () => filteredJobs.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE),
+    [filteredJobs, currentPage]
+  )
+  // Reset to page 1 whenever the filter/search/sort changes the result set
+  useEffect(() => { setCurrentPage(1) }, [statusFilter, searchQuery, sortBy])
+  // Clamp page if the list shrinks (e.g. jobs completing/polling)
+  useEffect(() => { if (currentPage > totalPages) setCurrentPage(totalPages) }, [totalPages, currentPage])
 
   // Onboarding checklist items
   const checklistItems = [
@@ -387,6 +420,31 @@ function DashboardContent() {
             )}
           </div>
 
+          {/* Search + Sort toolbar */}
+          {recentJobs.length > 0 && (
+            <div className="flex flex-col sm:flex-row gap-3 p-4 md:px-6 md:py-4 border-b border-[#f0f0f0] bg-[#fafafa]">
+              <div className="relative flex-1">
+                <Search className="w-4 h-4 text-[#9ca3af] absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder={t.dashboard.searchPlaceholder}
+                  className="w-full pl-9 pr-3 py-2 rounded-lg border border-[#e5e7eb] text-sm focus:outline-none focus:border-[#7c3aed] bg-white"
+                />
+              </div>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as 'newest' | 'oldest' | 'name')}
+                className="px-3 py-2 rounded-lg border border-[#e5e7eb] text-sm text-[#374151] focus:outline-none focus:border-[#7c3aed] bg-white cursor-pointer"
+              >
+                <option value="newest">{t.dashboard.sortNewest}</option>
+                <option value="oldest">{t.dashboard.sortOldest}</option>
+                <option value="name">{t.dashboard.sortName}</option>
+              </select>
+            </div>
+          )}
+
           <div className="p-4 md:p-6">
             {isLoading ? (
               <div className="text-center py-12">
@@ -419,7 +477,7 @@ function DashboardContent() {
               </div>
             ) : (
               <div className="space-y-2">
-                {filteredJobs.map((job, index) => (
+                {paginatedJobs.map((job, index) => (
                   <Link
                     key={job.job_id}
                     href={`/dashboard/jobs/${job.job_id}`}
@@ -518,6 +576,40 @@ function DashboardContent() {
                     </div>
                   </Link>
                 ))}
+              </div>
+            )}
+
+            {/* Pagination */}
+            {!isLoading && totalPages > 1 && (
+              <div className="flex items-center justify-center gap-2 mt-6">
+                <button
+                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  className="p-2 rounded-lg border border-[#e5e7eb] text-[#6b7280] hover:bg-[#f3f4f6] disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                  aria-label="Previous page"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
+                  <button
+                    key={p}
+                    onClick={() => setCurrentPage(p)}
+                    className={`w-9 h-9 rounded-lg text-sm font-semibold transition-all ${p === currentPage
+                      ? 'bg-[#7c3aed] text-white'
+                      : 'border border-[#e5e7eb] text-[#6b7280] hover:bg-[#f3f4f6]'
+                      }`}
+                  >
+                    {p}
+                  </button>
+                ))}
+                <button
+                  onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                  disabled={currentPage === totalPages}
+                  className="p-2 rounded-lg border border-[#e5e7eb] text-[#6b7280] hover:bg-[#f3f4f6] disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                  aria-label="Next page"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
               </div>
             )}
           </div>
