@@ -224,6 +224,7 @@ export interface Translations {
     reprocessUploadNew: string
     outputFormat: string
     customFormat: string
+    marketplaceFormats: string
   }
 
   settings: {
@@ -944,6 +945,7 @@ export const translations: Record<Language, Translations> = {
       reprocessUploadNew: 'New Upload',
       outputFormat: 'Output Format',
       customFormat: 'Custom',
+      marketplaceFormats: 'Marketplace formats',
     },
 
     settings: {
@@ -1669,6 +1671,7 @@ export const translations: Record<Language, Translations> = {
       reprocessUploadNew: 'Nuovo upload',
       outputFormat: 'Formato output',
       customFormat: 'Personalizzato',
+      marketplaceFormats: 'Formati marketplace',
     },
 
     settings: {

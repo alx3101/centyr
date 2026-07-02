@@ -752,6 +752,31 @@ function JobDetailContent() {
                           <><Download className="w-4 h-4" />{jd.downloadImage} {index + 1}</>
                         )}
                       </button>
+
+                      {/* Per-marketplace preset formats */}
+                      {output.outputs_by_preset && Object.keys(output.outputs_by_preset).length > 0 && (
+                        <div className="mt-3">
+                          <p className="text-xs font-semibold text-gray-600 mb-2">{jd.marketplaceFormats}</p>
+                          <div className="grid grid-cols-2 gap-2">
+                            {Object.entries(output.outputs_by_preset).map(([pk, pv]) => (
+                              <a
+                                key={pk}
+                                href={pv.url}
+                                download={`${pk}.webp`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center justify-between gap-2 px-3 py-2 bg-white border border-purple-200 rounded-lg text-xs font-semibold text-gray-700 hover:border-purple-400 hover:bg-purple-50 transition-all"
+                              >
+                                <span className="capitalize">{pk}</span>
+                                <span className="flex items-center gap-1 text-purple-600">
+                                  {pv.width && pv.height ? `${pv.width}×${pv.height}` : ''}
+                                  <Download className="w-3.5 h-3.5" />
+                                </span>
+                              </a>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>

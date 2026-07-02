@@ -171,7 +171,6 @@ export default function Features() {
             icon={<IntegrationIcon />}
             title={t.marketing.features.f4Title}
             description={t.marketing.features.f4Desc}
-            comingSoon
           />
         </div>
 
@@ -206,10 +205,10 @@ export default function Features() {
                 className="text-2xl font-extrabold"
                 style={{ color: '#0f0a1e', letterSpacing: '-0.02em' }}
               >
-                &lt;10s
+                100%
               </p>
               <p className="text-sm font-medium" style={{ color: '#6b7280' }}>
-                Average processing time per job
+                Consistent output across your whole catalog
               </p>
             </div>
           </div>
