@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, Suspense, useMemo } from 'react'
+import { useState, useEffect, Suspense, useMemo, useRef } from 'react'
 import Link from 'next/link'
 import { toast } from 'react-hot-toast'
 import { Upload, Download, Loader, CheckCircle, XCircle, Clock, TrendingUp, Zap, Award, Activity, Filter, Image as ImageIcon, ArrowRight, Search, ChevronLeft, ChevronRight } from 'lucide-react'
@@ -97,7 +97,11 @@ function DashboardContent() {
   const [statusFilter, setStatusFilter] = useState<'all' | 'completed' | 'processing' | 'failed' | 'pending'>('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'name'>('newest')
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(() => {
+    if (typeof window === 'undefined') return 1
+    const saved = parseInt(sessionStorage.getItem('dashboardPage') || '1', 10)
+    return Number.isFinite(saved) && saved > 0 ? saved : 1
+  })
   const PAGE_SIZE = 9
 
   // React Query for jobs list - always polls every 10s, faster when processing
@@ -148,10 +152,17 @@ function DashboardContent() {
     () => filteredJobs.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE),
     [filteredJobs, currentPage]
   )
-  // Reset to page 1 whenever the filter/search/sort changes the result set
-  useEffect(() => { setCurrentPage(1) }, [statusFilter, searchQuery, sortBy])
+  // Reset to page 1 whenever the filter/search/sort changes — but NOT on first
+  // mount, so returning from a job detail restores the page we were on.
+  const isFirstRender = useRef(true)
+  useEffect(() => {
+    if (isFirstRender.current) { isFirstRender.current = false; return }
+    setCurrentPage(1)
+  }, [statusFilter, searchQuery, sortBy])
   // Clamp page if the list shrinks (e.g. jobs completing/polling)
   useEffect(() => { if (currentPage > totalPages) setCurrentPage(totalPages) }, [totalPages, currentPage])
+  // Persist page across navigation (job detail round-trip)
+  useEffect(() => { sessionStorage.setItem('dashboardPage', String(currentPage)) }, [currentPage])
 
   // Onboarding checklist items
   const checklistItems = [
