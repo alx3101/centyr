@@ -101,7 +101,7 @@ export default function Testimonials() {
             {it ? 'Prova gratis, nessuna carta' : 'Try free, no card required'}
           </Link>
           <p className="text-xs text-gray-400 mt-3" style={{ fontFamily: 'Onest, sans-serif' }}>
-            {it ? '3 job inclusi nel piano gratuito' : '3 jobs included in the free plan'}
+            {it ? '10 prodotti inclusi nel piano gratuito' : '10 products included in the free plan'}
           </p>
         </div>
 

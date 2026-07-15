@@ -1,267 +1,221 @@
 # OFFER.md
 # Centyr — Grand Slam Offer Build
-# Offer Name: Catalog Passport by Centyr
+# Offer Name: The Centyr Catalog Standard
+
+---
+
+## 0. Reframe Note (read first)
+
+Earlier versions of this offer collapsed Centyr into a single wedge — "EU Amazon sellers rejected by Zalando because Amazon wants square and Zalando wants portrait." That format conflict is a real, nameable pain, but it is **one angle, not the offer**. The offer is rebuilt here around the **full value**, which has three pillars, with **catalog uniformity over time** as the primary moat.
+
+**Pillar 1 — Catalog uniformity over time (THE CORE MOAT).** Centyr aligns, centers, sizes, removes background, and normalizes exposure across a whole catalog so every product photo matches — the "align 200 products on a grid in Canva (20 hours), but automatic" job. Crucially it is a **reproducible standard that holds as the catalog grows and changes**: add a new product three months later and it auto-matches the existing 500; change a margin or format and reprocess the entire catalog in one click. A Fiverr freelancer or manual Canva work must redo everything each time; Centyr keeps the catalog uniform over time. This is the main value.
+
+**Pillar 2 — Multichannel compliance (one angle, not the spine).** One upload outputs marketplace-compliant images per platform (Amazon 1:1 square, Zalando 2:3 portrait, eBay, Etsy) plus your own store. The Amazon-vs-Zalando conflict is a strong pain to name for the multichannel subset — not the whole offer.
+
+**Pillar 3 — Done-for-you compliance ("we handle it").** Centyr keeps up with each store's exact image spec so the seller never has to know, track, or maintain them. "We stay compliant with every marketplace's spec so you don't have to think about it." Peace-of-mind value.
 
 ---
 
 ## 1. Business Snapshot
 
-- **What the business does**: SaaS platform that uses BiRefNet AI to remove backgrounds, center products, and format images to the exact pixel specifications of major e-commerce marketplaces — Amazon, Zalando, eBay, Etsy — in one automated batch upload.
-- **What is being sold**: Subscription access to the Centyr image processor, positioned as "Catalog Passport" — one upload that outputs marketplace-compliant images for every platform simultaneously.
-- **Current stage**: B+ — product is live at centyr.com, needs a complete offer system around it.
-- **Main channel**: EU e-commerce seller communities (Amazon Seller Central forums, r/FulfillmentByAmazon, EU Facebook groups for FBA sellers, Zalando Partner Programme applicant forums).
+- **What the business does**: SaaS that turns a raw product-photo library into a single, consistent, marketplace-ready catalog — and keeps it consistent over time. Centyr aligns, centers, sizes, removes background (BiRefNet, strong on glass/reflective/transparent), and normalizes exposure across a whole catalog so every product photo matches, then outputs the right format for every channel from one upload.
+- **What is being sold**: Subscription access to the Centyr catalog processor, positioned as **The Centyr Catalog Standard** — set your look once, every product matches it, every new product auto-matches, on every marketplace, and you reprocess the whole catalog in one click whenever your standard changes.
+- **Current stage**: **Solo founder, pre-revenue, zero marketing budget.** Product ~80% built and in production (backend on AWS, web on Vercel). Distribution — not product — is the bottleneck. No customers yet: no testimonials, case studies, or client logos exist and none are fabricated here. Proof = the product works + a before/after of the prospect's own catalog.
+- **Main channel (zero budget)**: Cold outreach with a personalized before/after of the prospect's own catalog; a free "try your hardest products" tool as top-of-funnel; Fiverr/Upwork gigs delivered with Centyr and converted to subscription; seller communities; agencies as multipliers.
 
 ---
 
 ## 2. Target Market
 
-- **Market**: E-commerce product image processing / marketplace compliance tooling
-- **Segment**: Amazon FBA EU sellers with 50–500 SKUs who are simultaneously expanding to Zalando (or who have been rejected by Zalando's Partner Programme due to image format non-compliance)
-- **Why this segment**: Scores 34/40 on pain/purchasing power/reachability/growth. They face a structurally impossible conflict — Amazon requires 1:1 square (2000×2000, white background) and Zalando requires 2:3 portrait (1500×2250, light neutral background) — meaning any seller managing both platforms must reprocess their entire catalog twice per platform per season. Centyr is the only tool that resolves this conflict in a single workflow. Pain is acute, financial, recurring, and calculable.
+- **Market**: E-commerce catalog image standardization + multichannel compliance tooling (not "AI background remover" — that is a commodity Fiverr sells at €5/25 images).
+- **Primary segment**: E-commerce sellers, brands, and artisans with a **real catalog (dozens–hundreds of SKUs) that updates seasonally and must stay visually uniform over time** — selling on Amazon / eBay / Etsy / Zalando and/or their own Shopify/store. The pain is "my catalog looks like it was shot by five different people, and every new product breaks the grid again."
+- **High-value subset**: Multichannel sellers who must satisfy incompatible marketplace specs simultaneously (e.g. Amazon square + Zalando portrait). Acute, nameable, financial — but a subset, not the whole market.
+- **High-ARPA multiplier**: **Agencies and product-photo studios managing many client catalogs.** One agency = many catalogs that all need a persistent, reproducible standard → Business tier. This is the throughput multiplier that lifts average revenue per account.
+- **Not for**: Hobbyist Vinted/Depop sellers with 5 items — no volume pain, no uniformity problem over time, won't pay.
 
 ---
 
 ## 3. Ideal Customer Avatar
 
-- **One-sentence avatar**: An EU Amazon FBA seller managing 100–300 SKUs across Amazon.it, .de, or .fr who has inventory ready for Zalando but is blocked by image rejection, has no design team, and is losing ground to competitors who are already ranking on Zalando.
+- **One-sentence avatar**: An operator responsible for a growing product catalog (a brand owner, a marketplace seller, an artisan scaling up, or an agency/studio managing client catalogs) who needs every product photo to match every other one — now and as the catalog keeps growing and changing — across every channel they sell on, without doing it by hand every time.
 
 - **Current situation**:
-  - Manages 50–500 products, adding new SKUs regularly, with a catalog that needs updating every season
-  - Has already invested in a professional photoshoot (€1,500–€5,000+) but the images don't meet Zalando's portrait 2:3 spec
-  - Is spending €20–50/image at a studio or relying on a VA or Fiverr gig worker who delivers inconsistent, unreliable results
+  - Manages dozens–hundreds of SKUs, adds new products regularly, refreshes the catalog seasonally.
+  - Photos were taken at different times, on different days, at different distances — so sizes, centering, backgrounds, and exposure drift across the catalog.
+  - Either aligns them by hand in Canva/Photoshop (the validated case: ~200 products = ~20 hours ≈ €300 of manual work), or pays a Fiverr/VA who has to be re-briefed and redoes everything from scratch each cycle.
+  - If multichannel: also fights incompatible marketplace formats (square vs portrait) and tracks specs that change.
 
 - **Pain points**:
-  - Amazon listing suppression triggers immediate, measurable daily revenue loss while ad spend continues running to dead pages
-  - Zalando Partner Programme application is stalled or rejected specifically because of image format — not product quality
-  - Every new season or product line restarts the entire editing cycle with no scalable system
-  - Studio cost for a 200-product catalog runs €4,000–€10,000 per cycle before even counting repeat runs
-  - VA or Fiverr editing is inconsistent — some images pass Amazon review, others don't, and the reason is never clear
+  - **The catalog is not uniform.** Product photos don't match each other — different sizes, off-center, mismatched backgrounds and exposure. It looks amateur next to bigger brands.
+  - **Every new product breaks the grid.** Adding SKUs three months later means re-doing alignment so the newcomers match the existing set — there is no persistent standard.
+  - **Every change means redoing everything.** Decide on a new margin, a new background, a new size? Manual work and Fiverr both start over on the whole catalog.
+  - **Manual alignment is a time sink.** ~20 hours to grid ~200 products in Canva; it comes back every season and every new drop.
+  - **Freelancers are inconsistent and non-reproducible.** Different editor, different result; no standard is retained; re-briefing overhead every cycle.
+  - **Multichannel (subset):** incompatible specs (Amazon 1:1 vs Zalando 2:3) force a second full pass per platform.
+  - **Spec-tracking burden:** each marketplace publishes exact requirements that change; keeping up is a job nobody wants.
 
 - **Failed attempts**:
-  - Hired a VA or Fiverr editor — inconsistent quality, some images pass, some rejected, no clear reason given
-  - Used remove.bg — removes background but doesn't center, doesn't apply marketplace margins, outputs one format only
-  - Tried Canva or Photoshop — requires manual positioning per image, no batch capability at scale, requires design skills they don't have
-  - Paid a photo studio — expensive, slow turnaround (5–10 business days), still had images rejected because studio didn't know the exact spec
-  - Attempted to brief a VA on marketplace specs — inconsistent understanding, constant correction loops
+  - Manual Canva/Photoshop grid — works once, but must be redone every time the catalog grows or a standard changes; no batch, needs skill.
+  - remove.bg / generic bg-removers — strip the background but don't center, size, normalize exposure, or hold a standard across the catalog; one format only.
+  - Fiverr / VA — inconsistent, no retained standard, re-briefed every cycle, human error on specs.
+  - Photo studio — expensive per image, slow, and still no reproducible standard you own.
 
-- **Desired outcome**: Upload 200 raw product photos → receive 200 Amazon-compliant images AND 200 Zalando-compliant images → list everything in a single session → submit Zalando Partner Programme application → never have an image rejected again → launch on Zalando within 7 days.
-
----
-
-## 4. Dream Outcome
-
-- **Primary outcome**: A fully compliant, catalog-ready image set for Amazon AND Zalando — generated from a single upload of raw photos — processed in under 10 minutes regardless of catalog size.
-
-- **Emotional outcome**: Relief and confidence. The seller stops feeling like they are being blocked by a technical problem that has nothing to do with their products. They feel like a professional brand with a proper system — not someone improvising every catalog cycle.
-
-- **Status shift**: From "seller with a compliance problem" to "brand that looks like it belongs on every major EU marketplace." The catalog is now the same quality as bigger competitors. Zalando listings look professional. Amazon images are clean and consistent. The business looks credible.
-
-- **Outcome statement**: "From 200 raw product photos stuck on your desktop to a fully compliant Amazon and Zalando catalog — in under 10 minutes, with zero design skills, no studio booking, and no risk of rejection."
+- **Desired outcome**: A catalog where **every product photo matches every other**, that **stays matched as new products are added and the catalog changes**, and that **outputs correctly for every channel** — achieved once, then maintained in one click, with no design skill and no spec-tracking.
 
 ---
 
-## 5. Obstacles
+## 4. Dream Outcome (Hormozi Value Equation — maximize)
 
-1. Does not know the exact technical specifications for each marketplace (pixel dimensions, DPI, background color code, margin percentage, file format requirements)
-2. Amazon and Zalando specs are structurally incompatible — square vs. portrait — so processing for one platform breaks compliance for the other; currently must run two separate editing cycles
-3. Existing photos include glass, jewelry, shiny packaging, and transparent materials — complex edges that generic background removal tools fail on
-4. No Photoshop or design skills — cannot manually adjust centering, margins, or output canvas size
-5. 200+ products makes manual editing physically impossible at scale — hours turn into days
-6. Per-image studio cost (€20–50) makes professional editing economically non-viable for large catalogs or seasonal reprocessing
-7. Trust gap: does not know whether AI output will meet the quality bar Amazon and Zalando actually enforce, or whether all images will pass on first submission
-8. Consistency requirement: every image in the catalog must look identical (same background tone, same margin, same centering) — one outlier causes Amazon to flag the entire listing
-9. Time pressure: inventory is in the warehouse, Zalando application is pending, each week of delay is a week of lost sales on a platform where competitors are already ranking
-10. Seasonal updates and new SKU additions restart the entire process indefinitely — there is no "done" state, so any solution must be sustainable, not a one-time fix
-11. Multi-format management complexity: keeping track of which version of which image (Amazon square vs. Zalando portrait) applies to which listing on which platform
-12. Uncertainty about whether image compliance alone is sufficient to pass Zalando Partner Programme review — risk of "fixing images and still being rejected"
-13. Emotional avoidance: the problem has been postponed so many times that starting feels overwhelming; the backlog itself is a psychological barrier
-14. Language barrier: most advanced editing tutorials and VA briefing resources are in English; EU sellers in Italy, Germany, France may need localized support
+- **Primary outcome**: A permanently uniform catalog. Every product photo aligned, centered, sized, background-clean, and exposure-matched to one standard — a standard that **auto-applies to every new product** and can be **re-applied to the entire catalog in one click** whenever it changes, and that **exports correctly for every marketplace and your own store**.
+
+- **Emotional outcome**: Relief and control. The catalog stops being a recurring chore and an embarrassment. The operator stops improvising every season and stops worrying whether the newest product "matches." They feel like they run a real brand with a real system.
+
+- **Status shift**: From "seller whose catalog looks stitched together" to "brand whose catalog looks like a big, well-run operation" — on every channel, and it stays that way as the catalog grows.
+
+- **Outcome statement**: "Set your catalog's look once. Every product matches it, every new product auto-matches, every marketplace gets the right format — and when your standard changes, your whole catalog updates in one click."
+
+---
+
+## 5. Obstacles (and how the value equation neutralizes each)
+
+1. Photos drift — different size, centering, background, exposure across the catalog → **alignment + centering + sizing + bg removal + exposure normalization to one deterministic standard** (Pillar 1).
+2. Adding new products later breaks uniformity → **new products auto-match the existing standard** (Pillar 1, moat).
+3. Changing the standard means redoing everything → **one-click reprocess of the entire catalog** (Pillar 1, moat; paid-only feature).
+4. Manual alignment is ~20 hours per ~200 products → **~10 minutes automated** (Time Delay collapse).
+5. Freelancers are inconsistent and non-reproducible → **deterministic standard the customer owns and keeps** (Effort + Likelihood).
+6. Complex products (glass, jewelry, reflective, transparent) → **BiRefNet, chosen specifically for these edge cases** (Likelihood).
+7. Multichannel format conflict (square vs portrait, subset) → **one upload, per-marketplace compliant outputs** (Pillar 2).
+8. Nobody wants to track changing marketplace specs → **Centyr maintains the specs; done-for-you compliance** (Pillar 3).
+9. No design skills → **upload/download, zero configuration** (Effort).
+10. Trust that AI output is good enough → **try your hardest products free + before/after of your own catalog + 30-day money-back** (Likelihood; honest, no fabricated proof).
+11. Agencies/studios: many client catalogs, labor-bound → **one standard per client workspace, reprocessed in one click, high throughput without hiring** (multiplier).
 
 ---
 
 ## 6. Solution Map
 
-| Obstacle | Solution | Delivery Method |
-|---|---|---|
-| Does not know marketplace specs | Pre-built marketplace presets (Amazon, Zalando, eBay, Etsy) — zero configuration required | Built-in preset selector inside the upload UI |
-| Incompatible formats (Amazon square vs. Zalando portrait) | Single upload outputs multiple format variants simultaneously | Batch processor with multi-output per image |
-| Complex products (glass, jewelry, transparent packaging) | BiRefNet AI specialist model trained on complex edge cases | Core AI engine (already live) |
-| No design skills | Zero-configuration interface — drag, upload, download | Upload wizard with no manual adjustment required |
-| 200+ products at scale | Batch processing — upload full catalog, download all outputs | Bulk upload + folder download |
-| Studio cost €20–50/image | Subscription pricing at a fraction of per-image studio cost | Monthly/annual SaaS subscription |
-| Trust gap on AI output quality | Free trial batch of 25 images before any payment | Free tier or trial conversion flow |
-| Consistency requirement | Deterministic algorithm — same spec applied identically to every image in the batch | Standardized processing engine |
-| Time pressure | Processing completes in minutes, not days or weeks | Async batch engine with email notification |
-| Seasonal and ongoing SKU additions | Unlimited (or high-volume) subscription tier covers all future uploads | Subscription credits reset monthly |
-| Multi-format management | Download organized by marketplace — separate folders per platform, labeled | Structured output download |
-| Uncertainty about full compliance | Marketplace compliance checklist and spec documentation included | Downloadable resource / in-app guide |
-| Emotional avoidance / backlog | Quick-start batch (first 10 images free) creates momentum and reduces friction | Frictionless onboarding, no credit card for trial |
-| Language barrier | Localized onboarding for IT, DE, FR sellers | Multilingual UI or localized landing pages |
+| Obstacle | Solution | Pillar | Plan gating |
+|---|---|---|---|
+| Catalog not uniform (size/center/bg drift) | Align + center + size + background removal to one standard | 1 | Alignment + bg removal: **all plans** |
+| Exposure/lighting drift across catalog | Exposure normalization to a catalog standard | 1 | **Pro+** |
+| New products don't match the existing set | Standard auto-applies to every new upload | 1 (moat) | All plans (the standard); reprocess to re-baseline: paid-only |
+| Standard changes (margin/format/background) | One-click reprocess of the whole catalog | 1 (moat) | Reprocess: **paid-only** |
+| Clean, consistent look on complex products | BiRefNet bg removal (glass/reflective/transparent) | 1 | All plans |
+| Incompatible marketplace formats | One upload → per-marketplace compliant outputs | 2 | Presets: **Starter 1 / Pro+ all** |
+| Consistent, on-brand shadow | Shadow generation | 1/2 | **Starter+** |
+| Brand/store look beyond marketplace defaults | Custom background | 1 | **Paid-only** |
+| Tracking each store's changing specs | Centyr maintains specs; you don't think about it | 3 | Built into presets |
+| No design skill / no time | Upload → process → download, zero config | all | All plans |
+| Many client catalogs (agency/studio) | Per-client standard, batch, one-click reprocess | 1 + multiplier | **Business** (highest volume/batch) |
 
 ---
 
 ## 7. Core Offer
 
-- **Offer name**: Catalog Passport by Centyr
-- **Tagline**: One Upload. Every Marketplace. Zero Rejections.
+- **Offer name**: The Centyr Catalog Standard
+- **Tagline**: Set your look once. Every product matches — and stays matched.
 
 - **What's included**:
-  - Centyr multi-marketplace batch image processor (core product)
-  - AI background removal via BiRefNet (handles glass, jewelry, reflective surfaces, transparent packaging)
-  - Automatic product centering with configurable margin
-  - Marketplace format presets: Amazon (2000×2000, 5% margin, pure white), Zalando (1500×2250 portrait 2:3, 12% margin), eBay (1600×1600, 10% margin), Etsy (2000×2000, 8% margin)
-  - Dual-output processing: one upload generates Amazon AND Zalando files simultaneously
-  - Organized output folders by marketplace
-  - Bonus stack (detailed in Section 8)
+  - **Pillar 1 — The Standard Engine (core):** align, center, size, remove background (BiRefNet), and normalize exposure across your whole catalog to one reproducible standard. New products auto-match it; change the standard and reprocess the entire catalog in one click.
+  - **Pillar 2 — Multichannel outputs:** one upload → Amazon (1:1 square), Zalando (2:3 portrait), eBay, Etsy, and your own store — each compliant, from the same source.
+  - **Pillar 3 — Done-for-you compliance:** Centyr keeps up with each marketplace's exact image spec so you never track or maintain them.
+  - Shadow generation, custom background, and marketplace presets per plan gating (see PRICING.md).
 
-- **Format**: SaaS web application, browser-based, no install required
+- **Format**: SaaS web app, browser-based, no install.
 
-- **Delivery**: Instant access upon subscription. Upload → process → download in the same session.
+- **Delivery**: Instant access on signup. Upload → process → download in one session. Your standard is saved and re-usable.
 
-- **Time to first win**: Under 10 minutes from signup to first compliant image download. First 25 images are processable on the free trial — first result visible within 3 minutes of upload.
+- **Time to first win**: A single product processes in ~21 seconds (observed). A ~200-product catalog aligns to one standard in ~10 minutes — versus ~20 hours by hand (≈ €300 of manual work). (Current worker: BiRefNet, ~40s/image on CPU.)
 
 ---
 
-## 8. Bonus Stack
+## 8. Bonus Stack (honest, delivery-light — no fabricated proof)
 
-| Bonus | Purpose | Estimated Standalone Value |
+Bonuses are real, buildable assets that de-risk adoption. None imply existing customers or results.
+
+| Bonus | Purpose | Est. standalone value |
 |---|---|---|
-| **Marketplace Spec Master Sheet** (PDF/printable): Complete breakdown of Amazon, Zalando, eBay, Etsy image requirements — pixel dimensions, DPI, background specs, margin rules, file format, and common rejection reasons for each | Eliminates the research time and removes uncertainty about whether images are truly compliant | €47 |
-| **Zalando Partner Programme Image Fast-Track Guide**: The 6 specific image requirements that cause 80% of Zalando Partner Programme rejections, with annotated before/after examples showing compliant vs. non-compliant images and exactly what Centyr outputs for each requirement | Directly addresses the highest-urgency trigger event (Zalando rejection) and builds confidence before submission | €67 |
-| **Complex Product Processing Cheat Sheet**: Step-by-step setup for maximizing BiRefNet AI accuracy on glass bottles, jewelry, transparent packaging, shiny surfaces, and dark-background products — the edge cases where generic tools fail | Removes the trust gap on difficult products, converts skeptical sellers who think "AI won't work on my product type" | €37 |
-| **Catalog Launch Checklist**: Pre-submission QA checklist covering all image compliance requirements for Amazon and Zalando — to be run before any catalog submission to catch any remaining issues before rejection | Gives sellers confidence to submit without fear and reduces the trial-and-error cycle | €27 |
-| **Seasonal Catalog Workflow Template**: A repeatable SOP (standard operating procedure) for processing new SKUs and seasonal catalog updates using Centyr — covering naming conventions, folder structure, upload batches, and download organization | Solves the ongoing operational problem, not just the first catalog cycle | €47 |
+| **Your Catalog Before/After** — we run a sample of your own products (including your hardest ones) and send you the grid before you pay | This is the honest proof: it shows uniformity on *your* catalog, not someone else's testimonial | €90 (a Fiverr batch + an hour of manual alignment) |
+| **The Catalog Standard Blueprint** — a short guide to defining your own standard (margin, background, size, exposure) once, so it holds across every future drop | Turns a one-time cleanup into a durable system the customer owns | €40 |
+| **Marketplace Spec Reference** — current Amazon / Zalando / eBay / Etsy image requirements, maintained inside the product so you don't track them | Makes Pillar 3 (done-for-you compliance) tangible | €40 |
+| **Complex-Product Setup Notes** — how to get the best BiRefNet result on glass, jewelry, transparent and reflective products | Removes the "AI won't work on my product" objection honestly | €30 |
+| **Agency/Studio Workflow Pack** — per-client workspace naming, one-click reprocess routine, batch structure for many catalogs | Unlocks the high-ARPA multiplier segment | €50 |
 
-**Total bonus stack value: €225**
+**Total bonus stack value: ~€250** (all deliverable by a solo founder; no customer proof implied).
 
 ---
 
 ## 9. Value Stack
 
-| Component | Standalone Value |
+| Component | Standalone value (honest basis) |
 |---|---|
-| Centyr multi-marketplace batch processor (12-month access, Growth tier) | €708 (€59/month × 12) |
-| Marketplace Spec Master Sheet | €47 |
-| Zalando Partner Programme Image Fast-Track Guide | €67 |
-| Complex Product Processing Cheat Sheet | €37 |
-| Catalog Launch Checklist | €27 |
-| Seasonal Catalog Workflow Template | €47 |
-| **Total stacked value** | **€933** |
-| **Price hypothesis (monthly)** | **€29–€99/month depending on volume tier** |
-| **Price hypothesis (annual, Growth tier)** | **€49/month billed annually = €588/year** |
+| The Centyr Catalog Standard — 12 months, Pro tier (€39.99/mo × ~10 = annual) | ~€400/year |
+| Manual alignment replaced (per ~200-product cycle, ~20h ≈ €300) × seasonal recurrence | €600–€1,200/year |
+| Your Catalog Before/After | €90 |
+| Catalog Standard Blueprint | €40 |
+| Marketplace Spec Reference | €40 |
+| Complex-Product Setup Notes | €30 |
+| Agency/Studio Workflow Pack | €50 |
+| **Total stacked value** | **~€1,250–€1,850/year** |
+| **Actual Pro price** | **€39.99/month (annual = 10× monthly ≈ €400/year)** |
 
-**ROI anchor for sales messaging**: A seller with 200 products who would otherwise pay €30/image at a studio saves €6,000 on the first catalog cycle alone. At €59/month, Centyr pays for itself in the first 2 images processed. At 200 images, the ROI is 100:1 in month one.
+**ROI anchor (honest, no invented numbers)**: One manual alignment pass on ~200 products costs ~20 hours (≈ €300). Centyr does it in ~10 minutes and then holds the standard as the catalog grows — so the saving repeats every season and every new drop, for €39.99/month.
 
 ---
 
-## 10. Guarantee
+## 10. Guarantee (honest, pre-revenue)
 
-- **Option 1 — Unconditional**: "Try Centyr free for 14 days. If you're not satisfied for any reason, email us and we'll refund your first month. No questions asked."
-
-- **Option 2 — Conditional (action-based)**: "Process your first 50 images. If more than 2 are rejected by Amazon or Zalando for image compliance reasons, send us the rejection notice and we'll reprocess the entire batch manually — or refund you in full. You can't lose."
-
-- **Option 3 — Outcome-based**: "Get your first 25 images processed absolutely free — no credit card required. If they're not marketplace-compliant, you don't pay. Ever. We earn your subscription by proving the output before you commit."
-
-- **Recommended**: **Option 3** is the primary conversion mechanism — it removes all purchase risk and lets the product prove itself. The free trial of 25 images functions as both the guarantee and the acquisition strategy. For paid subscribers, **Option 2** (conditional) is the retention guarantee — it's specific, action-based, and demonstrates confidence in the output quality without creating a blanket refund abuse vector.
+- **Primary — "Try your hardest products free"**: Send us (or upload) your most difficult products — glass, jewelry, transparent, reflective. We process them and show you the before/after on *your own* catalog before you pay a cent. If it doesn't make your catalog look uniform, you walk away.
+- **Secondary — 30-day money-back**: Subscribe, process your real catalog, and if within 30 days it hasn't given you a uniform, reproducible catalog standard, email us for a full refund. No case studies required — the product proves itself on your products.
+- **Why this is the right guarantee at this stage**: With no customers yet, the only credible proof is the product working on the prospect's own catalog. The free hardest-products trial *is* the acquisition mechanism and the risk reversal at once; the 30-day money-back covers paid conversion. Neither relies on testimonials that don't exist.
 
 ---
 
 ## 11. Positioning
 
 - **Who it's for**:
-  - EU Amazon FBA sellers with 50–500 SKUs who are expanding to Zalando and need both formats without reshooting
-  - E-commerce brand owners running seasonal catalogs who need a repeatable, scalable image processing system
-  - Product photography agencies and studios managing 5+ client catalogs who want to multiply throughput without hiring
+  - E-commerce sellers, brands, and artisans with real, growing catalogs (dozens–hundreds of SKUs) that must stay visually uniform over time.
+  - Multichannel sellers juggling incompatible marketplace specs (high-value subset).
+  - Agencies and product-photo studios managing many client catalogs (high-ARPA multiplier).
 
 - **Who it's NOT for**:
-  - Single-product sellers with 1–5 SKUs who can manage images manually
-  - Sellers looking for lifestyle photography, creative product staging, or AI-generated scenes
-  - Brands with a full in-house design or post-production team already operating at capacity
-  - Sellers whose marketplaces do not enforce strict image compliance (low-stakes niches where rejection is not a real consequence)
+  - Sellers with a handful of items and no uniformity-over-time problem.
+  - Buyers wanting lifestyle/creative staging or AI-generated scenes.
+  - Teams with a full in-house production pipeline that already enforces a standard.
 
-- **Unique angle**: The only image processor that outputs Amazon-compliant AND Zalando-compliant files from a single upload — solving the format conflict that blocks EU sellers from listing on both platforms simultaneously.
+- **Unique angle**: The only tool that turns your catalog into a **reproducible standard that holds over time** — new products auto-match, one-click reprocess when the standard changes — and then outputs it compliant for every channel. Competitors (PhotoRoom, remove.bg, Claid, Pixelcut, Pebblely) do single-image creative editing; none maintain a persistent catalog standard.
 
-- **Positioning statement**: "Catalog Passport by Centyr — the only tool that turns one raw product photo into a compliant image for every EU marketplace, simultaneously, in under 10 minutes."
+- **Positioning statement**: "The Centyr Catalog Standard — set your product-photo standard once; every product matches it, every new product auto-matches, every marketplace gets the right format, and one click re-applies it to your whole catalog whenever it changes."
 
-- **Key differentiator vs. alternatives**:
-  - vs. remove.bg: removes background only; no centering, no margin, no format presets, one output
-  - vs. PhotoRoom: consumer and social media focus, no marketplace compliance system, no Zalando support
-  - vs. Canva: general design tool, manual per-image work, no batch capability, no compliance awareness
-  - vs. Pixc / outsourced editing: 24–48h turnaround, €1.99–€2.99/image, no simultaneous multi-format output, does not scale
-  - vs. VA / Fiverr: inconsistent quality, no standardization, constant briefing overhead, human error on specs
-  - **Centyr is the only option that is: automated + batch-capable + multi-marketplace-compliant + simultaneously outputs all formats in a single workflow**
+- **Key differentiators**:
+  - vs. manual Canva/Photoshop: batch, zero-skill, and the standard persists — you don't redo it every drop.
+  - vs. Fiverr/VA: reproducible standard you own, no re-briefing, consistent every time.
+  - vs. remove.bg / PhotoRoom / Pixelcut: they do single-image creative; none hold a catalog-wide standard over time or do multichannel compliance from one source.
+  - vs. studio: no per-image cost, minutes not days, and the standard is yours to re-apply.
 
-- **Category**: Multi-marketplace product image compliance engine (not a generic background remover, not a photo editor)
+- **Category**: Catalog standardization + multichannel compliance engine (not a background remover, not a photo editor).
 
 ---
 
 ## 12. Delivery Model
 
-- **Model**: DIY SaaS (AI does the work automatically)
-
-- **Why**: Aligns perfectly with the scale constraint and the SaaS business model. The AI handles all the skilled labor (background removal, centering, format conversion), so the user experience is zero-skill — upload and download. This creates the "effort reduction" leg of the Hormozi value equation: maximum result, minimum effort from the buyer. It also enables the core value proposition — batch processing at scale — which is structurally impossible in DFY or DWY models at the price points this market requires. DIY SaaS at €29–€99/month with AI doing the work functions like a done-for-you service from the customer's perspective, at a price point that makes the ROI obvious on first use.
+- **Model**: DIY SaaS where the AI does the skilled work — from the customer's side it feels done-for-you (upload → download), which is the effort-reduction leg of the value equation. The persistent standard (auto-match new products, one-click reprocess) is what a DFY human service structurally can't match at this price: a freelancer redoes the work each time; Centyr retains and re-applies the standard.
 
 ---
 
-## 13. Messaging
+## 13. Value-Equation Summary
 
-### Hooks
-
-1. **The format conflict hook** (strongest — specific pain, specific solution):
-"EU Amazon sellers: Zalando just rejected your images because they want portrait format and yours are square. You don't need a photographer. Upload your Amazon photos to Centyr — get Zalando-compliant images in one batch, in under 10 minutes."
-
-2. **The studio cost hook** (ROI anchor):
-"Stop paying €30 per image to make your product catalog compliant. 200 marketplace-ready photos — Amazon AND Zalando — for less than the cost of one studio session. Your first 25 are free."
-
-3. **The blocked inventory hook** (urgency trigger):
-"Your products are ready. Your inventory is sitting in the warehouse. Your Zalando application is stalled — because your photos are square and they want portrait. Fix your entire catalog in one upload today."
-
-4. **The consistency hook** (quality + trust):
-"The reason Amazon rejects some of your images and not others is consistency — the white isn't the same white, the centering drifts, the margins vary. Centyr applies the exact same spec to every image in your batch, every time."
-
-5. **The competitor comparison hook** (competitive fear):
-"Your competitors launched on Zalando six months ago. They're already ranking. The only difference is their images passed review and yours didn't. Centyr processes your full catalog to Zalando spec in minutes — not months."
-
-### Outcome-Driven Bullets
-
-- Upload your entire product catalog once and download Amazon-ready AND Zalando-ready images — both formats, simultaneously, from a single batch — so you never have to reprocess for a new marketplace again.
-- BiRefNet AI removes backgrounds accurately on glass, jewelry, shiny packaging, and transparent materials — the product types where every generic tool fails and your images get rejected.
-- Every image in your batch is processed to an identical standard — same background, same margin, same centering — so your catalog looks like it was produced by a professional studio, at a fraction of the cost.
-
-### Objection-Handling Bullets
-
-- "I'm worried the AI won't get the edges right on my products." — Try it free on your 25 hardest images before paying. Glass bottles, gold jewelry, and transparent bags — if Centyr handles those, it handles everything.
-- "I've already paid for studio photos. I don't want to reshoot." — You don't. Centyr converts your existing studio photos to Zalando's portrait format automatically. No reshoot required. Upload what you already have.
-- "It probably won't match Amazon's exact white background spec." — Centyr outputs pure white (RGB 255,255,255) with exact margin percentages, at exactly 2000×2000px. The same spec Amazon publishes. Not close — exact.
-
-### Short Offer Description
-
-Catalog Passport by Centyr converts your raw product photos into marketplace-compliant images for Amazon, Zalando, eBay, and Etsy — simultaneously, in one automated batch upload. No Photoshop, no studio booking, no design skills required. Upload once, download every format you need, and list on every EU marketplace today.
-
-### CTA Options
-
-- Primary CTA (acquisition): "Process Your First 25 Images Free — No Credit Card Required"
-- Secondary CTA (urgency): "Stop Losing Zalando Sales to a Format Problem — Fix Your Catalog Today"
-- Retargeting CTA: "Your Catalog Is 10 Minutes Away From Being Zalando-Ready"
+- **Dream Outcome (↑)**: a permanently uniform, professional catalog on every channel that stays uniform as it grows — brand-level look without a production team.
+- **Perceived Likelihood of Achievement (↑)**: BiRefNet on hard products, a deterministic standard, before/after on the prospect's *own* catalog, "try your hardest products free," 30-day money-back. Honest proof, no fabricated testimonials.
+- **Time Delay (↓)**: ~200 products aligned in ~10 min vs ~20 hours; single product ~21s; new products auto-match instantly; whole-catalog reprocess in one click.
+- **Effort & Sacrifice (↓)**: no Canva grid, no Photoshop, no Fiverr re-briefing, no spec-tracking — the standard is set once and maintained for you.
 
 ---
 
-## 14. Launch Notes
+## 14. Launch Notes (zero budget)
 
-- **Best channel**: EU Amazon seller communities — Amazon Seller Central forums (EU), r/FulfillmentByAmazon, Facebook groups for German/Italian/French FBA sellers, LinkedIn targeting "Amazon FBA" + EU location. Secondary: Google search ads targeting "zalando image requirements," "amazon product image white background," "batch product photo editor."
-
-- **Sales angle**: Lead with the Zalando rejection trigger. This is the highest-urgency, most specific entry point. Frame the problem before introducing the solution: "If Zalando rejected your images for format reasons, here is exactly why and here is the only automated tool that fixes it." The Zalando rejection is a concrete event with a specific error message — leads who have received it are already in problem-aware, solution-seeking mode.
-
-- **Objections to handle** (in order of frequency):
-  1. "I'm not sure the AI quality is good enough" — overcome with free trial (25 images, no card)
-  2. "My products are complicated (glass / jewelry / transparent)" — overcome with Complex Product guide and before/after gallery featuring those exact product types
-  3. "I already paid for studio photos" — overcome by clarifying Centyr reformats existing photos, no reshoot needed
-  4. "€X/month feels like another subscription" — overcome with ROI calculator: "What does one studio shoot for 200 products cost you?"
-  5. "What if my images still get rejected after I use Centyr?" — overcome with the conditional guarantee and Catalog Launch Checklist
-
-- **Next actions**:
-  1. Activate free trial flow (25 images, no credit card) as the primary conversion mechanism — this is the guarantee and the acquisition funnel simultaneously
-  2. Build a dedicated landing page anchored to the Zalando rejection trigger — headline, before/after, ROI calculator, free trial CTA
-  3. Publish the "Amazon EU vs. Zalando image spec breakdown" content piece across 3 seller communities to validate demand and drive organic trial signups (test outlined in MARKET_RESEARCH.md)
-  4. Run a €150 Google Ads test on "zalando image requirements" and "amazon product image format" to validate paid acquisition cost
-  5. Build the Marketplace Spec Master Sheet as a lead magnet / downloadable resource that gates to the free trial signup
+- **Lead pillar**: uniformity-over-time (Pillar 1). Open cold outreach with a before/after of the prospect's *own* catalog — the highest-signal asset available and the only honest proof at pre-revenue stage.
+- **Name the multichannel pain (Pillar 2) as one hook among several** for the multichannel subset — not the spine of every message.
+- **Sell Pillar 3 (done-for-you compliance)** to buyers who are tired of tracking specs.
+- **Target agencies/studios** with the workflow pack and one-click reprocess — the ARPA multiplier and Business-tier driver.
+- **Do not fabricate proof.** Proof = the product works + the prospect's own before/after. See OFFER_ANGLES.md for the full angle set and VALUE_PERCEPTION.md for framing; HOOKS.md / PITCH.md / LANDING_PAGE.md are handled in a separate pass.
