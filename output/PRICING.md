@@ -1,74 +1,85 @@
 # PRICING.md
-# Centyr — Catalog Passport Pricing Strategy
+# Centyr — The Centyr Catalog Standard: Pricing
 
 ---
 
-## 1. Value Analysis
+## 0. Source of Truth
 
-**Core outcome**: Turn raw product photos into marketplace-compliant images for Amazon, Zalando, eBay, and Etsy simultaneously — in under 10 minutes — with zero design skills required.
+These are the **real, live Stripe prices** — do not invent alternatives. Prior versions referenced €19/€49/€99 tiers that do not exist; those are removed.
 
-**Outcome value breakdown** (for the core segment: 200-SKU EU Amazon/Zalando seller):
+| Plan | Monthly | Jobs/mo | Batch size | Annual |
+|---|---|---|---|---|
+| **Free** | €0 | 10 | 5 | — |
+| **Starter** | €12.99 | 60 | 25 | 10× monthly (€129.90/yr) |
+| **Pro** | €39.99 | 200 | 100 | 10× monthly (€399.90/yr) |
+| **Business** | €129 | 500 | 100 | 10× monthly (€1,290/yr) |
 
-| Value Source | Calculation | Value |
+**Annual = 10× monthly** across all paid plans (two months free).
+
+### Feature gating (real)
+
+| Capability | Free | Starter | Pro | Business |
+|---|---|---|---|---|
+| Alignment + background removal | ✅ | ✅ | ✅ | ✅ |
+| Shadow | — | ✅ | ✅ | ✅ |
+| Marketplace presets | — | **1 preset** | **all presets** | all presets |
+| Exposure normalization | — | — | ✅ | ✅ |
+| Custom background | — | — | ✅ | ✅ |
+| **One-Click Reprocess** (whole-catalog re-apply) | — | ✅ | ✅ | ✅ |
+
+Note: **Reprocess and custom background are paid-only**; alignment + bg removal are on every plan; exposure normalization and all-preset multichannel start at **Pro**. This gating maps directly to the three pillars (below).
+
+---
+
+## 1. Value Analysis (honest basis)
+
+**Core outcome**: A catalog that is uniform now and stays uniform over time — new products auto-match, one-click reprocess when the standard changes — and outputs compliant for every channel.
+
+**Verifiable value drivers** (no invented multiples):
+
+| Value source | Honest basis | Value |
 |---|---|---|
-| Studio cost replaced | €30/image × 200 products | €6,000 per catalog cycle |
-| VA/Fiverr cost replaced | €10/image × 200 products | €2,000 per catalog cycle |
-| Labor time saved | 12 min/image manually × 200 images = 40 hours × €40/hr | €1,600 per cycle |
-| PPC waste prevented | €2,000/month ad spend to suppressed listings → 0 | €66/day while active |
-| Zalando revenue unlocked | New channel enabled (competitors earning €5K–€20K+/month on Zalando) | Variable, significant |
-| Seasonal recurrence | Same cost avoided every catalog cycle (2–4×/year) | €4,000–€24,000/year |
+| Manual alignment replaced | ~200 products aligned by hand ≈ ~20 hours ≈ **€300** of work | €300 per catalog cycle |
+| Seasonal recurrence | Same manual pass avoided every season / every new drop (2–4×/yr) | €600–€1,200/yr |
+| Reproducibility | The standard persists — you never re-buy the labor; Fiverr/VA redo it each time | Compounding |
+| Multichannel (subset) | Second manual reformat per platform eliminated | Situational |
+| Spec-tracking removed (Pillar 3) | Ongoing research/maintenance of each marketplace spec | Ongoing burden removed |
 
-**Conservative first-cycle ROI anchor**: €6,000 saved in studio fees alone, on one 200-image catalog batch.
-**Centyr Growth tier price**: €49/month.
-**ROI multiple in month 1**: approximately 122:1.
+**Verified performance facts** (use these, not fabricated ROI): ~200 products aligned in ~10 minutes vs ~20 hours by hand; a single product processed in ~21 seconds (observed); worker uses BiRefNet (~40s/image on CPU currently).
 
-**Why this matters for pricing**: This is not a "could save you money" situation — it is a documented, calculable existing cost that sellers are already paying. The pricing conversation is not "is this worth it?" but "how is €49 versus €6,000 even a question?"
+**Why this justifies the price**: Pro at €39.99/month replaces ~€300 of manual work *per cycle* and then holds the standard so the saving repeats. The pricing question is not "is it worth it?" but "why would I keep paying for the same alignment work by hand every season?"
 
 ---
 
 ## 2. Delivery Model Impact
 
-**Model**: SaaS / DIY — the AI performs all skilled labor automatically. The user experience is upload → download. No skill transfer. No configuration.
-
-**Pricing implication**: Standard DIY SaaS pricing runs €27–€497/month. However, Centyr occupies a specific position within that range because:
-
-1. The output is functionally equivalent to a done-for-you studio service. The buyer gets DFY results at DIY price.
-2. The customer is a B2B operator (EU FBA seller or agency) with a quantifiable, recurring pain and a calculable ROI — not a consumer. This justifies pricing toward the mid-to-upper end of the DIY range.
-3. The free trial (25 images, no credit card) eliminates price sensitivity at the top of the funnel by demonstrating quality before any payment is requested.
-
-**Target range**: €19–€99/month across three tiers, with annual billing as the primary revenue optimization lever.
+SaaS / DIY where the AI does the skilled work — the experience is upload → download, so it *feels* done-for-you. The differentiator that a human DFY service can't match at this price is **persistence**: a freelancer redoes the whole catalog each cycle; Centyr retains and re-applies the standard (Auto-Match + One-Click Reprocess). That persistence is what the paid tiers gate and what justifies subscription over one-off spend.
 
 ---
 
-## 3. Pricing Range
+## 3. Tier Design — mapped to the three pillars
 
-| Position | Monthly | Annual (per month) | Who |
+| Tier | Price | Who it's for | Pillar fit |
 |---|---|---|---|
-| Low-end (entry, impulse) | €19/month | €15/month | Solo sellers, 10–50 SKUs, testing the tool |
-| Mid-range (core, considered) | €49/month | €39/month | Growth sellers, 50–500 SKUs, the primary segment |
-| Premium (agency, transformation) | €99/month | €79/month | Agencies managing 5+ client catalogs |
+| **Free** (€0, 10 jobs, batch 5) | €0 | First-touch trial: standardize a handful of products, see your own before/after | Pillar 1 taster (align + bg only) — the acquisition mechanism |
+| **Starter** (€12.99, 60 jobs, batch 25) | €12.99/mo | Solo sellers / artisans with a small but real catalog; want uniformity + shadow + one marketplace | Pillar 1 core + one channel; reprocess unlocked |
+| **Pro** (€39.99, 200 jobs, batch 100) | €39.99/mo | The primary segment: growing catalogs (dozens–hundreds of SKUs), seasonal updates, multichannel | **All three pillars** — exposure normalization, custom background, all presets, reprocess |
+| **Business** (€129, 500 jobs, batch 100) | €129/mo | **Agencies / product-photo studios** managing many client catalogs | Pillar 1 at scale + high volume — the ARPA multiplier |
+
+**Pro is the flagship.** It is the first tier where all three pillars are fully present (exposure normalization + all marketplace presets + custom background + reprocess), which is exactly the uniformity-over-time + multichannel + done-for-you bundle the primary segment needs.
 
 ---
 
-## 4. Recommended Strategy
+## 4. Value-Stack Justification per Tier
 
-**Type**: Hybrid (Volume entry tier + Margin core tier + Premium agency tier)
+**Free → Starter (€12.99):**
+Free proves Pillar 1 on a few products. The upgrade reason is real catalog volume (60 jobs, batch 25), **shadow**, one marketplace preset, and — critically — **One-Click Reprocess**, so the standard becomes reproducible instead of one-off. Framing: "Keep your standard, don't rebuild it each time — for less than €13/month."
 
-**Reasoning**:
+**Starter → Pro (€39.99):**
+The jump buys the *complete* uniformity system: **exposure normalization** (the last source of drift), **custom background** (brand look beyond marketplace defaults), and **all marketplace presets** (true multichannel — Amazon square AND Zalando portrait AND your store from one source), plus 200 jobs / batch 100. Framing: "This is the tier that makes the whole catalog match on every channel — and replaces ~€300 of manual alignment every season."
 
-- The core revenue engine is the **Growth tier at €49/month**. This is the tier priced for the highest-pain, highest-purchasing-power segment (EU Amazon/Zalando sellers with 50–500 SKUs). It is priced low enough to feel like an obvious ROI decision, high enough to build sustainable MRR.
-
-- The **Starter tier at €19/month** functions as a commitment device and an acquisition lever. It gets solo sellers into the product with a real subscription, converts free trial users who are not yet at catalog scale, and creates an upgrade pathway to Growth when their SKU count grows.
-
-- The **Agency tier at €99/month** captures the photography studio and agency segment (33/40 pain/purchasing power score in MARKET_RESEARCH.md) at a price that still represents dramatic ROI for their use case (replacing hours of Photoshop labor per client with minutes of automated processing). The multiple-workspace feature at this tier makes the per-client economics compelling.
-
-**On the €59/month reference price**: €59 for the Growth tier is defensible — it is still a 100:1 ROI against the studio alternative. However, **€49/month is recommended** for initial rollout for three reasons:
-
-1. Charm pricing at €49 vs. €59 creates a stronger "no-brainer" perception for a cold audience that has not yet experienced the product.
-2. At launch, volume of trial-to-paid conversions matters more than maximizing per-subscriber revenue. €49 reduces friction in that conversion.
-3. €49 makes the price-to-value calculation trivially obvious: "Less than the cost of two professional image edits at Fiverr — for 500 images."
-
-A/B test against €59 is recommended once 50+ paying subscribers are active (see Section 8).
+**Pro → Business (€129):**
+Volume for **many catalogs**: 500 jobs/month for agencies and studios running client work. Each client gets its own persistent standard, reprocessed in one click. Framing: "Turn per-image retouching labor into per-catalog standards you re-run on demand — one operator, many clients, no new hires."
 
 ---
 
@@ -76,67 +87,44 @@ A/B test against €59 is recommended once 50+ paying subscribers are active (se
 
 | Technique | Application |
 |---|---|
-| Price anchoring | Always show studio cost (€6,000 / 200-image catalog) or VA cost (€2,000) before revealing any price. Reveal price only after the value stack is fully presented. "Total value: €933. Today: €49/month." |
-| Charm pricing | €19, €49, €99 — all end in 9. Used for monthly billing. Avoids the psychological "over the round number" resistance. |
-| Round pricing | €180, €468, €948 — clean round numbers for annual plans. Signals confidence and simplicity for annual commitment decision. |
-| Tier contrast | Each tier has a meaningfully different capability ceiling, not just a price difference. Entry: volume cap (100 images). Core: full batch capability + all bonuses. Agency: multi-client workspaces — a feature that does not exist at lower tiers. The upgrade reason must be obvious. |
-| Annual anchoring | Monthly vs. annual framing: "€49/month or €39/month billed annually — save €120 and lock in your rate." Frame annual as a saving amount, not a percentage. |
-| Free trial as price objection pre-emption | By giving 25 free images with no card, the tool demonstrates quality before any pricing conversation begins. The prospect's first experience of the price is after they've seen a compliant image from their own catalog — the hardest moment to say no. |
+| Anchor on manual cost | Show "~20 hours ≈ €300 per catalog, every season" before the price. Then: €39.99/month Pro. |
+| Anchor on reproducibility | Contrast one-off freelancer labor (re-bought each cycle) vs. an owned standard (re-applied free). |
+| Charm pricing | €12.99 and €39.99 already end in .99 — keep them. |
+| Free as proof, not just trial | Free tier (10 jobs) exists to produce the prospect's own before/after — the honest proof asset. Lead acquisition through it. |
+| Annual = 10× monthly | Frame as "two months free" — a concrete saving, not a percentage. |
+| Tier contrast by capability | Each tier adds a *capability ceiling* (shadow → exposure/custom-bg/all-presets → volume), not just a number, so the upgrade reason is obvious. |
+
+**Do not** anchor on invented studio invoices (€6,000) or ROI multiples (100:1, 122:1). Use the verifiable ~€300 / ~20 hours / ~10 minutes / ~21 seconds facts only.
 
 ---
 
-## 6. Price Justification Story
+## 6. Price Justification Story (honest narrative)
 
-**For landing page, email, sales DM — full narrative version**
+The last time you got your catalog to actually *match* — every product the same size, centered, clean background, even lighting — how did it happen? Either you spent ~20 hours aligning ~200 products on a grid in Canva (about €300 of your time), or you paid a freelancer who did it once and never kept your standard. Then you added new products, and the grid broke again. Next season, you did it all over.
 
-The last time an EU seller with 200 products booked a photo studio to get marketplace-compliant images, the invoice was between €4,000 and €10,000. That assumes the studio even knew Zalando's exact portrait specifications — most do not, which means a second round of corrections, more days, more cost.
+Centyr does that alignment in ~10 minutes. But the point isn't the ten minutes — it's that the standard *stays*. Add a product next quarter and it auto-matches the 500 already there. Change your margin or background and re-apply it to the whole catalog in one click. Sell on Amazon and Zalando? One upload gives you square and portrait from the same source. And you never track a marketplace spec sheet again — Centyr keeps up with those so you don't.
 
-Then there is the Fiverr or VA approach. €8–15 per image sounds manageable until you multiply it by 200 products and realize you are spending €1,600–€3,000 on editing alone — before the inconsistencies start. Some images pass Amazon review. Others do not. The rejection notice does not explain why. You brief the editor again. More time. More cost. The inventory is still sitting in the warehouse.
+- **Free**: standardize a few products and see your own before/after — €0.
+- **Starter (€12.99/mo)**: a small real catalog, shadow, one marketplace, and reprocess so your standard is reproducible.
+- **Pro (€39.99/mo)**: the whole system — exposure normalization, custom background, every marketplace preset, one-click reprocess — for a catalog that matches on every channel and stays that way.
+- **Business (€129/mo)**: many client catalogs, each with its own standard, at agency volume.
 
-Meanwhile, the Zalando Partner Programme application is stalled because the images are square and Zalando requires portrait. That is not a small problem. Every week of delay on Zalando is a week your competitors are accumulating reviews on a platform where position compounds over time.
-
-Here is what the same outcome costs with Centyr:
-
-- Upload your 200 raw product photos to the batch processor.
-- Select Amazon and Zalando presets.
-- Click process.
-- Download 200 Amazon-compliant images AND 200 Zalando-compliant images — organized by marketplace — within minutes.
-- The AI applies the exact specifications: Amazon at 2000×2000px, pure white (RGB 255,255,255), 5% margin. Zalando at 1500×2250px, 12% margin. eBay and Etsy whenever you need them.
-
-The cost of that batch: covered by a €49/month Growth tier subscription.
-
-That is not a 10% saving. That is not even a 90% saving. A €6,000 studio invoice replaced by €49 is a 122:1 ROI in month one.
-
-And this repeats every catalog cycle, every season, every time you add new SKUs. The tool does not get more expensive as your catalog grows within your plan tier. The studio invoice does.
-
-Your first 25 images are free — no credit card required. If the output is not exactly what Amazon and Zalando require, you do not pay. If it is, you will be asking yourself why you waited this long.
+Annual is 10× monthly — two months free. And you can try your hardest products first, free, before you pay anything.
 
 ---
 
-## 7. Pricing Tiers
+## 7. Guarantee (honest, pre-revenue)
 
-| Tier | Name | What's Included | Monthly | Annual (per month) |
-|---|---|---|---|---|
-| Entry | Starter | 100 images/month, all 4 marketplace presets (Amazon, Zalando, eBay, Etsy), standard processing speed, organized download by marketplace, 25-image free trial | €19/month | €15/month (€180/year) |
-| Core | Growth | 500 images/month, all 4 marketplace presets, priority processing queue, organized download by marketplace, Marketplace Spec Master Sheet, Zalando Fast-Track Guide, Complex Product Cheat Sheet, Catalog Launch Checklist, Seasonal Workflow Template | €49/month | €39/month (€468/year) |
-| Premium | Agency | 2,000 images/month (or negotiate unlimited), all 4 marketplace presets, multiple client workspace folders, white-label export file naming, priority email support, 2 team seats | €99/month | €79/month (€948/year) |
-
-**Tier guidance copy** (for pricing page):
-
-- Starter is for solo sellers with fewer than 50 SKUs who process images in batches once or twice per season.
-- Growth is for FBA sellers with 50–500 SKUs who are managing seasonal updates, Zalando expansion, or both. This is the tier that replaces the studio.
-- Agency is for photography studios, e-commerce agencies, and catalog management services handling five or more client accounts simultaneously.
-
-**Free trial**: 25 images processed free, no credit card required. Trial output is at full quality — not a watermarked or degraded preview. If the 25 images are not compliant, there is no subscription to cancel.
+- **Try your hardest products free**: use the Free tier (or send them) to standardize your most difficult products — glass, jewelry, transparent, reflective — and see the before/after on your own catalog before paying.
+- **30-day money-back** on any paid plan: if within 30 days Centyr hasn't given you a uniform, reproducible catalog standard, email for a full refund. No case studies required — the product proves itself on your products.
 
 ---
 
-## 8. Pricing Experiments
+## 8. Pricing Experiments (stage-appropriate)
 
-1. **€49 vs. €59 A/B test for Growth tier** — Run after 50 paying subscribers. Test whether €59 reduces conversion rate or is absorbed without friction (indicating the ROI math is so clear that an extra €10 is invisible). If conversion rates are within 10% of each other, move to €59 and improve MRR without volume loss.
+1. **Free → paid conversion via before/after** — measure whether prospects who receive their own before/after grid convert to Starter/Pro at a higher rate than those who don't. This is the core zero-budget acquisition test.
+2. **Starter vs. Pro positioning** — test whether leading multichannel sellers straight to Pro (all presets) beats routing them through Starter (1 preset). Hypothesis: multichannel subset should see Pro first.
+3. **Business-tier agency outreach** — direct outreach to agencies/studios with the Agency/Studio Workflow Pack; measure Business-tier signups. This is the ARPA-multiplier test.
+4. **Annual take-rate** — surface "annual = 2 months free" on the pricing page; target 20–30% annual mix; if low, reframe as the concrete euro saving per tier (Starter save €25.98, Pro save €79.98, Business save €258).
 
-2. **Monthly vs. annual mix test** — Offer annual billing prominently on the pricing page ("Most Popular" label on annual Growth at €468/year vs. €588/year monthly). Measure what % of new subscribers choose annual. Target: 30%+ annual rate. If below 20%, test reframing the annual saving as a named amount ("Save €120") rather than a percentage.
-
-3. **Early-access pricing lock-in** — Offer the first 100 subscribers a "Founder Rate" at €29/month locked for life. Creates urgency, generates early MRR, builds a testimonial cohort before the referral flywheel starts. Time-box to 30 days or 100 subscribers.
-
-4. **Bonus stack vs. price discount test** — Test two Growth tier variants: (A) €49/month with the full bonus stack (€225 in stated value), and (B) €39/month with no bonus stack. Measure conversion rate and subscriber LTV. The hypothesis is that (A) converts better and retains longer because the bonuses reinforce the product's value system and increase activation. If (B) outperforms on conversion but LTV is equal, reconsider the bonus stack structure.
+**Note**: hold pricing at the real Stripe values above until there are enough paying subscribers to run a clean test — do not A/B invented price points.

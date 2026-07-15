@@ -1,361 +1,348 @@
 # LANDING_PAGE.md
-# Centyr — Catalog Passport by Centyr
-# Complete Landing Page Copy (Copy-Ready, No Placeholders)
+# Centyr — Landing Page Copy
+# Offer: The Centyr Catalog Standard
+# Stage: solo founder, pre-revenue (no testimonials, no fabricated proof)
+
+> Copy-ready English sections. Lead pillar = catalog uniformity over time.
+> Multichannel is ONE section, not the hero. All proof is honest: the product working
+> + a before/after of the prospect's OWN catalog. Real Stripe prices only.
 
 ---
 
-## 1. Hero Section
+## 1. Hero Section (above the fold)
 
-**Headline**:
-Zalando Rejected Your Images Because They're Square.
+**Headline:**
+Set your catalog's look once. Every product matches it — and stays matched as you grow.
 
-**Subheadline**:
-Your existing Amazon catalog is already the reshoot. Centyr converts your square product photos into Zalando portrait format automatically — and outputs Amazon, Zalando, eBay, and Etsy compliant files simultaneously from one batch upload, in under 10 minutes. First 25 images free. No credit card.
+**Subheadline:**
+Centyr aligns, centers, sizes, cleans the background, and evens out the lighting across your whole catalog to one standard — the 20-hour Canva job, done in about 10 minutes. Then it holds: every new product auto-matches the ones already there, and one click re-applies your standard to the entire catalog whenever it changes.
 
-**CTA Button**:
-Process My First 25 Images Free
+**Primary CTA:**
+[ Try your hardest products free ]
 
-**Trust line below CTA**:
-Zero-Rejection First Batch Guarantee — if the output is not compliant with Amazon and Zalando's exact specifications, you don't pay. Ever.
+**Secondary CTA:**
+See a before/after of your own catalog →
 
-**Secondary trust signals (below hero fold)**:
-- No credit card required
-- First result visible in 60 seconds
-- No Photoshop. No design skills. No studio.
+**Honest trust line (under the CTA):**
+No credit card to start. Free plan, 10 products. We'll standardize your most difficult products — glass, jewelry, transparent, reflective — and show you the before/after on your own catalog before you pay anything.
 
 ---
 
 ## 2. Problem Section
 
-**Section heading**: The Format Conflict That Is Costing You Zalando Revenue Every Day
+**Heading:** Your catalog looks like it was shot by five different people.
 
-You have done everything right.
+**Copy:**
+And buyers notice before they read a word.
 
-The products are sourced. The inventory is in the warehouse. Your Amazon listings are live. You have even paid for professional product photos — possibly several thousand euros at a studio.
+The photos were taken on different days, at different distances, in different light. So across your catalog:
+- Product sizes don't match. Some fill the frame, some float in the middle.
+- Backgrounds don't match. Some are pure white, some are grey, some still have the tabletop.
+- Nothing is centered the same way. The grid looks stitched together.
+- Lighting drifts. One product is bright, the next is dull.
 
-And Zalando rejected the Partner Programme application. Not because of your products. Not because of your pricing. Because your images are square.
+You already know how to fix it — the problem is that fixing it never stays fixed:
+- **Doing it by hand** in Canva or Photoshop takes about 20 hours for ~200 products (roughly €300 of your time). It works once.
+- **Then you add new products** three months later, and the newcomers don't match the old ones. The grid breaks again.
+- **Decide on a new margin, size, or background?** You start over on the whole catalog.
+- **A freelancer or VA** does it once, to their taste, and never keeps your standard — so you re-brief and re-pay every cycle.
+- **remove.bg / PhotoRoom / Pixelcut** strip a background on one image at a time. They don't align, size, even out lighting, or hold a standard across hundreds of products.
 
-Here is the problem no studio tells you when they shoot your Amazon catalog:
-
-Amazon requires 1:1 square images. 2000×2000 pixels. Pure white background. 5% margin.
-
-Zalando requires 2:3 portrait images. 1500×2250 pixels. Light neutral background. 12% margin.
-
-These two formats are structurally incompatible. Processing your photos for Amazon automatically makes them non-compliant for Zalando. And processing them for Zalando breaks the Amazon spec.
-
-So every EU seller who wants to list on both platforms faces the same impossible choice: pay a studio to process the same catalog twice, brief a VA to manually convert 200 images from square to portrait (with inconsistent results and no Zalando spec knowledge), or sit with a stalled Zalando application while competitors who solved this problem first collect reviews and ranking signals you cannot recover.
-
-You have probably already tried some version of these options:
-
-A photo studio — €20–50 per image, 5–10 business day turnaround, some images still rejected because the studio did not know Zalando's exact portrait specification.
-
-Remove.bg — removes the background, outputs one format, does not center, does not apply marketplace margins, does not know what Zalando wants.
-
-A VA or Fiverr editor — €8–15 per image, 24–72 hours, inconsistent centering, inconsistent background values, some pass Amazon review and some do not, and the rejection notice never explains why.
-
-Canva or Photoshop — manual per-image work, no batch capability, no marketplace compliance awareness, requires design skills you should not have to develop for this.
-
-The problem with all of these is the same: they solve one format for one marketplace, or they solve no format correctly, or they produce results that are close but not exact — and Amazon and Zalando enforce exact specifications.
-
-Meanwhile, every week your Zalando catalog is not live is a week your competitors accumulate listing age and review velocity on a platform where organic position compounds over time. A competitor with a 12-week head start has a ranking advantage today that does not close regardless of your product quality. The gap widens every week you wait.
+Every season, every new drop, the same manual work comes back.
 
 ---
 
-## 3. Outcome Section
+## 3. Dream Outcome Section
 
-**Section heading**: What "Done" Actually Looks Like
+**Heading:** A catalog that matches — and stays matched.
 
-It is Monday morning. You upload 200 raw product photos to Centyr — unedited, straight from your camera or your photographer's delivery folder.
+**Copy:**
+Imagine opening your storefront and every product photo looks like it belongs to the same brand. Same size. Same centering. Same clean background. Same even light. On Amazon, on your own store, everywhere you sell.
 
-By Monday afternoon, your downloads folder contains:
+Now imagine it stays that way without you touching it:
+- You add a new product next quarter and it **auto-matches** the 500 already in your catalog.
+- You decide on a new look, and **one click** re-applies it to everything.
+- You never open Canva, re-brief a freelancer, or track a marketplace spec sheet again.
 
-A folder labeled /Amazon — 200 images at exactly 2000×2000 pixels, pure white background (RGB 255,255,255), 5% product margin, JPEG format. Amazon main image specification: met exactly.
+You stop improvising every season. You stop wondering whether the newest product "fits." Your catalog stops being a chore and an embarrassment — and starts looking like a big, well-run operation, because now it runs on a system you own.
 
-A folder labeled /Zalando — the same 200 products at exactly 1500×2250 pixels, portrait orientation, light neutral background, 12% margin. Zalando Partner Programme image specification: met exactly.
-
-Both folders are labeled by SKU. Nothing to sort. Nothing to rename. Nothing to reformat before uploading directly to Seller Central and the Zalando Partner Portal.
-
-You upload the Zalando folder to the Partner Portal that afternoon. You submit the application. The images are compliant. The format conflict — the specific, documented reason for the previous rejection — no longer exists in your submission.
-
-Your first Zalando listing goes live this week.
-
-And the next time you add new SKUs, or launch a new collection, or update images for a seasonal refresh — the same workflow takes the same 10 minutes. The system does not get harder to use as your catalog grows. It does not require re-briefing, reconfiguration, or rescheduling. It runs the same batch process every time, at the same speed, with the same compliance output.
-
-Image compliance is no longer the thing that delays your launches. Your products ship when they are ready, not when the photo studio finishes.
+That's the shift: from *seller whose catalog looks patched together* to *brand whose catalog looks like one thing*.
 
 ---
 
 ## 4. Solution Section
 
-**Section heading**: One Upload. Every Marketplace. Zero Rejections.
+**Heading:** Meet The Centyr Catalog Standard.
 
-Catalog Passport by Centyr is the EU marketplace compliance engine that converts raw product photos into compliant images for Amazon, Zalando, eBay, and Etsy — simultaneously, automatically, in under 10 minutes.
+**Copy:**
+Centyr isn't a background remover and it isn't a photo editor. It's a **catalog standardization engine**: you set your look once, and Centyr turns your whole product library into one reproducible standard — then keeps it that way as the catalog grows and changes.
 
-No design skills. No installation. No configuration. The entire workflow runs in a browser tab.
+Three things happen, in order of what matters most:
 
-**Here is how it works in four steps:**
+**1. It makes your whole catalog uniform** — align, center, size, remove background, even out lighting, to one standard. (The core.)
+**2. It outputs the right format for every channel** — one upload, every marketplace's spec. (For multichannel sellers.)
+**3. It keeps up with the specs for you** — so you never track or learn them. (Done-for-you.)
 
-**Step 1 — Upload your raw photos.**
-Drag your product photos into the upload zone. Any format: JPG, PNG, HEIC, TIFF, WebP. Up to 500 images at once on the Growth tier. Photos can be shot against any background — white, grey, location, studio — Centyr removes it and replaces it with the correct background for each marketplace.
+How it feels from your side: upload your catalog, download a matching one. A single product processes in about 21 seconds. A ~200-product catalog standardizes in about 10 minutes. No design skill, no configuration, nothing to install — it runs in your browser.
 
-**Step 2 — Select your marketplace presets.**
-Amazon and Zalando are pre-checked by default. Each preset contains the exact specification published by that marketplace — pixel dimensions, background RGB value, margin percentage — already researched, encoded, and tested against real marketplace submissions. No spec research required. No settings to configure. If you also sell on eBay or Etsy, add those presets with one click.
-
-**Step 3 — Click Process Batch.**
-BiRefNet AI removes backgrounds with specialist accuracy on the product types where every generic tool fails — glass bottles, gold jewelry, transparent packaging, reflective surfaces, dark-background products. The AI then centers every product automatically, at the exact margin percentage required by each selected marketplace preset.
-
-**Step 4 — Download your organized output.**
-Your results arrive in separate, labeled folders — one per marketplace. /Amazon contains your images at Amazon's exact specification. /Zalando contains the same products in Zalando's portrait format. Files are named by SKU. Upload directly to each platform. Nothing to sort, rename, or reorganize.
-
-First result: visible within 60 seconds of upload.
-Full 200-image catalog: complete in under 10 minutes.
-Zalando application: ready to submit today.
+**CTA:** [ Try your hardest products free ]
 
 ---
 
-## 5. Mechanism Section
+## 5. Mechanism Section — The Three Pillars
 
-**Section heading**: Why Centyr Produces Compliant Images When Everything Else You Have Tried Has Not
-
-The reason your current image workflow produces some compliant images and some rejections — even when you use the same service, the same editor, the same process — is consistency.
-
-A VA applies the "white background" specification differently on image 1 than on image 200. They eyeball the margin. The centering drifts slightly from product to product. The background tone varies between batches. Amazon's compliance algorithm catches these inconsistencies and flags them. Zalando's portal rejects images that are "close" to the portrait specification but not exactly at it.
-
-Centyr resolves the consistency problem because it is a deterministic process, not a judgment call.
-
-The background color applied to every image is RGB 255,255,255. Not approximately white. Not visually white. The exact value Amazon publishes as the required specification. The same value is applied to image 1 and image 847 in the same batch.
-
-The centering algorithm positions every product to the exact margin percentage of each selected marketplace preset. Amazon's 5% margin is applied to every Amazon output. Zalando's 12% margin is applied to every Zalando output. Not approximately — to the pixel.
-
-**BiRefNet AI and the complex product problem**
-
-Most AI background removal tools are trained primarily on simple, matte-surface products against solid-color studio backgrounds. When they encounter glass, reflective packaging, transparent materials, or jewelry with complex surface detail, they fail in one of three ways: they remove the reflection along with the background (destroying the product's appearance), they leave fringe artifacts around complex edges (which marketplace compliance filters flag), or they lose transparency detail entirely on products with partial opacity.
-
-BiRefNet (Bilateral Reference-Based Network) uses a different architecture. It compares high-resolution and low-resolution representations of the same image simultaneously, which produces significantly better edge detection at the boundaries where product and background are ambiguous — which is exactly what happens on glass surfaces, transparent labels, fine jewelry chains, and reflective metallic packaging.
-
-In practical terms: glass perfume bottles with visible reflections, gold chain necklaces, transparent plastic containers, and matte-black products on white backgrounds are all processed with clean, artifact-free edge accuracy.
-
-These are not edge cases that Centyr handles despite being hard. They are the product types that BiRefNet was developed to handle — and the reason the most skeptical buyers (those who have already seen generic AI tools fail on their specific catalog) are the ones most likely to convert after the free trial.
-
-**The format conflict solution**
-
-The dual-output mechanism is the structural differentiator that no other tool in the current market provides.
-
-Every other background removal tool — remove.bg, PhotoRoom, generic AI processors — outputs one format per run. You would need to run your catalog through the tool once for Amazon, then run the same catalog through again for Zalando with different output settings, then verify that the Zalando output actually meets the portrait 2:3 specification (which these tools do not natively support).
-
-Centyr outputs Amazon-compliant AND Zalando-compliant files from a single upload. The format conflict between the two platforms — the structural problem that has required EU sellers to maintain two separate image processing workflows — is resolved in one batch, in one session, with no second upload.
+**Heading:** How Centyr works — and why nothing else does this.
 
 ---
 
-## 6. Value Stack
+### Pillar 1 — The Standard Engine (the core)
 
-**Section heading**: Everything Included in Your Growth Tier Subscription
+This is the job that used to take 20 hours in Canva.
 
-Before we show you the price, here is what you are getting.
+Centyr aligns, centers, and sizes every product to one consistent frame, removes the background, and normalizes exposure so the whole catalog reads as evenly lit. Background removal runs on **BiRefNet**, chosen specifically because it holds up on the products where generic tools fail — glass bottles, jewelry, reflective and transparent packaging.
 
-| Component | What It Does For You | Value |
+The result is a single, reproducible standard applied across your entire SKU library at once — not a one-off edit, but a spec your catalog now follows.
+
+---
+
+### Pillar 2 — One Source, Every Channel (for multichannel sellers)
+
+*(Full section below — this is one part of the value, not the whole story.)*
+
+One standardized catalog exports to every place you sell, each output compliant with that platform's format, all from the same source.
+
+---
+
+### Pillar 3 — Done-for-You Compliance (peace of mind)
+
+Every marketplace publishes its own image spec, and they change. Centyr keeps up with all of them so you never have to learn, track, or maintain a single one. We stay compliant with every store's rules so you don't think about it.
+
+---
+
+**Why it's different:**
+PhotoRoom, remove.bg, and Pixelcut are funded, capable tools — but they all do the same shape of work: **one image at a time, creative editing.** None of them hold a catalog-wide standard over time. None auto-match your next product to your last 500. That gap is the whole point of Centyr.
+
+---
+
+## 6. The Moat Section — It stays uniform over time
+
+**Heading:** Anyone can clean a catalog once. Centyr keeps it clean.
+
+**Copy:**
+This is the part a freelancer or a Canva afternoon structurally can't give you: your standard **persists**. You're not buying a clean-up. You're buying a catalog that stays uniform as it grows and changes.
+
+**Auto-Match — new products inherit your standard automatically.**
+Add a product three months from now and it matches the ones already in your catalog the moment you upload it. Your catalog grows; your standard doesn't move. You never re-align to keep up.
+
+**One-Click Reprocess — change the standard, update everything.**
+New margin? New background? New size? Re-apply it to your entire catalog in one click. No redoing it product by product. Manual work and Fiverr both start over from zero — Centyr doesn't.
+
+**The economics of owning a standard vs. renting labor:**
+A freelancer's result dies when the job ends — the standard leaves with them, and next season you brief and pay again. Centyr's standard is yours, and it re-applies on demand, forever. That's the difference between paying for the same alignment work every cycle and owning a system that does it for you.
+
+> ~200 products by hand ≈ ~20 hours ≈ €300 — and you redo it every season.
+> Centyr: ~10 minutes, and it keeps your standard. Pro is €39.99/month.
+
+---
+
+## 7. Multichannel Section — One Source, Every Channel
+
+**Heading:** Sell everywhere without reformatting for everywhere.
+
+**Copy:**
+If you sell on more than one channel, you already know the trap: **Amazon wants square (1:1). Zalando wants portrait (2:3).** eBay, Etsy, and your own store each want something slightly different. Match one and you've broken another — so you do a second manual pass per platform, or you get images rejected.
+
+With Centyr, you upload once. From that same standardized catalog, you get:
+- **Amazon** — 1:1 square
+- **Zalando** — 2:3 portrait
+- **eBay** and **Etsy** — each to spec
+- **Your own store** — your brand look
+
+Every output compliant, all from one source. No reshoot. No second pass. If Zalando rejected your images for being square, you don't need new photos — you need one catalog that outputs every marketplace's format.
+
+*(Marketplace presets: 1 preset on Starter, all presets on Pro and Business.)*
+
+---
+
+## 8. Done-for-You Compliance Section
+
+**Heading:** Stop reading marketplace image-requirements pages.
+
+**Copy:**
+Every store has an exact image spec — dimensions, margins, background rules, aspect ratios — and they update them whenever they like. Keeping up is a job nobody wants and everybody gets wrong eventually.
+
+Centyr maintains those specs inside the product. When a marketplace changes its rules, that's our problem, not yours. You should be selling — not re-reading Amazon's image guidelines. We handle the specs so you don't have to think about them.
+
+---
+
+## 9. Value Stack Section
+
+**Heading:** What you're actually getting.
+
+### Core Offer
+
+| Component | What it does | Honest value |
 |---|---|---|
-| Centyr EU Marketplace Compliance Engine (12-month Growth access) | 500 images/month, all 4 marketplace presets (Amazon, Zalando, eBay, Etsy), BiRefNet AI on any product type, dual-output processing, organized download by marketplace | €708 |
-| Zalando Approval Accelerator | The 6 specific image checkpoints responsible for 80% of Zalando Partner Programme rejections — documented with annotated before/after examples. Includes a one-page pre-submission audit you run in 5 minutes. | €67 |
-| Glass & Jewelry AI Unlock | Expert configuration for glass, jewelry, transparent packaging, reflective surfaces, and dark-background products. Includes the Pre-Upload Photo Quality Checklist that maximizes BiRefNet accuracy before processing begins. | €47 |
-| Pre-Submission Safety Net | 28-point fillable Google Sheet compliance gate. Run it before any marketplace submission. Auto-highlights any checkpoint that falls below spec. Converts pre-submit hesitation into a documented "all clear." | €37 |
-| Zero-Rejection Spec Vault | Complete EU marketplace image blueprint — one reference card per marketplace. Exact pixel dimensions, RGB values, margin specs, file format requirements. Verify Centyr's output against the published specification yourself. | €47 |
-| Catalog Engine SOP Pack | Plug-and-play Notion template + Google Sheets tracker: SKU naming conventions, folder hierarchy, batch upload tracking, new SKU intake workflow, seasonal refresh protocol. Already built — copy it in and use it immediately. | €57 |
-| 10-Minute Catalog Kickstart Guide | Seven steps from account creation to first compliant image download, displayed on your signup confirmation screen. No documentation to read. No decisions to make. | €27 |
-| **Total stacked value** | | **€990** |
-| **Growth tier monthly price** | | **€49/month** |
-| **Growth tier annual price** | | **€39/month billed as €468/year** |
+| **The Standard Engine** (Pillar 1) | Align, center, size, background removal (BiRefNet), and exposure normalization across your whole catalog to one reproducible standard | Replaces ~20 hours of manual work (≈ €300) **every cycle** |
+| **Auto-Match** | Every new product inherits your standard on upload — the catalog stays uniform as it grows | The moat — nothing else does this |
+| **One-Click Reprocess** | Change your standard and re-apply it to the entire catalog in one click | Rebrand your whole catalog without redoing it by hand |
+| **One Source, Every Channel** (Pillar 2) | One upload → Amazon, Zalando, eBay, Etsy, and your own store, each compliant | Eliminates the second manual reformat per platform |
+| **Done-for-You Compliance** (Pillar 3) | Centyr maintains each marketplace's changing spec so you never track them | The ongoing research burden, removed |
+
+### Included assets
+
+| Asset | What it does | Value |
+|---|---|---|
+| **Your Catalog Before/After** | We run a sample of your own products — including your hardest ones — and show you the standardized grid before you pay | €90 |
+| **The Catalog Standard Blueprint** | A short guide to defining your standard once (margin, background, size, exposure) so it holds across every future drop | €40 |
+| **Marketplace Spec Reference** | Current Amazon / Zalando / eBay / Etsy image requirements, maintained inside the product | €40 |
+| **Complex-Product Setup Notes** | How to get the best result on glass, jewelry, transparent, and reflective products | €30 |
+| **Agency/Studio Workflow Pack** | Per-client workspaces, one-click reprocess routine, batch structure for many catalogs | €50 |
+
+**Total stacked value: ~€1,250–€1,850/year**
+**Your price: from €0 free — Pro is €39.99/month (annual ≈ €400/year, two months free).**
+
+The real question isn't "is it worth it?" It's "why would I keep paying to do the same alignment work by hand every season?"
+
+**CTA:** [ Start free — standardize your first products ]
 
 ---
 
-**The only comparison that matters:**
+## 10. Honest Proof Section
 
-| | Photo Studio | VA / Fiverr | Centyr Growth Tier |
-|---|---|---|---|
-| Cost for 200-image catalog | €4,000–€10,000 per cycle | €1,600–€3,000 per cycle | €49/month |
-| Turnaround time | 5–10 business days | 24–72 hours | Under 10 minutes |
-| Amazon compliance | Inconsistent | Inconsistent | Exact specification, every image |
-| Zalando portrait format | Rarely supported | Not standard | Automatic, same batch |
-| Glass and jewelry | Manual editing, variable results | Variable quality | BiRefNet AI, specialist accuracy |
-| Annual cost (2 catalog cycles/year) | €8,000–€20,000 | €3,200–€6,000 | €468 |
+**Heading:** We're new. So we'll prove it on your catalog, not someone else's.
 
-Your annual Growth subscription at €468 costs less than one studio session for 16 images.
+**Copy:**
+Centyr is early. That means no testimonials to quote, no client logos to flash, and no case studies we'd have to invent. We're not going to fake any of that.
 
-At 200 images processed in your first month: your ROI is 122:1 against studio pricing.
+Here's the proof we *can* give you, and it's better than a testimonial:
 
-At 500 images per month across four marketplaces: you have replaced a workflow that costs hundreds of hours and thousands of euros per year with a 10-minute batch process.
+**1. See it on your own products.**
+Send us — or upload — a sample of your real catalog, including your most difficult products. We return a before/after grid showing your catalog now uniform: same size, same centering, clean backgrounds, even light. You're not looking at our demo. You're looking at *your* stuff, matching, for the first time.
 
-**Start with your free 25 images.** See the output before you pay anything.
+**2. The numbers we can stand behind.**
+- ~200 products standardized in about **10 minutes** — the same job that takes about **20 hours** by hand (≈ €300 of manual work).
+- A single product processes in about **21 seconds** (observed).
+- Background removal runs on **BiRefNet**, which holds up on glass, jewelry, reflective, and transparent products where generic tools break down.
 
----
+**3. The honest competitive fact.**
+PhotoRoom, remove.bg, and Pixelcut all do single-image editing. None of them hold a catalog-wide standard over time. If uniformity across a whole catalog is your problem, that's the thing we do that they don't.
 
-## 7. Proof Section
-
-**Section heading**: What to Expect From Your Free Trial
-
-No testimonials on this page yet — because Centyr is built for sellers who have been burned by tools that overpromised and underdelivered. We are not asking you to trust a claim. We are asking you to test the output on your own products.
-
-Here is what the trial experience looks like:
-
-You upload 5 of your most difficult products — the ones you are most worried about. Glass bottles with reflections. Gold jewelry with fine chain detail. Transparent labels. Shiny packaging. Whatever your hardest product type is.
-
-You click Process Batch.
-
-Sixty seconds later, you see the first preview.
-
-You open the /Amazon folder. You see your product centered on a pure white background, at exactly 2000×2000 pixels, with the correct margin. You open the /Zalando folder. The same product, in portrait orientation at 1500×2250 pixels, with Zalando's 12% margin applied.
-
-You check the edges on the glass bottle. The reflection is preserved. The transparency is accurate. The background is clean.
-
-That is the proof. Not a claim on this page. Your own products, processed correctly, in front of you, before you pay anything.
-
-If the output does not look exactly right on your most challenging products — we do not want your money. The free trial is designed so that you arrive at a paid subscription because the product has already proved itself to you, not because we convinced you with copy.
-
-**What the BiRefNet AI handles** (use the free trial to verify this on your own catalog):
-
-Complex glass and crystal products — backgrounds removed with transparent accuracy on surfaces with reflections, gradients, and partial opacity.
-
-Gold, silver, and gemstone jewelry — fine edges recovered on chain links, clasps, prongs, and faceted stones where generic tools produce fringe artifacts.
-
-Transparent and frosted packaging — partial transparency preserved rather than removed or filled incorrectly.
-
-Reflective metallic and lacquered surfaces — background separated cleanly from the product surface without destroying the product's finish or sheen.
-
-Dark-background products — edge detection maintained even at the low-contrast boundaries that cause standard AI models to fail.
-
-Upload your 10 hardest products in the free trial. If BiRefNet handles those, it handles everything else in your catalog.
+> *(Show `before.webp` / `after.webp` here — the 9-product perfume catalog grid, before and after.)*
 
 ---
 
-## 8. Objection Handling
+## 11. Objection Handling Section
 
-**"I already tried AI background removal tools — they messed up my edges and my images were rejected."**
+**Heading:** The honest answers.
 
-Most AI background removal tools are trained on simple products and fail at complex surfaces. BiRefNet uses a different architecture that specifically handles the edge-detection problems that generic tools cannot solve — glass, jewelry, transparent materials, reflective packaging. These are not edge cases for Centyr. They are the product types the AI was built for. Upload your specific products in the free trial. If the output passes your visual inspection, you have your answer. If it does not, you have paid nothing.
+**"Will it actually work on my products?"**
+Try your hardest ones free before you pay — glass, jewelry, transparent, reflective. Background removal runs on BiRefNet, picked specifically for those edge cases. If the before/after of your own catalog doesn't convince you, you walk away.
 
----
+**"I don't have design skills / time to learn a tool."**
+There's nothing to learn. Upload your catalog, download a matching one. No Canva grid, no Photoshop, no configuration. A product processes in about 21 seconds.
 
-**"I already have a workflow — a VA or a studio I'm working with."**
+**"€39.99/month feels like a lot."**
+It replaces about €300 of manual alignment *per catalog cycle* — and then holds the standard so that saving repeats every season. One manual pass by hand costs more than a month of Pro, and you'd do that pass again in three months.
 
-Map the actual cost of that workflow:
+**"I could just pay a freelancer."**
+You can — and you'll pay again next cycle, because the freelancer's result leaves with them. They don't keep your standard, so every new drop is a fresh brief and a fresh invoice. Centyr keeps the standard and re-applies it on demand.
 
-Studio at €30/image × 200 products = €6,000 per catalog cycle. Plus 5–10 business day wait time. Plus the images that still come back needing corrections because the studio did not know Zalando's portrait specification.
+**"Isn't this just a background remover?"**
+No. Background removal is one step. Centyr aligns, sizes, centers, evens out lighting, holds a reproducible standard over time, and outputs every marketplace's format. Background removers do one image, one format, no standard.
 
-VA at €10/image × 200 products = €2,000 per cycle. Plus briefing overhead, correction rounds, and rejection notices for the images where the margin drifted or the centering was slightly off.
+**"I only sell on one channel."**
+The multichannel piece is optional. The core value — a uniform catalog that stays uniform — matters whether you sell on one channel or five.
 
-Centyr: €49/month. Under 10 minutes per catalog cycle. Same specification applied to every image. No briefing. No correction rounds. No per-image cost.
-
-You do not need to abandon your current workflow to try Centyr. Process your next batch of new SKUs — 25 images are free. Run both in parallel. Compare the output, the time, and the cost. You will not go back.
-
----
-
-**"What if the AI cannot handle my specific products — I sell [glass / jewelry / accessories with complex shapes]?"**
-
-Glass and jewelry are not exceptions to Centyr's capability — they are the showcase for it. Upload your 10 most difficult products in the free trial. Glass bottles with reflections. Gold chains. Crystal glassware. Transparent packaging. The Glass & Jewelry AI Unlock bonus (included with Growth tier) also covers expert configuration for six specific complex product types, with a pre-upload photo checklist that maximizes BiRefNet accuracy on your specific product category. Start with the hardest products you have. If those come back clean, the rest of your catalog is answered.
-
----
-
-**"What if Centyr processes my images correctly and Zalando still rejects my application for other reasons?"**
-
-This is the exact concern the Zalando Approval Accelerator bonus was built for. The accelerator documents all six image requirements Zalando enforces during Partner Programme review — not just format and dimensions, but background tone range, product placement within the frame, shadow and reflection handling, watermark restrictions, and file format and compression requirements. It covers the full compliance surface, not just the format conflict. The Pre-Submission Safety Net (also included) lets you verify every checkpoint before you submit. If you run both, you are not guessing about compliance — you are verifying it point by point before the portal sees your images.
+**"You have no customers yet."**
+True, and we're not pretending otherwise. That's exactly why the proof is your own before/after and a 30-day money-back guarantee — not testimonials we don't have.
 
 ---
 
-**"It is too expensive — I am already paying for too many tools."**
+## 12. Guarantee Section
 
-Centyr is not an additional tool cost. It is a direct replacement for a larger cost that is already there.
+**Heading:** Two ways we take the risk off you.
 
-Your last studio invoice for a catalog cycle: €4,000–€10,000.
-Your last Fiverr batch for 200 edited images: €1,600–€3,000.
-Your annual Centyr Growth subscription: €468.
+**Try Your Hardest Products Free.**
+Before you pay a cent, use the free plan (or send them to us) to standardize your most difficult products. We show you the before/after on your own catalog. If it doesn't make your catalog look uniform, there's nothing to cancel — you never paid.
 
-The question is not whether €49/month is affordable. The question is what your current workflow costs per year and whether that is still acceptable now that you know what the alternative costs. At €49/month, Centyr pays for itself on the third image you process in a given month against any alternative.
+**30-Day Catalog Standard Guarantee.**
+Subscribe to any paid plan, process your real catalog, and if within 30 days Centyr hasn't given you a uniform, reproducible standard, email us for a full refund. No case studies required, no hoops. The product proves itself on your products, or you get your money back.
 
----
-
-**"I don't need all four marketplaces — I only sell on Amazon and Zalando right now."**
-
-You only activate the presets you use per batch. Unused presets cost you nothing. Amazon and Zalando are pre-checked by default — if those are the only two you select, those are the only two outputs you receive. The other presets exist so that when you expand to eBay or Etsy, the format problem is already solved — no new workflow, no additional tool, one extra checkbox. If you are only on one marketplace today, the Starter tier at €19/month is the appropriate entry point.
+At this stage, that's the only honest guarantee we can make — and it's the strongest one there is: see it work on your own catalog first.
 
 ---
 
-## 9. Guarantee Section
+## 13. Pricing Section
 
-**Section heading**: The Zero-Rejection First Batch Guarantee
+**Heading:** Real prices. Start free.
 
-Process your first 25 images completely free.
+| Plan | Price | Jobs / month | Batch size | Best for |
+|---|---|---|---|---|
+| **Free** | €0 | 10 | 5 | Standardize a handful of products and see your own before/after |
+| **Starter** | €12.99/mo | 60 | 25 | A small but real catalog: uniformity, shadow, one marketplace, reprocess |
+| **Pro** ⭐ | €39.99/mo | 200 | 100 | The full system — the flagship for growing, multichannel catalogs |
+| **Business** | €129/mo | 500 | 100 | Agencies & studios running many client catalogs |
 
-No credit card required. No time limit. No watermarks or reduced-quality previews — the free trial outputs are at full processing quality, in the exact formats you would receive as a paid subscriber.
+**What each tier unlocks:**
+- **Free** — Alignment + background removal. Enough to see your own before/after. The honest trial.
+- **Starter (€12.99)** — Adds shadow, one marketplace preset, and **One-Click Reprocess** so your standard becomes reproducible instead of one-off.
+- **Pro (€39.99) — the flagship.** The first tier with all three pillars fully present: **exposure normalization, custom background, all marketplace presets, and one-click reprocess.** This is the tier that makes your whole catalog match on every channel and stay that way.
+- **Business (€129)** — Volume for many catalogs: 500 jobs/month for agencies and studios. Each client gets its own persistent standard, reprocessed in one click.
 
-If the output does not meet Amazon's and Zalando's exact published specifications — correct pixel dimensions, correct background color (RGB 255,255,255 for Amazon), correct margin percentages, correct portrait orientation for Zalando — you do not pay. Ever.
+**Annual = 10× monthly — two months free** (Starter save €25.98/yr, Pro save €79.98/yr, Business save €258/yr).
 
-We earn your subscription by proving the output before you commit to anything.
-
-Once you subscribe: if any paid batch produces more than 2 images rejected by Amazon or Zalando for image compliance reasons, send us the rejection notice. We will reprocess your entire batch at no charge — or refund your payment in full. Your choice. You cannot walk away with less than you arrived with.
-
----
-
-## 10. CTA Section
-
-**Section heading**: Your Zalando Catalog Is 10 Minutes Away From Being Submission-Ready
-
-Every week without a compliant Zalando catalog is a week competitors who solved this problem before you are accumulating the listing age and review velocity that determine organic position on a platform where early-entrant advantage compounds permanently.
-
-This is not urgency manufactured for a sales page. This is how Zalando's algorithm works. The sellers who launched 12 weeks ago have a ranking advantage today that cannot be eliminated by a better product — only by time. Time you are losing while the application waits.
-
-Your first 25 images are free. Your first result is visible in 60 seconds. Your Zalando application image set can be ready to submit today.
-
-**CTA Button**: Process My First 25 Images Free
-
-Zero-Rejection First Batch Guarantee — No credit card required — First result in 60 seconds
+**CTA:** [ Start free ] · [ Go Pro ]
 
 ---
 
-**Pricing (displayed below CTA)**:
+## 14. Final CTA Section
 
-**Starter — €19/month**
-100 images/month | All 4 marketplace presets | BiRefNet AI processing | Organized download by marketplace
-Best for: Solo sellers with fewer than 50 SKUs who process images once or twice per season.
-Annual: €15/month billed as €180/year
+**Heading:** Set your standard once. Let it hold.
 
-**Growth — €49/month** ← Most Popular
-500 images/month | All 4 marketplace presets | Priority processing queue | Full bonus stack (Zalando Approval Accelerator, Glass & Jewelry AI Unlock, Pre-Submission Safety Net, Zero-Rejection Spec Vault, Catalog Engine SOP Pack, 10-Minute Kickstart Guide)
-Best for: FBA sellers with 50–500 SKUs who are managing seasonal updates, Zalando expansion, or both. This is the tier that replaces the studio.
-Annual: €39/month billed as €468/year — save €120
+**Copy:**
+The last time your catalog actually matched — every product the same size, centered, clean, evenly lit — it took you 20 hours, or a freelancer you had to re-brief. Then you added products and it broke.
 
-**Agency — €99/month**
-2,000 images/month | All 4 marketplace presets | Multiple client workspace folders | White-label export file naming | Priority email support | 2 team seats
-Best for: Photography studios, e-commerce agencies, and catalog management services handling five or more client accounts simultaneously.
-Annual: €79/month billed as €948/year
+Do it in about 10 minutes instead, and this time keep the standard: new products auto-match, one click re-applies changes to everything, every channel gets the right format, and you never track a spec sheet again.
+
+Start free. Try your hardest products first. See the before/after of your own catalog before you pay anything.
+
+**Primary CTA:** [ Try your hardest products free ]
+**Secondary:** 30-day money-back on any paid plan. No case studies required — the product proves itself on your products.
 
 ---
 
-**CTA Button (repeated)**: Process My First 25 Images Free
+## 15. FAQ Section
 
----
+**How long does it take?**
+A single product processes in about 21 seconds. A ~200-product catalog standardizes in about 10 minutes — versus roughly 20 hours by hand.
 
-## 11. FAQ
+**What happens when I add new products later?**
+They auto-match your existing standard the moment you upload them. Your catalog stays uniform as it grows — you don't re-align anything.
 
-**Q: Do I need to reshoot my products to use Centyr?**
-A: No. Centyr is designed specifically to convert your existing product photos — including photos already processed for Amazon in square format — into compliant images for every other marketplace. Upload your raw studio photos, your existing Amazon images, or any product photo you already have. Centyr removes the background and reprocesses for the marketplace formats you select. The vast majority of users do not reshoot anything.
+**What if I change my mind about the look?**
+One-Click Reprocess re-applies your new standard (margin, size, background, format) to your entire catalog at once. No redoing it product by product. (Reprocess is available on all paid plans.)
 
-**Q: Will Centyr's output actually pass Amazon and Zalando's review, or is it just "close"?**
-A: Centyr applies the exact published specifications programmatically to every image: Amazon at 2000×2000px, RGB 255,255,255 background, 5% margin; Zalando at 1500×2250px, 12% margin, portrait 2:3. These are not approximations — they are the same values Amazon and Zalando publish as their requirements, applied identically to every image in every batch. The free trial lets you verify the output on your own products before committing. If the output does not meet the exact specification, you are covered by the Zero-Rejection First Batch Guarantee.
+**Does it work on difficult products like glass or jewelry?**
+Yes — that's exactly why background removal runs on BiRefNet, which is strong on glass, reflective, and transparent products. Try your hardest ones free before you decide.
 
-**Q: What happens with complex products — glass, jewelry, products with transparent packaging?**
-A: These are the product types BiRefNet AI was specifically designed to handle. Upload your glass bottles, jewelry, and transparent products as your free trial batch — start with your hardest ones. The Glass & Jewelry AI Unlock bonus (included with Growth tier) also provides expert configuration for six specific complex product categories, including a pre-upload photo quality checklist that maximizes accuracy before processing begins. If the AI handles your most difficult products, the rest of your catalog is solved.
+**How is this different from remove.bg or PhotoRoom?**
+Those tools edit single images and do it well. They don't align, size, or hold a consistent standard across a whole catalog over time, and they don't output every marketplace's format from one source. Centyr does.
 
-**Q: How many images can I process per month on each tier?**
-A: Starter: 100 images per month. Growth: 500 images per month. Agency: 2,000 images per month. Monthly image credits reset on your billing date. If you process more than your monthly limit, you can upgrade tiers at any time or contact us about add-on credit packs. All tiers include all four marketplace presets — you are not paying extra for Zalando versus Amazon, or any other combination.
+**Which marketplaces do you support?**
+Amazon (1:1 square), Zalando (2:3 portrait), eBay, Etsy, and your own store — one upload, each output compliant. We maintain the specs so you don't have to. (One preset on Starter; all presets on Pro and Business.)
 
-**Q: I only sell on Amazon right now. Is Centyr still useful for me?**
-A: Yes — two reasons. First, Centyr applies Amazon's exact specification (2000×2000px, RGB 255,255,255, 5% margin) consistently to every image in every batch. If you currently use a VA, a studio, or manual editing, you are likely experiencing inconsistencies that cause random Amazon listing suppressions. Centyr eliminates that. Second, the Zalando preset is available immediately when you decide to expand — no new tool, no new workflow, one extra checkbox. The Starter tier at €19/month is the appropriate entry point for single-marketplace use.
+**Do I need design skills or software?**
+No. It runs in your browser — upload your catalog, download a matching one. Nothing to install, nothing to configure.
 
-**Q: What file types does Centyr accept for upload?**
-A: JPG, PNG, HEIC, TIFF, and WebP. Raw files from DSLR cameras (CR2, ARW, NEF) should be converted to JPG or TIFF before upload — the Glass & Jewelry AI Unlock bonus covers recommended export settings for each camera format. Maximum file size per image is 25MB. There is no limit on the total number of files per batch up to your monthly credit allowance.
+**I run an agency with lots of client catalogs. Does that work?**
+That's what Business is built for: 500 jobs/month, a persistent standard per client, and one-click reprocess when a client changes their mind — without hiring.
 
-**Q: How long does processing take for a large batch?**
-A: First image preview: approximately 60 seconds from upload. A 25-image batch: approximately 3–5 minutes. A 200-image catalog: approximately 8–12 minutes depending on product complexity and current processing queue. Growth tier subscribers access a priority processing queue, which reduces wait times during peak periods.
+**What's your refund policy?**
+Try your hardest products free before paying. On any paid plan, if within 30 days Centyr hasn't given you a uniform, reproducible catalog standard, email us for a full refund.
 
-**Q: What is the difference between the Growth and Agency tiers beyond image volume?**
-A: The Agency tier includes three capabilities not available at Growth: multiple client workspace folders (so images from different brands or client accounts are organized and never mixed), white-label export file naming (output files are named to your or your client's naming conventions rather than Centyr's defaults), and 2 team seats so multiple people in your agency can access the account simultaneously. If you manage product images for more than one brand or client account, the Agency tier eliminates the organizational overhead of managing multiple separate Centyr accounts.
+**Do you have customers / testimonials?**
+Not yet — we're new and we won't pretend otherwise. Instead of someone else's testimonial, we show you a before/after of your own catalog, and we back paid plans with a 30-day money-back guarantee.
+
+**How does annual billing work?**
+Annual is 10× the monthly price — you get two months free (Pro works out to about €400/year instead of €480).
