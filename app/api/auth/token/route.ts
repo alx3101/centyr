@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { REFRESH_COOKIE, refreshCookieOptions } from '@/lib/authCookie'
 
 export async function POST(request: NextRequest) {
   const { code } = await request.json()
@@ -35,5 +36,17 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  return NextResponse.json(data)
+  // Keep the refresh token out of client-side JS: it goes into an httpOnly
+  // cookie and is only read server-side by /api/auth/refresh. Previously it was
+  // returned to the browser and dropped on the floor, so a Hosted UI session
+  // died as soon as the id_token expired (1h) with nothing to renew it.
+  const { refresh_token, ...clientTokens } = data
+
+  const response = NextResponse.json(clientTokens)
+
+  if (refresh_token) {
+    response.cookies.set(REFRESH_COOKIE, refresh_token, refreshCookieOptions())
+  }
+
+  return response
 }

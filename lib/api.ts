@@ -1,3 +1,5 @@
+import { getFreshIdToken } from './session'
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 
 // ===========================
@@ -171,7 +173,7 @@ class ApiClient {
     endpoint: string,
     options: RequestInit = {}
   ): Promise<T> {
-    const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null
+    const token = await getFreshIdToken()
 
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
@@ -244,7 +246,7 @@ class ApiClient {
     const formData = new FormData()
     formData.append('file', file)
 
-    const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null
+    const token = await getFreshIdToken()
 
     const headers: Record<string, string> = {}
     if (token) {
@@ -340,7 +342,7 @@ class ApiClient {
       formData.append('normalize_exposure', 'true')
     }
 
-    const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null
+    const token = await getFreshIdToken()
 
     const headers: Record<string, string> = {}
     if (token) {

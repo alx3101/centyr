@@ -16,6 +16,7 @@ import {
   cognitoSignOut,
   cognitoGetIdToken,
 } from '@/lib/cognito'
+import { getFreshIdToken, clearServerSession } from '@/lib/session'
 import toast from 'react-hot-toast'
 
 type AuthStatus = 'checking' | 'authenticated' | 'unauthenticated'
@@ -52,13 +53,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setAuthStatus('checking')
 
     try {
-      // Try Cognito SDK session first (email/password login)
-      let idToken = await cognitoGetIdToken()
-
-      // Fallback: localStorage token set by Hosted UI OAuth callback
-      if (!idToken) {
-        idToken = localStorage.getItem('auth_token')
-      }
+      // Renews the token when it's expired: SDK session for email/password,
+      // httpOnly refresh cookie for Hosted UI (Google) logins.
+      const idToken = await getFreshIdToken()
 
       if (!idToken) {
         clearAuthStorage()
@@ -67,18 +64,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return
       }
 
-      // Cache token
-      localStorage.setItem('auth_token', idToken)
-
       const userData = await api.getCurrentUser()
       setUser(userData)
       setAuth(idToken, userData)
       setAuthStatus('authenticated')
-    } catch (error) {
-      console.error('Auth check failed:', error)
-      clearAuthStorage()
-      setUser(null)
-      setAuthStatus('unauthenticated')
+    } catch (error: any) {
+      // Only a real auth failure ends the session. A transient network/500 used
+      // to wipe the stored token and silently log the user out.
+      const status = error?.status ?? error?.response?.status
+      const isAuthError = status === 401 || status === 403
+
+      if (isAuthError) {
+        console.error('Auth check failed:', error)
+        clearAuthStorage()
+        setUser(null)
+        setAuthStatus('unauthenticated')
+      } else {
+        console.error('Auth check could not complete (keeping session):', error)
+        setAuthStatus(localStorage.getItem('auth_token') ? 'authenticated' : 'unauthenticated')
+      }
     }
   }, [])
 
@@ -157,6 +161,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = useCallback(() => {
     cognitoSignOut()
     clearAuthStorage()
+    // Drop the httpOnly refresh cookie too, otherwise the server could still
+    // mint new tokens for a "signed out" browser.
+    void clearServerSession()
     setUser(null)
     setAuthStatus('unauthenticated')
     router.replace('/')
@@ -168,18 +175,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
    */
   const refreshUser = useCallback(async () => {
     try {
-      // Try SDK session first, fallback to localStorage (covers OAuth + direct API login)
-      let idToken = await cognitoGetIdToken()
-      if (!idToken) {
-        idToken = localStorage.getItem('auth_token')
-      }
+      // Renews when expired (SDK session, or refresh cookie for Hosted UI).
+      const idToken = await getFreshIdToken()
 
       if (!idToken) {
         logout()
         return
       }
-
-      localStorage.setItem('auth_token', idToken)
 
       const userData = await api.getCurrentUser()
       setUser(userData)
