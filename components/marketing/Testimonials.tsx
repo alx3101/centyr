@@ -5,29 +5,34 @@ import { useLanguage } from '@/contexts/LanguageContext'
 
 const rows = [
   {
-    topic: { en: 'Time per SKU', it: 'Tempo per SKU' },
-    before: { en: 'Hours in Photoshop or Lightroom', it: 'Ore in Photoshop o Lightroom' },
-    after: { en: 'Seconds, fully automatic', it: 'Secondi, completamente automatico' },
+    topic: { en: 'A 200-product catalog', it: 'Un catalogo da 200 prodotti' },
+    before: { en: '~20 hours by hand in Canva or Photoshop', it: '~20 ore a mano in Canva o Photoshop' },
+    after: { en: '~10 minutes. One upload.', it: '~10 minuti. Un solo upload.' },
   },
   {
-    topic: { en: 'Marketplace compliance', it: 'Conformità marketplace' },
-    before: { en: 'Manual checks, frequent rejections', it: 'Controlli manuali, rifiuti frequenti' },
-    after: { en: 'Amazon, eBay, Etsy, Zalando ready out of the box', it: 'Pronto per Amazon, eBay, Etsy, Zalando' },
+    topic: { en: 'What it costs you', it: 'Quanto ti costa' },
+    before: { en: '~€300 of your time — again every season', it: '~€300 del tuo tempo — di nuovo ogni stagione' },
+    after: { en: '€39.99/month, and the work never comes back', it: '€39.99/mese, e il lavoro non torna più' },
   },
   {
-    topic: { en: 'Visual consistency', it: 'Coerenza visiva' },
-    before: { en: 'Varies by photographer or editor', it: 'Dipende dal fotografo o dall\'editor' },
-    after: { en: 'Uniform catalog, every time', it: 'Catalogo uniforme, ogni volta' },
+    topic: { en: 'Adding products later', it: 'Aggiungere prodotti dopo' },
+    before: { en: 'The grid breaks — new items don\'t match the old ones', it: 'La griglia si rompe — i nuovi non combaciano coi vecchi' },
+    after: { en: 'New products auto-match the standard already set', it: 'I nuovi si auto-allineano allo standard già impostato' },
   },
   {
-    topic: { en: 'Cost', it: 'Costo' },
-    before: { en: 'Freelancers, variable, hard to scale', it: 'Freelance, variabile, difficile da scalare' },
-    after: { en: 'Fixed price, scales with your catalog', it: 'Prezzo fisso, scala col catalogo' },
+    topic: { en: 'Changing your look', it: 'Cambiare il tuo look' },
+    before: { en: 'Start over on the whole catalog', it: 'Ricominci da capo su tutto il catalogo' },
+    after: { en: 'One click re-applies it to everything', it: 'Un click lo ri-applica a tutto' },
   },
   {
-    topic: { en: 'Setup', it: 'Setup' },
-    before: { en: 'Software, presets, training', it: 'Software, preset, formazione' },
-    after: { en: 'Upload and go, no learning curve', it: 'Carica e vai, zero curva di apprendimento' },
+    topic: { en: 'Consistency', it: 'Coerenza' },
+    before: { en: 'Depends who edited it — re-brief every cycle', it: 'Dipende da chi l\'ha fatto — ri-briefing ogni ciclo' },
+    after: { en: 'One reproducible standard you own', it: 'Uno standard riproducibile che è tuo' },
+  },
+  {
+    topic: { en: 'Marketplace specs', it: 'Specifiche marketplace' },
+    before: { en: 'You track them. Square vs portrait. Rejections.', it: 'Le insegui tu. Quadrato vs verticale. Rifiuti.' },
+    after: { en: 'Amazon, eBay, Etsy, Zalando — we keep up with them', it: 'Amazon, eBay, Etsy, Zalando — ce ne occupiamo noi' },
   },
 ]
 
@@ -46,8 +51,8 @@ export default function Testimonials() {
           </h2>
           <p style={{ fontFamily: 'Onest, sans-serif', fontSize: '0.95rem', color: '#6b7280', fontWeight: 300, maxWidth: 420, margin: '0 auto', lineHeight: 1.7 }}>
             {it
-              ? 'Il flusso di lavoro cambia. I risultati migliorano.'
-              : 'The workflow changes. The results get better.'}
+              ? 'Stesso catalogo. Un modo te lo fa rifare ogni stagione, l\'altro no.'
+              : 'Same catalog. One way makes you redo it every season. The other doesn\'t.'}
           </p>
         </div>
 

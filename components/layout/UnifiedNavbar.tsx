@@ -52,8 +52,9 @@ export function UnifiedNavbar() {
 
   // Links pubblici (marketing) - ordine rispecchia la pagina
   const publicLinks = [
-    { href: '/#features', label: t.nav.features },
+    // Order mirrors the landing sections: comparison sits right under the hero.
     { href: '/#testimonials', label: t.nav.testimonials },
+    { href: '/#features', label: t.nav.features },
     { href: '/#pricing', label: t.nav.pricing },
   ]
 

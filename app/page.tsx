@@ -10,17 +10,19 @@ const FinalCTA    = dynamic(() => import('@/components/marketing/FinalCTA'))
 
 export const metadata = {
   title: 'Centyr - Product Photo Standardization for E-commerce',
-  description: 'Align and center product photos in seconds. No design skills needed. Ready for any marketplace.',
+  description: 'Set your catalog standard once and it stays matched. A 200-product catalog aligned in ~10 minutes instead of ~20 hours by hand.',
 }
 
 export default function Home() {
   return (
     <>
+      {/* Short hook, then immediately the cost/time contrast (old way vs new way),
+          so the €300-per-season anchor lands before we explain the mechanism. */}
       <Hero />
+      <Testimonials />
       <TrustedBy />
       <HowItWorks />
       <Features />
-      <Testimonials />
       <Pricing />
       <FinalCTA />
     </>
