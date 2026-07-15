@@ -11,12 +11,12 @@ const rows = [
   },
   {
     topic: { en: 'What it costs you', it: 'Quanto ti costa' },
-    before: { en: '~€300 of your time — again every season', it: '~€300 del tuo tempo — di nuovo ogni stagione' },
+    before: { en: '~€300 of your time, again every season', it: '~€300 del tuo tempo, di nuovo ogni stagione' },
     after: { en: '€39.99/month, and the work never comes back', it: '€39.99/mese, e il lavoro non torna più' },
   },
   {
     topic: { en: 'Adding products later', it: 'Aggiungere prodotti dopo' },
-    before: { en: 'The grid breaks — new items don\'t match the old ones', it: 'La griglia si rompe — i nuovi non combaciano coi vecchi' },
+    before: { en: 'The grid breaks, new items don\'t match the old ones', it: 'La griglia si rompe, i nuovi non combaciano coi vecchi' },
     after: { en: 'New products auto-match the standard already set', it: 'I nuovi si auto-allineano allo standard già impostato' },
   },
   {
@@ -26,13 +26,13 @@ const rows = [
   },
   {
     topic: { en: 'Consistency', it: 'Coerenza' },
-    before: { en: 'Depends who edited it — re-brief every cycle', it: 'Dipende da chi l\'ha fatto — ri-briefing ogni ciclo' },
+    before: { en: 'Depends who edited it, re-brief every cycle', it: 'Dipende da chi l\'ha fatto, ri-briefing ogni ciclo' },
     after: { en: 'One reproducible standard you own', it: 'Uno standard riproducibile che è tuo' },
   },
   {
     topic: { en: 'Marketplace specs', it: 'Specifiche marketplace' },
     before: { en: 'You track them. Square vs portrait. Rejections.', it: 'Le insegui tu. Quadrato vs verticale. Rifiuti.' },
-    after: { en: 'Amazon, eBay, Etsy, Zalando — we keep up with them', it: 'Amazon, eBay, Etsy, Zalando — ce ne occupiamo noi' },
+    after: { en: 'Amazon, eBay, Etsy, Zalando, we keep up with them', it: 'Amazon, eBay, Etsy, Zalando, ce ne occupiamo noi' },
   },
 ]
 
